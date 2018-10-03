@@ -289,6 +289,10 @@ public final class TestHelper {
                 nextSurveyPage(3, "Soil Tests 2");
                 clickExternalSourceButton(2);
                 break;
+            case TestConstant.SOIL_PH_ID:
+                nextSurveyPage(3, "Soil Tests 1");
+                clickExternalSourceButton(0);
+                break;
         }
     }
 

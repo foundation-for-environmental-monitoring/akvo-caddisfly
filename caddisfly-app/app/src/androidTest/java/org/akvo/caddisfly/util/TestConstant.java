@@ -35,5 +35,6 @@ public final class TestConstant {
 
     public static final String WATER_FLUORIDE_ID = "f0f3c1dd-89af-49f1-83e7-bcc31c3006cf";
     public static final String SOIL_IRON_ID = "3353f5cf-1cd2-4bf5-b47f-15d3db917add";
+    public static final String SOIL_PH_ID = "485a0c0a-0af5-40bc-baee-f5f0b03ff739";
 
 }
