@@ -32,11 +32,11 @@ public class DiagnosticResultDialog extends DialogFragment {
     /**
      * Instance of dialog.
      *
-     * @param testFailed    did test fail
-     * @param retryCount    number of retries
-     * @param resultDetail  the result
-     * @param resultDetails the result details
-     * @param isCalibration is this in calibration mode
+     * @param testFailed          did test fail
+     * @param retryCount          count of retries
+     * @param resultDetail        the result
+     * @param resultDetails       the result details
+     * @param isCalibration       is this in calibration mode
      * @return the dialog
      */
     public static DialogFragment newInstance(boolean testFailed, int retryCount, ResultDetail resultDetail,
@@ -101,8 +101,9 @@ public class DiagnosticResultDialog extends DialogFragment {
                             ColorUtil.getColorRgbString(result.getColor())));
                 }
             } else {
-                getDialog().setTitle(String.format(Locale.getDefault(),
-                        "%.2f %s", result.getResult(), ""));
+                getDialog().setTitle(R.string.result);
+                textResult.setText(String.format(Locale.getDefault(),
+                        "%.2f", result.getResult()));
             }
         }
 

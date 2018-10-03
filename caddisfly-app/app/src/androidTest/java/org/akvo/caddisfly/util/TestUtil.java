@@ -348,4 +348,12 @@ public final class TestUtil {
         };
     }
 
+    public static ViewAssertion doesNotExistOrGone() {
+        return (view, noView) -> {
+            if (view != null && view.getVisibility() != View.GONE) {
+                assertThat("View is present in the hierarchy and not GONE: "
+                        + HumanReadables.describe(view), true, is(false));
+            }
+        };
+    }
 }

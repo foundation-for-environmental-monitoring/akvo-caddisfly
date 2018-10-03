@@ -515,14 +515,14 @@ public class ChamberTestActivity extends BaseActivity implements
 
                 stopScreenPinning();
 
-                fragmentManager.popBackStackImmediate();
+                fragmentManager.popBackStack();
 
                 if (AppPreferences.getShowDebugInfo()) {
 
                     SoundUtil.playShortResource(this, R.raw.err);
 
                     if (testInfo.getDilutions().size() > 0) {
-                        fragmentManager.popBackStackImmediate();
+                        fragmentManager.popBackStack();
                     }
 
                     showDiagnosticResultDialog(true, resultDetail, resultDetails, false);
@@ -870,9 +870,7 @@ public class ChamberTestActivity extends BaseActivity implements
                 finish();
             }
         } else {
-            setResult(Activity.RESULT_CANCELED);
-
-            stopScreenPinning();
+            sendResult();
 
             finish();
         }
