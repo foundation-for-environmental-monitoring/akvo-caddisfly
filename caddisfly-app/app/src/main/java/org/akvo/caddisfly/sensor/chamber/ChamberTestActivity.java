@@ -116,6 +116,7 @@ public class ChamberTestActivity extends BaseActivity implements
     private int currentDilution = 1;
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
+    private int retryCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +177,8 @@ public class ChamberTestActivity extends BaseActivity implements
 
     private void start() {
 
+        retryCount = 0;
+
         if (testInfo.getDilutions().size() > 0) {
             Fragment selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
             goToFragment(selectDilutionFragment);
@@ -197,7 +200,25 @@ public class ChamberTestActivity extends BaseActivity implements
                 startLockTask();
             }
 
+            if (fragmentManager.getFragments().size() > 0 && retryCount > 0) {
+
+                for (int i = 0; i < fragmentManager.getFragments().size(); i++) {
+                    fragmentManager.popBackStackImmediate();
+                }
+
+//                for (Fragment fragment : fragmentManager.getFragments()) {
+//                    fragmentManager.beginTransaction().remove(fragment).commit();
+//                }
+
+                if (testInfo.getCameraAbove()) {
+                    runTestFragment = ChamberBelowFragment.newInstance(testInfo);
+                } else {
+                    runTestFragment = ChamberAboveFragment.newInstance(testInfo);
+                }
+            }
+
             runTestFragment.setDilution(currentDilution);
+            runTestFragment.setRetryCount(retryCount);
             goToFragment((Fragment) runTestFragment);
 
             testStarted = true;
@@ -488,26 +509,25 @@ public class ChamberTestActivity extends BaseActivity implements
 
             } else {
 
+                releaseResources();
+
+                setResult(Activity.RESULT_CANCELED);
+
+                stopScreenPinning();
+
+                fragmentManager.popBackStackImmediate();
+
                 if (AppPreferences.getShowDebugInfo()) {
 
                     SoundUtil.playShortResource(this, R.raw.err);
 
-                    releaseResources();
-
-                    setResult(Activity.RESULT_CANCELED);
-
-                    stopScreenPinning();
-
-                    fragmentManager.popBackStack();
                     if (testInfo.getDilutions().size() > 0) {
-                        fragmentManager.popBackStack();
+                        fragmentManager.popBackStackImmediate();
                     }
 
                     showDiagnosticResultDialog(true, resultDetail, resultDetails, false);
 
                 } else {
-
-                    fragmentManager.popBackStack();
 
                     showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.errorTestFailed),
                             getString(R.string.checkChamberPlacement)),
@@ -585,7 +605,7 @@ public class ChamberTestActivity extends BaseActivity implements
     private void showDiagnosticResultDialog(boolean testFailed, ResultDetail resultDetail,
                                             ArrayList<ResultDetail> resultDetails, boolean isCalibration) {
         DialogFragment resultFragment = DiagnosticResultDialog.newInstance(
-                testFailed, resultDetail, resultDetails, isCalibration);
+                testFailed, retryCount, resultDetail, resultDetails, isCalibration);
         final android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         android.app.Fragment prev = getFragmentManager().findFragmentByTag("gridDialog");
@@ -621,7 +641,10 @@ public class ChamberTestActivity extends BaseActivity implements
      */
     @SuppressWarnings("unused")
     public void onClickAcceptResult(View view) {
+        sendResult();
+    }
 
+    private void sendResult() {
         Intent resultIntent = new Intent();
         SparseArray<String> results = new SparseArray<>();
 
@@ -676,23 +699,38 @@ public class ChamberTestActivity extends BaseActivity implements
 
         releaseResources();
 
-        alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
-                (dialogInterface, i) -> {
-                    stopScreenPinning();
-                    if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                        start();
-                    } else {
-                        runTest();
-                    }
-                },
-                (dialogInterface, i) -> {
-                    stopScreenPinning();
-                    dialogInterface.dismiss();
-                    releaseResources();
-                    setResult(Activity.RESULT_CANCELED);
-                    finish();
-                }, null
-        );
+        if (retryCount < 1) {
+            alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
+                    (dialogInterface, i) -> {
+
+                        retryCount++;
+
+                        if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
+                            runTest();
+                        } else {
+                            start();
+                        }
+                    },
+                    (dialogInterface, i) -> {
+                        stopScreenPinning();
+                        dialogInterface.dismiss();
+                        releaseResources();
+                        setResult(Activity.RESULT_CANCELED);
+                        finish();
+                    }, null
+            );
+        } else {
+            alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.ok,
+                    null,
+                    (dialogInterface, i) -> {
+                        stopScreenPinning();
+                        dialogInterface.dismiss();
+                        releaseResources();
+                        setResult(Activity.RESULT_CANCELED);
+                        finish();
+                    }, null
+            );
+        }
     }
 
     private void releaseResources() {
@@ -817,8 +855,26 @@ public class ChamberTestActivity extends BaseActivity implements
     }
 
     @Override
-    public void onDismissed() {
+    public void onDismissed(boolean retry) {
         testStarted = false;
         invalidateOptionsMenu();
+        if (retry) {
+            if (retryCount < 1) {
+                retryCount++;
+                runTest();
+            } else {
+                setResult(Activity.RESULT_CANCELED);
+
+                stopScreenPinning();
+
+                finish();
+            }
+        } else {
+            setResult(Activity.RESULT_CANCELED);
+
+            stopScreenPinning();
+
+            finish();
+        }
     }
 }

@@ -30,4 +30,6 @@ public interface RunTest {
     void start();
 
     void stop();
+
+    void setRetryCount(int retryCount);
 }

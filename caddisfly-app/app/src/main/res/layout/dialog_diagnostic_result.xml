@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cancel"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/buttonRetry"
@@ -169,10 +169,11 @@
         <Button
             android:id="@+id/buttonOk"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/ok"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
     </LinearLayout>
 

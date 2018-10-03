@@ -33,12 +33,13 @@ public class DiagnosticResultDialog extends DialogFragment {
      * Instance of dialog.
      *
      * @param testFailed    did test fail
+     * @param retryCount    number of retries
      * @param resultDetail  the result
      * @param resultDetails the result details
      * @param isCalibration is this in calibration mode
      * @return the dialog
      */
-    public static DialogFragment newInstance(boolean testFailed, ResultDetail resultDetail,
+    public static DialogFragment newInstance(boolean testFailed, int retryCount, ResultDetail resultDetail,
                                              ArrayList<ResultDetail> resultDetails,
                                              boolean isCalibration) {
         DiagnosticResultDialog fragment = new DiagnosticResultDialog();
@@ -46,6 +47,7 @@ public class DiagnosticResultDialog extends DialogFragment {
         fragment.result = resultDetail;
         fragment.resultDetails = resultDetails;
         args.putBoolean("testFailed", testFailed);
+        args.putInt("retryCount", retryCount);
         args.putBoolean("isCalibration", isCalibration);
         fragment.setArguments(args);
         return fragment;
@@ -61,6 +63,7 @@ public class DiagnosticResultDialog extends DialogFragment {
         listResults.setAdapter(new ResultListAdapter());
 
         boolean testFailed = getArguments().getBoolean("testFailed");
+        int retryCount = getArguments().getInt("retryCount");
         boolean isCalibration = getArguments().getBoolean("isCalibration");
 
         Button buttonColorExtract = view.findViewById(R.id.buttonColorExtract);
@@ -102,13 +105,23 @@ public class DiagnosticResultDialog extends DialogFragment {
         }
 
         buttonCancel.setVisibility(View.GONE);
-        buttonRetry.setVisibility(View.GONE);
+        if (testFailed && retryCount < 1) {
+            buttonRetry.setVisibility(View.VISIBLE);
+            buttonRetry.setOnClickListener(v -> {
+                if (mListener != null) {
+                    mListener.onDismissed(true);
+                }
+                this.dismiss();
+            });
+        } else {
+            buttonRetry.setVisibility(View.GONE);
+        }
 
         Button buttonOk = view.findViewById(R.id.buttonOk);
         buttonOk.setVisibility(View.VISIBLE);
         buttonOk.setOnClickListener(view1 -> {
             if (mListener != null) {
-                mListener.onDismissed();
+                mListener.onDismissed(false);
             }
             this.dismiss();
         });
@@ -125,7 +138,7 @@ public class DiagnosticResultDialog extends DialogFragment {
     }
 
     public interface OnDismissed {
-        void onDismissed();
+        void onDismissed(boolean retry);
     }
 
     private class ResultListAdapter extends BaseAdapter {
