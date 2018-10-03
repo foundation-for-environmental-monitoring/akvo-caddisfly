@@ -71,7 +71,6 @@ import static org.akvo.caddisfly.util.TestUtil.sleep;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
-@LargeTest
 @RunWith(AndroidJUnit4.class)
 public class ChamberInstructions {
 

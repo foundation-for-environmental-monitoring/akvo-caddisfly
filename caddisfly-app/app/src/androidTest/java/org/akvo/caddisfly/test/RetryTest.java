@@ -33,6 +33,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
 import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
+import static org.akvo.caddisfly.common.TestConstants.TEST_START_DELAY;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
@@ -46,12 +47,11 @@ import static org.akvo.caddisfly.util.TestUtil.clickListViewItem;
 import static org.akvo.caddisfly.util.TestUtil.doesNotExistOrGone;
 import static org.akvo.caddisfly.util.TestUtil.getText;
 import static org.akvo.caddisfly.util.TestUtil.sleep;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class RetryTest {
-
-    private static final int TEST_START_DELAY = 0;
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
@@ -80,22 +80,33 @@ public class RetryTest {
     @Test
     @RequiresDevice
     public void testRetry() {
-        testRetryTest(false, false);
+        testRetryTest(TestConstants.CUVETTE_TEST_ID_1, 3.9, false,
+                false, false);
+    }
+
+    @Test
+    @RequiresDevice
+    public void testDilutionRetry() {
+        testRetryTest(TestConstants.CUVETTE_TEST_ID_1, 1.4, false,
+                false, true);
     }
 
     @Test
     @RequiresDevice
     public void testDiagnosticRetry() {
-        testRetryTest(true, false);
+        testRetryTest(TestConstants.CUVETTE_TEST_ID_1, 3.9, true,
+                false, false);
     }
 
     @Test
     @RequiresDevice
     public void testDiagnosticDebugRetry() {
-        testRetryTest(true, true);
+        testRetryTest(TestConstants.CUVETTE_TEST_ID_1, 3.9, true,
+                true, false);
     }
 
-    public void testRetryTest(boolean useDiagnosticMode, boolean showDebugInfo) {
+    public void testRetryTest(String testId, double expectedResult, boolean useDiagnosticMode,
+                              boolean showDebugInfo, boolean hasDilution) {
 
         onView(withId(R.id.actionSettings)).perform(click());
 
@@ -123,13 +134,25 @@ public class RetryTest {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(testId);
 
         sleep(1000);
 
         onView(withId(R.id.button_prepare)).check(matches(isDisplayed()));
 
         onView(withId(R.id.button_prepare)).perform(click());
+
+        if (hasDilution) {
+            onView(withId(R.id.buttonNoDilution)).check(matches(isDisplayed()));
+
+            onView(withId(R.id.buttonNoDilution)).perform(click());
+
+            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
+                    .check(matches(isCompletelyDisplayed()));
+
+            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
+                    .check(matches(isCompletelyDisplayed()));
+        }
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
@@ -139,7 +162,8 @@ public class RetryTest {
 
         onView(withText(R.string.retry)).perform(click());
 
-        sleep(((DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
+        sleep((TEST_START_DELAY +
+                (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
                 * 1000);
 
         onView(withText(R.string.retry)).check(doesNotExistOrGone());
@@ -155,6 +179,18 @@ public class RetryTest {
         //Test Start Screen
         takeScreenshot();
 
+        if (hasDilution) {
+            onView(withId(R.id.buttonNoDilution)).check(matches(isDisplayed()));
+
+            onView(withId(R.id.buttonNoDilution)).perform(click());
+
+            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
+                    .check(matches(isCompletelyDisplayed()));
+
+            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
+                    .check(matches(isCompletelyDisplayed()));
+        }
+
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
         //Test Progress Screen
@@ -169,7 +205,7 @@ public class RetryTest {
         String resultString = getText(withId(R.id.textResult));
 
         double result = Double.valueOf(resultString.replace(">", "").trim());
-        assertTrue("Result is wrong", result > 3.9);
+        assertTrue("Result is wrong", result > expectedResult);
 
 
         if (showDebugInfo) {
