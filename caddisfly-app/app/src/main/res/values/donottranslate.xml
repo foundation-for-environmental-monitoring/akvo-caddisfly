@@ -133,6 +133,7 @@
     <string name="eclipse_software"><a href="https://github.com/junit-team/junit4">Junit 4</a></string>
     <string name="testing">Testing</string>
     <string name="camera">Camera</string>
+    <string name="soilCalibrate">Soil - Calibrate</string>
     <string name="waterCalibrate">Water - Calibrate</string>
     <string name="cameraFocusMode">Camera Focus Mode</string>
 

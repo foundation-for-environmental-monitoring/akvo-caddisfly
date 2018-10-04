@@ -107,26 +107,37 @@ public class DiagnosticResultDialog extends DialogFragment {
             }
         }
 
+        Button buttonOk = view.findViewById(R.id.buttonOk);
+
         buttonCancel.setVisibility(View.GONE);
         if (testFailed && retryCount < 1) {
             buttonRetry.setVisibility(View.VISIBLE);
+            buttonCancel.setVisibility(View.VISIBLE);
+            buttonOk.setVisibility(View.GONE);
             buttonRetry.setOnClickListener(v -> {
                 if (mListener != null) {
                     mListener.onDismissed(true);
                 }
-                this.dismiss();
+                dismiss();
             });
         } else {
             buttonRetry.setVisibility(View.GONE);
+            buttonCancel.setVisibility(View.GONE);
+            buttonOk.setVisibility(View.VISIBLE);
         }
 
-        Button buttonOk = view.findViewById(R.id.buttonOk);
-        buttonOk.setVisibility(View.VISIBLE);
         buttonOk.setOnClickListener(view1 -> {
             if (mListener != null) {
                 mListener.onDismissed(false);
             }
-            this.dismiss();
+            dismiss();
+        });
+
+        buttonCancel.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onDismissed(false);
+            }
+            dismiss();
         });
 
         return view;

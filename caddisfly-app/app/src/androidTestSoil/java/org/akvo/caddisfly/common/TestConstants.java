@@ -16,8 +16,14 @@ public final class TestConstants {
 //    public static final int CUVETTE_TEST_TIME_DELAY = 180;
 
     // Soil - pH
+    public static final String TEST_GROUP = "Soil Tests 1";
+    public static final String TEST_NAME = "pH";
     public static final String CUVETTE_TEST_ID_1 = "485a0c0a-0af5-40bc-baee-f5f0b03ff739";
+    public static final int TEST_START_DELAY = 0;
     public static final int TEST_INDEX = 0;
     public static final int CUVETTE_TEST_TIME_DELAY = 30;
+    public static final double EXPECTED_RESULT = 3.9;
+    public static final boolean IS_HAS_DILUTION = false;
+
 
 }

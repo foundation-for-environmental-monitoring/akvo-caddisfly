@@ -129,7 +129,7 @@
                     android:onClick="onCalibrateSoilClick"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Soil - Calibrate"
+                    android:text="@string/soilCalibrate"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
                     android:theme="?longButtonStyle" />
