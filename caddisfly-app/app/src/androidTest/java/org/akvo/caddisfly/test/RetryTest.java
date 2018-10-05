@@ -19,9 +19,11 @@ import org.akvo.caddisfly.model.TestSampleType;
 import org.akvo.caddisfly.ui.MainActivity;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -54,6 +56,7 @@ import static org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode;
 import static org.akvo.caddisfly.util.TestHelper.loadData;
 import static org.akvo.caddisfly.util.TestHelper.mCurrentLanguage;
 import static org.akvo.caddisfly.util.TestHelper.mDevice;
+import static org.akvo.caddisfly.util.TestHelper.saveCalibration;
 import static org.akvo.caddisfly.util.TestHelper.takeScreenshot;
 import static org.akvo.caddisfly.util.TestUtil.childAtPosition;
 import static org.akvo.caddisfly.util.TestUtil.clickListViewItem;
@@ -61,10 +64,13 @@ import static org.akvo.caddisfly.util.TestUtil.doesNotExistOrGone;
 import static org.akvo.caddisfly.util.TestUtil.getText;
 import static org.akvo.caddisfly.util.TestUtil.sleep;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.startsWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RetryTest {
 
     private static final String TAG = "Instrumented Test";
@@ -95,41 +101,94 @@ public class RetryTest {
 
     @Test
     @RequiresDevice
-    public void testRetry() {
-        runTest(CUVETTE_TEST_ID_1, EXPECTED_RESULT, false,
+    public void a_normalRetry() {
+        runTest(IS_TEST_ID, false,
                 false, IS_HAS_DILUTION, true);
     }
 
     @Test
     @RequiresDevice
-    public void testDilutionRetry() {
-        runTest(CUVETTE_TEST_ID_1, EXPECTED_RESULT, false,
+    public void b_normalSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, false,
                 false, IS_HAS_DILUTION, true);
     }
 
     @Test
     @RequiresDevice
-    public void testDiagnosticRetry() {
-        runTest(CUVETTE_TEST_ID_1, EXPECTED_RESULT, true,
+    public void c_dilutionRetry() {
+        runTest(IS_TEST_ID, false,
                 false, IS_HAS_DILUTION, true);
     }
 
     @Test
     @RequiresDevice
-    public void testDiagnosticDebugRetry() {
-        runTest(CUVETTE_TEST_ID_1, EXPECTED_RESULT, true,
+    public void d_dilutionSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, false,
+                false, IS_HAS_DILUTION, true);
+    }
+
+    @Test
+    @RequiresDevice
+    public void e_diagnosticRetry() {
+        runTest(IS_TEST_ID, true,
+                false, IS_HAS_DILUTION, true);
+    }
+
+    @Test
+    @RequiresDevice
+    public void f_diagnosticSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                false, IS_HAS_DILUTION, true);
+    }
+
+    @Test
+    @RequiresDevice
+    public void g_diagnosticDebugRetry() {
+        runTest(IS_TEST_ID, true,
                 true, IS_HAS_DILUTION, true);
     }
 
     @Test
     @RequiresDevice
-    public void testInternalRetry() {
-        runTest(CUVETTE_TEST_ID_1, EXPECTED_RESULT, true,
+    public void h_diagnosticDebugSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                true, IS_HAS_DILUTION, true);
+    }
+
+    @Test
+    @RequiresDevice
+    public void i_internalRetry() {
+        runTest(IS_TEST_ID, true,
+                false, IS_HAS_DILUTION, false);
+    }
+
+    @Test
+    @RequiresDevice
+    public void j_internalSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                false, IS_HAS_DILUTION, false);
+    }
+
+    @Test
+    @RequiresDevice
+    public void k_internalDebugRetry() {
+        runTest(IS_TEST_ID, true,
                 true, IS_HAS_DILUTION, false);
     }
 
-    public void runTest(String testId, double expectedResult, boolean useDiagnosticMode,
+    @Test
+    @RequiresDevice
+    public void l_internalDebugSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                true, IS_HAS_DILUTION, false);
+    }
+
+    public void runTest(String testId, boolean useDiagnosticMode,
                         boolean showDebugInfo, boolean hasDilution, boolean isExternal) {
+
+        saveCalibration("TestValid", IS_TEST_ID);
+
+        saveCalibration("TestNoMatch", IS_TEST_ID);
 
         Log.i(TAG, "Test 1");
 
@@ -150,6 +209,30 @@ public class RetryTest {
         if (showDebugInfo) {
             clickListViewItem("Show debug info");
         }
+
+        goToMainScreen();
+
+        try {
+            onView(withText(R.string.calibrate)).perform(click());
+        } catch (Exception e) {
+            if (IS_TEST_TYPE == TestSampleType.SOIL) {
+                onView(withText(R.string.soilCalibrate)).perform(click());
+            } else {
+                onView(withText(R.string.waterCalibrate)).perform(click());
+            }
+        }
+
+        onView(allOf(withId(R.id.list_types),
+                childAtPosition(
+                        withClassName(is("android.widget.LinearLayout")),
+                        0))).perform(actionOnItemAtPosition(
+                TestConstants.IS_TEST_INDEX, click()));
+
+        onView(withId(R.id.menuLoad)).perform(click());
+
+        sleep(1000);
+
+        onData(hasToString(startsWith("TestNoMatch"))).perform(click());
 
         if (!useDiagnosticMode) {
             leaveDiagnosticMode();
@@ -262,10 +345,56 @@ public class RetryTest {
         onView(withText(R.string.retry)).check(doesNotExistOrGone());
 
         onView(withText(R.string.ok)).perform(click());
+    }
+
+    public void runSuccessTest(String testId, double expectedResult, boolean useDiagnosticMode,
+                               boolean showDebugInfo, boolean hasDilution, boolean isExternal) {
 
         Log.i(TAG, "Test 4");
 
+        onView(withId(R.id.actionSettings)).perform(click());
+
+        onView(withText(R.string.about)).check(matches(isDisplayed())).perform(click());
+
+        enterDiagnosticMode();
+
+        pressBack();
+
+        if (showDebugInfo) {
+            clickListViewItem("Show debug info");
+        }
+
+        goToMainScreen();
+
+        try {
+            onView(withText(R.string.calibrate)).perform(click());
+        } catch (Exception e) {
+            if (IS_TEST_TYPE == TestSampleType.SOIL) {
+                onView(withText(R.string.soilCalibrate)).perform(click());
+            } else {
+                onView(withText(R.string.waterCalibrate)).perform(click());
+            }
+        }
+
+        onView(allOf(withId(R.id.list_types),
+                childAtPosition(
+                        withClassName(is("android.widget.LinearLayout")),
+                        0))).perform(actionOnItemAtPosition(
+                TestConstants.IS_TEST_INDEX, click()));
+
+        onView(withId(R.id.menuLoad)).perform(click());
+
+        sleep(1000);
+
+        onData(hasToString(startsWith("TestValid"))).perform(click());
+
+        if (!useDiagnosticMode) {
+            leaveDiagnosticMode();
+        }
+
         if (isExternal) {
+
+            gotoSurveyForm();
 
             clickExternalSourceButton(testId);
 
@@ -300,11 +429,6 @@ public class RetryTest {
             onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
                     .check(matches(isCompletelyDisplayed()));
         }
-
-        onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
-
-        //Test Progress Screen
-        takeScreenshot();
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 

@@ -143,10 +143,16 @@ public final class TestHelper {
         // Restore device-specific locale
         new Resources(assets, metrics, currentResources.getConfiguration());
 
-        addCalibration("TestValid", "0.0=255  38  186\n"
+        addCalibration("TestNoMatch", "0.0=255  38  186\n"
                 + "0.5=255  51  129\n"
                 + "1.0=255  59  89\n"
                 + "1.5=255  62  55\n"
+                + "2.0=255  81  34\n");
+
+        addCalibration("TestValid", "0.0=255  38  186\n"
+                + "0.5=255  51  129\n"
+                + "1.0=255  59  89\n"
+                + "1.5=255  24  1\n"
                 + "2.0=255  81  34\n");
 
         addCalibration("TestInvalid", "0.0=255  88  177\n"
