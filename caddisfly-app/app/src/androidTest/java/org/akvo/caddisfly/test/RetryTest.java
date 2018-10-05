@@ -186,9 +186,9 @@ public class RetryTest {
     public void runTest(String testId, boolean useDiagnosticMode,
                         boolean showDebugInfo, boolean hasDilution, boolean isExternal) {
 
-        saveCalibration("TestValid", IS_TEST_ID);
+        saveCalibration(IS_TEST_NAME + "_Valid", IS_TEST_ID);
 
-        saveCalibration("TestNoMatch", IS_TEST_ID);
+        saveCalibration(IS_TEST_NAME + "_NoMatch", IS_TEST_ID);
 
         Log.i(TAG, "Test 1");
 
@@ -232,7 +232,7 @@ public class RetryTest {
 
         sleep(1000);
 
-        onData(hasToString(startsWith("TestNoMatch"))).perform(click());
+        onData(hasToString(startsWith(IS_TEST_NAME + "_NoMatch"))).perform(click());
 
         if (!useDiagnosticMode) {
             leaveDiagnosticMode();
@@ -386,7 +386,7 @@ public class RetryTest {
 
         sleep(1000);
 
-        onData(hasToString(startsWith("TestValid"))).perform(click());
+        onData(hasToString(startsWith(IS_TEST_NAME + "_Valid"))).perform(click());
 
         if (!useDiagnosticMode) {
             leaveDiagnosticMode();

@@ -113,7 +113,7 @@ public class SurveyTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -167,7 +167,7 @@ public class SurveyTest {
     @RequiresDevice
     public void testStartASurvey() {
 
-        saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1);
+        saveCalibration("TestValid", TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.actionSettings)).perform(click());
 
@@ -183,7 +183,7 @@ public class SurveyTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -203,7 +203,7 @@ public class SurveyTest {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.button_prepare)).check(matches(isDisplayed()));
 

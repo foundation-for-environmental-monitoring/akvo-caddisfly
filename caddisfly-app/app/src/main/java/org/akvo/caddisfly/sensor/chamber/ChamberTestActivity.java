@@ -34,6 +34,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -421,6 +422,13 @@ public class ChamberTestActivity extends BaseActivity implements
                             try {
                                 SwatchHelper.loadCalibrationFromFile(testInfo, fileName);
                                 loadDetails();
+
+                                Toast toast = Toast.makeText(this,
+                                        String.format(getString(R.string.calibrationLoaded), fileName),
+                                        Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.BOTTOM, 0, 200);
+                                toast.show();
+
                             } catch (Exception ex) {
                                 AlertUtil.showError(context, R.string.error, getString(R.string.errorLoadingFile),
                                         null, R.string.ok,

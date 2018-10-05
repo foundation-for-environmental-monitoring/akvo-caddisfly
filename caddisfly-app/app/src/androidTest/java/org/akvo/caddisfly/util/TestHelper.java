@@ -143,11 +143,33 @@ public final class TestHelper {
         // Restore device-specific locale
         new Resources(assets, metrics, currentResources.getConfiguration());
 
-        addCalibration("TestNoMatch", "0.0=255  38  186\n"
+        addCalibration("Fluoride_NoMatch", "0.0=255  38  186\n"
                 + "0.5=255  51  129\n"
                 + "1.0=255  59  89\n"
                 + "1.5=255  62  55\n"
                 + "2.0=255  81  34\n");
+
+        addCalibration("Fluoride_Valid", "0.0=255  38  186\n"
+                + "0.5=255  51  129\n"
+                + "1.0=255  59  89\n"
+                + "1.5=255  24  1\n"
+                + "2.0=255  81  34\n");
+
+        addCalibration("pH_NoMatch", "4=255  103  68\n"
+                + "5=255  136  16\n"
+                + "6=241  214  0\n"
+                + "7=178  218  18\n"
+                + "8=64  231  163\n"
+                + "9=116  218  227\n"
+                + "10=204  153  255\n");
+
+        addCalibration("pH_Valid", "4=255  24  1\n"
+                + "5=255  136  16\n"
+                + "6=241  214  0\n"
+                + "7=178  218  18\n"
+                + "8=64  231  163\n"
+                + "9=116  218  227\n"
+                + "10=204  153  255\n");
 
         addCalibration("TestValid", "0.0=255  38  186\n"
                 + "0.5=255  51  129\n"
