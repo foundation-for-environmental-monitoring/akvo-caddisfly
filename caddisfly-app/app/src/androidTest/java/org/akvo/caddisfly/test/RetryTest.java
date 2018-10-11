@@ -11,6 +11,7 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 
+import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.common.ChamberTestConfig;
@@ -68,6 +69,7 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
+@SuppressWarnings("ConstantConditions")
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -99,92 +101,8 @@ public class RetryTest {
         prefs.edit().clear().apply();
     }
 
-    @Test
-    @RequiresDevice
-    public void a_normalRetry() {
-        runTest(IS_TEST_ID, false,
-                false, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void b_normalSuccess() {
-        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, false,
-                false, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void c_dilutionRetry() {
-        runTest(IS_TEST_ID, false,
-                false, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void d_dilutionSuccess() {
-        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, false,
-                false, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void e_diagnosticRetry() {
-        runTest(IS_TEST_ID, true,
-                false, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void f_diagnosticSuccess() {
-        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
-                false, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void g_diagnosticDebugRetry() {
-        runTest(IS_TEST_ID, true,
-                true, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void h_diagnosticDebugSuccess() {
-        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
-                true, IS_HAS_DILUTION, true);
-    }
-
-    @Test
-    @RequiresDevice
-    public void i_internalRetry() {
-        runTest(IS_TEST_ID, true,
-                false, IS_HAS_DILUTION, false);
-    }
-
-    @Test
-    @RequiresDevice
-    public void j_internalSuccess() {
-        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
-                false, IS_HAS_DILUTION, false);
-    }
-
-    @Test
-    @RequiresDevice
-    public void k_internalDebugRetry() {
-        runTest(IS_TEST_ID, true,
-                true, IS_HAS_DILUTION, false);
-    }
-
-    @Test
-    @RequiresDevice
-    public void l_internalDebugSuccess() {
-        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
-                true, IS_HAS_DILUTION, false);
-    }
-
-    public void runTest(String testId, boolean useDiagnosticMode,
-                        boolean showDebugInfo, boolean hasDilution, boolean isExternal) {
+    public static void runTest(String testId, boolean useDiagnosticMode,
+                               boolean showDebugInfo, boolean hasDilution, boolean isExternal) {
 
         saveCalibration(IS_TEST_NAME + "_Valid", IS_TEST_ID);
 
@@ -234,7 +152,9 @@ public class RetryTest {
 
         onData(hasToString(startsWith(IS_TEST_NAME + "_NoMatch"))).perform(click());
 
-        if (!useDiagnosticMode) {
+        sleep(1000);
+
+        if (!useDiagnosticMode && !BuildConfig.FLAVOR.equals("experiment")) {
             leaveDiagnosticMode();
         }
 
@@ -347,6 +267,106 @@ public class RetryTest {
         onView(withText(R.string.ok)).perform(click());
     }
 
+    @Test
+    @RequiresDevice
+    public void a_normalRetry() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runTest(IS_TEST_ID, false,
+                    false, IS_HAS_DILUTION, true);
+        }
+    }
+
+    @Test
+    @RequiresDevice
+    public void b_normalSuccess() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, false,
+                    false, IS_HAS_DILUTION, true);
+        }
+    }
+
+    @Test
+    @RequiresDevice
+    public void c_dilutionRetry() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runTest(IS_TEST_ID, false,
+                    false, IS_HAS_DILUTION, true);
+        }
+    }
+
+    @Test
+    @RequiresDevice
+    public void d_dilutionSuccess() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, false,
+                    false, IS_HAS_DILUTION, true);
+        }
+    }
+
+    @Test
+    @RequiresDevice
+    public void e_diagnosticRetry() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runTest(IS_TEST_ID, true,
+                    false, IS_HAS_DILUTION, true);
+        }
+    }
+
+    @Test
+    @RequiresDevice
+    public void f_diagnosticSuccess() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                    false, IS_HAS_DILUTION, true);
+        }
+    }
+
+    @Test
+    @RequiresDevice
+    public void g_diagnosticDebugRetry() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runTest(IS_TEST_ID, true,
+                    true, IS_HAS_DILUTION, true);
+        }
+    }
+
+    @Test
+    @RequiresDevice
+    public void i_internalRetry() {
+        runTest(IS_TEST_ID, true,
+                false, IS_HAS_DILUTION, false);
+    }
+
+    @Test
+    @RequiresDevice
+    public void j_internalSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                false, IS_HAS_DILUTION, false);
+    }
+
+    @Test
+    @RequiresDevice
+    public void k_internalDebugRetry() {
+        runTest(IS_TEST_ID, true,
+                true, IS_HAS_DILUTION, false);
+    }
+
+    @Test
+    @RequiresDevice
+    public void l_internalDebugSuccess() {
+        runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                true, IS_HAS_DILUTION, false);
+    }
+
+    @Test
+    @RequiresDevice
+    public void h_diagnosticDebugSuccess() {
+        if (!BuildConfig.FLAVOR.equals("experiment")) {
+            runSuccessTest(IS_TEST_ID, IS_EXPECTED_RESULT, true,
+                    true, IS_HAS_DILUTION, true);
+        }
+    }
+
     public void runSuccessTest(String testId, double expectedResult, boolean useDiagnosticMode,
                                boolean showDebugInfo, boolean hasDilution, boolean isExternal) {
 
@@ -388,7 +408,7 @@ public class RetryTest {
 
         onData(hasToString(startsWith(IS_TEST_NAME + "_Valid"))).perform(click());
 
-        if (!useDiagnosticMode) {
+        if (!useDiagnosticMode && !BuildConfig.FLAVOR.equals("experiment")) {
             leaveDiagnosticMode();
         }
 
