@@ -181,5 +181,10 @@
             </intent-filter>
         </receiver>
 
+        <!--Disable Firebase advertising id-->
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+
     </application>
 </manifest>
