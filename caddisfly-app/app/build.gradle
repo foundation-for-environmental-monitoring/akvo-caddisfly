@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'de.mobilej.unmock'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "io.ffem"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 239
         versionName "Beta 1.3.1"
         resConfigs "en", "en_US", "hi"
@@ -60,10 +60,10 @@ android {
 
 //    signingConfigs {
 //        appRelease {
-//            storeFile file(FFEM_CADDISFLY_RELEASE_STORE_FILE)
-//            storePassword FFEM_CADDISFLY_RELEASE_STORE_PASSWORD
-//            keyAlias FFEM_CADDISFLY_RELEASE_KEY_ALIAS
-//            keyPassword FFEM_CADDISFLY_RELEASE_KEY_PASSWORD
+//            storeFile file(FFEM_RELEASE_STORE_FILE)
+//            storePassword FFEM_RELEASE_STORE_PASSWORD
+//            keyAlias FFEM_RELEASE_KEY_ALIAS
+//            keyPassword FFEM_RELEASE_KEY_PASSWORD
 //        }
 //    }
 //
@@ -100,12 +100,12 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Support
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:exifinterface:27.1.1'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:exifinterface:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.18'
@@ -164,10 +164,10 @@ dependencies {
 
     // Firebase (Experiment Flavor)
 //    experimentImplementation 'com.android.support:multidex:1.0.3'
-    experimentImplementation 'com.google.firebase:firebase-core:16.0.5'
+    experimentImplementation 'com.google.firebase:firebase-core:16.0.6'
     experimentImplementation 'com.google.firebase:firebase-database:16.0.5'
-    experimentImplementation 'com.google.firebase:firebase-firestore:17.1.3'
+    experimentImplementation 'com.google.firebase:firebase-firestore:17.1.4'
     experimentImplementation 'com.google.firebase:firebase-storage:16.0.5'
-    experimentImplementation 'com.google.firebase:firebase-auth:16.0.5'
+    experimentImplementation 'com.google.firebase:firebase-auth:16.1.0'
 }
 //apply plugin: 'com.google.gms.google-services'
