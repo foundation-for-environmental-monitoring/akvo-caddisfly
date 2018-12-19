@@ -83,7 +83,7 @@
 
             <Button
                 android:id="@+id/button_prepare"
-                style="@style/Button"
+                style="?primaryButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -94,7 +94,7 @@
                 android:minWidth="230dp"
                 android:onClick="onStartTestClick"
                 android:text="@string/next"
-                android:theme="?primaryButtonStyle" />
+                android:textColor="?longButtonText" />
 
             <Button
                 android:id="@+id/button_instructions"

@@ -67,6 +67,7 @@
     <color name="button_selected_2">#4f778b</color>
     <color name="button_text_2">#fff</color>
     <color name="link_text_2">#304f74</color>
+    <color name="button_text_soft_2">#e3fafafa</color>
 
     <color name="categoryTitle">#2C2A74</color>
 

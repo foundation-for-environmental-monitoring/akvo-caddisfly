@@ -28,13 +28,19 @@
         <item name="toolbarMargin">@dimen/toolbar_margin</item>
     </style>
 
-    <style name="AppTheme.Button.Gray">
+    <style name="AppTheme.Green.Button" parent="Button">
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:background">@color/button_2</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="AppTheme.Button.Gray" parent="Button">
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:background">@color/button_main</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
-    <style name="AppTheme.Button.DarkGray">
+    <style name="AppTheme.Button.DarkGray" parent="Button">
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:background">@color/button_2</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>

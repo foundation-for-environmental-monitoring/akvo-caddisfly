@@ -71,20 +71,26 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="AppTheme.Button.Cyan">
+    <style name="AppTheme.Green.Button" parent="Button">
+        <item name="colorButtonNormal">@color/button_2</item>
+        <item name="colorAccent">@color/button_2</item>
+        <item name="colorControlHighlight">@color/button_selected_2</item>
+    </style>
+
+    <style name="AppTheme.Button.Cyan" parent="Button">
         <item name="colorButtonNormal">@color/button_green</item>
         <item name="colorAccent">@color/button_green</item>
         <item name="colorControlHighlight">@color/button_green_selected</item>
     </style>
 
-    <style name="AppTheme.Button.Gray">
+    <style name="AppTheme.Button.Gray" parent="Button">
         <item name="colorButtonNormal">@color/button_2</item>
         <item name="colorAccent">@color/button_2</item>
         <item name="colorControlHighlight">@color/button_selected_2</item>
         <item name="android:textColor">@color/button_text_2</item>
     </style>
 
-    <style name="AppTheme.Button.DarkGray">
+    <style name="AppTheme.Button.DarkGray" parent="Button">
         <item name="colorButtonNormal">@color/button_2</item>
         <item name="colorAccent">@color/button_2</item>
         <item name="colorControlHighlight">@color/button_selected_2</item>
