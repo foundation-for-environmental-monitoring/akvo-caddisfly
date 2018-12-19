@@ -162,7 +162,8 @@
                     android:text="Titration"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
-                    android:theme="?longButtonStyle" />
+                    android:theme="?longButtonStyle"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/buttonColiforms"
@@ -189,10 +190,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="10dp"
+                        android:clickable="false"
                         android:ellipsize="none"
                         android:gravity="center_horizontal"
                         android:singleLine="true"
-                        android:clickable="false"
                         android:textAllCaps="true"
                         android:textColor="#b4ffffff"
                         android:textSize="12dp"
