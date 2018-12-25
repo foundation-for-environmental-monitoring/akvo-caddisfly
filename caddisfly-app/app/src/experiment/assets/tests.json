@@ -2,6 +2,64 @@
   "comment": "This file contains the metadata for tests. IMPORTANT: *DO NOT* change the uuid values",
   "tests": [
     {
+      "name": "Fertilizer Recommendation",
+      "type": "soil",
+      "subtype": "api",
+      "uuid": "ef9f8703-36b1-407c-9175-4184f6fc974f",
+      "imageScale": "centerCrop",
+      "calibrate": false,
+      "results": [
+        {
+          "id": 1,
+          "name": "Comb1Fert1"
+        },
+        {
+          "id": 2,
+          "name": "Comb1Value1"
+        },
+        {
+          "id": 3,
+          "name": "Comb1Fert2"
+        },
+        {
+          "id": 4,
+          "name": "Comb1Value2"
+        },
+        {
+          "id": 5,
+          "name": "Comb1Fert3"
+        },
+        {
+          "id": 6,
+          "name": "Comb1Value3"
+        },
+        {
+          "id": 7,
+          "name": "Comb2Fert1"
+        },
+        {
+          "id": 8,
+          "name": "Comb2Value1"
+        },
+        {
+          "id": 9,
+          "name": "Comb2Fert2"
+        },
+        {
+          "id": 10,
+          "name": "Comb2Value2"
+        },
+        {
+          "id": 11,
+          "name": "Comb2Fert3"
+        },
+        {
+          "id": 12,
+          "name": "Comb2Value3"
+        }
+      ]
+    },
+    {
       "name": "Coliforms",
       "type": "water",
       "subtype": "coliform",

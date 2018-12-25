@@ -1,21 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) Stichting Akvo (Akvo Foundation)
-  ~
-  ~ This file is part of Akvo Caddisfly.
-  ~
-  ~ Akvo Caddisfly is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ Akvo Caddisfly is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.akvo.caddisfly">
@@ -78,39 +61,25 @@
         <activity
             android:name=".ui.AboutActivity"
             android:parentActivityName=".preference.SettingsActivity"
-            android:screenOrientation="nosensor" />
-
-        <!-- CBT -->
+            android:screenOrientation="nosensor" /> <!-- CBT -->
         <activity
             android:name=".sensor.cbt.CbtActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /CBT -->
-
-
+            android:screenOrientation="nosensor" /> <!-- /CBT -->
         <!-- Manual Test -->
         <activity
             android:name=".sensor.manual.ManualTestActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /Manual Tests -->
-
-
+            android:screenOrientation="nosensor" /> <!-- /Manual Tests -->
         <!-- USB Sensor -->
         <activity
             android:name=".sensor.usb.SensorActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /USB Sensor -->
-
-
+            android:screenOrientation="nosensor" /> <!-- /USB Sensor -->
         <!-- StripTest -->
         <activity
             android:name=".sensor.striptest.ui.StripMeasureActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".sensor.striptest.ui.ResultActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /StripTest -->
-
-
+            android:screenOrientation="nosensor" /> <!-- /StripTest -->
         <!-- Bluetooth -->
         <activity
             android:name=".sensor.bluetooth.DeviceControlActivity"
@@ -120,10 +89,7 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".sensor.chamber.ChamberTestActivity"
-            android:screenOrientation="nosensor" />
-
-        <!-- /Bluetooth -->
-
+            android:screenOrientation="nosensor" /> <!-- /Bluetooth -->
         <!-- Diagnostic -->
         <activity
             android:name=".ui.DiagnosticInfoActivity"
@@ -134,9 +100,7 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".diagnostic.ChamberPreviewActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /Diagnostic -->
-
+            android:screenOrientation="nosensor" /> <!-- /Diagnostic -->
         <!-- Turbidity -->
         <activity
             android:name=".sensor.turbidity.TimeLapseActivity"
@@ -148,9 +112,7 @@
         <receiver
             android:name=".sensor.turbidity.TurbidityStartReceiver"
             android:enabled="true"
-            android:exported="false" />
-        <!-- /Turbidity -->
-
+            android:exported="false" /> <!-- /Turbidity -->
         <!-- Titration -->
         <activity
             android:name=".sensor.titration.TitrationTestActivity"
@@ -160,11 +122,13 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".sensor.titration.ui.ResultActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /Titration -->
-
+            android:screenOrientation="nosensor" /> <!-- /Titration -->
         <activity
             android:name=".sensor.chamber.CalibrationGraphActivity"
+            android:screenOrientation="nosensor" />
+
+        <activity
+            android:name=".ui.RecommendActivity"
             android:screenOrientation="nosensor" />
 
         <service
@@ -179,12 +143,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
-
-        <!--Disable Firebase advertising id-->
+        </receiver> <!-- Disable Firebase advertising id -->
         <meta-data
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
-
     </application>
+
 </manifest>

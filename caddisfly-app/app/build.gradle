@@ -123,6 +123,9 @@ dependencies {
     implementation 'android.arch.persistence.room:runtime:1.1.1'
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
+    // Volley
+    implementation 'com.android.volley:volley:1.1.1'
+
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
 
@@ -166,8 +169,9 @@ dependencies {
     experimentImplementation 'com.android.support:multidex:1.0.3'
     experimentImplementation 'com.google.firebase:firebase-core:16.0.6'
     experimentImplementation 'com.google.firebase:firebase-database:16.0.5'
-    experimentImplementation 'com.google.firebase:firebase-firestore:17.1.4'
+    experimentImplementation 'com.google.firebase:firebase-firestore:17.1.5'
     experimentImplementation 'com.google.firebase:firebase-storage:16.0.5'
     experimentImplementation 'com.google.firebase:firebase-auth:16.1.0'
 }
 //apply plugin: 'com.google.gms.google-services'
+
