@@ -94,7 +94,7 @@
                 android:minWidth="230dp"
                 android:onClick="onStartTestClick"
                 android:text="@string/next"
-                android:textColor="?longButtonText" />
+                android:textColor="?primaryButtonColor" />
 
             <Button
                 android:id="@+id/button_instructions"

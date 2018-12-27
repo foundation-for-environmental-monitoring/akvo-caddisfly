@@ -477,7 +477,7 @@
                     android:minWidth="230dp"
                     android:onClick="onSaveClick"
                     android:text="@string/save"
-                    android:textColor="?longButtonText" />
+                    android:textColor="?primaryButtonColor" />
 
             </LinearLayout>
         </ScrollView>

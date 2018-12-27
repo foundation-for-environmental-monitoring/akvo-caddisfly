@@ -25,19 +25,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
-
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
-import org.akvo.caddisfly.common.SensorConstants;
 import org.akvo.caddisfly.databinding.ActivityRecommendBinding;
 import org.akvo.caddisfly.model.RecommendationInfo;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
-import org.akvo.caddisfly.util.PrintQueueSingleton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RecommendActivity extends BaseActivity {
 
@@ -60,6 +56,15 @@ public class RecommendActivity extends BaseActivity {
         testInfo = bundle.getParcelable(ConstantKey.TEST_INFO);
 
         getRecommendation();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     @Override
@@ -126,7 +131,7 @@ public class RecommendActivity extends BaseActivity {
         String url = "https://soilhealth.dac.gov.in/calculator/calculator";
 
         ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Sending dummy result...");
+        pd.setMessage(getString(R.string.just_a_moment));
         pd.setCancelable(false);
         pd.show();
 
@@ -136,9 +141,30 @@ public class RecommendActivity extends BaseActivity {
 
         String state = getIntent().getStringExtra("State");
         String district = getIntent().getStringExtra("District");
+        String cropGroup = getIntent().getStringExtra("Crop Group");
+        String crop = getIntent().getStringExtra("Crop");
+
+        if (state == null || district == null || cropGroup == null || crop == null) {
+            Toast.makeText(this,
+                    "State, District, Crop Group and Crop details required", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         recommendationInfo.nitrogenResult = getIntent().getStringExtra("Available Nitrogen");
         recommendationInfo.phosphorusResult = getIntent().getStringExtra("Available Phosphorous");
         recommendationInfo.potassiumResult = getIntent().getStringExtra("Available Potassium");
+        if (recommendationInfo.nitrogenResult == null) {
+            recommendationInfo.nitrogenResult = "0";
+        }
+
+        if (recommendationInfo.phosphorusResult == null) {
+            recommendationInfo.phosphorusResult = "0";
+        }
+
+        if (recommendationInfo.potassiumResult == null) {
+            recommendationInfo.potassiumResult = "0";
+        }
 
         final String js = "javascript:document.getElementById('State_Code').value='" + state + "';StateChange();" +
                 "javascript:document.getElementById('District_CodeDDL').value='" + district + "';DistrictChange('" + district + "');" +
@@ -146,20 +172,24 @@ public class RecommendActivity extends BaseActivity {
                 "javascript:document.getElementById('P').value='" + recommendationInfo.phosphorusResult + "';" +
                 "javascript:document.getElementById('K').value='" + recommendationInfo.potassiumResult + "';" +
                 "document.getElementsByClassName('myButton')[0].click();" +
-                "javascript:document.getElementById('Group_Code').value='1';Crop(1);" +
-                "javascript:document.getElementById('Crop_Code').value='3';Variety(3);" +
+                "javascript:document.getElementById('Group_Code').value='" + cropGroup + "';Crop(" + cropGroup + ");" +
+                "javascript:document.getElementById('Crop_Code').value='" + crop + "';Variety(" + crop + ");" +
                 "javascript:document.getElementById('AddCrop').click();" +
                 "(function() { " +
-                "return document.getElementById('C1F1').options[document.getElementById('C1F1').selectedIndex].text + ',' +" +
-                "document.getElementById('Comb1_Fert1_Rec_dose1').value  + ',' +" +
+                "return " +
+                "document.getElementById('State_Code').options[document.getElementById('State_Code').selectedIndex].text + ',' +" +
+                "document.getElementById('District_CodeDDL').options[document.getElementById('District_CodeDDL').selectedIndex].text + ',' +" +
+                "document.getElementById('Crop_Code').options[document.getElementById('Crop_Code').selectedIndex].text + ',' +" +
+                "document.getElementById('C1F1').options[document.getElementById('C1F1').selectedIndex].text + ',' +" +
+                "document.getElementById('Comb1_Fert1_Rec_dose1').value + ',' +" +
                 "document.getElementById('C1F2').options[document.getElementById('C1F2').selectedIndex].text + ',' +" +
-                "document.getElementById('Comb1_Fert2_Rec_dose1').value  + ',' +" +
+                "document.getElementById('Comb1_Fert2_Rec_dose1').value + ',' +" +
                 "document.getElementById('C1F3').options[document.getElementById('C1F3').selectedIndex].text + ',' +" +
-                "document.getElementById('Comb1_Fert3_Rec_dose1').value  + ',' +" +
+                "document.getElementById('Comb1_Fert3_Rec_dose1').value + ',' +" +
                 "document.getElementById('C2F1').options[document.getElementById('C2F1').selectedIndex].text + ',' +" +
-                "document.getElementById('Comb2_Fert1_Rec_dose1').value  + ',' +" +
+                "document.getElementById('Comb2_Fert1_Rec_dose1').value + ',' +" +
                 "document.getElementById('C2F2').options[document.getElementById('C2F2').selectedIndex].text + ',' +" +
-                "document.getElementById('Comb2_Fert2_Rec_dose1').value  + ',' +" +
+                "document.getElementById('Comb2_Fert2_Rec_dose1').value + ',' +" +
                 "document.getElementById('C2F3').options[document.getElementById('C2F3').selectedIndex].text + ',' +" +
                 "document.getElementById('Comb2_Fert3_Rec_dose1').value;" +
                 "})();";
@@ -169,6 +199,7 @@ public class RecommendActivity extends BaseActivity {
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
+                pd.dismiss();
             }
 
             @TargetApi(android.os.Build.VERSION_CODES.M)
@@ -179,58 +210,34 @@ public class RecommendActivity extends BaseActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
-                if (Build.VERSION.SDK_INT >= 19) {
-                    view.evaluateJavascript(js, s -> {
+                view.evaluateJavascript(js, s -> {
 
-                        String[] values = s.replace("\"", "").split(",");
+                    String[] values = s.replace("\"", "").split(",");
 
-                        SparseArray<String> results = new SparseArray<>();
+                    SparseArray<String> results = new SparseArray<>();
+                    recommendationInfo.state = values[0];
+                    recommendationInfo.district = values[1];
+                    recommendationInfo.crop = values[2];
 
-                        for (int i = 0; i < testInfo.getResults().size(); i++) {
-                            Result result = testInfo.getResults().get(i);
-                            resultIntent.putExtra(result.getName().replace(" ", "_")
-                                    + testInfo.getResultSuffix(), values[i]);
+                    for (int i = 0; i < testInfo.getResults().size(); i++) {
+                        Result result = testInfo.getResults().get(i);
+                        resultIntent.putExtra(result.getName().replace(" ", "_")
+                                + testInfo.getResultSuffix(), values[i + 3]);
 
-                            results.append(result.getId(), result.getResult());
-                        }
+                        results.append(result.getId(), result.getResult());
+                    }
 
-                        recommendationInfo.values = values;
-                        recommendationInfo.state = "Maharashtra";
-                        recommendationInfo.district = "Osmanabad";
-                        recommendationInfo.crop = "Rice";
-                        b.setInfo(recommendationInfo);
+                    recommendationInfo.values = Arrays.copyOfRange(values, 3, values.length);
 
-                        setResult(Activity.RESULT_OK, resultIntent);
+                    b.setInfo(recommendationInfo);
 
-                        pd.dismiss();
-//                        (new Handler()).postDelayed(() -> {
-//                            pd.dismiss();
-//                            finish();
-//                        }, 1000);
-//                        Toast.makeText(activity, s, Toast.LENGTH_SHORT).show();
-                    });
-                }
+                    setResult(Activity.RESULT_OK, resultIntent);
+                });
+                (new Handler()).postDelayed(pd::dismiss, 3000);
             }
         });
 
         webView.loadUrl(url);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null,
-                        response -> {
-                            resultIntent.putExtra(SensorConstants.VALUE, response.toString());
-                            setResult(Activity.RESULT_OK, resultIntent);
-
-                            (new Handler()).postDelayed(() -> {
-                                pd.dismiss();
-                                finish();
-                            }, 3000);
-                        },
-                        error -> {
-                            // TODO: Handle error
-                        });
-
-        PrintQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
     public void onSaveClick(View view) {
