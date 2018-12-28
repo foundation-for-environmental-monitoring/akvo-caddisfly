@@ -1,28 +1,91 @@
 <body style="margin:0;font-family:Calibri, 'Trebuchet MS', sans-serif;font-size:14px;color:#000;background:#eee">
+<style>
+    table{width:100%}
+    td {padding-bottom:10px}
+    .valueCell {text-align:right}
+</style>
 <div style="margin:20px auto;max-width:500px;background:#fff">
-    <div style="background: #2b9700;padding:30px 0 20px;text-align:center">
+    <div style="background: #999;padding:30px 0 20px;text-align:center">
         <div style="font-size:30px;color:white">Fertilizer Recommendation</div>
+        <div style="font-size:16px;color:white">{Date}</div>
     </div>
-    <div style="text-align:center;color:#fff;background:#2c2c2c;padding:8px;text-align:right;padding-right:16px">
-        <div style="color:#fff;font-size:15px;">
+    <div style="text-align:center;color:#fff;text-align:right;margin:8px 16px">
+        <div style="color:#000;font-size:15px;">
             (All values in kg/ha)
         </div>
     </div>
-    <div style="text-align:center;margin:30px;padding:0 20px">
-
+    <div style="padding:10px 20px 10px;border-bottom:1px solid #999">
+        <div style="font-size:16px;font-weight:bold;margin-bottom:10px;">Details</div>
+        <table>
+            <tr>
+                <td style="width:90%">State</td>
+                <td>{State}</td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>{District}</td>
+            </tr>
+            <tr>
+                <td>Crop</td>
+                <td>{Crop}</td>
+            </tr>
+        </table>
     </div>
-    <div style="text-align:center;margin:30px;padding:0 20px">
-
+    <div style="padding:15px 20px;border-bottom:1px solid #999">
+        <div style="font-size:16px;font-weight:bold;margin-bottom:10px;">Combination 1</div>
+        <table>
+            <tr>
+                <td style="width:90%">{Value0}</td>
+                <td class="valueCell">{Value1}</td>
+            </tr>
+            <tr>
+                <td>{Value2}</td>
+                <td class="valueCell">{Value3}</td>
+            </tr>
+            <tr>
+                <td>{Value4}</td>
+                <td class="valueCell">{Value5}</td>
+            </tr>
+        </table>
     </div>
-    <div style="padding:20px;line-height:22px">
-        <div style="font-size:16px;font-weight:bold;margin-bottom: 10px;">Combination 1</div>
+    <div style="padding:15px 20px;border-bottom:1px solid #999">
+        <div style="font-size:16px;font-weight:bold;margin-bottom:10px;">Combination 2</div>
+        <table>
+            <tr>
+                <td style="width:90%">{Value6}</td>
+                <td class="valueCell">{Value7}</td>
+            </tr>
+            <tr>
+                <td>{Value8}</td>
+                <td class="valueCell">{Value9}</td>
+            </tr>
+            <tr>
+                <td>{Value10}</td>
+                <td class="valueCell">{Value11}</td>
+            </tr>
+        </table>
     </div>
-    <div style="padding:15px 20px;line-height:22px">
-        <div style="font-size:16px;font-weight:bold;margin-bottom: 10px;">Combination 2</div>
+    <div style="padding:15px 20px;">
+        <div style="font-size:16px;font-weight:bold;margin-bottom:10px;">Test Results</div>
+        <table>
+            <tr>
+                <td style="width:90%">Nitrogen</td>
+                <td class="valueCell">{Nitrogen}</td>
+            </tr>
+            <tr>
+                <td>Phosphorus</td>
+                <td class="valueCell">{Phosphorus}</td>
+            </tr>
+            <tr>
+                <td>Potassium</td>
+                <td class="valueCell">{Potassium}</td>
+            </tr>
+        </table>
     </div>
     <div style="color: #494949;padding:20px">
-        All recommendation is scraped from the Soil Health Card website by Department of
-        Agriculture, Cooperation & Farmers Welfare, For further information please visit
+        <hr/>
+        Fertilizer recommendation data was scraped from the Soil Health Card website by Department
+        of Agriculture, Cooperation & Farmers Welfare, For further information please visit
         https://soilhealth.dac.gov.in/.
     </div>
 </div>

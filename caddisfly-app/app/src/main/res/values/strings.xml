@@ -17,7 +17,7 @@
   ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
     <!--Common-->
     <string name="delete">Delete</string>
     <string name="save">Save</string>
@@ -38,6 +38,7 @@
     <string name="stage_one"><b>Stage 1:</b></string>
     <string name="stage_two"><b>Stage 2:</b></string>
     <string name="navigate_up">Navigate Up</string>
+    <string name="print">Print</string>
 
     <!--External-->
     <string name="sensor">Sensor</string>

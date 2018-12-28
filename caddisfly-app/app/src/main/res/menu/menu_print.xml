@@ -7,7 +7,7 @@
         android:id="@+id/actionPrint"
         android:icon="@drawable/ic_print_black_24dp"
         android:onClick="onPrint"
-        android:title="Print"
+        android:title="@string/print"
         app:showAsAction="always"
         tools:ignore="AlwaysShowAction" />
 </menu>

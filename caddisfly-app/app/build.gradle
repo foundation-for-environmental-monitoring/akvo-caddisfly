@@ -173,5 +173,5 @@ dependencies {
     experimentImplementation 'com.google.firebase:firebase-storage:16.0.5'
     experimentImplementation 'com.google.firebase:firebase-auth:16.1.0'
 }
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
 

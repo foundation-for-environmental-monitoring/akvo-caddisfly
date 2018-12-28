@@ -31,18 +31,25 @@ import org.akvo.caddisfly.databinding.ActivityRecommendBinding;
 import org.akvo.caddisfly.model.RecommendationInfo;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
+import org.akvo.caddisfly.util.AssetsManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class RecommendActivity extends BaseActivity {
 
+    public static final String DATE_FORMAT = "dd MMM yyyy HH:mm";
     private static ArrayList<PrintJob> mPrintJobs = new ArrayList<>();
     final Activity activity = this;
     WebView webView;
     TestInfo testInfo;
     RecommendationInfo recommendationInfo = new RecommendationInfo();
     ActivityRecommendBinding b;
+    String printTemplate;
+    String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,8 @@ public class RecommendActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getBundleExtra("bundle");
         testInfo = bundle.getParcelable(ConstantKey.TEST_INFO);
+
+        printTemplate = AssetsManager.getInstance().loadJsonFromAsset("templates/recommendation_template.html");
 
         getRecommendation();
     }
@@ -93,9 +102,7 @@ public class RecommendActivity extends BaseActivity {
             }
         });
 
-        // Generate an HTML document on the fly:
-        String htmlDocument = "<html><body><h1>Soil Health Card</h1><p>To be implemented</p></body></html>";
-        printWebView.loadDataWithBaseURL(null, htmlDocument, "text/HTML", "UTF-8", null);
+        printWebView.loadDataWithBaseURL(null, printTemplate, "text/HTML", "UTF-8", null);
 
     }
 
@@ -106,7 +113,7 @@ public class RecommendActivity extends BaseActivity {
         PrintManager printManager = (PrintManager) this
                 .getSystemService(Context.PRINT_SERVICE);
 
-        String jobName = getString(R.string.appName) + " Document";
+        String jobName = "Fertilizer Recommendation - " + date;
 
         // Get a print adapter instance
         PrintDocumentAdapter printAdapter = webView.createPrintDocumentAdapter(jobName);
@@ -218,6 +225,14 @@ public class RecommendActivity extends BaseActivity {
                     recommendationInfo.state = values[0];
                     recommendationInfo.district = values[1];
                     recommendationInfo.crop = values[2];
+                    date = new SimpleDateFormat(DATE_FORMAT, Locale.US).format(Calendar.getInstance().getTime());
+                    printTemplate = printTemplate.replace("{Date}", date);
+                    printTemplate = printTemplate.replace("{State}", recommendationInfo.state);
+                    printTemplate = printTemplate.replace("{District}", recommendationInfo.district);
+                    printTemplate = printTemplate.replace("{Crop}", recommendationInfo.crop);
+                    printTemplate = printTemplate.replace("{Nitrogen}", recommendationInfo.nitrogenResult);
+                    printTemplate = printTemplate.replace("{Phosphorus}", recommendationInfo.phosphorusResult);
+                    printTemplate = printTemplate.replace("{Potassium}", recommendationInfo.potassiumResult);
 
                     for (int i = 0; i < testInfo.getResults().size(); i++) {
                         Result result = testInfo.getResults().get(i);
@@ -225,6 +240,8 @@ public class RecommendActivity extends BaseActivity {
                                 + testInfo.getResultSuffix(), values[i + 3]);
 
                         results.append(result.getId(), result.getResult());
+
+                        printTemplate = printTemplate.replace("{Value" + i + "}", values[i + 3]);
                     }
 
                     recommendationInfo.values = Arrays.copyOfRange(values, 3, values.length);
