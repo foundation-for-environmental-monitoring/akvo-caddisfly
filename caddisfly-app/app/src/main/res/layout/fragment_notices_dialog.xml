@@ -23,14 +23,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary"
-        android:padding="15dp"
-        android:text="@string/software_notices"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:background="?colorPrimary"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/navigate_up"
+            android:onClick="onHomeClick"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="16dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="16dp"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="@string/software_notices"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/about_scrollview"
@@ -108,6 +127,26 @@
                 android:layoutDirection="ltr"
                 android:lineSpacingMultiplier="1.5"
                 android:text="@string/cca_software"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#555"
+                android:textIsSelectable="true" />
+
+            <TextView
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/gnu_license"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layoutDirection="ltr"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/gnu_software"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#555"
                 android:textIsSelectable="true" />
