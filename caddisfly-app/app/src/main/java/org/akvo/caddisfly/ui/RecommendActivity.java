@@ -149,6 +149,10 @@ public class RecommendActivity extends BaseActivity {
         String state = getIntent().getStringExtra("State");
         String district = getIntent().getStringExtra("District");
         String cropGroup = getIntent().getStringExtra("Crop Group");
+        recommendationInfo.farmerName = getIntent().getStringExtra("Farmer name");
+        recommendationInfo.phoneNumber = getIntent().getStringExtra("Phone number");
+        recommendationInfo.sampleNumber = getIntent().getStringExtra("Sample number");
+        recommendationInfo.villageName = getIntent().getStringExtra("Village name");
         String crop = getIntent().getStringExtra("Crop");
 
         if (state == null || district == null || cropGroup == null || crop == null) {
@@ -233,6 +237,10 @@ public class RecommendActivity extends BaseActivity {
                     printTemplate = printTemplate.replace("{Nitrogen}", recommendationInfo.nitrogenResult);
                     printTemplate = printTemplate.replace("{Phosphorus}", recommendationInfo.phosphorusResult);
                     printTemplate = printTemplate.replace("{Potassium}", recommendationInfo.potassiumResult);
+                    printTemplate = printTemplate.replace("{FarmerName}", recommendationInfo.farmerName);
+                    printTemplate = printTemplate.replace("{PhoneNumber}", recommendationInfo.phoneNumber);
+                    printTemplate = printTemplate.replace("{VillageName}", recommendationInfo.villageName);
+                    printTemplate = printTemplate.replace("{SampleNumber}", recommendationInfo.sampleNumber);
 
                     for (int i = 0; i < testInfo.getResults().size(); i++) {
                         Result result = testInfo.getResults().get(i);
