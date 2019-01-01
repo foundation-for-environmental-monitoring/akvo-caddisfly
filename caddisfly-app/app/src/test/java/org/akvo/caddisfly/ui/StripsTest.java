@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
+import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestType;
 import org.junit.Test;
@@ -47,7 +48,16 @@ public class StripsTest {
     @Test
     public void titleIsCorrect() {
 
-        Activity activity = Robolectric.setupActivity(TestListActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
+
+        ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
+
+        controller.start().visible();
+
+        Activity activity = (Activity) controller.get();
+
         TextView textView = activity.findViewById(R.id.textToolbarTitle);
         assertEquals(textView.getText(), "Select Test");
     }
@@ -57,6 +67,7 @@ public class StripsTest {
 
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
 
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
@@ -66,20 +77,23 @@ public class StripsTest {
 
         RecyclerView recyclerView = activity.findViewById(R.id.list_types);
 
-        assertSame(2, recyclerView.getChildCount());
+        assertSame(TestConstants.STRIP_TESTS_COUNT, recyclerView.getChildCount());
 
-        TestInfoAdapter adapter = (TestInfoAdapter) recyclerView.getAdapter();
-        recyclerView.getAdapter();
-        assertEquals("Water - Potassium",
-                adapter.getItemAt(1).getName());
-        assertEquals("Water - Potassium",
-                ((TextView) recyclerView.getChildAt(1).findViewById(R.id.text_title)).getText());
+        if (TestConstants.STRIP_TESTS_COUNT > 0) {
+            TestInfoAdapter adapter = (TestInfoAdapter) recyclerView.getAdapter();
+            recyclerView.getAdapter();
+            assertEquals(TestConstants.STRIP_TEST_NAME,
+                    adapter.getItemAt(1).getName());
+            assertEquals(TestConstants.STRIP_TEST_NAME,
+                    ((TextView) recyclerView.getChildAt(1).findViewById(R.id.text_title)).getText());
+        }
     }
 
     @Test
     public void testTitles() {
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
 
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
@@ -102,6 +116,7 @@ public class StripsTest {
 
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
 
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
@@ -111,30 +126,39 @@ public class StripsTest {
 
         RecyclerView recyclerView = activity.findViewById(R.id.list_types);
 
-        assertSame(2, recyclerView.getChildCount());
+        assertSame(TestConstants.STRIP_TESTS_COUNT, recyclerView.getChildCount());
 
-        recyclerView.getChildAt(1).performClick();
+        if (TestConstants.STRIP_TESTS_COUNT > 0) {
+            recyclerView.getChildAt(1).performClick();
 
-        ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
+            ShadowLooper.runUiThreadTasksIncludingDelayedTasks();
 
-        Intent nextIntent = shadowOf(activity).getNextStartedActivity();
+            Intent nextIntent = shadowOf(activity).getNextStartedActivity();
 
-        if (nextIntent.getComponent() != null) {
-            assertEquals(TestActivity.class.getCanonicalName(),
-                    nextIntent.getComponent().getClassName());
+            if (nextIntent.getComponent() != null) {
+                assertEquals(TestActivity.class.getCanonicalName(),
+                        nextIntent.getComponent().getClassName());
+            }
         }
     }
 
     @Test
     public void clickHome() {
 
-        Activity activity = Robolectric.setupActivity(TestListActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
+
+        ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
+        controller.start().visible();
+
+        Activity activity = (Activity) controller.get();
 
         ShadowActivity shadowActivity = shadowOf(activity);
         shadowActivity.clickMenuItem(android.R.id.home);
-        Intent intent = shadowOf(activity).getNextStartedActivity();
+        Intent nextIntent = shadowOf(activity).getNextStartedActivity();
 
-        assertNull(intent);
+        assertNull(nextIntent);
     }
 
 }

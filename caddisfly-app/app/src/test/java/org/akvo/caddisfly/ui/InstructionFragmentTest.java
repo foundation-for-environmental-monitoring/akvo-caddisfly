@@ -28,7 +28,6 @@ import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.repository.TestConfigRepository;
 import org.akvo.caddisfly.widget.RowView;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -39,15 +38,13 @@ import static org.robolectric.Shadows.shadowOf;
 import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFragment;
 import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startVisibleFragment;
 
-
-@Ignore
 @RunWith(RobolectricTestRunner.class)
 public class InstructionFragmentTest {
 
     @Test
     public void testFragment() {
         TestConfigRepository testConfigRepository = new TestConfigRepository();
-        TestInfo testInfo = testConfigRepository.getTestInfo(Constants.CBT_ID);
+        TestInfo testInfo = testConfigRepository.getTestInfo(Constants.FLUORIDE_ID);
 
         Fragment fragment = InstructionFragment.getInstance(testInfo);
         startFragment(fragment);
@@ -58,7 +55,7 @@ public class InstructionFragmentTest {
     public void testInstruction() {
 
         TestConfigRepository testConfigRepository = new TestConfigRepository();
-        TestInfo testInfo = testConfigRepository.getTestInfo(Constants.CBT_ID);
+        TestInfo testInfo = testConfigRepository.getTestInfo(Constants.FLUORIDE_ID);
 
         Fragment fragment = InstructionFragment.getInstance(testInfo);
         startVisibleFragment(fragment, TestActivity.class, R.id.fragment_container);
@@ -70,12 +67,12 @@ public class InstructionFragmentTest {
 
         RowView rowView = view.findViewById(0);
         assertNotNull(rowView);
-        assertEquals("Put on plastic gloves", rowView.getString());
+        assertEquals("Rinse the empty test chamber twice with the sample to remove any traces of previous solutions.", rowView.getString());
 
-        ImageView imageView = view.findViewById(3);
+        ImageView imageView = view.findViewById(1);
         assertNotNull(imageView);
         int drawableResId = shadowOf(imageView.getDrawable()).getCreatedFromResId();
-        assertEquals(-1, drawableResId);
+        assertEquals(R.drawable.in_bc_rinse, drawableResId);
     }
 
 }

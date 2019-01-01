@@ -26,12 +26,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.Constants;
+import org.akvo.caddisfly.common.SensorConstants;
+import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestType;
@@ -59,7 +62,6 @@ import static org.robolectric.Shadows.shadowOf;
 @RunWith(RobolectricTestRunner.class)
 public class ChamberTest {
 
-    private static final String CADDISFLY_RESOURCE_ID = "caddisflyResourceUuid";
     private static final String CADDISFLY_QUESTION_ID = "questionId";
     private static final String CADDISFLY_QUESTION_TITLE = "questionTitle";
     private static final String CADDISFLY_LANGUAGE = "language";
@@ -79,7 +81,16 @@ public class ChamberTest {
 
     @Test
     public void titleIsCorrect() {
-        Activity activity = Robolectric.setupActivity(TestListActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
+
+        ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
+
+        controller.start().visible();
+
+        Activity activity = (Activity) controller.get();
+
         TextView textView = activity.findViewById(R.id.textToolbarTitle);
         assertEquals(textView.getText(), "Select Test");
     }
@@ -88,6 +99,7 @@ public class ChamberTest {
     public void testCount() {
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
 
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
@@ -97,12 +109,12 @@ public class ChamberTest {
 
         RecyclerView recyclerView = activity.findViewById(R.id.list_types);
 
-        assertSame(7, recyclerView.getChildCount());
+        assertSame(TestConstants.CUVETTE_TESTS_COUNT, recyclerView.getChildCount());
 
-        assertTestTitle(recyclerView, 0, "pH");
-        assertTestTitle(recyclerView, 1, "Total Iron");
-        assertTestTitle(recyclerView, 2, "Water - Chromium");
-        assertTestTitle(recyclerView, 3, "Water - Fluoride");
+        assertTestTitle(recyclerView, 0, TestConstants.CUVETTE_TEST_NAME_1);
+        assertTestTitle(recyclerView, 1, TestConstants.CUVETTE_TEST_NAME_2);
+        assertTestTitle(recyclerView, 2, TestConstants.CUVETTE_TEST_NAME_3);
+        assertTestTitle(recyclerView, 3, TestConstants.CUVETTE_TEST_NAME_4);
     }
 
     private void assertTestTitle(RecyclerView recyclerView, int index, String title) {
@@ -116,6 +128,7 @@ public class ChamberTest {
     public void testTitles() {
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
         controller.start().visible();
@@ -137,6 +150,7 @@ public class ChamberTest {
 
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
 
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
@@ -176,13 +190,21 @@ public class ChamberTest {
     @Test
     public void clickHome() {
 
-        Activity activity = Robolectric.setupActivity(TestListActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE);
+
+        ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
+
+        controller.start().visible();
+
+        Activity activity = (Activity) controller.get();
 
         ShadowActivity shadowActivity = shadowOf(activity);
         shadowActivity.clickMenuItem(android.R.id.home);
-        Intent intent = shadowOf(activity).getNextStartedActivity();
+        Intent nextIntent = shadowOf(activity).getNextStartedActivity();
 
-        assertNull(intent);
+        assertNull(nextIntent);
     }
 
     @Test
@@ -191,7 +213,7 @@ public class ChamberTest {
         Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 
         Bundle data = new Bundle();
-        data.putString(CADDISFLY_RESOURCE_ID, Constants.FLUORIDE_ID);
+        data.putString(SensorConstants.TEST_ID, Constants.FLUORIDE_ID);
         data.putString(CADDISFLY_QUESTION_ID, "123");
         data.putString(CADDISFLY_QUESTION_TITLE, "Fluoride");
         data.putString(CADDISFLY_LANGUAGE, "en");
@@ -200,17 +222,59 @@ public class ChamberTest {
         intent.setType("text/plain");
 
         ActivityController controller = Robolectric.buildActivity(TestActivity.class, intent).create();
+        Activity activity = (Activity) controller.get();
 
         controller.start();
+
+        Button button = activity.findViewById(R.id.button_prepare);
+        button.performClick();
+
+        AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
+
+        assertNull(alert);
+
+    }
+
+    @Test
+    public void testExternalWithPermission() {
+
+        String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        Intent intent = new Intent(BuildConfig.APPLICATION_ID);
+
+        Bundle data = new Bundle();
+        data.putString(SensorConstants.TEST_ID, Constants.FLUORIDE_ID);
+        data.putString(CADDISFLY_QUESTION_ID, "123");
+        data.putString(CADDISFLY_QUESTION_TITLE, "Fluoride");
+        data.putString(CADDISFLY_LANGUAGE, "en");
+
+        intent.putExtras(data);
+        intent.setType("text/plain");
+
+        ActivityController controller = Robolectric.buildActivity(TestActivity.class, intent).create();
+        Activity activity = (Activity) controller.get();
+
+        ShadowApplication application = shadowOf(activity.getApplication());
+        application.grantPermissions(permissions);
+
+        ShadowPackageManager pm = shadowOf(RuntimeEnvironment.application.getPackageManager());
+        pm.setSystemFeature(PackageManager.FEATURE_CAMERA, true);
+        pm.setSystemFeature(PackageManager.FEATURE_CAMERA_FLASH, true);
+
+        controller.start();
+
+
+        Button button = activity.findViewById(R.id.button_prepare);
+        button.performClick();
 
         AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
         ShadowAlertDialog sAlert = shadowOf(alert);
 
-        assertEquals(sAlert.getMessage(), "Calibration for Fluoride is incomplete\n" +
+        assertEquals("Calibration for Fluoride is incomplete\n" +
                 "\n" +
-                "Do you want to calibrate now?");
-
+                "Do you want to calibrate now?", sAlert.getMessage());
     }
+
 //
 //    @Test
 //    public void testFromExternalActivity() {

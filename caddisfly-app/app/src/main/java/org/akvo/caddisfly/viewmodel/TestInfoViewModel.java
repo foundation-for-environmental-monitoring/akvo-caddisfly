@@ -180,7 +180,7 @@ public class TestInfoViewModel extends AndroidViewModel {
     private static void insertImage(LinearLayout linearLayout, Context context, Point size,
                                     DisplayMetrics displayMetrics, int i, String text) {
 
-        String imageName = text.substring(text.indexOf(":") + 1, text.length());
+        String imageName = text.substring(text.indexOf(":") + 1);
 
         int resourceId = context.getResources().getIdentifier("drawable/in_" + imageName,
                 "id", BuildConfig.APPLICATION_ID);
@@ -206,6 +206,9 @@ public class TestInfoViewModel extends AndroidViewModel {
             imageView.setImageResource(resourceId);
             imageView.setLayoutParams(llp);
             imageView.setContentDescription(imageName);
+
+            // set an id for the view to be able to find it for unit testing
+            imageView.setId(i);
 
             linearLayout.addView(imageView);
 

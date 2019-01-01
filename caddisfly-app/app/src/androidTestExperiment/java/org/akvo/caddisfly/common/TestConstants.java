@@ -34,4 +34,6 @@ public final class TestConstants {
     public static final String CUVETTE_TEST_ID_1 = Constants.FLUORIDE_ID;
     public static final int TEST_INDEX = 6;
 
+    public static final int CUVETTE_TEST_TIME_DELAY = 180;
+
 }

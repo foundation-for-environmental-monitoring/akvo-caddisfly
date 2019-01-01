@@ -54,7 +54,7 @@ public class ResultsTest {
         json = json.replaceAll("(\"appVersion\":\").*?\"", "$1version\"");
         json = json.replaceAll("(\"country\":\").*?\"", "$1\"");
 
-        String expectedJson = "{\"type\":\"io.ffem.water\",\"name\":\"Fluoride\",\"uuid\":\"f0f3c1dd-89af-49f1-83e7-bcc31c3006cf\",\"result\":[{\"name\":\"Fluoride\",\"unit\":\"mg\\/l\",\"id\":1,\"value\":\"> 2.0\"}],\"testDate\":\"today\",\"user\":{\"language\":\"\"},\"app\":{\"appVersion\":\"version\",\"language\":\"en\"},\"device\":{\"model\":\"unknown\",\"product\":\"unknown\",\"manufacturer\":\"unknown\",\"os\":\"Android - 8.1.0 (27)\",\"country\":\"\",\"language\":\"en\"}}";
+        String expectedJson = "{\"type\":\"io.ffem.water\",\"name\":\"Fluoride\",\"uuid\":\"f0f3c1dd-89af-49f1-83e7-bcc31c3006cf\",\"result\":[{\"dilution\":0,\"name\":\"Fluoride\",\"unit\":\"mg\\/l\",\"id\":1,\"value\":\"> 2.0\"}],\"testDate\":\"today\"}";
 
         assertEquals(expectedJson, json);
     }
