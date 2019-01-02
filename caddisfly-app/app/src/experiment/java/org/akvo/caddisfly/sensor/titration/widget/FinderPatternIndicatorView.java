@@ -9,7 +9,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -20,6 +19,8 @@ import org.akvo.caddisfly.sensor.titration.decode.DecodeProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Overlay to indicate QR code corners

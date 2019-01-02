@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 import org.akvo.caddisfly.common.AppConfig;
 import org.akvo.caddisfly.helper.ApkHelper;
@@ -12,6 +11,8 @@ import org.akvo.caddisfly.util.NetUtil;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import androidx.annotation.Nullable;
 
 public class AlarmService extends Service {
 

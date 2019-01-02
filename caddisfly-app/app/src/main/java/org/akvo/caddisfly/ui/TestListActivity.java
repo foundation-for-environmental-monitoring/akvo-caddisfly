@@ -21,9 +21,7 @@ package org.akvo.caddisfly.ui;
 
 import android.Manifest;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -44,7 +42,8 @@ import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ConfigDownloader;
 import org.akvo.caddisfly.util.PreferencesUtil;
 
-import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 

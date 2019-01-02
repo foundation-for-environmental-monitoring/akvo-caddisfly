@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +52,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static org.akvo.caddisfly.sensor.striptest.utils.BitmapUtils.concatTwoBitmaps;

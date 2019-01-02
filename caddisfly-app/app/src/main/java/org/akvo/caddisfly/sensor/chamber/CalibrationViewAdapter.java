@@ -21,8 +21,6 @@ package org.akvo.caddisfly.sensor.chamber;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +38,9 @@ import org.akvo.caddisfly.util.ColorUtil;
 
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationViewAdapter.ViewHolder> {
 

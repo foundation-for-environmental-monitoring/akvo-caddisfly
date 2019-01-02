@@ -1,7 +1,6 @@
 package org.akvo.caddisfly.preference;
 
 import android.Manifest;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Camera;
@@ -10,8 +9,6 @@ import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +26,9 @@ import org.akvo.caddisfly.util.ListViewUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import io.ffem.experiment.ResolutionListPreference;
 
 import static org.akvo.caddisfly.util.ApiUtil.getCameraInstance;

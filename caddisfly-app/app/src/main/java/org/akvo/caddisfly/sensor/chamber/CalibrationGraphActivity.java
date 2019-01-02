@@ -2,7 +2,6 @@ package org.akvo.caddisfly.sensor.chamber;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.MenuItem;
 
 import com.jjoe64.graphview.GraphView;
@@ -18,6 +17,8 @@ import org.akvo.caddisfly.ui.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class CalibrationGraphActivity extends BaseActivity {
 

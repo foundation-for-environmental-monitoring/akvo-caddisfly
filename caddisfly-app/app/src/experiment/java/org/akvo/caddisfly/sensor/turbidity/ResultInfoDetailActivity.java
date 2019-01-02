@@ -1,12 +1,13 @@
 package org.akvo.caddisfly.sensor.turbidity;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.ui.BaseActivity;
+
+import androidx.appcompat.app.ActionBar;
 
 /**
  * An activity representing a single ResultInfo detail screen. This

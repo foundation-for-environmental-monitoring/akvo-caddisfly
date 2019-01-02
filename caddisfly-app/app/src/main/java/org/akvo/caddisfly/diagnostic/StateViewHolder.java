@@ -1,10 +1,11 @@
 package org.akvo.caddisfly.diagnostic;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import org.akvo.caddisfly.R;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class StateViewHolder extends RecyclerView.ViewHolder {
 

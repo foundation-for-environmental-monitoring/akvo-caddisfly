@@ -1,6 +1,6 @@
 package org.akvo.caddisfly.sensor.titration.ui;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class TitrationMeasureActivity extends AppCompatActivity{
 }

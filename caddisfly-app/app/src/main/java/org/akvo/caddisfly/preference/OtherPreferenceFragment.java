@@ -21,7 +21,6 @@ package org.akvo.caddisfly.preference;
 
 
 import android.app.ProgressDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,9 +31,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +50,11 @@ import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 public class OtherPreferenceFragment extends PreferenceFragment {
 

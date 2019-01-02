@@ -3,7 +3,6 @@ package org.akvo.caddisfly.sensor.titration.ui;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -21,6 +20,7 @@ import org.akvo.caddisfly.util.CameraPreview;
 
 import java.lang.ref.WeakReference;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 @SuppressWarnings("deprecation")

@@ -1,7 +1,6 @@
 package org.akvo.caddisfly.sensor.striptest.utils;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.akvo.caddisfly.sensor.striptest.models.CalibrationCardData;
@@ -20,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import androidx.annotation.NonNull;
 
 import static org.akvo.caddisfly.sensor.striptest.qrdetector.MathUtils.distance;
 import static org.akvo.caddisfly.sensor.striptest.utils.MathUtils.meanMedianMax;

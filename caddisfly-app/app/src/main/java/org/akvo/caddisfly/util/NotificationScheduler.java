@@ -25,12 +25,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.updater.NotificationCancelReceiver;
 import org.akvo.caddisfly.updater.UpdateAppReceiver;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 public class NotificationScheduler {
     private static final String EXTRA_NOTIFICATION_ID = "android.intent.extra.NOTIFICATION_ID";

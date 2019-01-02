@@ -1,9 +1,7 @@
 package org.akvo.caddisfly.common;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestSampleType;
@@ -13,6 +11,9 @@ import org.akvo.caddisfly.ui.TestListActivity;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
 import java.util.List;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 

@@ -27,16 +27,18 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.akvo.caddisfly.R;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 /**
  * Utility functions to show alert messages.
@@ -249,7 +251,7 @@ public final class AlertUtil {
 
         View snackbarView = snackbar.getView();
 
-        TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = snackbarView.findViewById(R.id.snackbar_text);
 
         textView.setTextColor(Color.WHITE);
 

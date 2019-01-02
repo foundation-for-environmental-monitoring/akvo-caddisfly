@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +29,8 @@ import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.util.ColorUtil;
 import org.akvo.caddisfly.util.ImageUtil;
 import org.json.JSONObject;
+
+import androidx.annotation.Nullable;
 
 import static org.akvo.caddisfly.sensor.titration.decode.DecodeProcessor.applyGrayScale;
 import static org.akvo.caddisfly.util.ImageUtil.convertYUV420_NV21toRGB8888;

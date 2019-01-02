@@ -21,7 +21,6 @@ package org.akvo.caddisfly.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.util.SparseIntArray;
 
 import org.akvo.caddisfly.common.ChamberTestConfig;
@@ -29,6 +28,7 @@ import org.akvo.caddisfly.model.ColorInfo;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**

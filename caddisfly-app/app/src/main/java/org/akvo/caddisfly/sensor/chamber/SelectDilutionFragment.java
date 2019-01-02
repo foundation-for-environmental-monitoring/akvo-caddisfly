@@ -20,11 +20,7 @@
 package org.akvo.caddisfly.sensor.chamber;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +32,11 @@ import org.akvo.caddisfly.model.TestInfo;
 
 import java.util.List;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class SelectDilutionFragment extends Fragment {
     private static final String ARG_PARAM_TEST_INFO = "testInfo";

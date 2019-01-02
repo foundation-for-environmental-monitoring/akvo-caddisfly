@@ -22,10 +22,11 @@ package org.akvo.caddisfly.helper;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.support.annotation.RawRes;
 
 import org.akvo.caddisfly.common.AppConfig;
 import org.akvo.caddisfly.preference.AppPreferences;
+
+import androidx.annotation.RawRes;
 
 import static android.content.Context.AUDIO_SERVICE;
 

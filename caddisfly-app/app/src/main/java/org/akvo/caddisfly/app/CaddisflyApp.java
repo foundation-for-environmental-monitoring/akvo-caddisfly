@@ -19,9 +19,6 @@
 
 package org.akvo.caddisfly.app;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -29,7 +26,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 
 import org.akvo.caddisfly.BuildConfig;
@@ -40,6 +36,10 @@ import org.akvo.caddisfly.util.PreferencesUtil;
 import java.util.Arrays;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 import timber.log.Timber;
 
 public class CaddisflyApp extends BaseApplication {

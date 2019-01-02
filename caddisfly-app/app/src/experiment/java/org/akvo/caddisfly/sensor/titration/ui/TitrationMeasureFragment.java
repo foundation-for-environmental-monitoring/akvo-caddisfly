@@ -2,9 +2,6 @@ package org.akvo.caddisfly.sensor.titration.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +15,10 @@ import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.striptest.utils.MessageUtils;
 import org.akvo.caddisfly.sensor.striptest.widget.PercentageMeterView;
 import org.akvo.caddisfly.sensor.titration.TitrationConstants;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 public class TitrationMeasureFragment extends Fragment {
     private static final long INITIAL_DELAY_MILLIS = 200;

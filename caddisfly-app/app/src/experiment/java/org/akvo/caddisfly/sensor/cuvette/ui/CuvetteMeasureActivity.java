@@ -12,10 +12,6 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -33,6 +29,10 @@ import org.akvo.caddisfly.util.BluetoothChatService;
 
 import java.lang.ref.WeakReference;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import timber.log.Timber;
 
 @SuppressWarnings("deprecation")

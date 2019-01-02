@@ -31,7 +31,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableStringBuilder;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +50,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.fragment.app.FragmentTransaction;
 import timber.log.Timber;
 
 /**

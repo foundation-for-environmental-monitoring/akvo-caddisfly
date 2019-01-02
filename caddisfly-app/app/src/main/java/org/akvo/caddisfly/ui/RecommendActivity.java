@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
-import android.support.annotation.RequiresApi;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +36,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Locale;
+
+import androidx.annotation.RequiresApi;
+import androidx.databinding.DataBindingUtil;
 
 public class RecommendActivity extends BaseActivity {
 
@@ -153,6 +154,8 @@ public class RecommendActivity extends BaseActivity {
         recommendationInfo.phoneNumber = getIntent().getStringExtra("Phone number");
         recommendationInfo.sampleNumber = getIntent().getStringExtra("Sample number");
         recommendationInfo.villageName = getIntent().getStringExtra("Village name");
+        recommendationInfo.geoLocation = getIntent().getStringExtra("Geolocation");
+
         String crop = getIntent().getStringExtra("Crop");
 
         if (state == null || district == null || cropGroup == null || crop == null) {
@@ -240,8 +243,9 @@ public class RecommendActivity extends BaseActivity {
                     printTemplate = printTemplate.replace("{FarmerName}", recommendationInfo.farmerName);
                     printTemplate = printTemplate.replace("{PhoneNumber}", recommendationInfo.phoneNumber);
                     printTemplate = printTemplate.replace("{VillageName}", recommendationInfo.villageName);
-                    printTemplate = printTemplate.replace("{SampleNumber}", recommendationInfo.sampleNumber);
+                    printTemplate = printTemplate.replace("{Geolocation}", recommendationInfo.geoLocation);
 
+                    printTemplate = printTemplate.replace("{SampleNumber}", recommendationInfo.sampleNumber);
                     for (int i = 0; i < testInfo.getResults().size(); i++) {
                         Result result = testInfo.getResults().get(i);
                         resultIntent.putExtra(result.getName().replace(" ", "_")

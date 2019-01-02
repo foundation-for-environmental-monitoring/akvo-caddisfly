@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.Nullable;
 
 import org.akvo.caddisfly.sensor.qrdetector.BitMatrix;
 import org.akvo.caddisfly.sensor.qrdetector.BitMatrixCreator;
@@ -18,6 +17,8 @@ import org.akvo.caddisfly.sensor.titration.qrdetector.FinderPatternFinder;
 import org.akvo.caddisfly.sensor.titration.ui.TitrationTestHandler;
 
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 public class DecodeProcessor {
 

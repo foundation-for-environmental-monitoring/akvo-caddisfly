@@ -24,7 +24,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceFragment;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,8 @@ import android.widget.ListView;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.util.ListViewUtil;
+
+import androidx.annotation.NonNull;
 
 /**
  * A simple {@link Fragment} subclass.

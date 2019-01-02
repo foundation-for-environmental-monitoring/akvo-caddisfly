@@ -11,7 +11,6 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.v4.content.LocalBroadcastManager;
 
 import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.helper.FileHelper;
@@ -25,6 +24,8 @@ import org.akvo.caddisfly.util.ColorUtil;
 import org.akvo.caddisfly.util.ImageUtil;
 
 import java.io.ByteArrayOutputStream;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class CuvetteCameraManager {
     private final TestInfo testInfo;

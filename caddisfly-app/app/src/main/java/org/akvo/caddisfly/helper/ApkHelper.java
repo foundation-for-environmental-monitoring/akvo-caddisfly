@@ -24,7 +24,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
@@ -35,6 +34,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Installation related utility methods.

@@ -15,8 +15,6 @@ import android.hardware.Camera;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.PowerManager;
-import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -36,6 +34,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static org.akvo.caddisfly.util.ImageUtil.createGreyMatrix;
 import static org.akvo.caddisfly.util.ImageUtil.createThresholdMatrix;

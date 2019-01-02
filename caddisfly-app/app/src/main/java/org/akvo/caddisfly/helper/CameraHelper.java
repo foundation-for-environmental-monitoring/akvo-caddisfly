@@ -23,13 +23,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
-import android.support.annotation.StringRes;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ApiUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 
+import androidx.annotation.StringRes;
 import timber.log.Timber;
 
 public final class CameraHelper {

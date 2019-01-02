@@ -23,8 +23,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v7.view.menu.ActionMenuItemView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,6 +40,9 @@ import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowPackageManager;
+
+import androidx.appcompat.view.menu.ActionMenuItemView;
+import androidx.appcompat.widget.Toolbar;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;

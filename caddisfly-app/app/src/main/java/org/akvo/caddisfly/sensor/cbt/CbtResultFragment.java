@@ -21,8 +21,6 @@ package org.akvo.caddisfly.sensor.cbt;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +32,9 @@ import org.akvo.caddisfly.helper.TestConfigHelper;
 import org.akvo.caddisfly.model.MpnValue;
 import org.akvo.caddisfly.ui.BaseFragment;
 import org.akvo.caddisfly.util.StringUtil;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class CbtResultFragment extends BaseFragment {
     private static final String ARG_PARAM1 = "param1";

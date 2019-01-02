@@ -56,8 +56,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ParcelUuid;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,6 +78,9 @@ import org.akvo.caddisfly.util.AlertUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 /**
  * Activity for scanning and displaying available Bluetooth LE devices.

@@ -31,8 +31,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
-import android.support.media.ExifInterface;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.Surface;
@@ -50,6 +48,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import androidx.annotation.NonNull;
+import androidx.exifinterface.media.ExifInterface;
 import timber.log.Timber;
 
 import static org.akvo.caddisfly.common.Constants.DEGREES_180;

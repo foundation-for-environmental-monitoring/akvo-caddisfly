@@ -20,13 +20,14 @@
 package org.akvo.caddisfly.sensor.chamber;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.model.TestInfo;
+
+import androidx.annotation.NonNull;
 
 public class ChamberBelowFragment extends BaseRunTest implements RunTest {
 

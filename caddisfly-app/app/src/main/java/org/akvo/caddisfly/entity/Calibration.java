@@ -1,12 +1,13 @@
 package org.akvo.caddisfly.entity;
 
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
 
 @Entity(primaryKeys = {"uid", "value"})
 public class Calibration implements Parcelable {

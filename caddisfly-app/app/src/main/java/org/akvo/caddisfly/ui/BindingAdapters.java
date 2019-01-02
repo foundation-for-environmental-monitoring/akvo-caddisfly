@@ -35,13 +35,14 @@
 
 package org.akvo.caddisfly.ui;
 
-import android.databinding.BindingAdapter;
-import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.View;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.preference.AppPreferences;
+
+import androidx.core.content.ContextCompat;
+import androidx.databinding.BindingAdapter;
 
 
 public class BindingAdapters {
