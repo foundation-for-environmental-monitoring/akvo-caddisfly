@@ -26,7 +26,7 @@ android {
             applicationIdSuffix ".water"
             buildConfigField 'boolean', 'showExperimentalTests', 'false'
         }
-        experiment {
+        tryout {
             applicationIdSuffix ".experiment"
             versionCode 243
             versionName "Experiment"
@@ -165,10 +165,10 @@ dependencies {
 
     // Firebase (Experiment Flavor)
 //    experimentImplementation 'com.android.support:multidex:1.0.3'
-    experimentImplementation 'com.google.firebase:firebase-core:16.0.6'
-    experimentImplementation 'com.google.firebase:firebase-database:16.0.5'
-    experimentImplementation 'com.google.firebase:firebase-firestore:17.1.5'
-    experimentImplementation 'com.google.firebase:firebase-storage:16.0.5'
-    experimentImplementation 'com.google.firebase:firebase-auth:16.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-core:16.0.6'
+    tryoutImplementation 'com.google.firebase:firebase-database:16.0.5'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:17.1.5'
+    tryoutImplementation 'com.google.firebase:firebase-storage:16.0.5'
+    tryoutImplementation 'com.google.firebase:firebase-auth:16.1.0'
 }
 //apply plugin: 'com.google.gms.google-services'

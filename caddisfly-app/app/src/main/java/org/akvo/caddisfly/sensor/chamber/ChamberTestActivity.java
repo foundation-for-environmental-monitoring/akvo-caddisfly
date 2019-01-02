@@ -85,7 +85,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import io.ffem.experiment.DiagnosticSendDialogFragment;
+import io.ffem.tryout.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;

@@ -215,7 +215,7 @@ public final class PreferencesUtil {
      * @param defaultValue default value
      * @return the stored string value
      */
-    private static String getString(Context context, String keyId, String defaultValue) {
+    public static String getString(Context context, String keyId, String defaultValue) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         return sharedPreferences.getString(keyId, defaultValue);
