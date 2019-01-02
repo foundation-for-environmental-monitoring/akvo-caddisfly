@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.common.Constants;
+import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.repository.TestConfigRepository;
 import org.akvo.caddisfly.widget.RowView;
@@ -45,7 +45,7 @@ public class InstructionFragmentTest {
     @Test
     public void testFragment() {
         TestConfigRepository testConfigRepository = new TestConfigRepository();
-        TestInfo testInfo = testConfigRepository.getTestInfo(Constants.FLUORIDE_ID);
+        TestInfo testInfo = testConfigRepository.getTestInfo(TestConstants.CUVETTE_TEST_INSTRUCTION_ID);
 
         Fragment fragment = InstructionFragment.getInstance(testInfo);
         startFragment(fragment);
@@ -56,7 +56,7 @@ public class InstructionFragmentTest {
     public void testInstruction() {
 
         TestConfigRepository testConfigRepository = new TestConfigRepository();
-        TestInfo testInfo = testConfigRepository.getTestInfo(Constants.FLUORIDE_ID);
+        TestInfo testInfo = testConfigRepository.getTestInfo(TestConstants.CUVETTE_TEST_INSTRUCTION_ID);
 
         Fragment fragment = InstructionFragment.getInstance(testInfo);
         startVisibleFragment(fragment, TestActivity.class, R.id.fragment_container);

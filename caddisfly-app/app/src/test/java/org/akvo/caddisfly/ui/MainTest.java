@@ -23,32 +23,25 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.preference.SettingsActivity;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ActivityController;
-import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowPackageManager;
 
 import androidx.appcompat.view.menu.ActionMenuItemView;
-import androidx.appcompat.widget.Toolbar;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
@@ -64,17 +57,18 @@ public class MainTest {
 
     }
 
-    @Ignore
-    @Test
-    public void onCreateShouldInflateTheMenu() {
-        Activity activity = Robolectric.setupActivity(MainActivity.class);
-
-        Toolbar toolbar = activity.findViewById(R.id.toolbar);
-        ShadowActivity shadowActivity = shadowOf(activity);
-        //shadowActivity.onCreateOptionsMenu(toolbar.getMenu());
-        assertTrue(shadowActivity.getOptionsMenu().hasVisibleItems());
-        assertTrue(shadowActivity.getOptionsMenu().findItem(R.id.actionSettings).isVisible());
-    }
+//    @Test
+//    public void onCreateShouldInflateTheMenu() {
+//        Activity activity = Robolectric.setupActivity(MainActivity.class);
+//
+//        Toolbar toolbar = activity.findViewById(R.id.toolbar);
+//        activity.onCreateOptionsMenu(toolbar.getMenu());
+//
+//        ShadowActivity shadowActivity = shadowOf(activity);
+//
+//        assertTrue(shadowActivity.getOptionsMenu().hasVisibleItems());
+//        assertTrue(shadowActivity.getOptionsMenu().findItem(R.id.actionSettings).isVisible());
+//    }
 
     @Test
     public void onClickSettings() {
@@ -136,23 +130,6 @@ public class MainTest {
         Intent intent = shadowOf(activity).getNextStartedActivity();
         if (intent.getComponent() != null) {
             assertEquals(TestListActivity.class.getCanonicalName(),
-                    intent.getComponent().getClassName());
-        }
-    }
-
-    @Ignore
-    @Test
-    public void cbt() {
-        Activity activity = Robolectric.setupActivity(MainActivity.class);
-
-        Button button = activity.findViewById(R.id.buttonCbt);
-
-        assertThat(button.getVisibility(), equalTo(View.VISIBLE));
-
-        button.performClick();
-        Intent intent = shadowOf(activity).getNextStartedActivity();
-        if (intent.getComponent() != null) {
-            assertEquals(TestActivity.class.getCanonicalName(),
                     intent.getComponent().getClassName());
         }
     }

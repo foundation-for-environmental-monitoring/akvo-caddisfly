@@ -276,7 +276,7 @@ public final class TestUtil {
         };
     }
 
-    private static void nextPage() {
+    public static void nextPage() {
         onView(allOf(withId(R.id.image_pageRight),
                 isDisplayed())).perform(click());
         mDevice.waitForIdle();

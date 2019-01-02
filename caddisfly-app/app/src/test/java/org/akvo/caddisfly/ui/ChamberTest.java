@@ -214,7 +214,7 @@ public class ChamberTest {
         Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 
         Bundle data = new Bundle();
-        data.putString(SensorConstants.TEST_ID, Constants.FLUORIDE_ID);
+        data.putString(SensorConstants.TEST_ID, TestConstants.CUVETTE_TEST_ID_1);
         data.putString(CADDISFLY_QUESTION_ID, "123");
         data.putString(CADDISFLY_QUESTION_TITLE, "Fluoride");
         data.putString(CADDISFLY_LANGUAGE, "en");
@@ -244,7 +244,7 @@ public class ChamberTest {
         Intent intent = new Intent(BuildConfig.APPLICATION_ID);
 
         Bundle data = new Bundle();
-        data.putString(SensorConstants.TEST_ID, Constants.FLUORIDE_ID);
+        data.putString(SensorConstants.TEST_ID, TestConstants.CUVETTE_TEST_ID_1);
         data.putString(CADDISFLY_QUESTION_ID, "123");
         data.putString(CADDISFLY_QUESTION_TITLE, "Fluoride");
         data.putString(CADDISFLY_LANGUAGE, "en");
@@ -264,14 +264,13 @@ public class ChamberTest {
 
         controller.start();
 
-
         Button button = activity.findViewById(R.id.button_prepare);
         button.performClick();
 
         AlertDialog alert = ShadowAlertDialog.getLatestAlertDialog();
         ShadowAlertDialog sAlert = shadowOf(alert);
 
-        assertEquals("Calibration for Fluoride is incomplete\n" +
+        assertEquals("Calibration for " + TestConstants.CUVETTE_TEST_NAME_1 + " is incomplete\n" +
                 "\n" +
                 "Do you want to calibrate now?", sAlert.getMessage());
     }

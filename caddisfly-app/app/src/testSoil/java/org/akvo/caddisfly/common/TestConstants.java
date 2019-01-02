@@ -8,7 +8,7 @@ public final class TestConstants {
     public static final int CUVETTE_TESTS_COUNT = 8;
 
     // Soil - Available Iron
-    public static final String CUVETTE_TEST_ID_1 = "3353f5cf-1cd2-4bf5-b47f-15d3db917add";
+    public static final String CUVETTE_TEST_ID_1 = "29e609a0-0f57-4365-a4eb-4eb84c61c9ab";
     public static final int TEST_INDEX = 1;
     public static final int CUVETTE_TEST_TIME_DELAY = 180;
 
@@ -20,4 +20,5 @@ public final class TestConstants {
     public static final String CUVETTE_TEST_NAME_3 = "Available Nitrogen";
     public static final String CUVETTE_TEST_NAME_4 = "Available Phosphorous";
 
+    public static final String CUVETTE_TEST_UNIT = "mg\\/kg";
 }

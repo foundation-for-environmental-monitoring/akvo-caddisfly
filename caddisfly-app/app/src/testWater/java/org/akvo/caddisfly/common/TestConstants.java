@@ -7,8 +7,9 @@ public final class TestConstants {
     public static final int STRIP_TESTS_COUNT = 2;
     public static final int CUVETTE_TESTS_COUNT = 14;
 
-    // Soil - Available Iron
-    public static final String CUVETTE_TEST_ID_1 = "3353f5cf-1cd2-4bf5-b47f-15d3db917add";
+    public static final String CUVETTE_TEST_ID_1 = "af112e3c-4fc1-45c1-a8d0-1ec75a2b789e";
+    public static final String CUVETTE_TEST_INSTRUCTION_ID = "f0f3c1dd-89af-49f1-83e7-bcc31c3006cf";
+
     public static final int TEST_INDEX = 1;
     public static final int CUVETTE_TEST_TIME_DELAY = 180;
 
@@ -19,4 +20,6 @@ public final class TestConstants {
     public static final String CUVETTE_TEST_NAME_2 = "Arsenic (III)";
     public static final String CUVETTE_TEST_NAME_3 = "Chromium";
     public static final String CUVETTE_TEST_NAME_4 = "Copper";
+
+    public static final String CUVETTE_TEST_UNIT = "mg\\/l";
 }

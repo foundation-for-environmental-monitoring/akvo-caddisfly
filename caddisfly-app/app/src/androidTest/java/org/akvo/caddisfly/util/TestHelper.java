@@ -98,7 +98,7 @@ public final class TestHelper {
         CALIBRATION_HASH_MAP.put(key, colors);
     }
 
-    private static String getString(Activity activity, @StringRes int resourceId) {
+    public static String getString(Activity activity, @StringRes int resourceId) {
         Resources currentResources = activity.getResources();
         AssetManager assets = currentResources.getAssets();
         DisplayMetrics metrics = currentResources.getDisplayMetrics();
