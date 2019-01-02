@@ -1,7 +1,6 @@
 package org.akvo.caddisfly.sensor.striptest.utils;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.akvo.caddisfly.sensor.striptest.models.CalibrationCardData;
@@ -20,6 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import androidx.annotation.NonNull;
 
 import static org.akvo.caddisfly.sensor.striptest.qrdetector.MathUtils.distance;
 import static org.akvo.caddisfly.sensor.striptest.utils.MathUtils.meanMedianMax;
@@ -431,7 +432,7 @@ public class CalibrationCardUtils {
             i++;
         }
 
-        // we now have a delta array, in the order of the keyset. Let's get the 3 worst ones
+        // we now have a delta array, in the order of the key set. Let's get the 3 worst ones
         String name1 = "", name2 = "", name3 = "", name4 = "", name5 = "";
         float worst = 0;
 

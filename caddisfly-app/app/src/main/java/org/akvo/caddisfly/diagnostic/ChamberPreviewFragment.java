@@ -20,7 +20,6 @@
 package org.akvo.caddisfly.diagnostic;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,8 @@ import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.chamber.BaseRunTest;
 import org.akvo.caddisfly.sensor.chamber.RunTest;
+
+import androidx.annotation.NonNull;
 
 public class ChamberPreviewFragment extends BaseRunTest implements RunTest {
 

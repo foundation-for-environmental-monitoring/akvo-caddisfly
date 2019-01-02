@@ -25,9 +25,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -35,8 +32,10 @@ import android.widget.EditText;
 
 import org.akvo.caddisfly.R;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 /**
- * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link EditSensorIdentity.OnFragmentInteractionListener} interface
  * to handle interaction events.
@@ -163,7 +162,7 @@ public class EditSensorIdentity extends DialogFragment {
         }
     }
 
-    public interface OnFragmentInteractionListener {
+    interface OnFragmentInteractionListener {
         void onFragmentInteraction(String value);
     }
 

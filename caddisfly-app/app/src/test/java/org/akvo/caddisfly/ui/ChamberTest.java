@@ -25,7 +25,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -53,6 +52,8 @@ import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowPackageManager;
 
 import java.io.File;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;

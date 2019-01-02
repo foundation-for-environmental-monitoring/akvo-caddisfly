@@ -3,7 +3,6 @@ package org.akvo.caddisfly.repository;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -30,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class TestConfigRepository {

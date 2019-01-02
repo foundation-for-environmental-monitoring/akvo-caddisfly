@@ -23,9 +23,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by linda on 11/5/15
@@ -38,7 +39,7 @@ public class PercentageMeterView extends View {
     private float percentage = Float.NaN;
 
     // Red to green colour scale
-    private int[][] colours = {{230, 53, 46}, {234, 91, 47}, {240, 132, 45}, {232, 168, 52}, {247, 211, 43}, {212, 216, 57}, {169, 204, 57},
+    private final int[][] colours = {{230, 53, 46}, {234, 91, 47}, {240, 132, 45}, {232, 168, 52}, {247, 211, 43}, {212, 216, 57}, {169, 204, 57},
             {112, 186, 68}, {58, 171, 75}, {6, 155, 85}};
 
     public PercentageMeterView(@NonNull Context context) {
@@ -66,9 +67,9 @@ public class PercentageMeterView extends View {
         }
         canvas.save();
 
-        float barWidth = canvas.getHeight() / 3.0f;
+        float barWidth = getHeight() / 3.0f;
         float gutterWidth = 0.2f * barWidth;
-        float distHor = 0.5f * (canvas.getWidth() - (barWidth + gutterWidth) * NUMBER_OF_BARS);
+        float distHor = 0.5f * (getWidth() - (barWidth + gutterWidth) * NUMBER_OF_BARS);
 
         canvas.translate(distHor, 0);
         for (int i = 0; i < NUMBER_OF_BARS; i++) {
@@ -78,7 +79,7 @@ public class PercentageMeterView extends View {
 
             if (percentage > 10 * i)
                 paint.setARGB(255, colours[i][0], colours[i][1], colours[i][2]);
-            canvas.drawRect(0f, 0f, 20, canvas.getHeight(), paint);
+            canvas.drawRect(0f, 0f, 20, getHeight(), paint);
 
             // Position next bar
             canvas.translate(barWidth + gutterWidth, 0);

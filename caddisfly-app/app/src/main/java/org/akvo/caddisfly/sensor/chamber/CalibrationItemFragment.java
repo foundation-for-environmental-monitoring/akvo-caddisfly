@@ -19,14 +19,8 @@
 
 package org.akvo.caddisfly.sensor.chamber;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.databinding.BindingAdapter;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +39,13 @@ import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
 
 import java.text.DateFormat;
 import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 
@@ -66,7 +67,7 @@ public class CalibrationItemFragment extends Fragment {
      * Get instance of CalibrationItemFragment.
      *
      * @param testInfo   the test info
-     * @param isInternal
+     * @param isInternal is it an internal call or called by an external app
      * @return the fragment
      */
     public static CalibrationItemFragment newInstance(TestInfo testInfo, boolean isInternal) {

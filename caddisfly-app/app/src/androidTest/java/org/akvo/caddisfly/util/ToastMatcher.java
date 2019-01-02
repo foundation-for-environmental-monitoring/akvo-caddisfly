@@ -20,11 +20,12 @@
 package org.akvo.caddisfly.util;
 
 import android.os.IBinder;
-import android.support.test.espresso.Root;
 import android.view.WindowManager;
 
 import org.hamcrest.Description;
-import org.hamcrest.TypeSafeMatcher;
+import org.junit.internal.matchers.TypeSafeMatcher;
+
+import androidx.test.espresso.Root;
 
 class ToastMatcher extends TypeSafeMatcher<Root> {
 
@@ -39,11 +40,9 @@ class ToastMatcher extends TypeSafeMatcher<Root> {
         if (type == WindowManager.LayoutParams.TYPE_TOAST) {
             IBinder windowToken = root.getDecorView().getWindowToken();
             IBinder appToken = root.getDecorView().getApplicationWindowToken();
-            if (windowToken.equals(appToken)) {
-                // windowToken == appToken means this window isn't contained by any other windows.
-                // if it was a window for an activity, it would have TYPE_BASE_APPLICATION.
-                return true;
-            }
+            // windowToken == appToken means this window isn't contained by any other windows.
+            // if it was a window for an activity, it would have TYPE_BASE_APPLICATION.
+            return windowToken.equals(appToken);
         }
         return false;
     }

@@ -23,7 +23,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.support.annotation.StringRes;
+
+import androidx.annotation.StringRes;
 
 /**
  * Various utility functions to get/set values from/to SharedPreferences.
@@ -214,7 +215,7 @@ public final class PreferencesUtil {
      * @param defaultValue default value
      * @return the stored string value
      */
-    public static String getString(Context context, String keyId, String defaultValue) {
+    private static String getString(Context context, String keyId, String defaultValue) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         return sharedPreferences.getString(keyId, defaultValue);
@@ -270,7 +271,7 @@ public final class PreferencesUtil {
      * @param context the context
      * @param key     the key id
      */
-    public static void removeKey(Context context, String key) {
+    private static void removeKey(Context context, String key) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         Editor editor = sharedPreferences.edit();

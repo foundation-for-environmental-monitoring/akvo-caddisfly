@@ -24,7 +24,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +37,8 @@ import org.akvo.caddisfly.util.ListViewUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 
 import java.util.Date;
+
+import androidx.annotation.NonNull;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,11 +33,6 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -85,6 +79,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import io.ffem.experiment.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
@@ -735,8 +735,8 @@ public class ChamberTestActivity extends BaseActivity implements
                             -> PreferencesUtil.setBoolean(getBaseContext(),
                             R.string.showMinMegaPixelDialogKey, !isChecked));
 
-                    android.support.v7.app.AlertDialog.Builder builder
-                            = new android.support.v7.app.AlertDialog.Builder(this);
+                    androidx.appcompat.app.AlertDialog.Builder builder
+                            = new androidx.appcompat.app.AlertDialog.Builder(this);
 
                     builder.setTitle(R.string.warning);
                     builder.setMessage(R.string.camera_not_good)
@@ -787,7 +787,7 @@ public class ChamberTestActivity extends BaseActivity implements
         ConfigDownloader.sendDataToCloudDatabase(this, testInfo, comment);
     }
 
-    public boolean isAppInLockTaskMode() {
+    private boolean isAppInLockTaskMode() {
         ActivityManager activityManager;
 
         activityManager = (ActivityManager)

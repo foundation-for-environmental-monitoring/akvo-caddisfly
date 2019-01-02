@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,8 +12,10 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 //https://medium.com/@felipegi91_89910/thanks-daniele-bottillo-b57caf823e34
-public class DrawableMatcher extends TypeSafeMatcher<View> {
+class DrawableMatcher extends TypeSafeMatcher<View> {
 
     //    private static final int EMPTY = -1;
     private static final int ANY = -2;

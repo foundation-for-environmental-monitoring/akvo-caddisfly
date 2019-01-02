@@ -22,16 +22,16 @@ package org.akvo.caddisfly.util;
 import android.content.Context;
 import android.graphics.Rect;
 import android.hardware.Camera;
-import android.support.annotation.Nullable;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import org.akvo.caddisfly.common.Constants;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static android.hardware.Camera.Parameters.FLASH_MODE_OFF;
@@ -50,7 +50,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         this(context, FLASH_MODE_OFF);
     }
 
-    public CameraPreview(Context context, String flashModeTorch) {
+    private CameraPreview(Context context, String flashModeTorch) {
         // create surfaceView
         super(context);
 
@@ -183,7 +183,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         parameters.setFocusMode(focusMode);
 
         Camera.Area cardArea = new Camera.Area(new Rect(-1000, -1000, -167, 1000), 1);
-        List<Camera.Area> cardAreaList = Arrays.asList(cardArea);
+        List<Camera.Area> cardAreaList = Collections.singletonList(cardArea);
         if (parameters.getMaxNumFocusAreas() > 0) {
             parameters.setFocusAreas(cardAreaList);
         }
@@ -229,7 +229,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         return mCamera;
     }
 
-    public interface OnSurfaceChangedListener {
+    interface OnSurfaceChangedListener {
         void onSurfaceChanged(int w, int h, int previewWidth, int previewHeight);
     }
 }

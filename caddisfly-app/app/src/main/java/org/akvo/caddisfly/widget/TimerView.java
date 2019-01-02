@@ -30,13 +30,14 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.striptest.utils.Constants;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Countdown timer view.
@@ -159,16 +160,16 @@ public class TimerView extends View {
             mCanvas.drawOval(mCircleInnerBounds, mEraserPaint);
 
             float width = mTextPaint.measureText(text);
-            mCanvas.drawText(text, (canvas.getWidth() - width) / 2f,
-                    ((canvas.getHeight() + Math.abs(rectangle.height())) / 2f) - 10, mTextPaint);
+            mCanvas.drawText(text, (getWidth() - width) / 2f,
+                    ((getHeight() + Math.abs(rectangle.height())) / 2f) - 10, mTextPaint);
 
             int mainTextHeight = rectangle.height();
 
             String subText = getContext().getString(R.string.seconds);
             width = mSubTextPaint.measureText(subText);
             mSubTextPaint.getTextBounds(subText, 0, subText.length(), rectangle);
-            mCanvas.drawText(subText, (canvas.getWidth() - width) / 2f,
-                    ((canvas.getHeight() + Math.abs(rectangle.height())) / 2f) + mainTextHeight - 10, mSubTextPaint);
+            mCanvas.drawText(subText, (getWidth() - width) / 2f,
+                    ((getHeight() + Math.abs(rectangle.height())) / 2f) + mainTextHeight - 10, mSubTextPaint);
         }
 
         canvas.drawBitmap(mBitmap, 0, 0, null);

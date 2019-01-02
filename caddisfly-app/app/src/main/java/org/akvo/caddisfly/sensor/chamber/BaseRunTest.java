@@ -21,18 +21,13 @@ package org.akvo.caddisfly.sensor.chamber;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.res.Resources;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,17 +57,23 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 //import timber.log.Timber;
 
 public class BaseRunTest extends Fragment implements RunTest {
     private static final double SHORT_DELAY = 1;
-    final int[] countdown = {0};
+    private final int[] countdown = {0};
     private final ArrayList<ResultDetail> results = new ArrayList<>();
     private final Handler delayHandler = new Handler();
     protected FragmentRunTestBinding binding;
     protected boolean cameraStarted;
     protected int pictureCount = 0;
-    int timeDelay = 0;
+    private int timeDelay = 0;
     private Handler mHandler;
     private AlertDialog alertDialogToBeDestroyed;
     private TestInfo mTestInfo;
@@ -109,7 +110,7 @@ public class BaseRunTest extends Fragment implements RunTest {
             }
         }
     };
-    private Runnable mCountdown = this::setCountDown;
+    private final Runnable mCountdown = this::setCountDown;
 
     private static String timeConversion(int seconds) {
 
@@ -387,7 +388,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     /**
      * Turn flash off.
      */
-    public void turnFlashOff() {
+    protected void turnFlashOff() {
         if (mCamera == null) {
             return;
         }
@@ -402,7 +403,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     /**
      * Turn flash on.
      */
-    public void turnFlashOn() {
+    protected void turnFlashOn() {
         if (mCamera == null) {
             return;
         }

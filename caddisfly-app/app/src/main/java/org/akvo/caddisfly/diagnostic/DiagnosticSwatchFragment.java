@@ -20,23 +20,24 @@
 package org.akvo.caddisfly.diagnostic;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.model.TestInfo;
+import org.jetbrains.annotations.NotNull;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 @SuppressWarnings("WeakerAccess")
 public class DiagnosticSwatchFragment extends Fragment {
 
     private static final String ARG_TEST_INFO = "testInfo";
     TestInfo testInfo;
-    private RecyclerView recyclerView;
 
     public static DiagnosticSwatchFragment newInstance(TestInfo testInfo) {
         DiagnosticSwatchFragment fragment = new DiagnosticSwatchFragment();
@@ -56,7 +57,7 @@ public class DiagnosticSwatchFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_swatch, container, false);
     }
@@ -69,7 +70,7 @@ public class DiagnosticSwatchFragment extends Fragment {
             getActivity().setTitle(R.string.swatches);
         }
 
-        recyclerView = view.findViewById(R.id.swatchRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.swatchRecyclerView);
 
         if (testInfo.getSwatches().size() > 0) {
             DiagnosticSwatchesAdapter diagnosticSwatchesAdapter =

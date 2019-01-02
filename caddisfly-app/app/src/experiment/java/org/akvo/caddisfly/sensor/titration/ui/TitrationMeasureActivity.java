@@ -3,7 +3,7 @@ package org.akvo.caddisfly.sensor.titration.ui;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.FrameLayout;

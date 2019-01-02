@@ -22,12 +22,13 @@ package org.akvo.caddisfly.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
 import org.akvo.caddisfly.R;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 public class PageIndicatorView extends View {
 
@@ -78,10 +79,10 @@ public class PageIndicatorView extends View {
         if (pageCount > 1) {
             for (int i = 0; i < pageCount; i++) {
                 if (activePage == i) {
-                    canvas.drawCircle(DISTANCE * i + BULLET_RADIUS * 2, canvas.getHeight() / 2f,
+                    canvas.drawCircle(DISTANCE * i + BULLET_RADIUS * 2, getHeight() / 2f,
                             BULLET_RADIUS * 2, fillPaint);
                 } else {
-                    canvas.drawCircle(DISTANCE * i + BULLET_RADIUS * 2, canvas.getHeight() / 2f,
+                    canvas.drawCircle(DISTANCE * i + BULLET_RADIUS * 2, getHeight() / 2f,
                             BULLET_RADIUS, fillPaint);
                 }
             }

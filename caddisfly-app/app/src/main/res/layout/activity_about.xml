@@ -134,7 +134,7 @@
                 android:textSize="46dp"
                 tools:ignore="SpUsage" />
 
-            <android.support.design.widget.FloatingActionButton
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabDisableDiagnostics"
                 android:onClick="disableDiagnosticsMode"
                 style="@style/floating_action_button"

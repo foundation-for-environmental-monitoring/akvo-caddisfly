@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.sensor.qrdetector.BitMatrix;
 import org.akvo.caddisfly.sensor.qrdetector.BitMatrixCreator;

@@ -20,12 +20,12 @@
 package org.akvo.caddisfly.app;
 
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
-
 import org.akvo.caddisfly.dao.CalibrationDao;
 import org.akvo.caddisfly.entity.Calibration;
 import org.akvo.caddisfly.entity.CalibrationDetail;
+
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
 @Database(entities = {Calibration.class, CalibrationDetail.class}, version = 5, exportSchema = false)
 public abstract class CalibrationDatabase extends RoomDatabase {

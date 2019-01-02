@@ -20,7 +20,7 @@
             android:orientation="vertical"
             android:padding="5dp">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp">
@@ -29,9 +29,9 @@
                     android:id="@+id/graphRed"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp">
@@ -40,9 +40,9 @@
                     android:id="@+id/graphGreen"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp">
@@ -51,7 +51,7 @@
                     android:id="@+id/graphBlue"
                     android:layout_width="match_parent"
                     android:layout_height="200dip" />
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

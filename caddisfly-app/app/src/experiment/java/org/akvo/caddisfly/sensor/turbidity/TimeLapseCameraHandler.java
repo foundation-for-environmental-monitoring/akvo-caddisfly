@@ -15,7 +15,7 @@ import android.hardware.Camera;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.PowerManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 
 import org.akvo.caddisfly.R;

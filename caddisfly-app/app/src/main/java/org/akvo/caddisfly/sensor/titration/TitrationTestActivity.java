@@ -3,8 +3,6 @@ package org.akvo.caddisfly.sensor.titration;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.SparseArray;
 import android.view.MenuItem;
 
@@ -16,6 +14,9 @@ import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.json.JSONObject;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class TitrationTestActivity extends BaseActivity
         implements TitrationInputFragment.OnSubmitResultListener {

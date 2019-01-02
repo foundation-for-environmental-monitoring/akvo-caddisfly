@@ -10,12 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,6 +32,13 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import static org.akvo.caddisfly.common.AppConfig.FILE_PROVIDER_AUTHORITY_URI;
 
@@ -110,11 +111,9 @@ public class CbtActivity extends BaseActivity
         if (resultCode == RESULT_OK) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             if (requestCode == CBT_TEST) {
-                (new Handler()).postDelayed(() -> {
-                    fragmentTransaction.replace(R.id.fragment_container,
-                            CompartmentBagFragment.newInstance(cbtResult), "compartmentFragment")
-                            .commit();
-                }, 500);
+                (new Handler()).postDelayed(() -> fragmentTransaction.replace(R.id.fragment_container,
+                        CompartmentBagFragment.newInstance(cbtResult), "compartmentFragment")
+                        .commit(), 500);
             }
         } else {
             onBackPressed();

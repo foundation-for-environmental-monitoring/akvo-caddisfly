@@ -19,8 +19,6 @@
 
 package org.akvo.caddisfly.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -31,6 +29,9 @@ import org.akvo.caddisfly.databinding.ActivityAboutBinding;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
 /**
  * Activity to display info about the app.
  */
@@ -40,7 +41,7 @@ public class AboutActivity extends BaseActivity {
 
     private int clickCount = 0;
 
-    NoticesDialogFragment dialog;
+    private NoticesDialogFragment dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
