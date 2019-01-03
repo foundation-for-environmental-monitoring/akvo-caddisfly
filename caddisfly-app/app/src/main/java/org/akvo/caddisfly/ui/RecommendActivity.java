@@ -147,38 +147,29 @@ public class RecommendActivity extends BaseActivity {
 
         webView.getSettings().setJavaScriptEnabled(true);
 
-        String state = getIntent().getStringExtra("State");
-        String district = getIntent().getStringExtra("District");
-        String cropGroup = getIntent().getStringExtra("Crop Group");
-        recommendationInfo.farmerName = getIntent().getStringExtra("Farmer name");
-        recommendationInfo.phoneNumber = getIntent().getStringExtra("Phone number");
-        recommendationInfo.sampleNumber = getIntent().getStringExtra("Sample number");
-        recommendationInfo.villageName = getIntent().getStringExtra("Village name");
-        recommendationInfo.geoLocation = getIntent().getStringExtra("Geolocation");
+        String state = getStringExtra("State");
+        String district = getStringExtra("District");
+        String cropGroup = getStringExtra("Crop Group");
+        recommendationInfo.farmerName = getStringExtra("Farmer name");
+        recommendationInfo.phoneNumber = getStringExtra("Phone number");
+        recommendationInfo.sampleNumber = getStringExtra("Sample number");
+        recommendationInfo.villageName = getStringExtra("Village name");
+        recommendationInfo.geoLocation = getStringExtra("Geolocation");
 
         String crop = getIntent().getStringExtra("Crop");
 
-        if (state == null || district == null || cropGroup == null || crop == null) {
+        if (recommendationInfo.farmerName.isEmpty() || recommendationInfo.sampleNumber.isEmpty() ||
+                state.isEmpty() || district.isEmpty() || cropGroup.isEmpty() || crop.isEmpty()) {
             Toast.makeText(this,
-                    "State, District, Crop Group and Crop details required", Toast.LENGTH_LONG).show();
+                    "Farmer name, Sample number, State, District, Crop Group and Crop details required",
+                    Toast.LENGTH_LONG).show();
             finish();
             return;
         }
 
-        recommendationInfo.nitrogenResult = getIntent().getStringExtra("Available Nitrogen");
-        recommendationInfo.phosphorusResult = getIntent().getStringExtra("Available Phosphorous");
-        recommendationInfo.potassiumResult = getIntent().getStringExtra("Available Potassium");
-        if (recommendationInfo.nitrogenResult == null) {
-            recommendationInfo.nitrogenResult = "0";
-        }
-
-        if (recommendationInfo.phosphorusResult == null) {
-            recommendationInfo.phosphorusResult = "0";
-        }
-
-        if (recommendationInfo.potassiumResult == null) {
-            recommendationInfo.potassiumResult = "0";
-        }
+        recommendationInfo.nitrogenResult = getStringExtra("Available Nitrogen", "0");
+        recommendationInfo.phosphorusResult = getStringExtra("Available Phosphorous", "0");
+        recommendationInfo.potassiumResult = getStringExtra("Available Potassium", "0");
 
         final String js = "javascript:document.getElementById('State_Code').value='" + state + "';StateChange();" +
                 "javascript:document.getElementById('District_CodeDDL').value='" + district + "';DistrictChange('" + district + "');" +
@@ -232,20 +223,9 @@ public class RecommendActivity extends BaseActivity {
                     recommendationInfo.state = values[0];
                     recommendationInfo.district = values[1];
                     recommendationInfo.crop = values[2];
-                    date = new SimpleDateFormat(DATE_FORMAT, Locale.US).format(Calendar.getInstance().getTime());
-                    printTemplate = printTemplate.replace("{Date}", date);
-                    printTemplate = printTemplate.replace("{State}", recommendationInfo.state);
-                    printTemplate = printTemplate.replace("{District}", recommendationInfo.district);
-                    printTemplate = printTemplate.replace("{Crop}", recommendationInfo.crop);
-                    printTemplate = printTemplate.replace("{Nitrogen}", recommendationInfo.nitrogenResult);
-                    printTemplate = printTemplate.replace("{Phosphorus}", recommendationInfo.phosphorusResult);
-                    printTemplate = printTemplate.replace("{Potassium}", recommendationInfo.potassiumResult);
-                    printTemplate = printTemplate.replace("{FarmerName}", recommendationInfo.farmerName);
-                    printTemplate = printTemplate.replace("{PhoneNumber}", recommendationInfo.phoneNumber);
-                    printTemplate = printTemplate.replace("{VillageName}", recommendationInfo.villageName);
-                    printTemplate = printTemplate.replace("{Geolocation}", recommendationInfo.geoLocation);
 
-                    printTemplate = printTemplate.replace("{SampleNumber}", recommendationInfo.sampleNumber);
+                    preparePrintDocument();
+
                     for (int i = 0; i < testInfo.getResults().size(); i++) {
                         Result result = testInfo.getResults().get(i);
                         resultIntent.putExtra(result.getName().replace(" ", "_")
@@ -269,7 +249,44 @@ public class RecommendActivity extends BaseActivity {
         webView.loadUrl(url);
     }
 
+    private void preparePrintDocument() {
+        date = new SimpleDateFormat(DATE_FORMAT, Locale.US).format(Calendar.getInstance().getTime());
+        printTemplate = printTemplate.replace("{Date}", date);
+        printTemplate = printTemplate.replace("{FarmerName}", recommendationInfo.farmerName);
+        printTemplate = printTemplate.replace("{PhoneNumber}", recommendationInfo.phoneNumber);
+        printTemplate = printTemplate.replace("{VillageName}", recommendationInfo.villageName);
+        printTemplate = printTemplate.replace("{State}", recommendationInfo.state);
+        printTemplate = printTemplate.replace("{District}", recommendationInfo.district);
+        printTemplate = printTemplate.replace("{SampleNumber}", recommendationInfo.sampleNumber);
+        printTemplate = printTemplate.replace("{Crop}", recommendationInfo.crop);
+
+        if (recommendationInfo.geoLocation != null && !recommendationInfo.geoLocation.isEmpty()) {
+            String[] geoValues = recommendationInfo.geoLocation.split(" ");
+            for (int i = 0; i < geoValues.length; i++) {
+                printTemplate = printTemplate.replace("{Geo" + i + "}", geoValues[i]);
+            }
+        }
+
+        printTemplate = printTemplate.replace("{Nitrogen}", recommendationInfo.nitrogenResult);
+        printTemplate = printTemplate.replace("{Phosphorus}", recommendationInfo.phosphorusResult);
+        printTemplate = printTemplate.replace("{Potassium}", recommendationInfo.potassiumResult);
+    }
+
     public void onSaveClick(View view) {
         finish();
+    }
+
+
+    private String getStringExtra(String key) {
+        return getStringExtra(key, "");
+    }
+
+    private String getStringExtra(String key, String defaultValue) {
+        String value = getIntent().getStringExtra(key);
+        if (value == null) {
+            return defaultValue;
+        }
+
+        return value;
     }
 }
