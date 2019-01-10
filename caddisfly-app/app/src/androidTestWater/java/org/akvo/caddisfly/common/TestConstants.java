@@ -27,6 +27,10 @@ public final class TestConstants {
     public static final int CUVETTE_TESTS_COUNT = 13;
 
 
+    public static final String IS_TEST_HIGH_CALIBRATION = "HighLevelTest";
+    public static final int IS_TEST_CALIBRATION_INDEX = 4;
+    public static final String IS_TEST_VALID_CALIBRATION = "Fluoride_Valid";
+
     // Water - Fluoride
     public static final TestSampleType IS_TEST_TYPE = TestSampleType.WATER;
     public static final String IS_TEST_GROUP = "Water Tests 1";

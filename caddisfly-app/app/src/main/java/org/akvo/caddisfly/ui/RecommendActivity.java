@@ -118,7 +118,7 @@ public class RecommendActivity extends BaseActivity {
         if (recommendationInfo.farmerName.isEmpty() || recommendationInfo.sampleNumber.isEmpty() ||
                 state.isEmpty() || district.isEmpty() || cropGroup.isEmpty() || crop.isEmpty()) {
             Toast.makeText(this,
-                    "Farmer name, Sample number, State, District, Crop Group and Crop details required",
+                    "All farmer and crop details should be filled before requesting a recommendation.",
                     Toast.LENGTH_LONG).show();
             finish();
             return;
