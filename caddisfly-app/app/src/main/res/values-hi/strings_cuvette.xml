@@ -35,6 +35,8 @@
     <string name="phosphate">फॉस्फेट</string>
     <string name="sulphate">सल्फेट</string>
     <string name="total_iron">कुल लौह</string>
+    <string name="chlorophyll_a">क्लोरोफिल-ए</string>
+
     <!-- Calibration Screen -->
     <string name="calibration">कैलिब्रेशन</string>
     <string name="calibrated">कैलिब्रेटेड</string>

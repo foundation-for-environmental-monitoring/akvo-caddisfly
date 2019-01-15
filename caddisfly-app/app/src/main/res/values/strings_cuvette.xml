@@ -36,6 +36,7 @@
     <string name="phosphate">.</string>
     <string name="sulphate">.</string>
     <string name="total_iron">.</string>
+    <string name="chlorophyll_a">.</string>
     <string name="up_to_with_dilution">Up to %s with dilution</string>
 
     <!-- Calibration Screen -->
