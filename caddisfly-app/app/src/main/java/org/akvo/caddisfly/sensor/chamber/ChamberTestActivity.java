@@ -244,7 +244,11 @@ public class ChamberTestActivity extends BaseActivity implements
     public void onBackPressed() {
         if (isAppInLockTaskMode()) {
             if (((Fragment) runTestFragment).isVisible()) {
-                Toast.makeText(this, R.string.screen_pinned, Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    showLockTaskEscapeMessage();
+                } else {
+                    Toast.makeText(this, R.string.screen_pinned, Toast.LENGTH_SHORT).show();
+                }
             } else {
                 stopScreenPinning();
             }
@@ -316,7 +320,11 @@ public class ChamberTestActivity extends BaseActivity implements
             case android.R.id.home:
                 if (isAppInLockTaskMode()) {
                     if (((Fragment) runTestFragment).isVisible()) {
-                        Toast.makeText(this, R.string.screen_pinned, Toast.LENGTH_SHORT).show();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            showLockTaskEscapeMessage();
+                        } else {
+                            Toast.makeText(this, R.string.screen_pinned, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         stopScreenPinning();
                     }
