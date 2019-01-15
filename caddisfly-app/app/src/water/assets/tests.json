@@ -287,6 +287,11 @@
       "calibrate": true,
       "ranges": "0,8",
       "monthsValid": 12,
+      "dilutions": [
+        1,
+        2,
+        5
+      ],
       "results": [
         {
           "id": 1,
@@ -601,6 +606,25 @@
           "name": "Total Iron",
           "unit": "mg/l",
           "timeDelay": 300
+        }
+      ]
+    },
+    {
+      "name": "Chlorophyll A",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "44b731e4-ad77-4ed7-b927-e17fe3846c64",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,0.20,0.50,1,5,10,25",
+      "monthsValid": 6,
+      "results": [
+        {
+          "id": 1,
+          "name": "Chlorophyll A",
+          "unit": "mg/l",
+          "timeDelay": 30
         }
       ]
     }
