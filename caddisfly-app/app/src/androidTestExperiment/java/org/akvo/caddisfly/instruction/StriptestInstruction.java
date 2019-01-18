@@ -46,9 +46,9 @@ import java.util.List;
 
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.RequiresDevice;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.InstrumentationRegistry.getInstrumentation;
@@ -373,7 +373,7 @@ public class StriptestInstruction {
             assertEquals(testList.get(i).getSubtype(), TestType.STRIP_TEST);
 
             String id = testList.get(i).getUuid();
-            id = id.substring(id.lastIndexOf("-") + 1, id.length());
+            id = id.substring(id.lastIndexOf("-") + 1);
 
 //            if (id.equalsIgnoreCase("aa4a4e3100c9")) {
             navigateToTest(i, id);

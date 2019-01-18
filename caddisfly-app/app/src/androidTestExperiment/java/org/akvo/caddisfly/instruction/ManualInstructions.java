@@ -54,9 +54,9 @@ import java.util.Random;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.RequiresDevice;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.InstrumentationRegistry.getInstrumentation;
@@ -156,7 +156,7 @@ public class ManualInstructions {
 
             if (testList.get(i).getSubtype() == TestType.MANUAL) {
                 String id = testList.get(i).getUuid();
-                id = id.substring(id.lastIndexOf("-") + 1, id.length());
+                id = id.substring(id.lastIndexOf("-") + 1);
 
                 int pages = navigateToTest(i, id);
 
@@ -221,8 +221,6 @@ public class ManualInstructions {
         clickExternalSourceButton(1, TestConstantKeys.GO_TO_TEST);
 
         SystemClock.sleep(6000);
-
-        //onView(allOf(withId(R.id.textTitle), withText("Lovibond SD 50 pH me..."))).check(matches(isDisplayed()));
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.button_instructions), withText("Instructions"),
