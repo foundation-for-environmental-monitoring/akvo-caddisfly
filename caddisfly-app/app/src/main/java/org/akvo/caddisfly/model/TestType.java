@@ -77,10 +77,5 @@ public enum TestType {
      */
     @SerializedName("titration")
     TITRATION,
-    /**
-     * Titration counting.
-     */
-    @SerializedName("api")
-    API
 }
 

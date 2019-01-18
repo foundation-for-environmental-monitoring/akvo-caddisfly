@@ -34,7 +34,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
@@ -65,7 +64,6 @@ import org.akvo.caddisfly.sensor.turbidity.ResultInfoListActivity;
 import org.akvo.caddisfly.sensor.turbidity.TimeLapseActivity;
 import org.akvo.caddisfly.sensor.usb.SensorActivity;
 import org.akvo.caddisfly.util.AlertUtil;
-import org.akvo.caddisfly.util.NetUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 import org.json.JSONObject;
@@ -86,8 +84,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
-import static org.akvo.caddisfly.model.TestType.API;
-
 @SuppressWarnings("deprecation")
 public class TestActivity extends BaseActivity {
 
@@ -98,7 +94,6 @@ public class TestActivity extends BaseActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
-    final Activity activity = this;
     private final WeakRefHandler handler = new WeakRefHandler(this);
     private final PermissionsDelegate permissionsDelegate = new PermissionsDelegate(this);
     private final String[] storagePermissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -141,12 +136,6 @@ public class TestActivity extends BaseActivity {
             testInfo.setPivotCalibration(PreferencesUtil.getDouble(this,
                     "pivot_" + testInfo.getUuid(), 0));
         }
-
-        if (testInfo.getSubtype() == API) {
-            sendDummyResultForDebugging();
-            finish();
-        }
-
     }
 
     private void getTestSelectedByExternalApp(FragmentManager fragmentManager, Intent intent) {
@@ -306,29 +295,6 @@ public class TestActivity extends BaseActivity {
             pd.dismiss();
             finish();
         }, 3000);
-    }
-
-    /**
-     * Create dummy results to send when in debug mode
-     */
-    private void sendDummyResultForDebugging() {
-        if (NetUtil.isNetworkAvailable(this)) {
-
-            Intent resultIntent = new Intent(getIntent());
-            resultIntent.setClass(this, RecommendActivity.class);
-            resultIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-
-            Bundle b = new Bundle();
-            b.putParcelable(ConstantKey.TEST_INFO, testInfo);
-            resultIntent.putExtra("bundle", b);
-
-            startActivity(resultIntent);
-            finish();
-        } else {
-            Toast.makeText(this,
-                    "No data connection. Please connect to the internet and try again.", Toast.LENGTH_LONG).show();
-            finish();
-        }
     }
 
     private void startTest() {

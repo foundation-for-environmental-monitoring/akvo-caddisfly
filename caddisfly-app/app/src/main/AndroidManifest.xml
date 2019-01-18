@@ -127,10 +127,6 @@
             android:name=".sensor.chamber.CalibrationGraphActivity"
             android:screenOrientation="nosensor" />
 
-        <activity
-            android:name=".ui.RecommendActivity"
-            android:screenOrientation="nosensor" />
-
         <service
             android:name=".updater.AlarmService"
             android:enabled="true" />
