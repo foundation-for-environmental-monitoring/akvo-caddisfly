@@ -103,9 +103,9 @@ dependencies {
     // Support
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
@@ -118,11 +118,11 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Architecture Components
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.1.0-alpha03'
-    annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'
+    implementation 'androidx.room:room-runtime:2.0.0'
+    annotationProcessor 'androidx.room:room-compiler:2.0.0'
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -164,10 +164,10 @@ dependencies {
     unmock 'org.robolectric:android-all:4.3_r2-robolectric-0'
 
     // Firebase (Experiment Flavor)
-//    experimentImplementation 'com.android.support:multidex:1.0.3'
-    tryoutImplementation 'com.google.firebase:firebase-core:16.0.6'
-    tryoutImplementation 'com.google.firebase:firebase-database:16.0.5'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:17.1.5'
+//    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
+    tryoutImplementation 'com.google.firebase:firebase-core:16.0.7'
+    tryoutImplementation 'com.google.firebase:firebase-database:16.0.6'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:18.0.1'
     tryoutImplementation 'com.google.firebase:firebase-storage:16.0.5'
     tryoutImplementation 'com.google.firebase:firebase-auth:16.1.0'
 }
