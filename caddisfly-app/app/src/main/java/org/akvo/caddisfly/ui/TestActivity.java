@@ -594,7 +594,7 @@ public class TestActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (testInfo.getSubtype() == TestType.COLIFORM) {
+        if (testInfo != null && testInfo.getSubtype() == TestType.COLIFORM) {
             // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.menu_results, menu);
         }

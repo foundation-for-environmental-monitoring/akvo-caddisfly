@@ -27,7 +27,7 @@ android {
         }
         experiment {
             applicationIdSuffix ".experiment"
-            versionCode 244
+            versionCode 245
             versionName "Experiment"
             buildConfigField 'boolean', 'showExperimentalTests', 'true'
         }
@@ -167,11 +167,11 @@ dependencies {
 
     // Firebase (Experiment Flavor)
     experimentImplementation 'androidx.multidex:multidex:2.0.1'
-    experimentImplementation 'com.google.firebase:firebase-core:16.0.6'
-    experimentImplementation 'com.google.firebase:firebase-database:16.0.5'
-    experimentImplementation 'com.google.firebase:firebase-firestore:17.1.5'
+    experimentImplementation 'com.google.firebase:firebase-core:16.0.7'
+    experimentImplementation 'com.google.firebase:firebase-database:16.0.6'
+    experimentImplementation 'com.google.firebase:firebase-firestore:18.0.1'
     experimentImplementation 'com.google.firebase:firebase-storage:16.0.5'
     experimentImplementation 'com.google.firebase:firebase-auth:16.1.0'
 }
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'
 

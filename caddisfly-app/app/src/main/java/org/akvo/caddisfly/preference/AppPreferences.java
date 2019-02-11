@@ -20,6 +20,7 @@
 package org.akvo.caddisfly.preference;
 
 import android.hardware.Camera;
+import android.os.Build;
 import android.util.Pair;
 import android.util.Patterns;
 
@@ -188,6 +189,11 @@ public final class AppPreferences {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean useFlashMode() {
+
+        if (Build.MODEL.toUpperCase().contains("M1803E6I")) {
+            return true;
+        }
+
         return isDiagnosticMode() &&
                 PreferencesUtil.getBoolean(CaddisflyApp.getApp(), R.string.useFlashModeKey, false);
     }
