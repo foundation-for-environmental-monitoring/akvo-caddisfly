@@ -539,6 +539,31 @@
       ]
     },
     {
+      "name": "Potassium",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "d4248af8-c0de-4d99-8554-80fb972e7070",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,10,20,30,40",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Potassium",
+          "unit": "mg/l",
+          "timeDelay": 300,
+          "grayScale": true
+        }
+      ]
+    },
+    {
       "name": "Phosphate",
       "type": "water",
       "subtype": "cuvette",
