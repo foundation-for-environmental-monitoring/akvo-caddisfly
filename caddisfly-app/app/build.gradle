@@ -9,8 +9,8 @@ android {
         applicationId "io.ffem"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 240
-        versionName "Beta 1.3.2"
+        versionCode 241
+        versionName "Beta 1.3.3"
         resConfigs "en", "en_US", "hi"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -59,24 +59,24 @@ android {
         }
     }
 
-//    signingConfigs {
-//        appRelease {
-//            storeFile file(FFEM_RELEASE_STORE_FILE)
-//            storePassword FFEM_RELEASE_STORE_PASSWORD
-//            keyAlias FFEM_RELEASE_KEY_ALIAS
-//            keyPassword FFEM_RELEASE_KEY_PASSWORD
-//        }
-//    }
-//
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.appRelease
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            zipAlignEnabled true
-//        }
-//    }
+    signingConfigs {
+        appRelease {
+            storeFile file(FFEM_RELEASE_STORE_FILE)
+            storePassword FFEM_RELEASE_STORE_PASSWORD
+            keyAlias FFEM_RELEASE_KEY_ALIAS
+            keyPassword FFEM_RELEASE_KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.appRelease
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+    }
 
     lintOptions {
         checkReleaseBuilds true
