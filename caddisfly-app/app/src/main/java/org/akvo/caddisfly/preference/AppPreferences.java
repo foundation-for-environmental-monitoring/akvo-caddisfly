@@ -36,6 +36,9 @@ import java.util.List;
  */
 public final class AppPreferences {
 
+    // Phone models where the camera does not work in torch mode
+    private static String[] phoneModels = {"M1803E6I", "REDMI NOTE 3"};
+
     private AppPreferences() {
     }
 
@@ -190,8 +193,10 @@ public final class AppPreferences {
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean useFlashMode() {
 
-        if (Build.MODEL.toUpperCase().contains("M1803E6I")) {
-            return true;
+        for (String model : phoneModels) {
+            if (Build.MODEL.toUpperCase().contains(model)) {
+                return true;
+            }
         }
 
         return isDiagnosticMode() &&
