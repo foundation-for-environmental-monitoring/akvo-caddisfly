@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/actionSend"
+        android:icon="@android:drawable/stat_sys_upload_done"
+        android:onClick="onSendResult"
+        android:title="Send results"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/actionReceive"
+        android:icon="@android:drawable/stat_sys_download"
+        android:onClick="onReceiveResult"
+        android:title="Receive results"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/actionSettings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:onClick="onSettingsClick"
+        android:title="@string/settings"
+        app:showAsAction="always" />
+</menu>

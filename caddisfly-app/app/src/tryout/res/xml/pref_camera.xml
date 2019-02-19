@@ -1,0 +1,38 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <org.akvo.caddisfly.preference.PreferenceCategoryCustom
+        android:key="preferenceCategoryDiagnostics"
+        android:title="@string/camera">
+        <Preference
+            android:key="cameraPreview"
+            android:summary="Test cuvette centering &amp; image quality"
+            android:title="@string/cameraPreview" />
+        <org.akvo.caddisfly.preference.SeekBarPreference
+            android:defaultValue="0"
+            android:key="cameraCenterOffsetKey"
+            android:max="250"
+            android:summary="0"
+            android:title="Camera center offset" />
+        <org.akvo.caddisfly.preference.SeekBarPreference
+            android:defaultValue="0"
+            android:key="cameraZoomPercentKey"
+            android:max="100"
+            android:summary="0"
+            android:title="Camera zoom percent" />
+        <io.ffem.experiment.ResolutionListPreference
+            android:defaultValue="640-480"
+            android:key="cameraResolutionKey"
+            android:summary="640-480"
+            android:title="Camera Resolution" />
+        <CheckBoxPreference
+            android:key="@string/useFlashModeKey"
+            android:title="Use flash mode" />
+        <ListPreference
+            android:defaultValue="fixed"
+            android:dialogTitle="@string/cameraFocusMode"
+            android:entries="@array/focusModes"
+            android:entryValues="@array/focusModes_codes"
+            android:key="cameraFocusKey"
+            android:summary="%s"
+            android:title="@string/cameraFocusMode" />
+    </org.akvo.caddisfly.preference.PreferenceCategoryCustom>
+</PreferenceScreen>
