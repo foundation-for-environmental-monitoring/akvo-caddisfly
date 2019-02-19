@@ -166,12 +166,14 @@ public class CameraPreferenceFragment extends PreferenceFragment {
             String resolution = PreferenceManager.getDefaultSharedPreferences(this.getActivity())
                     .getString(getString(R.string.cameraResolutionKey), "640-480");
 
-            resolutionListPreference.setSummary(String.valueOf(resolution));
+            resolutionListPreference.setSummary(resolution);
+            resolutionListPreference.setValue(resolution);
             if (resolutionListPreference.getEntries() == null) {
                 resolutionListPreference.setShouldDisableView(true);
                 resolutionListPreference.setEnabled(false);
             } else {
                 resolutionListPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                    resolutionListPreference.setValue(newValue.toString());
                     resolutionListPreference.setSummary(String.valueOf(newValue));
                     PreferencesUtil.setString(getActivity(), R.string.cameraResolutionKey, newValue.toString());
                     return false;

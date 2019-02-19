@@ -15,6 +15,7 @@ import android.hardware.Camera;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.util.Pair;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -65,7 +66,7 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
 
         wakeLock = Objects.requireNonNull(pm).newWakeLock(PowerManager.FULL_WAKE_LOCK
                 | PowerManager.ACQUIRE_CAUSES_WAKEUP
-                | PowerManager.ON_AFTER_RELEASE, "WakeLock");
+                | PowerManager.ON_AFTER_RELEASE, "ffem:WakeLock");
         wakeLock.acquire(15000);
     }
 
@@ -87,7 +88,7 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
                 return false;
             }
 
-            setCamera(mCamera);
+            setupCamera(mCamera);
             mCamera.startPreview();
             try {
                 Thread.sleep(PREVIEW_START_WAIT_MILLIS);
@@ -134,9 +135,7 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
             int imageCount = PreferencesUtil.getInt(mContext, "imageCount", 0);
             String demoFileName = "start.jpg";
             if (!PreferencesUtil.getBoolean(mContext, R.string.coliformResultSafeKey, false)) {
-                if (imageCount <= 1) {
-                    demoFileName = "start.jpg";
-                } else if (imageCount >= numberOfSamples) {
+                if (imageCount >= numberOfSamples) {
                     demoFileName = "end.jpg";
                 } else if (imageCount >= numberOfSamples / 2) {
                     demoFileName = "turbid.jpg";
@@ -164,6 +163,7 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private int getThresholdNonZeroCount(byte[] bytes, int threshold) {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -194,15 +194,18 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
         return nonZero;
     }
 
-    private void setCamera(Camera camera) {
+    /**
+     * Camera setup.
+     *
+     * @param camera the camera
+     */
+    private void setupCamera(Camera camera) {
         mCamera = camera;
-//        List<String> mSupportedFlashModes = mCamera.getParameters().getSupportedFlashModes();
         Camera.Parameters parameters = mCamera.getParameters();
 
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-
         List<String> supportedWhiteBalance = mCamera.getParameters().getSupportedWhiteBalance();
-        if (supportedWhiteBalance != null && supportedWhiteBalance.contains(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT)) {
+        if (supportedWhiteBalance != null && supportedWhiteBalance.contains(
+                Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT)) {
             parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT);
         }
 
@@ -224,13 +227,9 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
 
         List<String> focusModes = parameters.getSupportedFocusModes();
 
-        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_FIXED)) {
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_FIXED);
-        } else {
-            // Attempt to set focus to infinity if supported
-            if (focusModes.contains(Camera.Parameters.FOCUS_MODE_INFINITY)) {
-                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-            }
+        String focusMode = AppPreferences.getCameraFocusMode(focusModes);
+        if (!focusMode.isEmpty()) {
+            parameters.setFocusMode(focusMode);
         }
 
         if (parameters.getMaxNumMeteringAreas() > 0) {
@@ -241,13 +240,20 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
             parameters.setMeteringAreas(meteringAreas);
         }
 
-        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-
         parameters.setExposureCompensation(EXPOSURE_COMPENSATION);
 
-        parameters.setZoom(0);
+        if (parameters.isZoomSupported()) {
+            parameters.setZoom(AppPreferences.getCameraZoom());
+        }
 
-        parameters.setPictureSize(MIN_PICTURE_WIDTH, MIN_PICTURE_HEIGHT);
+        mCamera.setDisplayOrientation(Constants.DEGREES_90);
+
+        if (AppPreferences.isDiagnosticMode()) {
+            Pair<Integer, Integer> resolution = AppPreferences.getCameraResolution();
+            parameters.setPictureSize(resolution.first, resolution.second);
+        } else {
+            parameters.setPictureSize(MIN_PICTURE_WIDTH, MIN_PICTURE_HEIGHT);
+        }
 
         try {
             mCamera.setParameters(parameters);
