@@ -63,6 +63,7 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
+import static org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT;
 import static org.akvo.caddisfly.common.TestConstants.IS_START_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_TIME_DELAY;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
@@ -210,7 +211,7 @@ public class ChamberTest {
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
         sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
+                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000);
 
         onView(withId(R.id.buttonOk)).perform(click());
@@ -240,7 +241,7 @@ public class ChamberTest {
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
         sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
+                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000);
 
         onView(withId(R.id.buttonAccept)).perform(click());
@@ -268,7 +269,7 @@ public class ChamberTest {
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
         sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
+                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000);
 
         if (TestConstants.IS_HAS_DILUTION) {
@@ -304,7 +305,7 @@ public class ChamberTest {
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
         sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
+                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000);
 
         String resultString = getText(withId(R.id.textResult));
@@ -417,7 +418,7 @@ public class ChamberTest {
         recyclerView2.perform(actionOnItemAtPosition(TestConstants.IS_TEST_CALIBRATION_INDEX, click()));
 
         sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
+                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000);
 
         onView(withId(R.id.buttonOk)).perform(click());
@@ -444,7 +445,7 @@ public class ChamberTest {
         }
 
         sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
+                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000);
 
         //Result dialog
