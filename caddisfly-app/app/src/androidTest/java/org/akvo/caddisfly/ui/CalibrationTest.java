@@ -25,6 +25,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.widget.DatePicker;
 
+import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.util.TestUtil;
@@ -46,7 +47,6 @@ import androidx.test.filters.RequiresDevice;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -57,6 +57,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.currentHashMap;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
@@ -122,7 +123,11 @@ public class CalibrationTest {
 
         goToMainScreen();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
         sleep(4000);
 
@@ -166,7 +171,11 @@ public class CalibrationTest {
 
         leaveDiagnosticMode();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
     }
 
@@ -184,7 +193,11 @@ public class CalibrationTest {
 
         Espresso.pressBack();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
         sleep(500);
 
@@ -212,7 +225,11 @@ public class CalibrationTest {
 
         leaveDiagnosticMode();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
         onView(allOf(withId(R.id.list_types),
                 childAtPosition(
@@ -281,7 +298,11 @@ public class CalibrationTest {
 
         mActivityRule.launchActivity(new Intent());
 
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
 //        onView(withText(currentHashMap.get(TestConstant.FLUORIDE))).perform(click());
 

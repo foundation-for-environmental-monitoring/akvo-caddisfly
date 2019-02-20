@@ -39,7 +39,6 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -47,6 +46,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.akvo.caddisfly.util.TestHelper.currentHashMap;
 import static org.akvo.caddisfly.util.TestHelper.loadData;
 import static org.akvo.caddisfly.util.TestHelper.mCurrentLanguage;
@@ -86,7 +86,7 @@ public class LanguageTest {
 
         onView(withText(R.string.about)).check(matches(isDisplayed())).perform(click());
 
-        String version = CaddisflyApp.getAppVersion(false);
+        String version = CaddisflyApp.getAppVersion(true);
 
         onView(withText(version)).check(matches(isDisplayed()));
 
@@ -136,7 +136,7 @@ public class LanguageTest {
 
         mActivityRule.launchActivity(new Intent());
 
-        onView(withText(currentHashMap.get("sensors"))).perform(click());
+        onView(withText(R.string.coliforms)).perform(click());
 
         mDevice.waitForIdle();
 

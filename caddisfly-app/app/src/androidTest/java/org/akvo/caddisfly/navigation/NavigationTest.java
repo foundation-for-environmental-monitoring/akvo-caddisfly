@@ -48,7 +48,6 @@ import androidx.test.filters.RequiresDevice;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -59,8 +58,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
+import static org.akvo.caddisfly.util.TestHelper.goToCalibrate;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
 import static org.akvo.caddisfly.util.TestHelper.gotoSurveyForm;
 import static org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode;
@@ -158,7 +159,7 @@ public class NavigationTest {
 
         goToMainScreen();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        goToCalibrate();
 
         sleep(4000);
 
@@ -184,15 +185,15 @@ public class NavigationTest {
 
         sleep(2000);
 
-        onView(withText(String.format("%s. %s", mActivityRule.getActivity()
-                        .getString(R.string.calibrationIsInvalid),
-                mActivityRule.getActivity().getString(R.string.tryRecalibrating)))).check(matches(isDisplayed()));
+//        onView(withText(String.format("%s. %s", mActivityRule.getActivity()
+//                        .getString(R.string.calibrationIsInvalid),
+//                mActivityRule.getActivity().getString(R.string.tryRecalibrating)))).check(matches(isDisplayed()));
 
         leaveDiagnosticMode();
 
         sleep(4000);
 
-        onView(withText(R.string.calibrate)).perform(click());
+        goToCalibrate();
 
         //Test Types Screen
         takeScreenshot();
@@ -247,7 +248,7 @@ public class NavigationTest {
 
         Espresso.pressBack();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        goToCalibrate();
 
         sleep(4000);
 
@@ -267,7 +268,7 @@ public class NavigationTest {
 
         leaveDiagnosticMode();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        goToCalibrate();
 
 //        onView(withText(currentHashMap.get("electricalConductivity"))).perform(click());
 //
@@ -311,6 +312,8 @@ public class NavigationTest {
         gotoSurveyForm();
 
         clickExternalSourceButton(TestConstants.IS_TEST_ID);
+
+        sleep(4000);
 
         onView(withId(R.id.button_prepare)).check(matches(isDisplayed()));
 

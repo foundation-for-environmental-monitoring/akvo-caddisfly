@@ -22,6 +22,7 @@ package org.akvo.caddisfly.diagnostic;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.ui.MainActivity;
 import org.akvo.caddisfly.util.TestUtil;
@@ -38,7 +39,6 @@ import androidx.test.filters.RequiresDevice;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -49,6 +49,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
 import static org.akvo.caddisfly.util.TestHelper.loadData;
 import static org.akvo.caddisfly.util.TestHelper.mCurrentLanguage;
@@ -100,13 +101,19 @@ public class DiagnosticTest {
             onView(withId(R.id.textVersion)).perform(click());
         }
 
+        if (!BuildConfig.showExperimentalTests) {
+            goToMainScreen();
+
+            onView(withId(R.id.fabDisableDiagnostics)).check(matches(isDisplayed()));
+        }
+
         goToMainScreen();
 
-        onView(withId(R.id.fabDisableDiagnostics)).check(matches(isDisplayed()));
-
-        goToMainScreen();
-
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.list_types),

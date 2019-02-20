@@ -25,6 +25,7 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.widget.DatePicker;
 
+import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.ui.MainActivity;
@@ -52,7 +53,6 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 import timber.log.Timber;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -65,9 +65,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertEquals;
 import static org.akvo.caddisfly.util.TestHelper.currentHashMap;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
+import static org.akvo.caddisfly.util.TestHelper.goToCalibrate;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
 import static org.akvo.caddisfly.util.TestHelper.loadData;
 import static org.akvo.caddisfly.util.TestHelper.mCurrentLanguage;
@@ -141,7 +143,11 @@ public class MiscTest {
 
         goToMainScreen();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.list_types),
@@ -273,7 +279,11 @@ public class MiscTest {
     @RequiresDevice
     public void testRestartAppDuringAnalysis() {
 
-        onView(withText(R.string.calibrate)).perform(click());
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
 
         onView(allOf(withId(R.id.list_types),
                 childAtPosition(
@@ -375,7 +385,7 @@ public class MiscTest {
 
         goToMainScreen();
 
-        onView(withText(R.string.calibrate)).perform(click());
+        goToCalibrate();
 
         sleep(4000);
 

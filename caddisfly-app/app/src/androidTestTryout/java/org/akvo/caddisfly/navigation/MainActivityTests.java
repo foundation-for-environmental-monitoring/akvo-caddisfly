@@ -35,6 +35,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.akvo.caddisfly.util.TestHelper.goToCalibrate;
 import static org.akvo.caddisfly.util.TestHelper.mDevice;
 
 @RunWith(AndroidJUnit4.class)
@@ -56,7 +57,8 @@ public class MainActivityTests {
 
     @Test
     public void testMainActivityButtons() {
-        onView(withText("Calibrate")).perform(click());
+
+        goToCalibrate();
 
         pressBack();
 
@@ -64,15 +66,15 @@ public class MainActivityTests {
 
         pressBack();
 
-        onView(withText("Sensors")).perform(click());
+        onView(withText("Coliforms")).perform(click());
 
         pressBack();
 
-        onView(withText("MD 610 Photometer")).perform(click());
+        onView(withText("Water - Calibrate")).perform(click());
 
         pressBack();
 
-        onView(withText("E.coli - Aquagenx CBT")).perform(click());
+        onView(withText("Soil - Calibrate")).perform(click());
 
         pressBack();
 

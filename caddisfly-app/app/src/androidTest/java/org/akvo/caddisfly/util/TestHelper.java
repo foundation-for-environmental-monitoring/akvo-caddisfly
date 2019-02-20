@@ -44,9 +44,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.StringRes;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
@@ -260,6 +260,14 @@ public final class TestHelper {
         }
     }
 
+    public static void goToCalibrate() {
+        if (BuildConfig.showExperimentalTests) {
+            onView(withText(R.string.waterCalibrate)).perform(click());
+        } else {
+            onView(withText(R.string.calibrate)).perform(click());
+        }
+    }
+
     public static void activateTestMode(Activity activity) {
         onView(withId(R.id.actionSettings)).perform(click());
 
@@ -405,7 +413,9 @@ public final class TestHelper {
 
     public static void leaveDiagnosticMode() {
         goToMainScreen();
-        onView(withId(R.id.fabDisableDiagnostics)).perform(click());
+        if (!BuildConfig.showExperimentalTests) {
+            onView(withId(R.id.fabDisableDiagnostics)).perform(click());
+        }
     }
 
     public static void resetLanguage() {

@@ -361,7 +361,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void startTitration(){
+    private void startTitration() {
         final TestListViewModel viewModel =
                 ViewModelProviders.of(this).get(TestListViewModel.class);
 

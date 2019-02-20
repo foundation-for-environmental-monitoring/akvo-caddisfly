@@ -21,9 +21,7 @@ package org.akvo.caddisfly.instruction;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -122,9 +120,9 @@ public class ManualInstructions {
 
         loadData(mActivityTestRule.getActivity(), mCurrentLanguage);
 
-        SharedPreferences prefs =
-                PreferenceManager.getDefaultSharedPreferences(mActivityTestRule.getActivity());
-        prefs.edit().clear().apply();
+//        SharedPreferences prefs =
+//                PreferenceManager.getDefaultSharedPreferences(mActivityTestRule.getActivity());
+//        prefs.edit().clear().apply();
 
         resetLanguage();
     }

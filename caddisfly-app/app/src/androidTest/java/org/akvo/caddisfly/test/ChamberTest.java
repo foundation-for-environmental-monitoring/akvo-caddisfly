@@ -48,7 +48,6 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -60,6 +59,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
@@ -67,6 +67,7 @@ import static org.akvo.caddisfly.common.TestConstants.IS_START_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_TIME_DELAY;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
+import static org.akvo.caddisfly.util.TestHelper.goToCalibrate;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
 import static org.akvo.caddisfly.util.TestHelper.gotoSurveyForm;
 import static org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode;
@@ -143,11 +144,7 @@ public class ChamberTest {
 
         goToMainScreen();
 
-        try {
-            onView(withText(R.string.calibrate)).perform(click());
-        } catch (Exception e) {
-            onView(withText(R.string.waterCalibrate)).perform(click());
-        }
+        goToCalibrate();
 
         onView(allOf(withId(R.id.list_types),
                 childAtPosition(
@@ -177,11 +174,7 @@ public class ChamberTest {
 
         leaveDiagnosticMode();
 
-        try {
-            onView(withText(R.string.calibrate)).perform(click());
-        } catch (Exception e) {
-            onView(withText(R.string.waterCalibrate)).perform(click());
-        }
+        goToCalibrate();
 
         onView(allOf(withId(R.id.list_types),
                 childAtPosition(
@@ -362,11 +355,7 @@ public class ChamberTest {
 
         goToMainScreen();
 
-        try {
-            onView(withText(R.string.calibrate)).perform(click());
-        } catch (Exception e) {
-            onView(withText(R.string.waterCalibrate)).perform(click());
-        }
+        goToCalibrate();
 
         onView(allOf(withId(R.id.list_types),
                 childAtPosition(
@@ -394,11 +383,7 @@ public class ChamberTest {
 
         leaveDiagnosticMode();
 
-        try {
-            onView(withText(R.string.calibrate)).perform(click());
-        } catch (Exception e) {
-            onView(withText(R.string.waterCalibrate)).perform(click());
-        }
+        goToCalibrate();
 
         onView(allOf(withId(R.id.list_types),
                 childAtPosition(

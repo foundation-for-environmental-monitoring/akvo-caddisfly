@@ -35,6 +35,7 @@ import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -130,10 +131,10 @@ public class TestListFragment extends Fragment {
         }
     }
 
-    public void refresh() {
+    void refresh() {
         loadTests();
         mTestInfoAdapter.notifyDataSetChanged();
-        b.listTypes.getAdapter().notifyDataSetChanged();
+        Objects.requireNonNull(b.listTypes.getAdapter()).notifyDataSetChanged();
         b.listTypes.invalidate();
     }
 
