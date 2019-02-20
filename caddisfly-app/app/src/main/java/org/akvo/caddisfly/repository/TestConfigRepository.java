@@ -114,8 +114,6 @@ public class TestConfigRepository {
                     testInfoList.addAll(customList);
                 }
             }
-
-
         } catch (Exception e) {
             Timber.e(e);
         }
@@ -129,27 +127,34 @@ public class TestConfigRepository {
     }
 
     private void addExperimentalTests(TestType testType, TestSampleType testSampleType, List<TestInfo> testInfoList) {
-        TestConfig testConfig = new Gson().fromJson(assetsManager.getExperimentalJson(), TestConfig.class);
-        if (testConfig != null) {
-            List<TestInfo> experimentalList = testConfig.getTests();
+        try {
+            TestConfig testConfig = new Gson().fromJson(assetsManager.getExperimentalJson(), TestConfig.class);
+            if (testConfig != null) {
+                List<TestInfo> experimentalList = testConfig.getTests();
 
-            for (int i = experimentalList.size() - 1; i >= 0; i--) {
-                if (experimentalList.get(i).getSubtype() != testType) {
-                    experimentalList.remove(i);
-                } else if (testSampleType != TestSampleType.ALL
-                        && experimentalList.get(i).getSampleType() != testSampleType) {
-                    experimentalList.remove(i);
+                for (int i = experimentalList.size() - 1; i >= 0; i--) {
+                    if (experimentalList.get(i).getSubtype() != testType) {
+                        experimentalList.remove(i);
+                    } else if (testSampleType != TestSampleType.ALL
+                            && experimentalList.get(i).getSampleType() != testSampleType) {
+                        experimentalList.remove(i);
+                    }
+                }
+
+                if (experimentalList.size() > 0) {
+                    Collections.sort(experimentalList, (object1, object2) ->
+                            object1.getName().compareToIgnoreCase(object2.getName()));
+
+                    testInfoList.add(new TestInfo("Experimental"));
+
+                    testInfoList.addAll(experimentalList);
                 }
             }
-
-            if (experimentalList.size() > 0) {
-                Collections.sort(experimentalList, (object1, object2) ->
-                        object1.getName().compareToIgnoreCase(object2.getName()));
-
-                testInfoList.add(new TestInfo("Experimental"));
-
-                testInfoList.addAll(experimentalList);
-            }
+        } catch (JsonSyntaxException e) {
+            testInfoList.add(new TestInfo("Experimental"));
+            String msg = "JSON Error: ";
+            msg += e.getMessage().substring(e.getMessage().indexOf(":") + 1).trim();
+            testInfoList.add(new TestInfo(msg, ""));
         }
     }
 

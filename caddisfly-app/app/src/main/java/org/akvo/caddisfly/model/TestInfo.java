@@ -175,6 +175,11 @@ public class TestInfo implements Parcelable {
         isCategory = true;
     }
 
+    public TestInfo(String name, String id) {
+        this.name = name;
+        uuid = id;
+    }
+
     protected TestInfo(Parcel in) {
         isCategory = in.readByte() != 0;
         category = in.readString();

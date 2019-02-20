@@ -59,7 +59,7 @@ public class TestInfoAdapter extends RecyclerView.Adapter<TestInfoAdapter.TestIn
         mTestInfoClickCallback = clickCallback;
     }
 
-    public void setTestList(final List<? extends TestInfo> testList) {
+    void setTestList(final List<? extends TestInfo> testList) {
         if (mTestList != null) {
             mTestList.clear();
         }
@@ -88,7 +88,7 @@ public class TestInfoAdapter extends RecyclerView.Adapter<TestInfoAdapter.TestIn
         return mTestList == null ? 0 : mTestList.size();
     }
 
-    public TestInfo getItemAt(int i) {
+    TestInfo getItemAt(int i) {
         return mTestList.get(i);
     }
 
