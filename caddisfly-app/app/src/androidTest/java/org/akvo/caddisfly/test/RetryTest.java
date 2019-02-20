@@ -27,7 +27,6 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
@@ -39,6 +38,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
@@ -91,16 +91,6 @@ public class RetryTest {
                 mDevice.pressBack();
             }
         }
-    }
-
-    @Before
-    public void setUp() {
-
-        loadData(mActivityRule.getActivity(), mCurrentLanguage);
-
-        SharedPreferences prefs =
-                PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
-        prefs.edit().clear().apply();
     }
 
     public static void runTest(String testId, boolean useDiagnosticMode,
@@ -261,6 +251,16 @@ public class RetryTest {
         onView(withText(R.string.retry)).check(doesNotExistOrGone());
 
         onView(withText(R.string.ok)).perform(click());
+    }
+
+    @Before
+    public void setUp() {
+
+        loadData(mActivityRule.getActivity(), mCurrentLanguage);
+
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
+        prefs.edit().clear().apply();
     }
 
     @Test
