@@ -222,7 +222,8 @@ public class TestActivity extends BaseActivity {
     public void onStartTestClick(View view) {
 
         // if app was launched in debug mode then send dummy results without running test
-        if (getIntent().getBooleanExtra(SensorConstants.DEBUG_MODE, false)) {
+        if (AppPreferences.returnDummyResults() ||
+                getIntent().getBooleanExtra(SensorConstants.DEBUG_MODE, false)) {
             sendDummyJsonResultForDebugging();
             return;
         }
@@ -262,6 +263,10 @@ public class TestActivity extends BaseActivity {
         Intent resultIntent = new Intent();
         SparseArray<String> results = new SparseArray<>();
 
+        int maxDilution = testInfo.getMaxDilution();
+        if (maxDilution == -1) {
+            maxDilution = 15;
+        }
         for (int i = 0; i < testInfo.getResults().size(); i++) {
             Result result = testInfo.getResults().get(i);
             Random random = new Random();
@@ -271,8 +276,26 @@ public class TestActivity extends BaseActivity {
                 maxValue = result.getColors().get(result.getColors().size() - 1).getValue();
             }
 
+            int dilution = random.nextInt(maxDilution) + 1;
+
             result.setResult(random.nextDouble() * maxValue,
-                    random.nextInt(9) + 1, testInfo.getMaxDilution());
+                    dilution, maxDilution);
+
+            String testName = result.getName().replace(" ", "_");
+            if (testInfo.getNameSuffix() != null && !testInfo.getNameSuffix().isEmpty()) {
+                testName += "_" + testInfo.getNameSuffix().replace(" ", "_");
+            }
+
+            resultIntent.putExtra(testName
+                    + testInfo.getResultSuffix(), result.getResult());
+
+            resultIntent.putExtra(testName
+                    + "_" + SensorConstants.DILUTION
+                    + testInfo.getResultSuffix(), dilution);
+
+            resultIntent.putExtra(testName
+                            + "_" + SensorConstants.UNIT + testInfo.getResultSuffix(),
+                    testInfo.getResults().get(0).getUnit());
 
             if (i == 0) {
                 resultIntent.putExtra(SensorConstants.VALUE, result.getResult());
@@ -281,7 +304,8 @@ public class TestActivity extends BaseActivity {
             results.append(result.getId(), "> " + result.getResult());
         }
 
-        JSONObject resultJson = TestConfigHelper.getJsonResult(testInfo, results, null, -1, null);
+        JSONObject resultJson = TestConfigHelper.getJsonResult(testInfo, results,
+                null, -1, null);
         resultIntent.putExtra(SensorConstants.RESULT_JSON, resultJson.toString());
 
         ProgressDialog pd = new ProgressDialog(this);
@@ -412,8 +436,7 @@ public class TestActivity extends BaseActivity {
                 return;
             }
 
-            Intent intent = getIntent();
-            intent.setClass(this, ChamberTestActivity.class);
+            Intent intent = new Intent(this, ChamberTestActivity.class);
             intent.putExtra(ConstantKey.RUN_TEST, true);
             intent.putExtra(ConstantKey.TEST_INFO, testInfo);
             startActivityForResult(intent, REQUEST_TEST);
@@ -633,5 +656,4 @@ public class TestActivity extends BaseActivity {
             }
         }
     }
-
 }

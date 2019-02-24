@@ -22,6 +22,9 @@
         android:key="preferenceCategoryDiagnostics"
         android:title="@string/testing">
         <CheckBoxPreference
+            android:key="@string/dummyResultKey"
+            android:title="Return dummy results" />
+        <CheckBoxPreference
             android:key="@string/testModeOnKey"
             android:summary="Warning: Do not turn this on for normal usage of the app. For app demo or testing only."
             android:title="@string/testModeOn" />
