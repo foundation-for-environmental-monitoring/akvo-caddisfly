@@ -44,7 +44,7 @@ import static junit.framework.Assert.assertEquals;
 public class ColorTest {
 
     @Test
-    public void testGetResultValue() {
+    public void testGetResultValue() throws Exception {
         int[] colors = new int[2500];
         for (int i = 0; i < 2500; i++) {
             colors[i] = -1;
@@ -75,7 +75,7 @@ public class ColorTest {
     }
 
     @Test
-    public void testGetRedResultValue() {
+    public void testGetRedResultValue() throws Exception {
         int[] colors = new int[2500];
         for (int i = 0; i < 2500; i++) {
             colors[i] = Color.rgb(254, 1, 19);
@@ -106,7 +106,7 @@ public class ColorTest {
     }
 
     @Test
-    public void testGetPinkResultValue() {
+    public void testGetPinkResultValue() throws Exception {
         int[] colors = new int[2500];
         for (int i = 0; i < 2500; i++) {
             colors[i] = Color.rgb(254, 115, 190);

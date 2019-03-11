@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
@@ -41,6 +42,7 @@ import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ConfigDownloader;
 import org.akvo.caddisfly.util.PreferencesUtil;
+import org.akvo.caddisfly.util.StringUtil;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -123,27 +125,34 @@ public class TestListActivity extends BaseActivity
 
     private void startTest() {
 
-        testInfo = (new TestConfigRepository()).getTestInfo(testInfo.getUuid());
+        try {
+            testInfo = (new TestConfigRepository()).getTestInfo(testInfo.getUuid());
 
-        if (testInfo == null || testInfo.getIsGroup()) {
-            return;
-        }
+            if (testInfo == null || testInfo.getIsGroup()) {
+                return;
+            }
 
-        if (testInfo.getResults().size() == 0) {
-            ErrorMessages.alertCouldNotLoadConfig(this);
-            return;
-        }
+            if (testInfo.getResults().size() == 0) {
+                ErrorMessages.alertCouldNotLoadConfig(this);
+                return;
+            }
 
-        testInfo.setPivotCalibration(PreferencesUtil.getDouble(this,
-                "pivot_" + testInfo.getUuid(), 0));
+            testInfo.setPivotCalibration(PreferencesUtil.getDouble(this,
+                    "pivot_" + testInfo.getUuid(), 0));
 
-        if (testInfo.getSubtype() == TestType.CHAMBER_TEST) {
-            startCalibration();
-        } else {
-            Intent intent = new Intent(this, TestActivity.class);
-            intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-            intent.putExtra(IS_INTERNAL, true);
-            startActivity(intent);
+            if (testInfo.getSubtype() == TestType.CHAMBER_TEST) {
+                startCalibration();
+            } else {
+                Intent intent = new Intent(this, TestActivity.class);
+                intent.putExtra(ConstantKey.TEST_INFO, testInfo);
+                intent.putExtra(IS_INTERNAL, true);
+                startActivity(intent);
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
         }
     }
 

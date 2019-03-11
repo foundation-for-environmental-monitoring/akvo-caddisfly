@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
@@ -65,6 +66,7 @@ import org.akvo.caddisfly.sensor.turbidity.TimeLapseActivity;
 import org.akvo.caddisfly.sensor.usb.SensorActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
+import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 import org.json.JSONObject;
 
@@ -110,31 +112,38 @@ public class TestActivity extends BaseActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        // Add list fragment if this is first creation
-        if (savedInstanceState == null) {
+        try {
 
-            testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
+            // Add list fragment if this is first creation
+            if (savedInstanceState == null) {
 
-            if (testInfo != null) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
-                                TestActivity.class.getSimpleName()).commit();
+                testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
+
+                if (testInfo != null) {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
+                                    TestActivity.class.getSimpleName()).commit();
+                }
             }
-        }
 
-        if (BuildConfig.showExperimentalTests) {
-            AppPreferences.enableDiagnosticMode();
-        }
+            if (BuildConfig.showExperimentalTests) {
+                AppPreferences.enableDiagnosticMode();
+            }
 
-        Intent intent = getIntent();
+            Intent intent = getIntent();
 
-        if (BuildConfig.APPLICATION_ID.equals(intent.getAction())) {
-            getTestSelectedByExternalApp(fragmentManager, intent);
-        }
+            if (BuildConfig.APPLICATION_ID.equals(intent.getAction())) {
+                getTestSelectedByExternalApp(fragmentManager, intent);
+            }
 
-        if (null != testInfo) {
-            testInfo.setPivotCalibration(PreferencesUtil.getDouble(this,
-                    "pivot_" + testInfo.getUuid(), 0));
+            if (null != testInfo) {
+                testInfo.setPivotCalibration(PreferencesUtil.getDouble(this,
+                        "pivot_" + testInfo.getUuid(), 0));
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -144,36 +153,44 @@ public class TestActivity extends BaseActivity {
                 intent.getStringExtra(SensorConstants.LANGUAGE), true, handler);
 
         String uuid = intent.getStringExtra(SensorConstants.TEST_ID);
-        if (uuid != null) {
-            final TestListViewModel viewModel =
-                    ViewModelProviders.of(this).get(TestListViewModel.class);
-            testInfo = viewModel.getTestInfo(uuid);
 
-            if (testInfo != null && intent.getExtras() != null) {
-                for (int i = 0; i < intent.getExtras().keySet().size(); i++) {
-                    String code = Objects.requireNonNull(intent.getExtras().keySet().toArray())[i].toString();
-                    if (!code.equals(SensorConstants.TEST_ID)) {
-                        Pattern pattern = Pattern.compile("_(\\d*?)$");
-                        Matcher matcher = pattern.matcher(code);
-                        if (matcher.find()) {
-                            testInfo.setResultSuffix(matcher.group(0));
-                        } else if (code.contains("_x")) {
-                            testInfo.setResultSuffix(code.substring(code.indexOf("_x")));
+        try {
+            if (uuid != null) {
+                final TestListViewModel viewModel =
+                        ViewModelProviders.of(this).get(TestListViewModel.class);
+                testInfo = viewModel.getTestInfo(uuid);
+
+                if (testInfo != null && intent.getExtras() != null) {
+                    for (int i = 0; i < intent.getExtras().keySet().size(); i++) {
+                        String code = Objects.requireNonNull(intent.getExtras().keySet().toArray())[i].toString();
+                        if (!code.equals(SensorConstants.TEST_ID)) {
+                            Pattern pattern = Pattern.compile("_(\\d*?)$");
+                            Matcher matcher = pattern.matcher(code);
+                            if (matcher.find()) {
+                                testInfo.setResultSuffix(matcher.group(0));
+                            } else if (code.contains("_x")) {
+                                testInfo.setResultSuffix(code.substring(code.indexOf("_x")));
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if (testInfo == null) {
-            setTitle(R.string.notFound);
-            alertTestTypeNotSupported();
-        } else {
+            if (testInfo == null) {
+                setTitle(R.string.notFound);
+                alertTestTypeNotSupported();
+            } else {
 
-            TestInfoFragment fragment = TestInfoFragment.getInstance(testInfo);
+                TestInfoFragment fragment = TestInfoFragment.getInstance(testInfo);
 
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, fragment, TestActivity.class.getSimpleName()).commit();
+                fragmentManager.beginTransaction()
+                        .add(R.id.fragment_container, fragment, TestActivity.class.getSimpleName()).commit();
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
         }
 
 //        String suffix = "";

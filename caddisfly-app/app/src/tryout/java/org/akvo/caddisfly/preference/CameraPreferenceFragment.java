@@ -82,12 +82,16 @@ public class CameraPreferenceFragment extends PreferenceFragment {
 
             final TestListViewModel viewModel =
                     ViewModelProviders.of((FragmentActivity) getActivity()).get(TestListViewModel.class);
-            TestInfo testInfo = viewModel.getTestInfo(Constants.FLUORIDE_ID);
-
-            Intent intent = new Intent(getActivity(), ChamberPreviewActivity.class);
-            intent.putExtra(ConstantKey.RUN_TEST, true);
-            intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-            startActivity(intent);
+            TestInfo testInfo;
+            try {
+                testInfo = viewModel.getTestInfo(Constants.FLUORIDE_ID);
+                Intent intent = new Intent(getActivity(), ChamberPreviewActivity.class);
+                intent.putExtra(ConstantKey.RUN_TEST, true);
+                intent.putExtra(ConstantKey.TEST_INFO, testInfo);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

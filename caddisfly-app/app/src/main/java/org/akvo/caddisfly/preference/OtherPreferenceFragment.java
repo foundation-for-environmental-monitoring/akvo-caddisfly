@@ -180,33 +180,39 @@ public class OtherPreferenceFragment extends PreferenceFragment {
 
             List<TestInfo> testList = viewModel.getTests(TestType.CHAMBER_TEST, TestSampleType.ALL);
 
-            for (TestInfo testInfo : testList) {
 
-                if (testInfo.getIsGroup()) {
-                    continue;
-                }
+            try {
+                for (TestInfo testInfo : testList) {
 
-                testInfo = viewModel.getTestInfo(testInfo.getUuid());
+                    if (testInfo.getIsGroup()) {
+                        continue;
+                    }
 
-                boolean calibrated = false;
-                for (Calibration calibration :
-                        testInfo.getCalibrations()) {
-                    if (calibration.color != Color.TRANSPARENT &&
-                            calibration.color != Color.BLACK) {
-                        calibrated = true;
-                        break;
+                    testInfo = viewModel.getTestInfo(testInfo.getUuid());
+
+                    boolean calibrated = false;
+                    for (Calibration calibration :
+                            testInfo.getCalibrations()) {
+                        if (calibration.color != Color.TRANSPARENT &&
+                                calibration.color != Color.BLACK) {
+                            calibrated = true;
+                            break;
+                        }
+                    }
+
+                    if (calibrated) {
+                        message.append(SwatchHelper.generateCalibrationFile(activityReference.get().getActivity(), testInfo, false));
+
+                        message.append("\n");
+
+                        message.append("-------------------------------------------------");
+
+                        message.append("\n");
                     }
                 }
 
-                if (calibrated) {
-                    message.append(SwatchHelper.generateCalibrationFile(activityReference.get().getActivity(), testInfo, false));
-
-                    message.append("\n");
-
-                    message.append("-------------------------------------------------");
-
-                    message.append("\n");
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             if (message.toString().isEmpty()) {

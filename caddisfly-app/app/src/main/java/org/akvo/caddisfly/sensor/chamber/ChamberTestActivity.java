@@ -71,6 +71,7 @@ import org.akvo.caddisfly.util.ConfigDownloader;
 import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.NetUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
+import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
 import org.json.JSONObject;
 
@@ -111,6 +112,7 @@ public class ChamberTestActivity extends BaseActivity implements
         }
     };
     Calibration selectedCalibration;
+    boolean isInternal;
     private RunTest runTestFragment;
     private CalibrationItemFragment calibrationItemFragment;
     private FragmentManager fragmentManager;
@@ -120,7 +122,6 @@ public class ChamberTestActivity extends BaseActivity implements
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
     private int retryCount = 0;
-    boolean isInternal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,8 +280,14 @@ public class ChamberTestActivity extends BaseActivity implements
                         R.string.setDefaultCalibration, R.string.ok, R.string.cancel, true,
                         (dialogInterface1, i1) -> {
                             PreferencesUtil.setDouble(this, "pivot_" + testInfo.getUuid(), item.value);
-                            testInfo.setPivotCalibration(item.value);
-                            loadDetails();
+                            try {
+                                testInfo.setPivotCalibration(item.value);
+                                loadDetails();
+                            } catch (Exception e) {
+                                Toast.makeText(this, StringUtil
+                                                .getStringByName(this, e.getLocalizedMessage()),
+                                        Toast.LENGTH_LONG).show();
+                            }
                         }, null);
             }
         }
@@ -428,17 +435,24 @@ public class ChamberTestActivity extends BaseActivity implements
         List<Calibration> calibrations = CaddisflyApp.getApp().getDb()
                 .calibrationDao().getAll(testInfo.getUuid());
 
-        testInfo.setCalibrations(calibrations);
-        if (calibrationItemFragment != null) {
-            calibrationItemFragment.setAdapter(testInfo);
+        try {
+            testInfo.setCalibrations(calibrations);
+
+            if (calibrationItemFragment != null) {
+                calibrationItemFragment.setAdapter(testInfo);
+            }
+
+            final TestInfoViewModel model =
+                    ViewModelProviders.of(this).get(TestInfoViewModel.class);
+
+            model.setTest(testInfo);
+
+            calibrationItemFragment.loadDetails();
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
         }
-
-        final TestInfoViewModel model =
-                ViewModelProviders.of(this).get(TestInfoViewModel.class);
-
-        model.setTest(testInfo);
-
-        calibrationItemFragment.loadDetails();
     }
 
     /**

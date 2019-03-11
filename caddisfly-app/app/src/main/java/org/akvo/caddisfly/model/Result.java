@@ -387,7 +387,7 @@ public class Result implements Parcelable {
         return referenceColors;
     }
 
-    void setPivotIndex(int pivotIndex) {
+    void setPivotIndex(int pivotIndex) throws Exception {
         this.pivotIndex = pivotIndex;
         referenceColors.clear();
         if (references.size() > 0) {
@@ -413,6 +413,11 @@ public class Result implements Parcelable {
             }
 
             String[] colors = references.get(referenceIndex).split(",");
+
+            if (colorItems.size() != colors.length - 1) {
+                throw new Exception("incorrect_range");
+            }
+
             for (int i = 0; i < colors.length; i++) {
                 if (i == colors.length - 1) {
                     referenceName = colors[i].trim();

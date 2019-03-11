@@ -46,7 +46,7 @@ import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startVi
 public class InstructionFragmentTest {
 
     @Test
-    public void testFragment() {
+    public void testFragment() throws Exception {
         TestConfigRepository testConfigRepository = new TestConfigRepository();
         TestInfo testInfo = testConfigRepository.getTestInfo(Constants.CBT_ID);
 
@@ -56,7 +56,7 @@ public class InstructionFragmentTest {
     }
 
     @Test
-    public void testInstruction() {
+    public void testInstruction() throws Exception {
 
         TestConfigRepository testConfigRepository = new TestConfigRepository();
         TestInfo testInfo = testConfigRepository.getTestInfo(Constants.CBT_ID);

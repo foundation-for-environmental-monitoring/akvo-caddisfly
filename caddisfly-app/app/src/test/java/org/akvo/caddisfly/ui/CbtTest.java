@@ -54,7 +54,7 @@ import static org.robolectric.Shadows.shadowOf;
 public class CbtTest {
 
     @Test
-    public void titleIsCorrect() {
+    public void titleIsCorrect() throws Exception {
 
         TestConfigRepository testConfigRepository = new TestConfigRepository();
         TestInfo testInfo = testConfigRepository.getTestInfo(Constants.CBT_ID);
@@ -73,7 +73,7 @@ public class CbtTest {
     }
 
     @Test
-    public void clickingInstructions() {
+    public void clickingInstructions() throws Exception {
 
         TestConfigRepository testConfigRepository = new TestConfigRepository();
         TestInfo testInfo = testConfigRepository.getTestInfo(Constants.CBT_ID);
@@ -99,7 +99,7 @@ public class CbtTest {
     }
 
     @Test
-    public void clickingNext() {
+    public void clickingNext() throws Exception {
 
         String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 

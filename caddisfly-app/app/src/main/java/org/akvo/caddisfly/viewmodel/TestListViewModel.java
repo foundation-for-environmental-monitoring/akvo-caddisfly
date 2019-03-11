@@ -41,7 +41,7 @@ public class TestListViewModel extends AndroidViewModel {
         return testConfigRepository.getTests(testType, testSampleType);
     }
 
-    public TestInfo getTestInfo(String uuid) {
+    public TestInfo getTestInfo(String uuid) throws Exception {
         return testConfigRepository.getTestInfo(uuid);
     }
 

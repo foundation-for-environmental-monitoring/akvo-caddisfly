@@ -563,7 +563,7 @@ public class TestInfo implements Parcelable {
         return calibrations;
     }
 
-    public void setCalibrations(List<Calibration> calibrations) {
+    public void setCalibrations(List<Calibration> calibrations) throws Exception {
         swatches.clear();
 
         Result result = results.get(0);
@@ -725,7 +725,7 @@ public class TestInfo implements Parcelable {
         return pivotCalibration;
     }
 
-    public void setPivotCalibration(double pivotCalibration) {
+    public void setPivotCalibration(double pivotCalibration) throws Exception {
         this.pivotCalibration = pivotCalibration;
 
         for (int i = 0; i < calibrations.size(); i++) {

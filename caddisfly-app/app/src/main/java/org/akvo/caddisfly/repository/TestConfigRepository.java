@@ -164,7 +164,7 @@ public class TestConfigRepository {
      * @param id the test id
      * @return the test object
      */
-    public TestInfo getTestInfo(final String id) {
+    public TestInfo getTestInfo(final String id) throws Exception {
 
         TestInfo testInfo;
         testInfo = getTestInfoItem(assetsManager.getJson(), id);
@@ -188,7 +188,7 @@ public class TestConfigRepository {
     }
 
     @Nullable
-    private TestInfo getTestInfoItem(String json, String id) {
+    private TestInfo getTestInfoItem(String json, String id) throws Exception {
 
         List<TestInfo> testInfoList;
         try {

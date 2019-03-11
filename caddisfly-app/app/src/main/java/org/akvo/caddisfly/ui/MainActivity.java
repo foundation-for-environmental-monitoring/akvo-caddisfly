@@ -56,6 +56,7 @@ import org.akvo.caddisfly.sensor.cuvette.ui.CuvetteResultActivity;
 import org.akvo.caddisfly.sensor.titration.ui.TitrationMeasureActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
+import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
 import java.lang.ref.WeakReference;
@@ -297,40 +298,53 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startBluetoothSend() {
-        //Only start the colorimetry calibration if the device has a camera flash
-        if (CameraHelper.hasFeatureCameraFlash(this,
-                R.string.cannotStartTest, R.string.ok, null)) {
+        try {
+            //Only start the colorimetry calibration if the device has a camera flash
+            if (CameraHelper.hasFeatureCameraFlash(this,
+                    R.string.cannotStartTest, R.string.ok, null)) {
 
-            final TestListViewModel viewModel =
-                    ViewModelProviders.of(this).get(TestListViewModel.class);
+                final TestListViewModel viewModel =
+                        ViewModelProviders.of(this).get(TestListViewModel.class);
 
-            TestInfo testInfo = viewModel.getTestInfo(Constants.CUVETTE_BLUETOOTH_ID);
+                TestInfo testInfo = viewModel.getTestInfo(Constants.CUVETTE_BLUETOOTH_ID);
 
-            List<Calibration> calibrations = CaddisflyApp.getApp().getDb()
-                    .calibrationDao().getAll(Constants.FLUORIDE_ID);
+                List<Calibration> calibrations = CaddisflyApp.getApp().getDb()
+                        .calibrationDao().getAll(Constants.FLUORIDE_ID);
 
-            testInfo.setCalibrations(calibrations);
+                testInfo.setCalibrations(calibrations);
 
-            if (!SwatchHelper.isSwatchListValid(testInfo)) {
-                if (permissionsDelegate.hasPermissions(storagePermission)) {
-                    showCalibrationError();
+                if (!SwatchHelper.isSwatchListValid(testInfo)) {
+                    if (permissionsDelegate.hasPermissions(storagePermission)) {
+                        showCalibrationError();
+                    } else {
+                        permissionsDelegate.requestPermissions(storagePermission,
+                                BLUETOOTH_STORAGE_PERMISSION);
+                    }
                 } else {
-                    permissionsDelegate.requestPermissions(storagePermission,
-                            BLUETOOTH_STORAGE_PERMISSION);
+                    final Intent intent = new Intent(this, CuvetteMeasureActivity.class);
+                    intent.putExtra(ConstantKey.TEST_INFO, testInfo);
+                    startActivity(intent);
                 }
-            } else {
-                final Intent intent = new Intent(this, CuvetteMeasureActivity.class);
-                intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-                startActivity(intent);
             }
+
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
         }
     }
 
     private void showCalibrationError() {
         final TestListViewModel viewModel =
                 ViewModelProviders.of(this).get(TestListViewModel.class);
-        ErrorMessages.alertCalibrationIncomplete(this,
-                viewModel.getTestInfo(Constants.FLUORIDE_ID), true);
+        try {
+            ErrorMessages.alertCalibrationIncomplete(this,
+                    viewModel.getTestInfo(Constants.FLUORIDE_ID), true);
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onReceiveResult(MenuItem item) {
@@ -346,11 +360,17 @@ public class MainActivity extends BaseActivity {
         final TestListViewModel viewModel =
                 ViewModelProviders.of(this).get(TestListViewModel.class);
 
-        TestInfo testInfo = viewModel.getTestInfo(Constants.COLIFORM_ID);
-
-        final Intent intent = new Intent(this, TestActivity.class);
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        startActivity(intent);
+        TestInfo testInfo;
+        try {
+            testInfo = viewModel.getTestInfo(Constants.COLIFORM_ID);
+            final Intent intent = new Intent(this, TestActivity.class);
+            intent.putExtra(ConstantKey.TEST_INFO, testInfo);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onTitrationClick(View view) {
@@ -365,11 +385,17 @@ public class MainActivity extends BaseActivity {
         final TestListViewModel viewModel =
                 ViewModelProviders.of(this).get(TestListViewModel.class);
 
-        TestInfo testInfo = viewModel.getTestInfo(Constants.TITRATION2_ID);
-
-        final Intent intent = new Intent(this, TitrationMeasureActivity.class);
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        startActivity(intent);
+        TestInfo testInfo;
+        try {
+            testInfo = viewModel.getTestInfo(Constants.TITRATION2_ID);
+            final Intent intent = new Intent(this, TitrationMeasureActivity.class);
+            intent.putExtra(ConstantKey.TEST_INFO, testInfo);
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, StringUtil
+                            .getStringByName(this, e.getLocalizedMessage()),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     public void onCalibrateSoilClick(View view) {
