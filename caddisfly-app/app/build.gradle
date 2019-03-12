@@ -27,7 +27,7 @@ android {
         }
         tryout {
             applicationIdSuffix ".experiment"
-            versionCode 247
+            versionCode 248
             versionName "Experiment"
             buildConfigField 'boolean', 'showExperimentalTests', 'true'
         }

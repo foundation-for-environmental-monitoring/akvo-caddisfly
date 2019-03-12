@@ -46,9 +46,7 @@ public final class AppConfig {
     /**
      * The url for the experimental tests json config.
      */
-    public static final String EXPERIMENT_TESTS_URL = "https://raw.githubusercontent.com/foundation-for-environmental-monitoring/experimental-tests/ffem-experiment/experimental_tests.json";
-
-//    public static final String EXPERIMENT_TESTS_FFEM_URL = "https://raw.githubusercontent.com/foundation-for-environmental-monitoring/experimental-tests/ffem-app/experimental_tests.json";
+    public static final String EXPERIMENT_TESTS_URL = "https://raw.githubusercontent.com/foundation-for-environmental-monitoring/experimental-tests/master/experimental_tests.json";
 
     /**
      * The url to check for version updates.
