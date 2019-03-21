@@ -145,7 +145,7 @@ public final class StringUtil {
                     public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
-                        ds.setColor(context.getResources().getColor(R.color.links));
+                        ds.setColor(context.getResources().getColor(R.color.text_links));
                     }
                 };
                 builder.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

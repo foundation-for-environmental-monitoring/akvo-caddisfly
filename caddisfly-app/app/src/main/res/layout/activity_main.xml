@@ -48,8 +48,8 @@
                     android:gravity="center_vertical|start"
                     android:minHeight="80dp"
                     android:onClick="onSensorsClick"
-                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="@string/sensors"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
@@ -63,12 +63,12 @@
                     android:gravity="center_vertical|start"
                     android:minHeight="80dp"
                     android:onClick="onStripTestsClick"
-                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="@string/stripTest"
-                    android:visibility="gone"
                     android:textAlignment="viewStart"
-                    android:textColor="?longButtonText" />
+                    android:textColor="?longButtonText"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/buttonBluetooth"
@@ -78,8 +78,8 @@
                     android:gravity="center_vertical|start"
                     android:minHeight="80dp"
                     android:onClick="onBluetoothDeviceClick"
-                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="@string/md610_photometer"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
@@ -93,8 +93,8 @@
                     android:gravity="center_vertical|start"
                     android:minHeight="80dp"
                     android:onClick="onCbtClick"
-                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="@string/cbt"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
@@ -108,8 +108,8 @@
                     android:gravity="center_vertical|start"
                     android:minHeight="80dp"
                     android:onClick="onColiformCountClick"
-                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="@string/coliformCount"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
@@ -123,8 +123,8 @@
                     android:gravity="center_vertical|start"
                     android:minHeight="80dp"
                     android:onClick="onCalibrateClick"
-                    android:paddingEnd="16dp"
                     android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="@string/calibrate"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText" />
@@ -132,6 +132,28 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/link"
+                        android:layout_marginBottom="7dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/to_get_started"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/link"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/textVersionExpiry"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="150dp"
+                        android:gravity="center_horizontal"
+                        android:onClick="onGetStartedClicked"
+                        android:text="http://ffem.io/start"
+                        android:textColor="@color/text_links"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textVersionExpiry"
@@ -145,7 +167,7 @@
                         android:textAllCaps="true"
                         android:textColor="#d8001c29"
                         android:textSize="14dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         tools:ignore="SpUsage"
                         tools:text="Version expires: 15 Jan 2018" />
                 </RelativeLayout>
@@ -164,8 +186,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/text_margin_bottom"
                 android:layout_marginStart="16dp"
+                android:layout_marginBottom="@dimen/text_margin_bottom"
                 android:ellipsize="none"
                 android:gravity="start"
                 android:singleLine="true"

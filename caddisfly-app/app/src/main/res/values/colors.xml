@@ -40,7 +40,7 @@
     <color name="text_primary">#d9222222</color>
     <color name="text_secondary">#d9161616</color>
 
-    <color name="links">#007fa6</color>
+    <color name="text_links">#0078A7</color>
 
     <color name="window_background">#fff</color>
 

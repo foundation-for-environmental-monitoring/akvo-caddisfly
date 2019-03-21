@@ -154,7 +154,7 @@ dependencies {
     }
 
     // Robolectric
-    testImplementation 'org.robolectric:robolectric:4.1'
+    testImplementation 'org.robolectric:robolectric:4.2'
     testImplementation "com.github.nimbl3:robolectric.shadows-supportv4:4.1-SNAPSHOT"
 
     // UIAutomator
@@ -165,10 +165,10 @@ dependencies {
 
     // Firebase (Experiment Flavor)
 //    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:16.0.7'
-    tryoutImplementation 'com.google.firebase:firebase-database:16.0.6'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:18.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-storage:16.0.5'
-    tryoutImplementation 'com.google.firebase:firebase-auth:16.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-core:16.0.8'
+    tryoutImplementation 'com.google.firebase:firebase-database:16.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:18.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-storage:16.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-auth:16.2.0'
 }
 //apply plugin: 'com.google.gms.google-services'

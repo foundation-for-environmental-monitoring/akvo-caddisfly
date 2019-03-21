@@ -23,6 +23,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -69,6 +70,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import static org.akvo.caddisfly.common.AppConfig.GET_STARTED_URL;
 import static org.akvo.caddisfly.model.TestType.BLUETOOTH;
 import static org.akvo.caddisfly.model.TestType.CHAMBER_TEST;
 
@@ -373,6 +375,11 @@ public class MainActivity extends BaseActivity {
                 permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
             }
         }
+    }
+
+    public void onGetStartedClicked(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GET_STARTED_URL));
+        startActivity(browserIntent);
     }
 
     /**
