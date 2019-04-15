@@ -277,7 +277,7 @@
       ]
     },
     {
-      "name": "Dissolved Oxygen (Low range)",
+      "name": "Dissolved Oxygen",
       "nameSuffix": "LR",
       "type": "water",
       "subtype": "cuvette",
@@ -292,25 +292,6 @@
         2,
         5
       ],
-      "results": [
-        {
-          "id": 1,
-          "name": "Dissolved Oxygen",
-          "unit": "mg/l"
-        }
-      ]
-    },
-    {
-      "name": "Dissolved Oxygen (High range)",
-      "nameSuffix": "HR",
-      "type": "water",
-      "subtype": "cuvette",
-      "uuid": "8551ce6b-9a67-4d2f-927e-c48f7ab970ac",
-      "image": "ffem",
-      "imageScale": "centerCrop",
-      "calibrate": true,
-      "ranges": "0,40",
-      "monthsValid": 12,
       "results": [
         {
           "id": 1,
