@@ -275,7 +275,7 @@
       ]
     },
     {
-      "name": "Dissolved Oxygen (Low range)",
+      "name": "Dissolved Oxygen",
       "type": "water",
       "subtype": "cuvette",
       "uuid": "5d533d99-9b96-406c-a559-9be856e1665b",
@@ -283,24 +283,6 @@
       "imageScale": "centerCrop",
       "calibrate": true,
       "ranges": "0,8",
-      "monthsValid": 12,
-      "results": [
-        {
-          "id": 1,
-          "name": "Dissolved Oxygen",
-          "unit": "mg/l"
-        }
-      ]
-    },
-    {
-      "name": "Dissolved Oxygen (High range)",
-      "type": "water",
-      "subtype": "cuvette",
-      "uuid": "8551ce6b-9a67-4d2f-927e-c48f7ab970ac",
-      "image": "ffem",
-      "imageScale": "centerCrop",
-      "calibrate": true,
-      "ranges": "0,40",
       "monthsValid": 12,
       "results": [
         {
