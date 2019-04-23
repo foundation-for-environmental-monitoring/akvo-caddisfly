@@ -7,7 +7,7 @@ public final class TestConstants {
 
     // Water - Fluoride
     public static final String CUVETTE_TEST_ID_1 = "f0f3c1dd-89af-49f1-83e7-bcc31c3006cf";
-    public static final int TEST_INDEX = 7;
+    public static final int TEST_INDEX = 6;
     public static final int CUVETTE_TEST_TIME_DELAY = 0;
     public static final int DELAY_EXTRA = 4;
 
