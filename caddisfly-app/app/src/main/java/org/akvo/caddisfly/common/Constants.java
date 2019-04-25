@@ -23,7 +23,7 @@ public class Constants {
     public static final String BRAND_IMAGE_PATH = "images/brand/";
     public static final String ILLUSTRATION_PATH = "images/instructions/";
     public static final String TEST_IMAGE_PATH = "images/test/";
-    public static final String TESTS_META_FILENAME = "tests.json";
+    public static final String TESTS_META_FILENAME = "tests";
 
     public static final String FREE_CHLORINE_ID = "c3535e72-ff77-4225-9f4a-41d3288780c6";
     public static final String FREE_CHLORINE_ID_2 = "a2413119-38eb-4959-92ee-cc169fdbb0fc";

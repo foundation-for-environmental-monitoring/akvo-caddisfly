@@ -22,16 +22,17 @@ package org.akvo.caddisfly.preference;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.util.ListViewUtil;
-
-import androidx.annotation.NonNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,6 +52,15 @@ public class DiagnosticOptionsPreferenceFragment extends PreferenceFragment {
         final View rootView = inflater.inflate(R.layout.card_row, container, false);
 
         rootView.setBackgroundColor(Color.rgb(255, 240, 220));
+
+        Preference preference = findPreference(getString(R.string.testMetaDataVersionKey));
+        if (preference != null) {
+            preference.setSummary(AppPreferences.getTestMetaDataVersion());
+            preference.setOnPreferenceChangeListener((p, newValue) -> {
+                p.setSummary(String.valueOf(newValue));
+                return true;
+            });
+        }
 
         return rootView;
     }

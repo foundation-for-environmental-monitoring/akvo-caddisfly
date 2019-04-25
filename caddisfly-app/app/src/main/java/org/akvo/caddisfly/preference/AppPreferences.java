@@ -26,6 +26,7 @@ import android.util.Patterns;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.common.ChamberTestConfig;
+import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.util.PreferencesUtil;
 
 import java.util.List;
@@ -212,5 +213,14 @@ public final class AppPreferences {
         } else {
             return "";
         }
+    }
+
+    static String getTestMetaDataVersion() {
+        return PreferencesUtil.getString(CaddisflyApp.getApp(),
+                R.string.testMetaDataVersionKey, "1");
+    }
+
+    public static String getTestMetaDataFileName() {
+        return Constants.TESTS_META_FILENAME + "-" + getTestMetaDataVersion() + ".json";
     }
 }

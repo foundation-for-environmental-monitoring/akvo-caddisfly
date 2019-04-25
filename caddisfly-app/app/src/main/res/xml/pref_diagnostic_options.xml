@@ -21,6 +21,14 @@
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom
         android:key="preferenceCategoryDiagnostics"
         android:title="@string/diagnostics_options">
+        <EditTextPreference
+            android:defaultValue="1"
+            android:dialogMessage="A number from 1 to 2"
+            android:key="@string/testMetaDataVersionKey"
+            android:maxLength="2"
+            android:numeric="integer"
+            android:selectAllOnFocus="true"
+            android:title="JSON version" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="@string/soundOnKey"

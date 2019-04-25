@@ -22,12 +22,13 @@ package org.akvo.caddisfly.util;
 import android.content.res.AssetManager;
 
 import org.akvo.caddisfly.app.CaddisflyApp;
-import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.helper.FileHelper;
+import org.akvo.caddisfly.preference.AppPreferences;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import timber.log.Timber;
 
@@ -42,10 +43,11 @@ public final class AssetsManager {
     public AssetsManager() {
         this.manager = CaddisflyApp.getApp().getApplicationContext().getAssets();
 
-        json = loadJsonFromAsset(Constants.TESTS_META_FILENAME);
+        String jsonFileName = AppPreferences.getTestMetaDataFileName();
+        json = loadJsonFromAsset(jsonFileName);
 
         File customConfig = new File(FileHelper.getFilesDir(FileHelper.FileType.CUSTOM_CONFIG),
-                Constants.TESTS_META_FILENAME);
+                jsonFileName);
         customJson = FileUtil.loadTextFromFile(customConfig);
 
     }
@@ -72,7 +74,7 @@ public final class AssetsManager {
             //noinspection ResultOfMethodCallIgnored
             is.read(buffer);
 
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             Timber.e(ex);
             return null;
@@ -94,7 +96,7 @@ public final class AssetsManager {
 
     public String getExperimentalJson() {
         File experimentalConfig = new File(FileHelper.getFilesDir(FileHelper.FileType.EXP_CONFIG),
-                Constants.TESTS_META_FILENAME);
+                AppPreferences.getTestMetaDataFileName());
         return FileUtil.loadTextFromFile(experimentalConfig);
     }
 

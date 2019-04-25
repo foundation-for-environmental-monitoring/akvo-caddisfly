@@ -67,6 +67,7 @@
     <string name="testModeOnKey">testModeOn</string>
     <string name="dummyResultKey">dummyResults</string>
     <string name="deviceIdKey">deviceId</string>
+    <string name="testMetaDataVersionKey">testMetaDataVersion</string>
 
     <string name="ledRgbKey">ledRgb</string>
     <string name="useExternalCameraKey">useExternalCamera</string>
