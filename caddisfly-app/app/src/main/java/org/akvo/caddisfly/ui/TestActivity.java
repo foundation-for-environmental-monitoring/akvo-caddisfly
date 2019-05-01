@@ -34,6 +34,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -55,7 +63,7 @@ import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.bluetooth.DeviceControlActivity;
 import org.akvo.caddisfly.sensor.bluetooth.DeviceScanActivity;
 import org.akvo.caddisfly.sensor.cbt.CbtActivity;
-import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
+import org.akvo.caddisfly.sensor.chamber.ChamberTestPagerActivity;
 import org.akvo.caddisfly.sensor.manual.ManualTestActivity;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
 import org.akvo.caddisfly.sensor.titration.TitrationTestActivity;
@@ -73,15 +81,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
-@SuppressWarnings("deprecation")
 public class TestActivity extends BaseActivity {
 
     private static final int REQUEST_TEST = 1;
@@ -426,7 +427,7 @@ public class TestActivity extends BaseActivity {
                 return;
             }
 
-            Intent intent = new Intent(this, ChamberTestActivity.class);
+            Intent intent = new Intent(this, ChamberTestPagerActivity.class);
             intent.putExtra(ConstantKey.RUN_TEST, true);
             intent.putExtra(ConstantKey.TEST_INFO, testInfo);
             startActivityForResult(intent, REQUEST_TEST);
@@ -453,7 +454,7 @@ public class TestActivity extends BaseActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEST && resultCode == Activity.RESULT_OK) {
             //return the test result to the external app
@@ -560,13 +561,10 @@ public class TestActivity extends BaseActivity {
         } else {
 
             String message;
-            switch (testInfo.getSubtype()) {
-                case BLUETOOTH:
-                    message = getString(R.string.location_permission);
-                    break;
-                default:
-                    message = getString(R.string.cameraAndStoragePermissions);
-                    break;
+            if (testInfo.getSubtype() == TestType.BLUETOOTH) {
+                message = getString(R.string.location_permission);
+            } else {
+                message = getString(R.string.cameraAndStoragePermissions);
             }
 
             AlertUtil.showSettingsSnackbar(this,
