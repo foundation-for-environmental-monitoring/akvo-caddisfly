@@ -170,15 +170,15 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         }
 
         instructionCount = testInfo.getInstructions().size();
-        totalPageCount = instructionCount + 1;
+        totalPageCount = instructionCount + 2;
         resultPageNumber = totalPageCount - 1;
-        dilutionPageNumber = totalPageCount - 1;
+        dilutionPageNumber = totalPageCount - 2;
 
+        pagerIndicator.showDots(true);
         pagerIndicator.setPageCount(totalPageCount);
 
         ImageView imagePageRight = findViewById(R.id.image_pageRight);
-        imagePageRight.setOnClickListener(view ->
-                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1));
+        imagePageRight.setOnClickListener(view -> pageNext());
 
         ImageView imagePageLeft = findViewById(R.id.image_pageLeft);
         imagePageLeft.setOnClickListener(view -> pageBack());
@@ -277,7 +277,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             runTest();
         }
 
-        setTitle(R.string.analyze);
+        setTitle(testInfo.getName());
 
         invalidateOptionsMenu();
 
@@ -292,6 +292,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             }
 
             runTestFragment.setDilution(currentDilution);
+            pageNext();
 //            goToFragment((Fragment) runTestFragment);
 
             testStarted = true;
@@ -868,6 +869,10 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         invalidateOptionsMenu();
     }
 
+    private void pageNext() {
+        viewPager.setCurrentItem(Math.min(totalPageCount, viewPager.getCurrentItem() + 1));
+    }
+
     private void pageBack() {
         viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
     }
@@ -934,11 +939,13 @@ public class ChamberTestPagerActivity extends BaseActivity implements
 
         @Override
         public Fragment getItem(int position) {
-            if (position == dilutionPageNumber) {
+            if (position == resultPageNumber) {
+                return (Fragment) runTestFragment;
+            } else if (position == dilutionPageNumber) {
                 return selectDilutionFragment;
-            } else if (position == totalPageCount - 1) {
+            } else if (position < instructionCount) {
                 return PlaceholderFragment.newInstance(
-                        testInfo.getInstructions().get(instructionCount), true);
+                        testInfo.getInstructions().get(position), true);
             } else {
                 return PlaceholderFragment.newInstance(
                         testInfo.getInstructions().get(position), false);

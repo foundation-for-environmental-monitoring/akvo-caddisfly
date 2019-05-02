@@ -24,7 +24,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.databinding.FragmentSelectDilutionBinding;
@@ -32,11 +36,6 @@ import org.akvo.caddisfly.model.TestInfo;
 
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 public class SelectDilutionFragment extends Fragment {
     private static final String ARG_PARAM_TEST_INFO = "testInfo";
@@ -98,8 +97,6 @@ public class SelectDilutionFragment extends Fragment {
         } else {
             binding.buttonCustomDilution.setVisibility(View.GONE);
         }
-
-        ((TextView) binding.getRoot().findViewById(R.id.textTitle)).setText(testInfo.getName());
 
         return binding.getRoot();
     }
