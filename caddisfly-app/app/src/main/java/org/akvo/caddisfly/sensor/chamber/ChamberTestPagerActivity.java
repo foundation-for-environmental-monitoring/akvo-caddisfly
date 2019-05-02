@@ -83,6 +83,7 @@ import org.akvo.caddisfly.util.ConfigDownloader;
 import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.NetUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
+import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
 import org.akvo.caddisfly.widget.PageIndicatorView;
 import org.json.JSONObject;
@@ -170,9 +171,16 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         }
 
         instructionCount = testInfo.getInstructions().size();
-        totalPageCount = instructionCount + 2;
+        totalPageCount = instructionCount + 1;
         resultPageNumber = totalPageCount - 1;
         dilutionPageNumber = totalPageCount - 2;
+
+        for (int i = 0; i < testInfo.getInstructions().size(); i++) {
+            if (testInfo.getInstructions().get(i).section.get(0).contains("<dilution>")) {
+                dilutionPageNumber = i;
+                break;
+            }
+        }
 
         pagerIndicator.showDots(true);
         pagerIndicator.setPageCount(totalPageCount);
@@ -766,7 +774,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     @Override
     public void onDilutionSelected(int dilution) {
         currentDilution = dilution;
-        runTest();
+        pageNext();
     }
 
     @Override
@@ -877,6 +885,16 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
     }
 
+    public void onReadDilutionInfoLink(View view) {
+        androidx.fragment.app.DialogFragment newFragment = new StringUtil.DilutionDialogFragment();
+        newFragment.show(getSupportFragmentManager(), "dilutionDialog");
+    }
+
+    public void onStartClick(View view) {
+        pageNext();
+        runTest();
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -890,6 +908,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         private static final String ARG_SHOW_OK = "show_ok";
         FragmentInstructionBinding fragmentInstructionBinding;
         Instruction instruction;
+        private boolean showOk;
 
         /**
          * Returns a new instance of this fragment for the given section number.
@@ -915,14 +934,15 @@ public class ChamberTestPagerActivity extends BaseActivity implements
 
             if (getArguments() != null) {
                 instruction = getArguments().getParcelable(ARG_SECTION_NUMBER);
+                showOk = getArguments().getBoolean(ARG_SHOW_OK);
                 fragmentInstructionBinding.setInstruction(instruction);
             }
 
             View view = fragmentInstructionBinding.getRoot();
 
-//            if (showOk) {
-//                view.findViewById(R.id.buttonDone).setVisibility(View.VISIBLE);
-//            }
+            if (showOk) {
+                view.findViewById(R.id.buttonStart).setVisibility(View.VISIBLE);
+            }
             return view;
         }
     }
@@ -943,7 +963,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
                 return (Fragment) runTestFragment;
             } else if (position == dilutionPageNumber) {
                 return selectDilutionFragment;
-            } else if (position < instructionCount) {
+            } else if (position == resultPageNumber - 1) {
                 return PlaceholderFragment.newInstance(
                         testInfo.getInstructions().get(position), true);
             } else {

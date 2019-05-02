@@ -34,6 +34,7 @@
     <string name="stage_one"><b>Stage 1:</b></string>
     <string name="stage_two"><b>Stage 2:</b></string>
     <string name="start">Start</string>
+    <string name="start_test">Start Test</string>
     <string name="general">General</string>
     <string name="other">Other</string>
     <string name="to_get_started">To get started, go to</string>

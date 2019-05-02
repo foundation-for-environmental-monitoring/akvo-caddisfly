@@ -109,8 +109,8 @@
     <string name="bc_wipe_bottom">Wipe the transparent bottom of the test chamber (lens diffuser) dry with tissue.</string>
     <string name="bc_wipe_camera">Wipe the phone camera lens dry with tissue.</string>
     <string name="bc_place_chamber">Match the grooves on the smartphone to the test chamber and twist to lock in position.</string>
-    <string name="bc_select_dilution">If this is your first test, press <b>\'No Dilution\'</b>. If a previous test indicated the need for dilution then <b><xliff:g id="link">[a topic=dilution]</xliff:g>read the instructions here<xliff:g id="close_link">[/a]</xliff:g></b></string>
-    <string name="bc_place_phone">Place the phone face down on a level surface and leave it undisturbed for about a minute. You should get a result after 6 beeps, click <b>\'Accept result\'</b> to go back to your survey.</string>
+    <string name="bc_select_dilution">If this is your first test, press <b>\'No Dilution\'</b>.</string>
+    <string name="bc_place_phone">Place the phone face down on a level surface and leave it undisturbed for about a minute. You should get a result after a few beep sounds.</string>
     <string name="bc_dilution_1">Rinse the mixing chamber with deionised water.</string>
     <string name="bc_dilution_2">Empty the test chamber and fill it with the deionised water.</string>
     <string name="bc_dilution_3">Invert the lid and fit it over the inner chamber, aligning the bump on the cap and the inner chamber of the test chamber.</string>

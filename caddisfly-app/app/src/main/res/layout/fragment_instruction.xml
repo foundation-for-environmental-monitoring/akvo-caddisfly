@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) Stichting Akvo (Akvo Foundation)
   ~
   ~ This file is part of Akvo Caddisfly.
@@ -33,19 +32,40 @@
 
     </data>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            style="?android:attr/textAppearanceLarge"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:textIsSelectable="true"
-            app:content="@{instruction}">
+            android:layout_alignParentTop="true">
 
-        </LinearLayout>
-    </ScrollView>
+            <LinearLayout
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:textIsSelectable="true"
+                app:content="@{instruction}" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/buttonStart"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:enabled="true"
+            android:onClick="onStartClick"
+            android:text="@string/start_test"
+            android:theme="?primaryButtonStyle"
+            android:visibility="gone" />
+    </RelativeLayout>
 </layout>
