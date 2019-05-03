@@ -43,6 +43,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -83,9 +84,11 @@ import org.akvo.caddisfly.util.ConfigDownloader;
 import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.NetUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
-import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
+import org.akvo.caddisfly.widget.CustomViewPager;
 import org.akvo.caddisfly.widget.PageIndicatorView;
+import org.akvo.caddisfly.widget.SwipeDirection;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -129,8 +132,9 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     private int totalPageCount;
     private int instructionCount;
 
-    private ViewPager viewPager;
+    private CustomViewPager viewPager;
     private PageIndicatorView pagerIndicator;
+    private RelativeLayout footerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +145,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
 
         viewPager = findViewById(R.id.viewPager);
         pagerIndicator = findViewById(R.id.pager_indicator);
+        footerLayout = findViewById(R.id.layout_footer);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -223,6 +228,8 @@ public class ChamberTestPagerActivity extends BaseActivity implements
                     imagePageLeft.setVisibility(View.VISIBLE);
                 }
 
+                showHideFooter();
+
 //                if (position == resultPageNumber) {
 //                    showWaitingView();
 //                } else {
@@ -255,6 +262,23 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mSectionsPagerAdapter);
 
+        showHideFooter();
+    }
+
+    private void showHideFooter() {
+        if (viewPager.getCurrentItem() == dilutionPageNumber) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+        } else if (viewPager.getCurrentItem() == resultPageNumber - 1) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+        } else if (viewPager.getCurrentItem() == totalPageCount - 1) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+        } else {
+            footerLayout.setVisibility(View.VISIBLE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.all);
+        }
     }
 
 //    private void goToFragment(Fragment fragment) {
@@ -885,11 +909,6 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
     }
 
-    public void onReadDilutionInfoLink(View view) {
-        androidx.fragment.app.DialogFragment newFragment = new StringUtil.DilutionDialogFragment();
-        newFragment.show(getSupportFragmentManager(), "dilutionDialog");
-    }
-
     public void onStartClick(View view) {
         pageNext();
         runTest();
@@ -957,6 +976,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             super(fm);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             if (position == resultPageNumber) {

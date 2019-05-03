@@ -54,7 +54,7 @@
 
     <!-- Dilution Selection Dialog -->
     <string name="dilution">Dilution</string>
-    <string name="selectDilution">Select amount of dilution</string>
+    <string name="selectDilution">1. Select amount of dilution</string>
     <string name="noDilution">No Dilution</string>
     <string name="timesDilution" tools:ignore="PluralsCandidate">%1$d Times Dilution</string>
     <string name="calibrateWithNewReagent">Recalibrate with fresh reagent</string>

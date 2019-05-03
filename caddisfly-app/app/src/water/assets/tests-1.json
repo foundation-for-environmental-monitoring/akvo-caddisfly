@@ -318,54 +318,90 @@
       "instructions": [
         {
           "section": [
-            "bc_rinse",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
             "<dilution>"
           ]
         },
         {
           "section": [
-            "bc_fill",
+            "2. bc_dilution_1",
+            "image:bc_rinse"
+          ]
+        },
+        {
+          "section": [
+            "2. bc_dilution_2",
+            "image:bc_rinse"
+          ]
+        },
+        {
+          "section": [
+            "2. bc_dilution_3",
+            "image:bc_rinse"
+          ]
+        },
+        {
+          "section": [
+            "2. bc_dilution_4",
+            "image:bc_rinse"
+          ]
+        },
+        {
+          "section": [
+            "2. bc_dilution_5",
+            "image:bc_rinse"
+          ]
+        },
+        {
+          "section": [
+            "2. bc_dilution_6",
+            "image:bc_rinse"
+          ]
+        },
+        {
+          "section": [
+            "2. bc_rinse",
+            "image:bc_rinse"
+          ]
+        },
+        {
+          "section": [
+            "3. bc_fill",
             "image:bc_fill"
           ]
         },
         {
           "section": [
-            "bc_add_capsule",
+            "4. bc_add_capsule",
             "image:bc_add_capsule"
           ]
         },
         {
           "section": [
-            "bc_screw",
+            "5. bc_screw",
             "image:bc_screw"
           ]
         },
         {
           "section": [
-            "bc_shake",
+            "6. bc_shake",
             "image:bc_shake"
           ]
         },
         {
           "section": [
-            "bc_wipe_bottom",
+            "7. bc_wipe_bottom",
             "image:bc_wipe_bottom"
           ]
         },
         {
           "section": [
-            "bc_wipe_camera",
+            "8. bc_wipe_camera",
             "image:bc_wipe_camera"
           ]
         },
         {
           "section": [
-            "bc_place_chamber",
+            "9. bc_place_chamber",
             "image:bc_place_chamber"
           ]
         }
