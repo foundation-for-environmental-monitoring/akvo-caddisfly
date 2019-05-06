@@ -118,20 +118,19 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             finish();
         }
     };
+    SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
     private RunTest runTestFragment;
     private SelectDilutionFragment selectDilutionFragment;
     private FragmentManager fragmentManager;
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
-    private int currentDilution = 1;
+    private int currentDilution = 0;
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
-
     private int dilutionPageNumber;
     private int resultPageNumber;
     private int totalPageCount;
-    private int instructionCount;
-
+    private ArrayList<Instruction> instructions = new ArrayList<>();
     private CustomViewPager viewPager;
     private PageIndicatorView pagerIndicator;
     private RelativeLayout footerLayout;
@@ -175,20 +174,9 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             }
         }
 
-        instructionCount = testInfo.getInstructions().size();
-        totalPageCount = instructionCount + 1;
-        resultPageNumber = totalPageCount - 1;
-        dilutionPageNumber = totalPageCount - 2;
-
-        for (int i = 0; i < testInfo.getInstructions().size(); i++) {
-            if (testInfo.getInstructions().get(i).section.get(0).contains("<dilution>")) {
-                dilutionPageNumber = i;
-                break;
-            }
-        }
+        setupInstructions();
 
         pagerIndicator.showDots(true);
-        pagerIndicator.setPageCount(totalPageCount);
 
         ImageView imagePageRight = findViewById(R.id.image_pageRight);
         imagePageRight.setOnClickListener(view -> pageNext());
@@ -259,10 +247,45 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             }
         });
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(mSectionsPagerAdapter);
 
         showHideFooter();
+    }
+
+    private void setupInstructions() {
+        int instructionIndex = 0;
+        instructions.clear();
+        for (int i = 0; i < testInfo.getInstructions().size(); i++) {
+            if (currentDilution == 1 && i > 0 && i < 7) {
+                continue;
+            }
+            instructionIndex++;
+
+            Instruction instruction;
+            try {
+                instruction = testInfo.getInstructions().get(i).clone();
+                if (instruction != null) {
+                    if (instruction.section.get(0).contains("<dilution>")) {
+                        dilutionPageNumber = i;
+                    } else {
+                        instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));
+                    }
+                }
+                instructions.add(instruction);
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int instructionCount = instructionIndex;
+        totalPageCount = instructionCount + 1;
+        resultPageNumber = totalPageCount - 1;
+        pagerIndicator.setPageCount(totalPageCount);
+        pagerIndicator.setVisibility(View.GONE);
+        pagerIndicator.invalidate();
+        pagerIndicator.setVisibility(View.VISIBLE);
+
+        viewPager.setAdapter(mSectionsPagerAdapter);
     }
 
     private void showHideFooter() {
@@ -798,6 +821,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     @Override
     public void onDilutionSelected(int dilution) {
         currentDilution = dilution;
+        setupInstructions();
         pageNext();
     }
 
@@ -985,10 +1009,10 @@ public class ChamberTestPagerActivity extends BaseActivity implements
                 return selectDilutionFragment;
             } else if (position == resultPageNumber - 1) {
                 return PlaceholderFragment.newInstance(
-                        testInfo.getInstructions().get(position), true);
+                        instructions.get(position), true);
             } else {
                 return PlaceholderFragment.newInstance(
-                        testInfo.getInstructions().get(position), false);
+                        instructions.get(position), false);
             }
         }
 

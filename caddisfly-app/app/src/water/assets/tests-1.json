@@ -323,85 +323,85 @@
         },
         {
           "section": [
-            "2. bc_dilution_1",
+            "bc_dilution_1",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "2. bc_dilution_2",
+            "bc_dilution_2",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "2. bc_dilution_3",
+            "bc_dilution_3",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "2. bc_dilution_4",
+            "bc_dilution_4",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "2. bc_dilution_5",
+            "bc_dilution_5",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "2. bc_dilution_6",
+            "bc_dilution_6",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "2. bc_rinse",
+            "bc_rinse",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "3. bc_fill",
+            "bc_fill",
             "image:bc_fill"
           ]
         },
         {
           "section": [
-            "4. bc_add_capsule",
+            "bc_add_capsule",
             "image:bc_add_capsule"
           ]
         },
         {
           "section": [
-            "5. bc_screw",
+            "bc_screw",
             "image:bc_screw"
           ]
         },
         {
           "section": [
-            "6. bc_shake",
+            "bc_shake",
             "image:bc_shake"
           ]
         },
         {
           "section": [
-            "7. bc_wipe_bottom",
+            "bc_wipe_bottom",
             "image:bc_wipe_bottom"
           ]
         },
         {
           "section": [
-            "8. bc_wipe_camera",
+            "bc_wipe_camera",
             "image:bc_wipe_camera"
           ]
         },
         {
           "section": [
-            "9. bc_place_chamber",
+            "bc_place_chamber",
             "image:bc_place_chamber"
           ]
         }

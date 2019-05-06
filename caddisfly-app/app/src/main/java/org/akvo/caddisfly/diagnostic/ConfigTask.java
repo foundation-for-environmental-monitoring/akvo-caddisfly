@@ -112,7 +112,7 @@ public class ConfigTask extends AsyncTask<String, String, String> {
         File path = FileHelper.getFilesDir(fileType, "");
 
         //TODO: fix tests file version number
-        FileUtil.saveToFile(path, "tests.json", result);
+        FileUtil.saveToFile(path, "tests-1.json", result);
 
         if (configSyncHandler != null) {
             configSyncHandler.onDownloadFinished();

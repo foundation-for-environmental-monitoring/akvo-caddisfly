@@ -53,17 +53,6 @@ public class PageIndicatorView extends View {
     public PageIndicatorView(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        final float scale = getResources().getDisplayMetrics().density;
-        if (scale <= 1.5) {
-            distanceBetweenBullets = 26;
-            bulletRadius = 4;
-        } else if (scale >= 3) {
-            distanceBetweenBullets = 46;
-            bulletRadius = 12;
-        }
-
-        setActiveBulletSize(false, scale);
-
         fillPaint = new Paint();
         fillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         fillPaint.setStrokeWidth(2);
@@ -79,7 +68,17 @@ public class PageIndicatorView extends View {
 
     public void setPageCount(int value) {
         pageCount = value;
-        invalidate();
+
+        final float scale = getResources().getDisplayMetrics().density;
+        if (scale <= 1.5) {
+            distanceBetweenBullets = 26;
+            bulletRadius = 4;
+        } else if (scale >= 3) {
+            distanceBetweenBullets = 46;
+            bulletRadius = 12;
+        }
+
+        setActiveBulletSize(false, scale);
 
         if (pageCount < 3) {
             distanceBetweenBullets += bulletRadius;
@@ -87,6 +86,8 @@ public class PageIndicatorView extends View {
         } else if (pageCount > 12) {
             distanceBetweenBullets -= 4;
         }
+
+        invalidate();
     }
 
     public void setActiveIndex(int value) {
@@ -102,8 +103,6 @@ public class PageIndicatorView extends View {
 
     @Override
     public void onDraw(@NonNull Canvas canvas) {
-
-
         if (pageCount > 1) {
             for (int i = 0; i < pageCount; i++) {
                 if (activePage == i) {
