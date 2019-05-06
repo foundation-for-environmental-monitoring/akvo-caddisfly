@@ -41,9 +41,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -128,7 +128,6 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
     private int dilutionPageNumber;
-    private int resultPageNumber;
     private int totalPageCount;
     private ArrayList<Instruction> instructions = new ArrayList<>();
     private CustomViewPager viewPager;
@@ -178,10 +177,10 @@ public class ChamberTestPagerActivity extends BaseActivity implements
 
         pagerIndicator.showDots(true);
 
-        ImageView imagePageRight = findViewById(R.id.image_pageRight);
+        TextView imagePageRight = findViewById(R.id.image_pageRight);
         imagePageRight.setOnClickListener(view -> pageNext());
 
-        ImageView imagePageLeft = findViewById(R.id.image_pageLeft);
+        TextView imagePageLeft = findViewById(R.id.image_pageLeft);
         imagePageLeft.setOnClickListener(view -> pageBack());
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -277,9 +276,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             }
         }
 
-        int instructionCount = instructionIndex;
-        totalPageCount = instructionCount + 1;
-        resultPageNumber = totalPageCount - 1;
+        totalPageCount = instructionIndex;
         pagerIndicator.setPageCount(totalPageCount);
         pagerIndicator.setVisibility(View.GONE);
         pagerIndicator.invalidate();
@@ -292,12 +289,9 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         if (viewPager.getCurrentItem() == dilutionPageNumber) {
             footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.none);
-        } else if (viewPager.getCurrentItem() == resultPageNumber - 1) {
-            footerLayout.setVisibility(View.GONE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
         } else if (viewPager.getCurrentItem() == totalPageCount - 1) {
             footerLayout.setVisibility(View.GONE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
         } else {
             footerLayout.setVisibility(View.VISIBLE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.all);
@@ -1003,13 +997,11 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         @NotNull
         @Override
         public Fragment getItem(int position) {
-            if (position == resultPageNumber) {
-                return (Fragment) runTestFragment;
-            } else if (position == dilutionPageNumber) {
-                return selectDilutionFragment;
-            } else if (position == resultPageNumber - 1) {
+            if (position == totalPageCount - 1) {
                 return PlaceholderFragment.newInstance(
                         instructions.get(position), true);
+            } else if (position == dilutionPageNumber) {
+                return selectDilutionFragment;
             } else {
                 return PlaceholderFragment.newInstance(
                         instructions.get(position), false);

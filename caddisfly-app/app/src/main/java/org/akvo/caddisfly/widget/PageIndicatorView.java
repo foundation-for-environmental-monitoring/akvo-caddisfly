@@ -84,7 +84,7 @@ public class PageIndicatorView extends View {
             distanceBetweenBullets += bulletRadius;
             activeBulletRadius = bulletRadius * 1.2f;
         } else if (pageCount > 12) {
-            distanceBetweenBullets -= 4;
+            distanceBetweenBullets -= 6;
         }
 
         invalidate();

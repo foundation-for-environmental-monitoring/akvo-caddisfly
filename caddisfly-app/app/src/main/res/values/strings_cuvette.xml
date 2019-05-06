@@ -13,9 +13,6 @@
     <string name="language">Language</string>
     <string name="notSupported">Not Supported</string>
     <string name="cameraBusy">Camera Busy</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="close">Close</string>
     <string name="selectTest">Select Test</string>
     <string name="save">Save</string>
     <string name="pleaseWait">Please wait…</string>
