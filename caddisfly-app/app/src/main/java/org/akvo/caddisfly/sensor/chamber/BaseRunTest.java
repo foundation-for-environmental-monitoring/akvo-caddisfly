@@ -364,7 +364,6 @@ public class BaseRunTest extends Fragment implements RunTest {
 
     @Override
     public void stop() {
-        releaseResources();
     }
 
     protected void startRepeatingTask() {

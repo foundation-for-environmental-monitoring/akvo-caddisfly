@@ -135,6 +135,11 @@ public class ChamberAboveFragment extends BaseRunTest implements RunTest {
     }
 
     @Override
+    public void stop() {
+        releaseResources();
+    }
+
+    @Override
     protected void releaseResources() {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(mShakeDetector);

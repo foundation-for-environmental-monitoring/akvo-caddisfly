@@ -36,7 +36,7 @@ public class PageIndicatorView extends View {
     private final Paint fillPaint;
     private final Paint strokePaint;
     private float distanceBetweenBullets = 36;
-    private int bulletRadius = 8;
+    private int bulletRadius = 6;
     private float activeBulletRadius;
     private int pageCount;
     private int activePage;
@@ -75,7 +75,7 @@ public class PageIndicatorView extends View {
             bulletRadius = 4;
         } else if (scale >= 3) {
             distanceBetweenBullets = 46;
-            bulletRadius = 12;
+            bulletRadius = 6;
         }
 
         setActiveBulletSize(false, scale);
@@ -84,7 +84,7 @@ public class PageIndicatorView extends View {
             distanceBetweenBullets += bulletRadius;
             activeBulletRadius = bulletRadius * 1.2f;
         } else if (pageCount > 12) {
-            distanceBetweenBullets -= 6;
+            distanceBetweenBullets -= 10;
         }
 
         invalidate();
@@ -131,9 +131,9 @@ public class PageIndicatorView extends View {
     private void setActiveBulletSize(boolean dots, float scale) {
 
         if (scale <= 1.5) {
-            activeBulletRadius = bulletRadius * 1.6f;
+            activeBulletRadius = bulletRadius * 1.7f;
         } else if (scale >= 3) {
-            activeBulletRadius = bulletRadius * 1.4f;
+            activeBulletRadius = bulletRadius * 2f;
         } else {
             if (dots) {
                 activeBulletRadius = bulletRadius * 1.4f;

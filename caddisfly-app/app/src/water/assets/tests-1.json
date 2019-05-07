@@ -318,47 +318,6 @@
       "instructions": [
         {
           "section": [
-            "<dilution>"
-          ]
-        },
-        {
-          "section": [
-            "bc_dilution_1",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_dilution_2",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_dilution_3",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_dilution_4",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_dilution_5",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_dilution_6",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
             "bc_rinse",
             "image:bc_rinse"
           ]
@@ -403,6 +362,18 @@
           "section": [
             "bc_place_chamber",
             "image:bc_place_chamber"
+          ]
+        },
+        {
+          "section": [
+            "bc_select_dilution",
+            "image:bc_select_dilution"
+          ]
+        },
+        {
+          "section": [
+            "bc_place_phone",
+            "image:bc_place_phone"
           ]
         }
       ],

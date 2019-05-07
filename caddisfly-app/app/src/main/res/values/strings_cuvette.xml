@@ -114,6 +114,23 @@
     <string name="bc_dilution_4">Some excess water will spill into the overflow space. Hold tightly as shown and throw out the excess water.</string>
     <string name="bc_dilution_5">Next remove the cap and pour the deionised water into the mixing chamber. For <b>two times dilution</b> add one measure of deionised water and one measure of your sample. For <b>five times dilution</b> add four measures of deionised water and one measure of your sample.</string>
     <string name="bc_dilution_6">Shake the mixing chamber so the deionised water and sample mix thoroughly. Pour the mixture into the Test Chamber. Use this mixture for your measurement.</string>
+
+    <string name="c_rinse">Rinse the empty cuvette and measuring tube <b>twice</b> with the sample to remove any traces of previous solutions.</string>
+    <string name="c_measure"><b>Measure 10 ml</b> of the sample with the measuring tube.</string>
+    <string name="c_open_reagent">Open the vial of <b>Reagent A</b>.</string>
+    <string name="c_add_reagent">Add <b>Reagent A</b> to the measuring tube.</string>
+    <string name="c_shake">Close the lid of the measuring tube and shake it to ensure proper mixing of the reagent and sample.</string>
+    <string name="c_pour">Pour the contents of the mixing tube into the provided cuvette.</string>
+    <string name="c_close">Close the lid, wipe any excess water and fit the cuvette into the pipe.</string>
+    <string name="c_place_phone">Place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
+    <string name="c_empty">Empty the contents of the cuvette and rinse it once.</string>
+    <string name="c_dilution_1">Rinse the mixing cuvette with <b>deionised water</b>.</string>
+    <string name="c_dilution_2">Empty the test cuvette and fill it with the <b>deionised water</b>.</string>
+    <string name="c_dilution_3">Invert the lid and fit it over the inner chamber, aligning the bump on the cap and the inner chamber of the test chamber.</string>
+    <string name="c_dilution_4">Some excess water will spill into the overflow space. Hold tightly as shown and throw out the excess water.</string>
+    <string name="c_2_times_dilution">Next remove the cap and pour the deionised water into the mixing chamber. Add <b>1 measure of deionised water</b> and 1 measure of your sample.</string>
+    <string name="c_5_times_dilution">Next remove the cap and pour the deionised water into the mixing chamber. Add <b>4 measures of deionised water</b> and 1 measure of your sample.</string>
+    <string name="c_dilution_6">Shake the mixing chamber so the deionised water and sample mix thoroughly. Pour the mixture into the cuvette.</string>
     <!-- About Screen -->
     <string name="copyrightMessage">Copyright © ffem</string>
     <string name="legalInformation">Legal Information</string>

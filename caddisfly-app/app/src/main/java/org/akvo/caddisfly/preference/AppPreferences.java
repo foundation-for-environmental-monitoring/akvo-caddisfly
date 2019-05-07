@@ -215,7 +215,11 @@ public final class AppPreferences {
         }
     }
 
-    static String getTestMetaDataVersion() {
+    public static int getTestMetaDataVersionInt() {
+        return Integer.parseInt(getTestMetaDataVersion());
+    }
+
+    public static String getTestMetaDataVersion() {
         return PreferencesUtil.getString(CaddisflyApp.getApp(),
                 R.string.testMetaDataVersionKey, "1");
     }

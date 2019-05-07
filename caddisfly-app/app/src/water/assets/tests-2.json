@@ -371,62 +371,107 @@
       "instructions": [
         {
           "section": [
-            "bc_rinse",
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
             "image:bc_rinse"
           ]
         },
         {
           "section": [
-            "bc_fill",
-            "image:bc_fill"
+            "c_dilution_2",
+            "image:c_dilute_2"
           ]
         },
         {
           "section": [
-            "bc_add_capsule",
-            "image:bc_add_capsule"
+            "c_dilution_3",
+            "image:c_dilute_3"
           ]
         },
         {
           "section": [
-            "bc_screw",
-            "image:bc_screw"
+            "c_dilution_4",
+            "image:c_dilute_4"
           ]
         },
         {
           "section": [
-            "bc_shake",
-            "image:bc_shake"
+            "c_2_times_dilution",
+            "image:c_dilute_5"
           ]
         },
         {
           "section": [
-            "bc_wipe_bottom",
-            "image:bc_wipe_bottom"
+            "c_dilution_6",
+            "image:c_dilute_6"
           ]
         },
         {
           "section": [
-            "bc_wipe_camera",
-            "image:bc_wipe_camera"
+            "c_rinse",
+            "image:c_rinse"
           ]
         },
         {
           "section": [
-            "bc_place_chamber",
-            "image:bc_place_chamber"
+            "c_measure",
+            "image:c_measure_sample"
           ]
         },
         {
           "section": [
-            "bc_select_dilution",
-            "image:bc_select_dilution"
+            "c_open_reagent",
+            "image:c_open_reagent"
           ]
         },
         {
           "section": [
-            "bc_place_phone",
-            "image:bc_place_phone"
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_place_phone",
+            "image:c_place"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
           ]
         }
       ],

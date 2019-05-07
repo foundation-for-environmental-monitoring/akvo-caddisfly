@@ -67,5 +67,21 @@
             android:text="@string/start_test"
             android:theme="?primaryButtonStyle"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/buttonAcceptResult"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:enabled="true"
+            android:onClick="onAcceptResultClick"
+            android:text="@string/acceptResult"
+            android:theme="?primaryButtonStyle"
+            android:visibility="gone" />
     </RelativeLayout>
 </layout>

@@ -22,6 +22,8 @@ package org.akvo.caddisfly.ui;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.fragment.app.Fragment;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.model.TestInfo;
@@ -30,8 +32,6 @@ import org.akvo.caddisfly.widget.RowView;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
-import androidx.fragment.app.Fragment;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -73,7 +73,7 @@ public class InstructionFragmentTest {
         ImageView imageView = view.findViewById(1);
         assertNotNull(imageView);
         int drawableResId = shadowOf(imageView.getDrawable()).getCreatedFromResId();
-        assertEquals(R.drawable.in_bc_rinse, drawableResId);
+        assertEquals(R.drawable.in_c_rinse, drawableResId);
     }
 
 }

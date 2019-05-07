@@ -25,13 +25,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.common.ConstantKey;
-import org.akvo.caddisfly.databinding.FragmentInstructionBinding;
-import org.akvo.caddisfly.databinding.FragmentInstructionsBinding;
-import org.akvo.caddisfly.model.Instruction;
-import org.akvo.caddisfly.model.TestInfo;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -39,6 +32,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import org.akvo.caddisfly.R;
+import org.akvo.caddisfly.common.ConstantKey;
+import org.akvo.caddisfly.databinding.FragmentInstructionBinding;
+import org.akvo.caddisfly.databinding.FragmentInstructionsBinding;
+import org.akvo.caddisfly.model.Instruction;
+import org.akvo.caddisfly.model.TestInfo;
+import org.jetbrains.annotations.NotNull;
 
 public class InstructionFragment extends Fragment {
 
@@ -79,6 +80,7 @@ public class InstructionFragment extends Fragment {
                 b.viewPager.setCurrentItem(Math.max(0, b.viewPager.getCurrentItem() - 1)));
 
 
+        b.pagerIndicator.showDots(true);
         b.pagerIndicator.setPageCount(mSectionsPagerAdapter.getCount());
 
         b.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -169,6 +171,7 @@ public class InstructionFragment extends Fragment {
             super(fm);
         }
 
+        @NotNull
         @Override
         public Fragment getItem(int position) {
             return PlaceholderFragment.newInstance(mTestInfo.getInstructions().get(position));

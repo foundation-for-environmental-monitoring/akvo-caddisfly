@@ -63,7 +63,8 @@ import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.bluetooth.DeviceControlActivity;
 import org.akvo.caddisfly.sensor.bluetooth.DeviceScanActivity;
 import org.akvo.caddisfly.sensor.cbt.CbtActivity;
-import org.akvo.caddisfly.sensor.chamber.ChamberTestPagerActivity;
+import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
+import org.akvo.caddisfly.sensor.cuvette.CuvetteTestPagerActivity;
 import org.akvo.caddisfly.sensor.manual.ManualTestActivity;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
 import org.akvo.caddisfly.sensor.titration.TitrationTestActivity;
@@ -426,8 +427,12 @@ public class TestActivity extends BaseActivity {
                 ErrorMessages.alertCalibrationIncomplete(this, testInfo, false);
                 return;
             }
-
-            Intent intent = new Intent(this, ChamberTestPagerActivity.class);
+            Intent intent;
+            if (AppPreferences.getTestMetaDataVersionInt() == 1) {
+                intent = new Intent(this, ChamberTestActivity.class);
+            } else {
+                intent = new Intent(this, CuvetteTestPagerActivity.class);
+            }
             intent.putExtra(ConstantKey.RUN_TEST, true);
             intent.putExtra(ConstantKey.TEST_INFO, testInfo);
             startActivityForResult(intent, REQUEST_TEST);

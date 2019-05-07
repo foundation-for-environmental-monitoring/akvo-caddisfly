@@ -110,8 +110,8 @@
                     android:id="@+id/buttonAccept"
                     style="@style/Button"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="onClickAcceptResult"
-                    android:text="@string/acceptResult"
+                    android:onClick="onClickNext"
+                    android:text="@string/next"
                     android:theme="?primaryButtonStyle" />
             </LinearLayout>
         </LinearLayout>

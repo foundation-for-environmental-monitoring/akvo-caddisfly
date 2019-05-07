@@ -17,7 +17,7 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.sensor.chamber;
+package org.akvo.caddisfly.sensor.cuvette;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -78,6 +78,16 @@ import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.ResultDetail;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.preference.AppPreferences;
+import org.akvo.caddisfly.sensor.chamber.BaseRunTest;
+import org.akvo.caddisfly.sensor.chamber.CalibrationFile;
+import org.akvo.caddisfly.sensor.chamber.CalibrationGraphActivity;
+import org.akvo.caddisfly.sensor.chamber.CalibrationResultDialog;
+import org.akvo.caddisfly.sensor.chamber.ChamberAboveFragment;
+import org.akvo.caddisfly.sensor.chamber.ChamberBelowFragment;
+import org.akvo.caddisfly.sensor.chamber.EditCustomDilution;
+import org.akvo.caddisfly.sensor.chamber.ResultFragment;
+import org.akvo.caddisfly.sensor.chamber.RunTest;
+import org.akvo.caddisfly.sensor.chamber.SelectDilutionFragment;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ConfigDownloader;
@@ -85,6 +95,7 @@ import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.NetUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
+import org.akvo.caddisfly.widget.ButtonType;
 import org.akvo.caddisfly.widget.CustomViewPager;
 import org.akvo.caddisfly.widget.PageIndicatorView;
 import org.akvo.caddisfly.widget.SwipeDirection;
@@ -104,7 +115,7 @@ import timber.log.Timber;
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.helper.CameraHelper.getMaxSupportedMegaPixelsByCamera;
 
-public class ChamberTestPagerActivity extends BaseActivity implements
+public class CuvetteTestPagerActivity extends BaseActivity implements
         BaseRunTest.OnResultListener,
         SelectDilutionFragment.OnDilutionSelectedListener,
         EditCustomDilution.OnCustomDilutionListener,
@@ -119,10 +130,10 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         }
     };
     SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    TextView imagePageRight;
     private RunTest runTestFragment;
     private SelectDilutionFragment selectDilutionFragment;
     private ResultFragment resultFragment;
-
     private FragmentManager fragmentManager;
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
@@ -184,7 +195,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
 
         pagerIndicator.showDots(true);
 
-        TextView imagePageRight = findViewById(R.id.image_pageRight);
+        imagePageRight = findViewById(R.id.image_pageRight);
         imagePageRight.setOnClickListener(view -> pageNext());
 
         TextView imagePageLeft = findViewById(R.id.image_pageLeft);
@@ -689,8 +700,11 @@ public class ChamberTestPagerActivity extends BaseActivity implements
      * Create result json to send back.
      */
     @SuppressWarnings("unused")
-    public void onClickAcceptResult(View view) {
+    public void onAcceptResultClick(View view) {
+        submitResult();
+    }
 
+    public void submitResult() {
         Intent resultIntent = new Intent();
         SparseArray<String> results = new SparseArray<>();
 
@@ -908,30 +922,33 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         int instructionIndex = 0;
         instructions.clear();
         for (int i = 0; i < testInfo.getInstructions().size(); i++) {
-            if (currentDilution == 1 && i > 0 && i < 7) {
+            if (currentDilution == 1 && i > 0 && i < 8) {
                 continue;
             }
-            instructionIndex++;
-
             Instruction instruction;
             try {
                 instruction = testInfo.getInstructions().get(i).clone();
                 if (instruction != null) {
-                    if (instruction.section.get(0).contains("<dilution>")) {
-                        dilutionPageNumber = i;
+                    if (instruction.section.get(0).contains("<test>")) {
+                        testPageNumber = instructionIndex;
+                    } else if (instruction.section.get(0).contains("<result>")) {
+                        resultPageNumber = instructionIndex;
+                    } else if (instruction.section.get(0).contains("<dilution>")) {
+                        dilutionPageNumber = instructionIndex;
                     } else {
                         instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));
                     }
                 }
                 instructions.add(instruction);
+
+                instructionIndex++;
+
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
         }
 
-        totalPageCount = instructionIndex + 2;
-        testPageNumber = totalPageCount - 2;
-        resultPageNumber = totalPageCount - 1;
+        totalPageCount = instructionIndex;
         pagerIndicator.setPageCount(totalPageCount - 2);
         pagerIndicator.setVisibility(View.GONE);
         pagerIndicator.invalidate();
@@ -941,6 +958,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     }
 
     private void showHideFooter() {
+        imagePageRight.setVisibility(View.VISIBLE);
         if (viewPager.getCurrentItem() == testPageNumber) {
             footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.left);
@@ -948,7 +966,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.none);
         } else if (viewPager.getCurrentItem() == testPageNumber - 1) {
-            footerLayout.setVisibility(View.GONE);
+            imagePageRight.setVisibility(View.INVISIBLE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.left);
         } else if (viewPager.getCurrentItem() == resultPageNumber) {
             footerLayout.setVisibility(View.GONE);
@@ -960,6 +978,10 @@ public class ChamberTestPagerActivity extends BaseActivity implements
             footerLayout.setVisibility(View.VISIBLE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.all);
         }
+    }
+
+    public void onClickNext(View view) {
+        pageNext();
     }
 
     /**
@@ -975,7 +997,7 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         private static final String ARG_SHOW_OK = "show_ok";
         FragmentInstructionBinding fragmentInstructionBinding;
         Instruction instruction;
-        private boolean showOk;
+        private ButtonType showOk;
 
         /**
          * Returns a new instance of this fragment for the given section number.
@@ -983,11 +1005,11 @@ public class ChamberTestPagerActivity extends BaseActivity implements
          * @param instruction The information to to display
          * @return The instance
          */
-        static PlaceholderFragment newInstance(Instruction instruction, boolean showOkButton) {
+        static PlaceholderFragment newInstance(Instruction instruction, ButtonType button) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putParcelable(ARG_SECTION_NUMBER, instruction);
-            args.putBoolean(ARG_SHOW_OK, showOkButton);
+            args.putSerializable(ARG_SHOW_OK, button);
             fragment.setArguments(args);
             return fragment;
         }
@@ -1001,14 +1023,16 @@ public class ChamberTestPagerActivity extends BaseActivity implements
 
             if (getArguments() != null) {
                 instruction = getArguments().getParcelable(ARG_SECTION_NUMBER);
-                showOk = getArguments().getBoolean(ARG_SHOW_OK);
+                showOk = (ButtonType) getArguments().getSerializable(ARG_SHOW_OK);
                 fragmentInstructionBinding.setInstruction(instruction);
             }
 
             View view = fragmentInstructionBinding.getRoot();
 
-            if (showOk) {
+            if (showOk == ButtonType.NEXT) {
                 view.findViewById(R.id.buttonStart).setVisibility(View.VISIBLE);
+            } else if (showOk == ButtonType.ACCEPT) {
+                view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
             }
             return view;
         }
@@ -1033,12 +1057,15 @@ public class ChamberTestPagerActivity extends BaseActivity implements
                 return resultFragment;
             } else if (position == testPageNumber - 1) {
                 return PlaceholderFragment.newInstance(
-                        instructions.get(position), true);
+                        instructions.get(position), ButtonType.NEXT);
+            } else if (position == resultPageNumber + 1) {
+                return PlaceholderFragment.newInstance(
+                        instructions.get(position), ButtonType.ACCEPT);
             } else if (position == dilutionPageNumber) {
                 return selectDilutionFragment;
             } else {
                 return PlaceholderFragment.newInstance(
-                        instructions.get(position), false);
+                        instructions.get(position), ButtonType.NONE);
             }
         }
 
