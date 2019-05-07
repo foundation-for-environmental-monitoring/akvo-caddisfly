@@ -503,6 +503,9 @@ public final class SwatchHelper {
 
         //return an average color
         int resultCount = resultDetails.size();
+        if (resultCount == 0) {
+            return Color.TRANSPARENT;
+        }
         return Color.rgb(red / resultCount, green / resultCount, blue / resultCount);
     }
 

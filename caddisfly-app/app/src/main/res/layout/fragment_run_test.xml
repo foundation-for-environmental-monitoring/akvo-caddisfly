@@ -42,9 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
-            android:paddingEnd="10dp"
             android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="20dp"
             app:background="@{vm.test.name}"
             tools:background="?colorPrimary">
 
@@ -130,9 +130,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_margin="16sp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
-                    android:src="@drawable/place_device"
+                    android:src="@drawable/in_c_wait"
                     android:visibility="@{vm.test.cameraAbove ? View.GONE : View.VISIBLE}" />
 
                 <FrameLayout
@@ -156,9 +157,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="24dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="24dp"
                     android:enabled="true"
                     android:minWidth="230dp"
                     android:onClick="onStartTestClick"

@@ -31,6 +31,19 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
+import androidx.annotation.StringRes;
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObject2;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -43,22 +56,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import androidx.annotation.StringRes;
-import androidx.test.InstrumentationRegistry;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.NoMatchingViewException;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.By;
-import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
-import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.UiSelector;
 import timber.log.Timber;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.replaceText;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -67,6 +71,7 @@ import static org.akvo.caddisfly.util.TestUtil.clickListViewItem;
 import static org.akvo.caddisfly.util.TestUtil.findButtonInScrollable;
 import static org.akvo.caddisfly.util.TestUtil.nextSurveyPage;
 import static org.akvo.caddisfly.util.TestUtil.sleep;
+import static org.hamcrest.Matchers.allOf;
 
 public final class TestHelper {
 
@@ -196,10 +201,9 @@ public final class TestHelper {
     }
 
     public static void takeScreenshot() {
-        if (TAKE_SCREENSHOTS) {
+        if (TAKE_SCREENSHOTS && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             File path = new File(Environment.getExternalStorageDirectory().getPath()
-                    + "/" + BuildConfig.APPLICATION_ID + "/screenshots/"
-                    + "screen-" + mCounter++ + "-" + mCurrentLanguage + ".png");
+                    + "/" + BuildConfig.APPLICATION_ID + "screen-" + mCounter++ + "-" + mCurrentLanguage + ".png");
             mDevice.takeScreenshot(path, 0.5f, 60);
         }
     }
@@ -207,19 +211,12 @@ public final class TestHelper {
     public static void takeScreenshot(String name, int page) {
         if (TAKE_SCREENSHOTS && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             File path;
-            if (page < 0) {
-                path = new File(Environment.getExternalStorageDirectory().getPath()
-                        + "/" + BuildConfig.APPLICATION_ID + "/screenshots/"
-                        + name + "-" + mCurrentLanguage + ".png");
-            } else {
-                path = new File(Environment.getExternalStorageDirectory().getPath()
-                        + "/" + BuildConfig.APPLICATION_ID + "/screenshots/"
-                        + name + "-" + page + "-" + mCurrentLanguage + ".png");
-            }
-            mDevice.takeScreenshot(path, 0.2f, 40);
+            path = new File(Environment.getExternalStorageDirectory().getPath()
+                    + "/" + BuildConfig.APPLICATION_ID + "/screenshots/" + name + "-" + mCurrentLanguage + "-" +
+                    String.format("%02d", page + 1) + ".png");
+            mDevice.takeScreenshot(path, 0.1f, 30);
         }
     }
-
 
     public static void goToMainScreen() {
 
@@ -232,6 +229,38 @@ public final class TestHelper {
                 Espresso.pressBack();
             }
         }
+    }
+
+    public static void setJsonVersion(int dataVersion) {
+
+        onView(withId(R.id.actionSettings)).perform(click());
+
+        onView(withText(R.string.about)).check(matches(isDisplayed())).perform(click());
+
+        String version = CaddisflyApp.getAppVersion(false);
+
+        onView(withText(version)).check(matches(isDisplayed()));
+
+        enterDiagnosticMode();
+
+        goToMainScreen();
+
+        onView(withId(R.id.actionSettings)).perform(click());
+
+        clickListViewItem("JSON version");
+
+        ViewInteraction editText = onView(withId(android.R.id.edit));
+        editText.perform(scrollTo(), replaceText(String.valueOf(dataVersion)));
+
+        TestUtil.sleep(500);
+
+        mDevice.waitForIdle();
+
+        TestUtil.sleep(500);
+
+        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
+
+        leaveDiagnosticMode();
     }
 
     public static void activateTestMode(Activity activity) {
@@ -375,7 +404,11 @@ public final class TestHelper {
 
     public static void leaveDiagnosticMode() {
         goToMainScreen();
-        onView(withId(R.id.fabDisableDiagnostics)).perform(click());
+
+        try {
+            onView(withId(R.id.fabDisableDiagnostics)).perform(click());
+        } catch (Exception ignore) {
+        }
     }
 
     public static void resetLanguage() {

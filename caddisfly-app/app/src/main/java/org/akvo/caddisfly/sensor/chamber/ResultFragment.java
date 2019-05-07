@@ -66,9 +66,9 @@ public class ResultFragment extends Fragment {
             b.buttonSendToServer.setVisibility(View.GONE);
         }
 
-        if (getActivity() != null) {
-            getActivity().setTitle(R.string.result);
-        }
+//        if (getActivity() != null) {
+//            getActivity().setTitle(R.string.result);
+//        }
 
         if (getArguments() != null) {
             TestInfo testInfo = getArguments().getParcelable(TEST_INFO);
