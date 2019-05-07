@@ -43,6 +43,13 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.common.AppConfig;
@@ -79,12 +86,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import io.ffem.tryout.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
@@ -438,7 +439,7 @@ public class ChamberTestActivity extends BaseActivity implements
     }
 
     @Override
-    public void onResult(ArrayList<ResultDetail> resultDetails, Calibration calibration) {
+    public void onResult(ArrayList<ResultDetail> resultDetails, Calibration calibration, int cancelled) {
 
         ColorInfo colorInfo = new ColorInfo(SwatchHelper.getAverageColor(resultDetails), 0);
         ResultDetail resultDetail = SwatchHelper.analyzeColor(testInfo.getSwatches().size(),

@@ -36,6 +36,12 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.common.ConstantKey;
@@ -51,17 +57,12 @@ import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ColorUtil;
 import org.akvo.caddisfly.util.ImageUtil;
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 //import timber.log.Timber;
 
@@ -74,6 +75,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     protected boolean cameraStarted;
     protected int pictureCount = 0;
     private int timeDelay = 0;
+    private final Runnable mCountdown = this::setCountDown;
     private Handler mHandler;
     private AlertDialog alertDialogToBeDestroyed;
     private TestInfo mTestInfo;
@@ -110,7 +112,6 @@ public class BaseRunTest extends Fragment implements RunTest {
             }
         }
     };
-    private final Runnable mCountdown = this::setCountDown;
 
     private static String timeConversion(int seconds) {
 
@@ -248,23 +249,13 @@ public class BaseRunTest extends Fragment implements RunTest {
 
         countdown[0] = 0;
 
-        // If the test has a time delay config then use that otherwise use standard delay
-        if (mTestInfo.getResults().get(0).getTimeDelay() > 10) {
-            timeDelay = (int) Math.max(SHORT_DELAY, mTestInfo.getResults().get(0).getTimeDelay());
-
-            binding.timeLayout.setVisibility(View.VISIBLE);
-            binding.countdownTimer.setProgress(timeDelay, timeDelay);
-
-            setCountDown();
-        } else {
-            waitForStillness();
-        }
+        start();
 
         return binding.getRoot();
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         if (context instanceof OnResultListener) {
             mListener = (OnResultListener) context;
@@ -340,7 +331,8 @@ public class BaseRunTest extends Fragment implements RunTest {
                     }
                 }
 
-                mListener.onResult(results, mCalibration);
+                releaseResources();
+                mListener.onResult(results, mCalibration, Activity.RESULT_OK);
             }
         }
     }
@@ -355,12 +347,34 @@ public class BaseRunTest extends Fragment implements RunTest {
         this.dilution = dilution;
     }
 
+    @Override
+    public void start() {
+        // If the test has a time delay config then use that otherwise use standard delay
+        if (mTestInfo.getResults().get(0).getTimeDelay() > 10) {
+            timeDelay = (int) Math.max(SHORT_DELAY, mTestInfo.getResults().get(0).getTimeDelay());
+
+            binding.timeLayout.setVisibility(View.VISIBLE);
+            binding.countdownTimer.setProgress(timeDelay, timeDelay);
+
+            setCountDown();
+        } else {
+            waitForStillness();
+        }
+    }
+
+    @Override
+    public void stop() {
+        releaseResources();
+    }
+
     protected void startRepeatingTask() {
         mRunnableCode.run();
     }
 
     private void stopRepeatingTask() {
-        mHandler.removeCallbacks(mRunnableCode);
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mRunnableCode);
+        }
     }
 
     protected void startTest() {
@@ -462,7 +476,10 @@ public class BaseRunTest extends Fragment implements RunTest {
                     activity.setResult(Activity.RESULT_CANCELED);
 
                     stopScreenPinning(getActivity());
-                    activity.finish();
+
+//                    activity.finish();
+
+                    mListener.onResult(results, mCalibration, Activity.RESULT_CANCELED);
                 }, null, null
         );
     }
@@ -483,6 +500,6 @@ public class BaseRunTest extends Fragment implements RunTest {
     }
 
     public interface OnResultListener {
-        void onResult(ArrayList<ResultDetail> results, Calibration calibration);
+        void onResult(ArrayList<ResultDetail> results, Calibration calibration, int cancelled);
     }
 }

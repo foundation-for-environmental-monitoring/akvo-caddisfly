@@ -25,20 +25,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.databinding.FragmentResultBinding;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.common.ConstantKey.TEST_INFO;
 
 public class ResultFragment extends Fragment {
+
+    FragmentResultBinding b;
 
     /**
      * Get the instance.
@@ -56,7 +58,7 @@ public class ResultFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FragmentResultBinding b = DataBindingUtil.inflate(inflater,
+        b = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_result, container, false);
         View view = b.getRoot();
 
@@ -71,25 +73,31 @@ public class ResultFragment extends Fragment {
         if (getArguments() != null) {
             TestInfo testInfo = getArguments().getParcelable(TEST_INFO);
             if (testInfo != null) {
-                Result result = testInfo.getResults().get(0);
-
-                b.textResult.setText(result.getResult());
-                b.textTitle.setText(testInfo.getName());
-                b.textDilution.setText(getResources().getQuantityString(R.plurals.dilutions,
-                        testInfo.getDilution(), testInfo.getDilution()));
-                b.textUnit.setText(result.getUnit());
-
-                if (testInfo.getDilution() == testInfo.getMaxDilution()) {
-                    b.dilutionLayout.setVisibility(View.GONE);
-                } else if (result.highLevelsFound()) {
-                    b.dilutionLayout.setVisibility(View.VISIBLE);
-                } else {
-                    b.dilutionLayout.setVisibility(View.GONE);
-                }
+                setInfo(testInfo);
             }
         }
 
         return view;
     }
+
+    public void setInfo(TestInfo testInfo) {
+        Result result = testInfo.getResults().get(0);
+
+        b.textResult.setText(result.getResult());
+        b.textTitle.setText(testInfo.getName());
+        b.textDilution.setText(getResources().getQuantityString(R.plurals.dilutions,
+                testInfo.getDilution(), testInfo.getDilution()));
+        b.textUnit.setText(result.getUnit());
+
+        if (testInfo.getDilution() == testInfo.getMaxDilution()) {
+            b.dilutionLayout.setVisibility(View.GONE);
+        } else if (result.highLevelsFound()) {
+            b.dilutionLayout.setVisibility(View.VISIBLE);
+        } else {
+            b.dilutionLayout.setVisibility(View.GONE);
+        }
+
+    }
+
 }
 

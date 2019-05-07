@@ -121,6 +121,8 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
     private RunTest runTestFragment;
     private SelectDilutionFragment selectDilutionFragment;
+    private ResultFragment resultFragment;
+
     private FragmentManager fragmentManager;
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
@@ -128,6 +130,8 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
     private int dilutionPageNumber;
+    private int resultPageNumber;
+    private int testPageNumber;
     private int totalPageCount;
     private ArrayList<Instruction> instructions = new ArrayList<>();
     private CustomViewPager viewPager;
@@ -165,6 +169,9 @@ public class ChamberTestPagerActivity extends BaseActivity implements
                 runTestFragment = ChamberAboveFragment.newInstance(testInfo);
             }
 
+            boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
+            resultFragment = ResultFragment.newInstance(testInfo, isInternal);
+
             if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
                 start();
             } else {
@@ -186,11 +193,12 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                if (position > resultPageNumber) {
-//                    if (!resultFragment.isValid(true)) {
-//                        viewPager.setCurrentItem(resultPageNumber);
-//                    }
-//                } else if (position > photoPageNumber) {
+                if (position == testPageNumber) {
+                    runTestFragment.start();
+                } else {
+                    runTestFragment.stop();
+                }
+//                else if (position > photoPageNumber) {
 //                    if (!resultPhotoFragment.isValid()) {
 //                        viewPager.setCurrentItem(photoPageNumber);
 //                    }
@@ -249,53 +257,6 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         viewPager.setAdapter(mSectionsPagerAdapter);
 
         showHideFooter();
-    }
-
-    private void setupInstructions() {
-        int instructionIndex = 0;
-        instructions.clear();
-        for (int i = 0; i < testInfo.getInstructions().size(); i++) {
-            if (currentDilution == 1 && i > 0 && i < 7) {
-                continue;
-            }
-            instructionIndex++;
-
-            Instruction instruction;
-            try {
-                instruction = testInfo.getInstructions().get(i).clone();
-                if (instruction != null) {
-                    if (instruction.section.get(0).contains("<dilution>")) {
-                        dilutionPageNumber = i;
-                    } else {
-                        instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));
-                    }
-                }
-                instructions.add(instruction);
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        totalPageCount = instructionIndex;
-        pagerIndicator.setPageCount(totalPageCount);
-        pagerIndicator.setVisibility(View.GONE);
-        pagerIndicator.invalidate();
-        pagerIndicator.setVisibility(View.VISIBLE);
-
-        viewPager.setAdapter(mSectionsPagerAdapter);
-    }
-
-    private void showHideFooter() {
-        if (viewPager.getCurrentItem() == dilutionPageNumber) {
-            footerLayout.setVisibility(View.GONE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
-        } else if (viewPager.getCurrentItem() == totalPageCount - 1) {
-            footerLayout.setVisibility(View.GONE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
-        } else {
-            footerLayout.setVisibility(View.VISIBLE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.all);
-        }
     }
 
 //    private void goToFragment(Fragment fragment) {
@@ -374,8 +335,12 @@ public class ChamberTestPagerActivity extends BaseActivity implements
                 stopScreenPinning();
             }
         } else {
-            if (!fragmentManager.popBackStackImmediate()) {
-                super.onBackPressed();
+            if (viewPager.getCurrentItem() == 0) {
+                if (!fragmentManager.popBackStackImmediate()) {
+                    super.onBackPressed();
+                }
+            } else {
+                pageBack();
             }
             refreshTitle();
             testStarted = false;
@@ -535,7 +500,13 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     }
 
     @Override
-    public void onResult(ArrayList<ResultDetail> resultDetails, Calibration calibration) {
+    public void onResult(ArrayList<ResultDetail> resultDetails, Calibration calibration, int cancelled) {
+
+        if (cancelled == Activity.RESULT_CANCELED) {
+            stopScreenPinning();
+            pageBack();
+            return;
+        }
 
         ColorInfo colorInfo = new ColorInfo(SwatchHelper.getAverageColor(resultDetails), 0);
         ResultDetail resultDetail = SwatchHelper.analyzeColor(testInfo.getSwatches().size(),
@@ -567,16 +538,18 @@ public class ChamberTestPagerActivity extends BaseActivity implements
                     SoundUtil.playShortResource(this, R.raw.done);
                 }
 
-                boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
-
-                fragmentManager.popBackStack();
-                fragmentManager
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.fragment_container,
-                                ResultFragment.newInstance(testInfo, isInternal), null).commit();
-
                 testInfo.setResultDetail(resultDetail);
+
+                resultFragment.setInfo(testInfo);
+
+                pageNext();
+
+//                fragmentManager.popBackStack();
+//                fragmentManager
+//                        .beginTransaction()
+//                        .addToBackStack(null)
+//                        .replace(R.id.fragment_container,
+//                                ResultFragment.newInstance(testInfo, isInternal), null).commit();
 
                 if (AppPreferences.getShowDebugInfo()) {
                     showDiagnosticResultDialog(false, resultDetail, resultDetails, false);
@@ -928,8 +901,65 @@ public class ChamberTestPagerActivity extends BaseActivity implements
     }
 
     public void onStartClick(View view) {
-        pageNext();
         runTest();
+    }
+
+    private void setupInstructions() {
+        int instructionIndex = 0;
+        instructions.clear();
+        for (int i = 0; i < testInfo.getInstructions().size(); i++) {
+            if (currentDilution == 1 && i > 0 && i < 7) {
+                continue;
+            }
+            instructionIndex++;
+
+            Instruction instruction;
+            try {
+                instruction = testInfo.getInstructions().get(i).clone();
+                if (instruction != null) {
+                    if (instruction.section.get(0).contains("<dilution>")) {
+                        dilutionPageNumber = i;
+                    } else {
+                        instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));
+                    }
+                }
+                instructions.add(instruction);
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        totalPageCount = instructionIndex + 2;
+        testPageNumber = totalPageCount - 2;
+        resultPageNumber = totalPageCount - 1;
+        pagerIndicator.setPageCount(totalPageCount - 2);
+        pagerIndicator.setVisibility(View.GONE);
+        pagerIndicator.invalidate();
+        pagerIndicator.setVisibility(View.VISIBLE);
+
+        viewPager.setAdapter(mSectionsPagerAdapter);
+    }
+
+    private void showHideFooter() {
+        if (viewPager.getCurrentItem() == testPageNumber) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+        } else if (viewPager.getCurrentItem() == dilutionPageNumber) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+        } else if (viewPager.getCurrentItem() == testPageNumber - 1) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+        } else if (viewPager.getCurrentItem() == resultPageNumber) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+        } else if (viewPager.getCurrentItem() == totalPageCount - 1) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+        } else {
+            footerLayout.setVisibility(View.VISIBLE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.all);
+        }
     }
 
     /**
@@ -997,7 +1027,11 @@ public class ChamberTestPagerActivity extends BaseActivity implements
         @NotNull
         @Override
         public Fragment getItem(int position) {
-            if (position == totalPageCount - 1) {
+            if (position == testPageNumber) {
+                return (Fragment) runTestFragment;
+            } else if (position == resultPageNumber) {
+                return resultFragment;
+            } else if (position == testPageNumber - 1) {
                 return PlaceholderFragment.newInstance(
                         instructions.get(position), true);
             } else if (position == dilutionPageNumber) {
