@@ -40,7 +40,7 @@ import static org.akvo.caddisfly.common.ConstantKey.TEST_INFO;
 
 public class ResultFragment extends Fragment {
 
-    FragmentResultBinding b;
+    private FragmentResultBinding b;
 
     /**
      * Get the instance.
@@ -66,9 +66,7 @@ public class ResultFragment extends Fragment {
             b.buttonSendToServer.setVisibility(View.GONE);
         }
 
-//        if (getActivity() != null) {
-//            getActivity().setTitle(R.string.result);
-//        }
+        b.buttonAccept.setVisibility(View.GONE);
 
         if (getArguments() != null) {
             TestInfo testInfo = getArguments().getParcelable(TEST_INFO);
@@ -90,13 +88,12 @@ public class ResultFragment extends Fragment {
         b.textUnit.setText(result.getUnit());
 
         if (testInfo.getDilution() == testInfo.getMaxDilution()) {
-            b.dilutionLayout.setVisibility(View.GONE);
+            b.textDilutionInfo.setVisibility(View.GONE);
         } else if (result.highLevelsFound()) {
-            b.dilutionLayout.setVisibility(View.VISIBLE);
+            b.textDilutionInfo.setVisibility(View.VISIBLE);
         } else {
-            b.dilutionLayout.setVisibility(View.GONE);
+            b.textDilutionInfo.setVisibility(View.GONE);
         }
-
     }
 
 }

@@ -35,6 +35,7 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
 
 import org.akvo.caddisfly.R;
+import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.model.TestInfo;
@@ -47,21 +48,26 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertEquals;
+import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
+import static org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT;
+import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
+import static org.akvo.caddisfly.common.TestConstants.DELAY_EXTRA;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.getString;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
@@ -81,6 +87,8 @@ import static org.hamcrest.Matchers.is;
 @RunWith(AndroidJUnit4.class)
 public class CuvetteInstructions {
 
+    private static final int TEST_START_DELAY = 24;
+
     private final StringBuilder jsArrayString = new StringBuilder();
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -96,6 +104,7 @@ public class CuvetteInstructions {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 
@@ -174,44 +183,41 @@ public class CuvetteInstructions {
                 screenShotIndex++;
                 onView(withId(R.id.image_pageRight)).perform(click());
 
+                TestUtil.sleep(500);
+
             } catch (Exception e) {
                 TestUtil.sleep(600);
                 break;
             }
         }
 
-        List<UiObject2> buttons = mDevice.findObjects(By.text(
-                getString(mActivityTestRule.getActivity(), R.string.start_test)));
-        if (buttons.size() > 0) {
-            buttons.get(0).click();
-        }
-
-        TestUtil.sleep(3000);
+        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+                + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
+                * 1000);
 
         takeScreenshot(id, screenShotIndex);
         screenShotIndex++;
 
-        TestUtil.sleep(70000);
-
-        takeScreenshot(id, screenShotIndex);
-        screenShotIndex++;
+        onView(withText("Result")).check(matches(isDisplayed()));
 //        onView(withText("0.49")).check(matches(isDisplayed()));
 
-        List<UiObject2> button1s = mDevice.findObjects(By.text(
-                getString(mActivityTestRule.getActivity(), R.string.next)));
-        if (button1s.size() > 0) {
-            button1s.get(0).click();
-        }
+//        List<UiObject2> button1s = mDevice.findObjects(By.text(
+//                getString(mActivityTestRule.getActivity(), R.string.next)));
+//        if (button1s.size() > 0) {
+//            button1s.get(0).click();
+//        }
 
-        TestUtil.sleep(1000);
-
-//        onView(withText("Result")).check(matches(isDisplayed()));
+        onView(withId(R.id.image_pageRight)).perform(click());
 
         takeScreenshot(id, screenShotIndex);
 
-        TestUtil.sleep(1000);
+        onView(withText("Finish")).check(matches(isDisplayed()));
 
-        onView(withText(getString(mActivityTestRule.getActivity(), R.string.acceptResult))).perform(click());
+        List<UiObject2> buttonAccept = mDevice.findObjects(By.text(
+                getString(mActivityTestRule.getActivity(), R.string.acceptResult)));
+        if (buttonAccept.size() > 0) {
+            buttonAccept.get(0).click();
+        }
 
     }
 
@@ -261,7 +267,6 @@ public class CuvetteInstructions {
 
     @Test
     @RequiresDevice
-    @Ignore
     public void testInstructionsAll() {
 
         goToMainScreen();

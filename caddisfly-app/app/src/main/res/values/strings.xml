@@ -42,6 +42,10 @@
     <string name="back">Back</string>
     <string name="previous">Previous</string>
     <string name="close">Close</string>
+    <string name="skip">Skip</string>
+    <string name="finish">Finish</string>
+    <string name="important">Important</string>
+    <string name="retest">Retest</string>
 
     <plurals name="dilutions">
         <item quantity="one">@string/noDilution</item>

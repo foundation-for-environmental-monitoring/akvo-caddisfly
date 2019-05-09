@@ -377,37 +377,31 @@
         {
           "section": [
             "c_dilution_1",
-            "image:bc_rinse"
+            "image:c_dilution1"
           ]
         },
         {
           "section": [
             "c_dilution_2",
-            "image:c_dilute_2"
+            "image:c_dilution2"
           ]
         },
         {
           "section": [
             "c_dilution_3",
-            "image:c_dilute_3"
+            "image:c_dilution_3"
           ]
         },
         {
           "section": [
             "c_dilution_4",
-            "image:c_dilute_4"
+            "image:c_dilution_4"
           ]
         },
         {
           "section": [
-            "c_2_times_dilution",
-            "image:c_dilute_5"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_6",
-            "image:c_dilute_6"
+            "c_dilution_5",
+            "image:c_dilution_5"
           ]
         },
         {
@@ -450,12 +444,6 @@
           "section": [
             "c_close",
             "image:c_close"
-          ]
-        },
-        {
-          "section": [
-            "c_place_phone",
-            "image:c_place"
           ]
         },
         {

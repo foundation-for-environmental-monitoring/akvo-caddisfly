@@ -51,7 +51,7 @@
 
     <!-- Dilution Selection Dialog -->
     <string name="dilution">Dilution</string>
-    <string name="selectDilution">1. Select amount of dilution</string>
+    <string name="selectDilution">Select amount of dilution</string>
     <string name="noDilution">No Dilution</string>
     <string name="timesDilution" tools:ignore="PluralsCandidate">%1$d Times Dilution</string>
     <string name="calibrateWithNewReagent">Recalibrate with fresh reagent</string>
@@ -64,8 +64,8 @@
     <string name="checkChamberPlacement">Check that the chamber has been placed correctly.</string>
     <!-- Result Screen -->
     <string name="acceptResult">Accept Result</string>
-    <string name="highLevelRecommendation">Retesting with dilution is recommended as level of contamination is high.</string>
-    <string name="testWithDilution">Test with Dilution</string>
+    <string name="highLevelRecommendation"><b>Note</b>: Retesting with dilution is advised due to high level of contamination</string>
+    <string name="testWithDilution">Test with more Dilution</string>
 
     <!-- Permission -->
     <string name="storagePermission">Storage permission is required</string>
@@ -122,15 +122,14 @@
     <string name="c_shake">Close the lid of the measuring tube and shake it to ensure proper mixing of the reagent and sample.</string>
     <string name="c_pour">Pour the contents of the mixing tube into the provided cuvette.</string>
     <string name="c_close">Close the lid, wipe any excess water and fit the cuvette into the pipe.</string>
-    <string name="c_place_phone">Place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
+    <string name="c_press_place_phone">Press the start button below and then place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
+    <string name="c_place_phone">Accept the screen pin alert. Then place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
     <string name="c_empty">Empty the contents of the cuvette and rinse it once.</string>
-    <string name="c_dilution_1">Rinse the mixing cuvette with <b>deionised water</b>.</string>
-    <string name="c_dilution_2">Empty the test cuvette and fill it with the <b>deionised water</b>.</string>
-    <string name="c_dilution_3">Invert the lid and fit it over the inner chamber, aligning the bump on the cap and the inner chamber of the test chamber.</string>
-    <string name="c_dilution_4">Some excess water will spill into the overflow space. Hold tightly as shown and throw out the excess water.</string>
-    <string name="c_2_times_dilution">Next remove the cap and pour the deionised water into the mixing chamber. Add <b>1 measure of deionised water</b> and 1 measure of your sample.</string>
-    <string name="c_5_times_dilution">Next remove the cap and pour the deionised water into the mixing chamber. Add <b>4 measures of deionised water</b> and 1 measure of your sample.</string>
-    <string name="c_dilution_6">Shake the mixing chamber so the deionised water and sample mix thoroughly. Pour the mixture into the cuvette.</string>
+    <string name="c_dilution_1">Rinse the mixing cuvette and the test cuvette <b>twice</b> with <b>deionised water</b>.</string>
+    <string name="c_dilution_2">Dilution step 2</string>
+    <string name="c_dilution_3">Dilution step 3</string>
+    <string name="c_dilution_4">Dilution step 4</string>
+    <string name="c_dilution_5">Dilution step 5</string>
     <!-- About Screen -->
     <string name="copyrightMessage">Copyright © ffem</string>
     <string name="legalInformation">Legal Information</string>

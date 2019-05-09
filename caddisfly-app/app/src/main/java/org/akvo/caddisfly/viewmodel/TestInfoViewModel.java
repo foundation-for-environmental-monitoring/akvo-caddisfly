@@ -33,6 +33,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.ObservableField;
+import androidx.lifecycle.AndroidViewModel;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.Constants;
@@ -46,13 +53,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.AndroidViewModel;
 
 public class TestInfoViewModel extends AndroidViewModel {
 
@@ -201,7 +201,7 @@ public class TestInfoViewModel extends AndroidViewModel {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     (int) (displayMetrics.heightPixels / divisor));
 
-            llp.setMargins(0, 0, 0, 20);
+            llp.setMargins(0, 0, 0, 10);
 
             final AppCompatImageView imageView = new AppCompatImageView(context);
             imageView.setImageResource(resourceId);
@@ -243,7 +243,7 @@ public class TestInfoViewModel extends AndroidViewModel {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         (int) (displayMetrics.heightPixels / divisor));
 
-                llp.setMargins(0, 0, 0, 20);
+                llp.setMargins(0, 0, 0, 10);
                 imageView.setLayoutParams(llp);
 
                 imageView.setContentDescription(imageName);

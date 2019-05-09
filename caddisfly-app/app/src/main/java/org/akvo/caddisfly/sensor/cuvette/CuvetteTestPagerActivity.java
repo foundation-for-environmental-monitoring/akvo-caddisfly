@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -41,12 +42,15 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -112,6 +116,7 @@ import java.util.UUID;
 import io.ffem.tryout.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
+import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.helper.CameraHelper.getMaxSupportedMegaPixelsByCamera;
 
@@ -129,7 +134,10 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
             finish();
         }
     };
-    SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    SectionsPagerAdapter mSectionsPagerAdapter =
+            new SectionsPagerAdapter(getSupportFragmentManager(),
+                    BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+    TextView imagePageLeft;
     TextView imagePageRight;
     private RunTest runTestFragment;
     private SelectDilutionFragment selectDilutionFragment;
@@ -148,6 +156,7 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     private CustomViewPager viewPager;
     private PageIndicatorView pagerIndicator;
     private RelativeLayout footerLayout;
+    private LinearLayout waitingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,6 +168,13 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
         viewPager = findViewById(R.id.viewPager);
         pagerIndicator = findViewById(R.id.pager_indicator);
         footerLayout = findViewById(R.id.layout_footer);
+        waitingLayout = findViewById(R.id.waitingLayout);
+        ProgressBar waitingProgressBar = findViewById(R.id.waitingProgressBar);
+        waitingProgressBar.getIndeterminateDrawable()
+                .setColorFilter(ContextCompat.getColor(this, R.color.white),
+                        PorterDuff.Mode.SRC_IN);
+
+//        waitingProgressBar.setVisibility(View.GONE);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -173,15 +189,6 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
                 finish();
                 return;
             }
-
-            if (testInfo.getCameraAbove()) {
-                runTestFragment = ChamberBelowFragment.newInstance(testInfo);
-            } else {
-                runTestFragment = ChamberAboveFragment.newInstance(testInfo);
-            }
-
-            boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
-            resultFragment = ResultFragment.newInstance(testInfo, isInternal);
 
             if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
                 start();
@@ -198,35 +205,38 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
         imagePageRight = findViewById(R.id.image_pageRight);
         imagePageRight.setOnClickListener(view -> pageNext());
 
-        TextView imagePageLeft = findViewById(R.id.image_pageLeft);
+        imagePageLeft = findViewById(R.id.image_pageLeft);
         imagePageLeft.setOnClickListener(view -> pageBack());
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position == testPageNumber) {
-                    runTestFragment.start();
+                    runTest();
                 } else {
-                    runTestFragment.stop();
+                    if (testStarted) {
+                        stopTest();
+                    }
                 }
-//                else if (position > photoPageNumber) {
-//                    if (!resultPhotoFragment.isValid()) {
-//                        viewPager.setCurrentItem(photoPageNumber);
-//                    }
-//                } else if (result1PageNumber != -1 && position > result1PageNumber) {
-//                    if (!result1Fragment.isValid(true)) {
-//                        viewPager.setCurrentItem(result1PageNumber);
-//                    }
-//                } else if (photo1PageNumber != -1 && position > photo1PageNumber) {
-//                    if (!result1PhotoFragment.isValid()) {
-//                        viewPager.setCurrentItem(photo1PageNumber);
-//                    }
-//                }
+
+                if (position == resultPageNumber + 1) {
+                    setTitle(R.string.finish);
+                } else if (position == resultPageNumber) {
+                    setTitle(R.string.result);
+                } else {
+                    setTitle(testInfo.getName());
+                }
+                invalidateOptionsMenu();
             }
 
             @Override
             public void onPageSelected(int position) {
-                pagerIndicator.setActiveIndex(position);
+
+                if (position < resultPageNumber) {
+                    pagerIndicator.setActiveIndex(position - 1);
+                } else {
+                    pagerIndicator.setActiveIndex(position - resultPageNumber);
+                }
 
                 if (position < 1) {
                     imagePageLeft.setVisibility(View.INVISIBLE);
@@ -235,33 +245,10 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
                 }
 
                 showHideFooter();
-
-//                if (position == resultPageNumber) {
-//                    showWaitingView();
-//                } else {
-//                    showInstructionsView();
-//                    onInstructionFinish(testInfo.getInstructions().size() - position);
-//                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-//                    if (viewPager.getCurrentItem() == resultPageNumber &&
-//                            !resultFragment.isValid(false)) {
-//                        resultFragment.showSoftKeyboard();
-//                    } else if (viewPager.getCurrentItem() == result1PageNumber &&
-//                            !result1Fragment.isValid(false)) {
-//                        if (result1Fragment != null) {
-//                            result1Fragment.showSoftKeyboard();
-//                        }
-//                    } else {
-//                        resultFragment.hideSoftKeyboard();
-//                        if (result1Fragment != null) {
-//                            result1Fragment.hideSoftKeyboard();
-//                        }
-//                    }
-                }
             }
         });
 
@@ -270,30 +257,10 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
         showHideFooter();
     }
 
-//    private void goToFragment(Fragment fragment) {
-//        if (fragmentManager.getFragments().size() > 0) {
-//            fragmentManager.beginTransaction()
-//                    .addToBackStack(null)
-//                    .replace(R.id.fragment_container, fragment).commit();
-//        } else {
-//            fragmentManager.beginTransaction()
-//                    .add(R.id.fragment_container, fragment).commit();
-//        }
-//
-//        if (fragment instanceof SelectDilutionFragment) {
-//            testStarted = true;
-//        } else if (fragment != runTestFragment) {
-//            testStarted = false;
-//        }
-//
-//        invalidateOptionsMenu();
-//    }
-
     private void start() {
 
         if (testInfo.getDilutions().size() > 0) {
             selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
-//            goToFragment(selectDilutionFragment);
         } else {
             runTest();
         }
@@ -307,14 +274,14 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     private void runTest() {
         if (cameraIsOk) {
 
+            runTestFragment.start();
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                     && AppConfig.USE_SCREEN_PINNING) {
                 startLockTask();
             }
 
             runTestFragment.setDilution(currentDilution);
-            pageNext();
-//            goToFragment((Fragment) runTestFragment);
 
             testStarted = true;
 
@@ -322,6 +289,15 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
             checkCameraMegaPixel();
         }
 
+        invalidateOptionsMenu();
+    }
+
+    private void stopTest() {
+        if (runTestFragment != null) {
+            runTestFragment.stop();
+        }
+        stopScreenPinning();
+        testStarted = false;
         invalidateOptionsMenu();
     }
 
@@ -351,7 +327,9 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
                     super.onBackPressed();
                 }
             } else {
-                pageBack();
+                if (viewPager.getCurrentItem() != resultPageNumber) {
+                    pageBack();
+                }
             }
             refreshTitle();
             testStarted = false;
@@ -361,9 +339,7 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
 
     private void refreshTitle() {
         if (fragmentManager.getBackStackEntryCount() == 0) {
-            if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                setTitle(R.string.analyze);
-            } else {
+            if (!getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
                 setTitle(R.string.calibration);
             }
         }
@@ -371,8 +347,13 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (AppPreferences.isDiagnosticMode() && !testStarted) {
-            getMenuInflater().inflate(R.menu.menu_calibrate_dev, menu);
+        if (!testStarted) {
+            if (AppPreferences.isDiagnosticMode()) {
+                getMenuInflater().inflate(R.menu.menu_calibrate_dev, menu);
+            } else if (viewPager.getCurrentItem() > 0 &&
+                    viewPager.getCurrentItem() < testPageNumber - 1) {
+                getMenuInflater().inflate(R.menu.menu_instructions, menu);
+            }
         }
         return true;
     }
@@ -409,12 +390,14 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
                 } else {
                     stopScreenPinning();
                     releaseResources();
-                    if (!fragmentManager.popBackStackImmediate()) {
-                        super.onBackPressed();
-                    }
                     refreshTitle();
                     testStarted = false;
                     invalidateOptionsMenu();
+                    if (viewPager.getCurrentItem() == testPageNumber) {
+                        pageBack();
+                    } else if (!fragmentManager.popBackStackImmediate()) {
+                        super.onBackPressed();
+                    }
                 }
                 return true;
             default:
@@ -554,13 +537,6 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
                 resultFragment.setInfo(testInfo);
 
                 pageNext();
-
-//                fragmentManager.popBackStack();
-//                fragmentManager
-//                        .beginTransaction()
-//                        .addToBackStack(null)
-//                        .replace(R.id.fragment_container,
-//                                ResultFragment.newInstance(testInfo, isInternal), null).commit();
 
                 if (AppPreferences.getShowDebugInfo()) {
                     showDiagnosticResultDialog(false, resultDetail, resultDetails, false);
@@ -804,6 +780,15 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
         currentDilution = dilution;
         setupInstructions();
         pageNext();
+        boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
+        testInfo.setDilution(dilution);
+        if (testInfo.getCameraAbove()) {
+            runTestFragment = ChamberBelowFragment.newInstance(testInfo);
+        } else {
+            runTestFragment = ChamberAboveFragment.newInstance(testInfo);
+        }
+        runTestFragment.setDilution(dilution);
+        resultFragment = ResultFragment.newInstance(testInfo, isInternal);
     }
 
     @Override
@@ -914,28 +899,26 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
         viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
     }
 
-    public void onStartClick(View view) {
-        runTest();
-    }
-
     private void setupInstructions() {
         int instructionIndex = 0;
+        resultPageNumber = 0;
+
         instructions.clear();
         for (int i = 0; i < testInfo.getInstructions().size(); i++) {
-            if (currentDilution == 1 && i > 0 && i < 8) {
-                continue;
-            }
             Instruction instruction;
             try {
                 instruction = testInfo.getInstructions().get(i).clone();
                 if (instruction != null) {
-                    if (instruction.section.get(0).contains("<test>")) {
+                    String text = instruction.section.get(0);
+                    if (text.contains("<test>")) {
                         testPageNumber = instructionIndex;
-                    } else if (instruction.section.get(0).contains("<result>")) {
+                    } else if (text.contains("<result>")) {
                         resultPageNumber = instructionIndex;
-                    } else if (instruction.section.get(0).contains("<dilution>")) {
+                    } else if (text.contains("<dilution>")) {
                         dilutionPageNumber = instructionIndex;
-                    } else {
+                    } else if (currentDilution == 1 && text.contains("dilution")) {
+                        continue;
+                    } else if (resultPageNumber < 1) {
                         instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));
                     }
                 }
@@ -949,7 +932,7 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
         }
 
         totalPageCount = instructionIndex;
-        pagerIndicator.setPageCount(totalPageCount - 2);
+        pagerIndicator.setPageCount(totalPageCount - 3);
         pagerIndicator.setVisibility(View.GONE);
         pagerIndicator.invalidate();
         pagerIndicator.setVisibility(View.VISIBLE);
@@ -958,22 +941,32 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     }
 
     private void showHideFooter() {
+        imagePageLeft.setVisibility(View.VISIBLE);
         imagePageRight.setVisibility(View.VISIBLE);
+        pagerIndicator.setVisibility(View.VISIBLE);
+        waitingLayout.setVisibility(View.GONE);
         if (viewPager.getCurrentItem() == testPageNumber) {
-            footerLayout.setVisibility(View.GONE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+            footerLayout.setVisibility(View.VISIBLE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+            pagerIndicator.setVisibility(View.GONE);
+            imagePageLeft.setVisibility(View.INVISIBLE);
+            imagePageRight.setVisibility(View.INVISIBLE);
+            waitingLayout.setVisibility(View.VISIBLE);
         } else if (viewPager.getCurrentItem() == dilutionPageNumber) {
             footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.none);
-        } else if (viewPager.getCurrentItem() == testPageNumber - 1) {
-            imagePageRight.setVisibility(View.INVISIBLE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
         } else if (viewPager.getCurrentItem() == resultPageNumber) {
-            footerLayout.setVisibility(View.GONE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+            pagerIndicator.setVisibility(View.GONE);
+            footerLayout.setVisibility(View.VISIBLE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.right);
+            imagePageRight.setVisibility(View.VISIBLE);
+            imagePageLeft.setVisibility(View.INVISIBLE);
         } else if (viewPager.getCurrentItem() == totalPageCount - 1) {
+            pagerIndicator.setVisibility(View.GONE);
             footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+            imagePageRight.setVisibility(View.INVISIBLE);
+            imagePageLeft.setVisibility(View.VISIBLE);
         } else {
             footerLayout.setVisibility(View.VISIBLE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.all);
@@ -982,6 +975,14 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
 
     public void onClickNext(View view) {
         pageNext();
+    }
+
+    public void onSkipClick(MenuItem item) {
+        viewPager.setCurrentItem(testPageNumber);
+    }
+
+    public void onRetestClick(View view) {
+        viewPager.setCurrentItem(dilutionPageNumber);
     }
 
     /**
@@ -1005,7 +1006,8 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
          * @param instruction The information to to display
          * @return The instance
          */
-        static PlaceholderFragment newInstance(Instruction instruction, ButtonType button) {
+        static PlaceholderFragment newInstance(Instruction instruction,
+                                               ButtonType button) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putParcelable(ARG_SECTION_NUMBER, instruction);
@@ -1029,11 +1031,22 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
 
             View view = fragmentInstructionBinding.getRoot();
 
-            if (showOk == ButtonType.NEXT) {
-                view.findViewById(R.id.buttonStart).setVisibility(View.VISIBLE);
-            } else if (showOk == ButtonType.ACCEPT) {
+            view.findViewById(R.id.textDilutionInfo).setVisibility(View.GONE);
+            view.findViewById(R.id.buttonLayout).setVisibility(View.GONE);
+
+            if (showOk == ButtonType.ACCEPT) {
+                view.findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.buttonRetest).setVisibility(View.GONE);
             }
+
+            if (showOk == ButtonType.RETEST) {
+                view.findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.buttonRetest).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.textDilutionInfo).setVisibility(View.VISIBLE);
+            }
+
             return view;
         }
     }
@@ -1044,8 +1057,8 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
      */
     class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
-        SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        SectionsPagerAdapter(FragmentManager fm, int behavior) {
+            super(fm, behavior);
         }
 
         @NotNull
@@ -1055,12 +1068,14 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
                 return (Fragment) runTestFragment;
             } else if (position == resultPageNumber) {
                 return resultFragment;
-            } else if (position == testPageNumber - 1) {
-                return PlaceholderFragment.newInstance(
-                        instructions.get(position), ButtonType.NEXT);
             } else if (position == resultPageNumber + 1) {
-                return PlaceholderFragment.newInstance(
-                        instructions.get(position), ButtonType.ACCEPT);
+                if (testInfo.getResults().get(0).highLevelsFound()) {
+                    return PlaceholderFragment.newInstance(
+                            instructions.get(position), ButtonType.RETEST);
+                } else {
+                    return PlaceholderFragment.newInstance(
+                            instructions.get(position), ButtonType.ACCEPT);
+                }
             } else if (position == dilutionPageNumber) {
                 return selectDilutionFragment;
             } else {

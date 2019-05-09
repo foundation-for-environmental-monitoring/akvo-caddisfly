@@ -32,10 +32,10 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
 import androidx.annotation.StringRes;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
@@ -71,7 +71,6 @@ import static org.akvo.caddisfly.util.TestUtil.clickListViewItem;
 import static org.akvo.caddisfly.util.TestUtil.findButtonInScrollable;
 import static org.akvo.caddisfly.util.TestUtil.nextSurveyPage;
 import static org.akvo.caddisfly.util.TestUtil.sleep;
-import static org.hamcrest.Matchers.allOf;
 
 public final class TestHelper {
 
@@ -79,7 +78,7 @@ public final class TestHelper {
     private static final Map<String, String> STRING_HASH_MAP_FR = new HashMap<>();
     private static final Map<String, String> STRING_HASH_MAP_IN = new HashMap<>();
     private static final Map<String, String> CALIBRATION_HASH_MAP = new HashMap<>();
-    private static final boolean TAKE_SCREENSHOTS = false;
+    private static final boolean TAKE_SCREENSHOTS = true;
     public static Map<String, String> currentHashMap;
     public static UiDevice mDevice;
     public static String mCurrentLanguage = "en";
@@ -115,7 +114,6 @@ public final class TestHelper {
 
     }
 
-    @SuppressWarnings("deprecation")
     public static void loadData(Activity activity, String languageCode) {
         mCurrentLanguage = languageCode;
 
@@ -256,9 +254,9 @@ public final class TestHelper {
 
         mDevice.waitForIdle();
 
-        TestUtil.sleep(500);
+        TestUtil.sleep(1500);
 
-        onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
 
         leaveDiagnosticMode();
     }
@@ -303,7 +301,9 @@ public final class TestHelper {
         String buttonText = currentHashMap.get(text);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            buttonText = buttonText.toUpperCase();
+            if (buttonText != null) {
+                buttonText = buttonText.toUpperCase();
+            }
         }
 
         findButtonInScrollable(buttonText);
@@ -322,12 +322,16 @@ public final class TestHelper {
             String buttonText = currentHashMap.get(text);
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                buttonText = buttonText.toUpperCase();
+                if (buttonText != null) {
+                    buttonText = buttonText.toUpperCase();
+                }
             }
 
             findButtonInScrollable(buttonText);
 
-            mDevice.findObject(new UiSelector().text(buttonText)).click();
+            if (buttonText != null) {
+                mDevice.findObject(new UiSelector().text(buttonText)).click();
+            }
 
             // New Android OS seems to popup a button for external app
             if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.M
