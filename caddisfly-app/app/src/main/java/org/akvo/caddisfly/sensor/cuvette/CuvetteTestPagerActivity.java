@@ -157,6 +157,7 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     private PageIndicatorView pagerIndicator;
     private RelativeLayout footerLayout;
     private LinearLayout waitingLayout;
+    private int currentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,12 +212,14 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (currentPage == position) {
+                    return;
+                }
+
                 if (position == testPageNumber) {
                     runTest();
                 } else {
-                    if (testStarted) {
-                        stopTest();
-                    }
+                    stopTest();
                 }
 
                 if (position == resultPageNumber + 1) {
@@ -892,10 +895,12 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     }
 
     private void pageNext() {
+        currentPage = viewPager.getCurrentItem();
         viewPager.setCurrentItem(Math.min(totalPageCount, viewPager.getCurrentItem() + 1));
     }
 
     private void pageBack() {
+        currentPage = viewPager.getCurrentItem();
         viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
     }
 
@@ -982,7 +987,7 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     }
 
     public void onRetestClick(View view) {
-        viewPager.setCurrentItem(dilutionPageNumber);
+        viewPager.setCurrentItem(dilutionPageNumber, false);
     }
 
     /**
@@ -1031,17 +1036,16 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
 
             View view = fragmentInstructionBinding.getRoot();
 
+            view.findViewById(R.id.buttonRetest).setVisibility(View.GONE);
             view.findViewById(R.id.textDilutionInfo).setVisibility(View.GONE);
-            view.findViewById(R.id.buttonLayout).setVisibility(View.GONE);
+            view.findViewById(R.id.buttonAcceptResult).setVisibility(View.GONE);
 
             if (showOk == ButtonType.ACCEPT) {
-                view.findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.buttonRetest).setVisibility(View.GONE);
             }
 
             if (showOk == ButtonType.RETEST) {
-                view.findViewById(R.id.buttonLayout).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.buttonRetest).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.textDilutionInfo).setVisibility(View.VISIBLE);

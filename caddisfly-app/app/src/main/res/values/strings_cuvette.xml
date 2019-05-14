@@ -64,8 +64,8 @@
     <string name="checkChamberPlacement">Check that the chamber has been placed correctly.</string>
     <!-- Result Screen -->
     <string name="acceptResult">Accept Result</string>
-    <string name="highLevelRecommendation"><b>Note</b>: Retesting with dilution is advised due to high level of contamination</string>
-    <string name="testWithDilution">Test with more Dilution</string>
+    <string name="highLevelRecommendation"><b>Note</b>: Retesting with increased dilution is advised due to high level of contamination</string>
+    <string name="testWithDilution">Test with increased Dilution</string>
 
     <!-- Permission -->
     <string name="storagePermission">Storage permission is required</string>
