@@ -107,7 +107,7 @@
                     android:layout_margin="16sp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
-                    android:src="@drawable/in_c_wait"
+                    android:src="@drawable/place_device"
                     android:visibility="@{vm.test.cameraAbove ? View.GONE : View.VISIBLE}" />
 
                 <FrameLayout

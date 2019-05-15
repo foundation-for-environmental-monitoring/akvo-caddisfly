@@ -644,7 +644,7 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     private void showDiagnosticResultDialog(boolean testFailed, ResultDetail resultDetail,
                                             ArrayList<ResultDetail> resultDetails, boolean isCalibration) {
         DialogFragment resultFragment = DiagnosticResultDialog.newInstance(
-                testFailed, resultDetail, resultDetails, isCalibration);
+                testFailed, 0, resultDetail, resultDetails, isCalibration);
         final android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         android.app.Fragment prev = getFragmentManager().findFragmentByTag("gridDialog");
@@ -889,7 +889,7 @@ public class CuvetteTestPagerActivity extends BaseActivity implements
     }
 
     @Override
-    public void onDismissed() {
+    public void onDismissed(boolean retry) {
         testStarted = false;
         invalidateOptionsMenu();
     }

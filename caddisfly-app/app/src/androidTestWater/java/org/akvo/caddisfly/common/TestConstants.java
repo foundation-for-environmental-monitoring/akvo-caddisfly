@@ -1,5 +1,7 @@
 package org.akvo.caddisfly.common;
 
+import org.akvo.caddisfly.model.TestSampleType;
+
 public final class TestConstants {
 
     public static final int STRIP_TESTS_COUNT = 1;
