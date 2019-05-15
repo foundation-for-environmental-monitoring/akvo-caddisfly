@@ -204,7 +204,8 @@ public class ChamberPreviewActivity extends BaseActivity implements
      * @param isCalibration is this a calibration result
      */
     private void showDiagnosticResultDialog(boolean testFailed, ResultDetail resultDetail,
-                                            ArrayList<ResultDetail> resultDetails, boolean isCalibration) {
+                                            ArrayList<ResultDetail> resultDetails,
+                                            @SuppressWarnings("SameParameterValue") boolean isCalibration) {
         DialogFragment resultFragment = DiagnosticResultDialog.newInstance(
                 testFailed, resultDetail, resultDetails, isCalibration);
         final android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
