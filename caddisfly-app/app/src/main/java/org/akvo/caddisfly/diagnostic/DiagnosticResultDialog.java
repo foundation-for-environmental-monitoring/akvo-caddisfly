@@ -74,6 +74,8 @@ public class DiagnosticResultDialog extends DialogFragment {
         TextView textDistance = view.findViewById(R.id.textDistance);
         TextView textQuality = view.findViewById(R.id.textQuality);
 
+        TextView textResult = view.findViewById(R.id.textResult);
+
         Button buttonCancel = view.findViewById(R.id.buttonCancel);
         Button buttonRetry = view.findViewById(R.id.buttonRetry);
 
