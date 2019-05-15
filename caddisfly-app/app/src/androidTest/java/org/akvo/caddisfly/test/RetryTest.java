@@ -23,7 +23,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
@@ -36,14 +38,14 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
-import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_ID_1;
 import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
-import static org.akvo.caddisfly.common.TestConstants.EXPECTED_RESULT;
+import static org.akvo.caddisfly.common.TestConstants.IS_EXPECTED_RESULT;
 import static org.akvo.caddisfly.common.TestConstants.IS_HAS_DILUTION;
+import static org.akvo.caddisfly.common.TestConstants.IS_START_DELAY;
+import static org.akvo.caddisfly.common.TestConstants.IS_TEST_GROUP;
+import static org.akvo.caddisfly.common.TestConstants.IS_TEST_ID;
+import static org.akvo.caddisfly.common.TestConstants.IS_TEST_NAME;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_TYPE;
-import static org.akvo.caddisfly.common.TestConstants.TEST_GROUP;
-import static org.akvo.caddisfly.common.TestConstants.TEST_NAME;
-import static org.akvo.caddisfly.common.TestConstants.TEST_START_DELAY;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
@@ -183,7 +185,7 @@ public class RetryTest {
                     childAtPosition(
                             withClassName(is("android.widget.LinearLayout")),
                             0))).perform(actionOnItemAtPosition(
-                    TestConstants.TEST_INDEX, click()));
+                    TestConstants.IS_TEST_INDEX, click()));
 
             onView(withId(R.id.buttonRunTest)).perform(click());
         }
@@ -202,7 +204,7 @@ public class RetryTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
+        sleep((IS_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
                 * 1000);
 
@@ -224,7 +226,7 @@ public class RetryTest {
                     childAtPosition(
                             withClassName(is("android.widget.LinearLayout")),
                             0))).perform(actionOnItemAtPosition(
-                    TestConstants.TEST_INDEX, click()));
+                    TestConstants.IS_TEST_INDEX, click()));
 
             onView(withId(R.id.buttonRunTest)).perform(click());
         }
@@ -245,7 +247,7 @@ public class RetryTest {
 
         Log.i(TAG, "Test 2");
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
+        sleep((IS_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
                 * 1000);
 
@@ -253,7 +255,7 @@ public class RetryTest {
 
         Log.i(TAG, "Test 3");
 
-        sleep((TEST_START_DELAY +
+        sleep((IS_START_DELAY +
                 (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
                 * 1000);
 
@@ -279,7 +281,7 @@ public class RetryTest {
                     childAtPosition(
                             withClassName(is("android.widget.LinearLayout")),
                             0))).perform(actionOnItemAtPosition(
-                    TestConstants.TEST_INDEX, click()));
+                    TestConstants.IS_TEST_INDEX, click()));
 
             onView(withId(R.id.buttonRunTest)).perform(click());
         }
@@ -306,7 +308,7 @@ public class RetryTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
+        sleep((IS_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
                 * 1000);
 
@@ -325,9 +327,9 @@ public class RetryTest {
 
             mDevice.waitForIdle();
 
-            assertNotNull(mDevice.findObject(By.text(TEST_GROUP)));
+            assertNotNull(mDevice.findObject(By.text(IS_TEST_GROUP)));
 
-            assertNotNull(mDevice.findObject(By.text(TEST_NAME)));
+            assertNotNull(mDevice.findObject(By.text(IS_TEST_NAME)));
 
             assertNotNull(mDevice.findObject(By.text(resultString)));
         }
