@@ -22,6 +22,14 @@ package org.akvo.caddisfly.navigation;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.test.espresso.AmbiguousViewMatcherException;
+import androidx.test.espresso.Espresso;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.RequiresDevice;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.ui.MainActivity;
@@ -34,15 +42,6 @@ import org.junit.runner.RunWith;
 
 import java.text.DecimalFormatSymbols;
 
-import androidx.test.espresso.AmbiguousViewMatcherException;
-import androidx.test.espresso.Espresso;
-import androidx.test.filters.LargeTest;
-import androidx.test.filters.RequiresDevice;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
-import androidx.test.uiautomator.UiDevice;
-
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -53,6 +52,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.fail;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
@@ -112,7 +112,7 @@ public class SurveyTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -166,7 +166,7 @@ public class SurveyTest {
     @RequiresDevice
     public void testStartASurvey() {
 
-        saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1);
+        saveCalibration("TestValid", TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.actionSettings)).perform(click());
 
@@ -182,7 +182,7 @@ public class SurveyTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -202,7 +202,7 @@ public class SurveyTest {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.button_prepare)).check(matches(isDisplayed()));
 

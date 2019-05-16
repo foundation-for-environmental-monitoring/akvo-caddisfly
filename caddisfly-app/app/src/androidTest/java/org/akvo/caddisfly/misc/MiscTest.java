@@ -53,7 +53,6 @@ import java.text.DecimalFormatSymbols;
 
 import timber.log.Timber;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -65,6 +64,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertEquals;
 import static org.akvo.caddisfly.util.TestHelper.currentHashMap;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
@@ -171,7 +171,7 @@ public class MiscTest {
     }
 
     @Test
-    @Ignore
+    @Ignore("Unable to get declared methods")
     @RequiresDevice
     public void testZErrors() {
 
@@ -269,7 +269,7 @@ public class MiscTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -373,7 +373,7 @@ public class MiscTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
             onView(withText(R.string.errorCameraFlashRequired)).perform(click());

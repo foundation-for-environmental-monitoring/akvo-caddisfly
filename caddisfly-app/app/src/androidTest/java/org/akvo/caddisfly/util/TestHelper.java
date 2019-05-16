@@ -78,7 +78,7 @@ public final class TestHelper {
     private static final Map<String, String> STRING_HASH_MAP_FR = new HashMap<>();
     private static final Map<String, String> STRING_HASH_MAP_IN = new HashMap<>();
     private static final Map<String, String> CALIBRATION_HASH_MAP = new HashMap<>();
-    private static final boolean TAKE_SCREENSHOTS = true;
+    private static final boolean TAKE_SCREENSHOTS = false;
     public static Map<String, String> currentHashMap;
     public static UiDevice mDevice;
     public static String mCurrentLanguage = "en";
@@ -152,7 +152,7 @@ public final class TestHelper {
         addCalibration("Fluoride_Valid", "0.0=255  38  186\n"
                 + "0.5=255  51  129\n"
                 + "1.0=255  59  89\n"
-                + "1.5=255  24  1\n"
+                + "1.5=172  12  0\n"
                 + "2.0=255  81  34\n");
 
         addCalibration("pH_NoMatch", "4=255  103  68\n"
@@ -229,7 +229,7 @@ public final class TestHelper {
     public static void takeScreenshot() {
         if (TAKE_SCREENSHOTS && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             File path = new File(Environment.getExternalStorageDirectory().getPath()
-                    + "/" + BuildConfig.APPLICATION_ID + "screen-" + mCounter++ + "-" + mCurrentLanguage + ".png");
+                    + "/" + BuildConfig.APPLICATION_ID + "/screen-" + mCounter++ + "-" + mCurrentLanguage + ".png");
             mDevice.takeScreenshot(path, 0.5f, 60);
         }
     }

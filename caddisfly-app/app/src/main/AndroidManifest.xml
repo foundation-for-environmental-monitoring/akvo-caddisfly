@@ -122,7 +122,7 @@
             android:name=".sensor.chamber.ChamberTestActivity"
             android:screenOrientation="nosensor" />
         <activity
-            android:name=".sensor.cuvette.CuvetteTestPagerActivity"
+            android:name=".sensor.cuvette.CuvetteTestActivity"
             android:screenOrientation="nosensor" />
 
         <!-- /Bluetooth -->

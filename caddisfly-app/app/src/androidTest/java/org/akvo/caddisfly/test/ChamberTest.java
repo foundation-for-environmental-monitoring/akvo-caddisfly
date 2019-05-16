@@ -48,7 +48,6 @@ import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -60,12 +59,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
 import static org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT;
 import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
-import static org.akvo.caddisfly.common.TestConstants.DELAY_EXTRA;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
@@ -132,7 +131,7 @@ public class ChamberTest {
     @RequiresDevice
     public void testStartHighLevelTest() {
 
-        saveCalibration("HighLevelTest", TestConstants.CUVETTE_TEST_ID_1);
+        saveCalibration("HighLevelTest", TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.actionSettings)).perform(click());
 
@@ -156,7 +155,7 @@ public class ChamberTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -190,7 +189,7 @@ public class ChamberTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         onView(withId(R.id.fabEditCalibration)).perform(click());
 
@@ -217,7 +216,7 @@ public class ChamberTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
                 * 1000);
 
@@ -227,7 +226,7 @@ public class ChamberTest {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         sleep(1000);
 
@@ -247,13 +246,13 @@ public class ChamberTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
                 * 1000);
 
         onView(withId(R.id.buttonAccept)).perform(click());
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.button_prepare)).check(matches(isDisplayed()));
 
@@ -272,7 +271,7 @@ public class ChamberTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
                 * 1000);
 
@@ -284,7 +283,7 @@ public class ChamberTest {
 
         onView(withId(R.id.buttonAccept)).perform(click());
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.button_prepare)).check(matches(isDisplayed()));
 
@@ -302,7 +301,7 @@ public class ChamberTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
                 * 1000);
 
@@ -340,7 +339,7 @@ public class ChamberTest {
     @RequiresDevice
     public void testStartNoDilutionTest() {
 
-        saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1);
+        saveCalibration("TestValid", TestConstants.IS_TEST_ID);
 
         onView(withId(R.id.actionSettings)).perform(click());
 
@@ -364,7 +363,7 @@ public class ChamberTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -396,7 +395,7 @@ public class ChamberTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         onView(withId(R.id.fabEditCalibration)).perform(click());
 
@@ -421,7 +420,7 @@ public class ChamberTest {
                                 0)));
         recyclerView2.perform(actionOnItemAtPosition(2, click()));
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
                 * 1000);
 
@@ -433,7 +432,7 @@ public class ChamberTest {
 
         sleep(1000);
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         sleep(1000);
 
@@ -445,7 +444,7 @@ public class ChamberTest {
 
         onView(withId(R.id.buttonNoDilution)).perform(click());
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
                 * 1000);
 

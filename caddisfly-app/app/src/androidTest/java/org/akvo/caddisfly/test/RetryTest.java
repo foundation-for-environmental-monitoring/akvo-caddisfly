@@ -14,9 +14,9 @@ import androidx.test.uiautomator.UiDevice;
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
-import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.model.TestSampleType;
+import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.ui.MainActivity;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -41,10 +41,12 @@ import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentat
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
+import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_INITIAL;
+import static org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT;
 import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_EXPECTED_RESULT;
+import static org.akvo.caddisfly.common.TestConstants.IS_EXTRA_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_HAS_DILUTION;
-import static org.akvo.caddisfly.common.TestConstants.IS_START_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_GROUP;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_ID;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_NAME;
@@ -89,16 +91,6 @@ public class RetryTest {
                 mDevice.pressBack();
             }
         }
-    }
-
-    @Before
-    public void setUp() {
-
-        loadData(mActivityRule.getActivity(), mCurrentLanguage);
-
-        SharedPreferences prefs =
-                PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
-        prefs.edit().clear().apply();
     }
 
     public static void runTest(String testId, boolean useDiagnosticMode,
@@ -160,7 +152,7 @@ public class RetryTest {
 
         goToMainScreen();
 
-        if (!isExternal) {
+        if (isExternal) {
 
             gotoSurveyForm();
 
@@ -207,9 +199,8 @@ public class RetryTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((IS_START_DELAY + CUVETTE_TEST_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         onView(withText(R.string.cancel)).perform(click());
 
@@ -250,21 +241,29 @@ public class RetryTest {
 
         Log.i(TAG, "Test 2");
 
-        sleep((IS_START_DELAY + CUVETTE_TEST_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         onView(withText(R.string.retry)).perform(click());
 
         Log.i(TAG, "Test 3");
 
-        sleep((IS_START_DELAY +
-                (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         onView(withText(R.string.retry)).check(doesNotExistOrGone());
 
         onView(withText(R.string.ok)).perform(click());
+    }
+
+    @Before
+    public void setUp() {
+
+        loadData(mActivityRule.getActivity(), mCurrentLanguage);
+
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
+        prefs.edit().clear().apply();
     }
 
     @Test
@@ -452,9 +451,8 @@ public class RetryTest {
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((IS_START_DELAY + CUVETTE_TEST_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         String resultString = getText(withId(R.id.textResult));
 

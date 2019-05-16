@@ -17,7 +17,7 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.sensor.chamber;
+package org.akvo.caddisfly.sensor.cuvette;
 
 
 import android.os.Bundle;
@@ -31,7 +31,7 @@ import androidx.fragment.app.Fragment;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.databinding.FragmentResultBinding;
+import org.akvo.caddisfly.databinding.FragmentResult2Binding;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 
@@ -40,7 +40,7 @@ import static org.akvo.caddisfly.common.ConstantKey.TEST_INFO;
 
 public class ResultFragment extends Fragment {
 
-    private FragmentResultBinding b;
+    private FragmentResult2Binding b;
 
     /**
      * Get the instance.
@@ -59,7 +59,7 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         b = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_result, container, false);
+                R.layout.fragment_result_2, container, false);
         View view = b.getRoot();
 
         if (!BuildConfig.showExperimentalTests) {

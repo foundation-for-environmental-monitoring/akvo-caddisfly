@@ -17,11 +17,11 @@ public final class TestConstants {
     public static final String IS_TEST_GROUP = "Water Tests 1";
     public static final String IS_TEST_NAME = "Fluoride";
     public static final String IS_TEST_ID = Constants.FLUORIDE_ID;
-    public static final int IS_START_DELAY = 34;
+    public static final int IS_START_DELAY = 60;
     public static final int IS_TEST_INDEX = 6;
-    public static final int IS_TIME_DELAY = 0;
     public static final double IS_EXPECTED_RESULT = 1.4;
     public static final boolean IS_HAS_DILUTION = true;
 
     public static final int CUVETTE_TEST_TIME_DELAY = 0;
+    public static final int IS_EXTRA_DELAY = 3;
 }

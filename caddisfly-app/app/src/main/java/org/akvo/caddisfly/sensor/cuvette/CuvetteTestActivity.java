@@ -89,7 +89,6 @@ import org.akvo.caddisfly.sensor.chamber.CalibrationResultDialog;
 import org.akvo.caddisfly.sensor.chamber.ChamberAboveFragment;
 import org.akvo.caddisfly.sensor.chamber.ChamberBelowFragment;
 import org.akvo.caddisfly.sensor.chamber.EditCustomDilution;
-import org.akvo.caddisfly.sensor.chamber.ResultFragment;
 import org.akvo.caddisfly.sensor.chamber.RunTest;
 import org.akvo.caddisfly.sensor.chamber.SelectDilutionFragment;
 import org.akvo.caddisfly.ui.BaseActivity;
@@ -120,7 +119,7 @@ import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ON
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.helper.CameraHelper.getMaxSupportedMegaPixelsByCamera;
 
-public class CuvetteTestPagerActivity extends BaseActivity implements
+public class CuvetteTestActivity extends BaseActivity implements
         BaseRunTest.OnResultListener,
         SelectDilutionFragment.OnDilutionSelectedListener,
         EditCustomDilution.OnCustomDilutionListener,

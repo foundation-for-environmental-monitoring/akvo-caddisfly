@@ -39,7 +39,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -47,6 +46,7 @@ import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
 import static org.akvo.caddisfly.util.TestHelper.loadData;
 import static org.akvo.caddisfly.util.TestHelper.mCurrentLanguage;
@@ -106,7 +106,7 @@ public class DiagnosticTest {
 
         onView(new RecyclerViewMatcher(R.id.list_types)
                 .atPositionOnView(0, R.id.text_title))
-                .check(matches(withText(TestConstants.CUVETTE_TEST_NAME_1)))
+                .check(matches(withText(TestConstants.IS_TEST_ID)))
                 .perform(click());
 
 //        ViewInteraction recyclerView = onView(

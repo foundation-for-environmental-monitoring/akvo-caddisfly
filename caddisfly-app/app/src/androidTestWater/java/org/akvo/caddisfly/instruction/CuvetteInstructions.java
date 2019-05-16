@@ -65,9 +65,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertEquals;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
+import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_INITIAL;
 import static org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT;
 import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
-import static org.akvo.caddisfly.common.TestConstants.DELAY_EXTRA;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.getString;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
@@ -86,8 +86,6 @@ import static org.hamcrest.Matchers.is;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class CuvetteInstructions {
-
-    private static final int TEST_START_DELAY = 24;
 
     private final StringBuilder jsArrayString = new StringBuilder();
     @Rule
@@ -150,7 +148,7 @@ public class CuvetteInstructions {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         sleep(1000);
 
@@ -158,8 +156,8 @@ public class CuvetteInstructions {
 
         TestUtil.sleep(1000);
 
-        String id = TestConstants.CUVETTE_TEST_ID_1.substring(
-                TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1
+        String id = TestConstants.IS_TEST_ID.substring(
+                TestConstants.IS_TEST_ID.lastIndexOf("-") + 1
         );
 
         takeScreenshot(id, screenShotIndex);
@@ -191,7 +189,7 @@ public class CuvetteInstructions {
             }
         }
 
-        sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY
                 + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
                 * 1000);
 

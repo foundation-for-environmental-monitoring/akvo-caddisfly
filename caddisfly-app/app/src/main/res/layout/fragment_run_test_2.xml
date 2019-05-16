@@ -38,44 +38,18 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/layoutTitleBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingStart="20dp"
+            android:paddingTop="16dp"
             android:paddingEnd="10dp"
-            android:paddingBottom="20dp"
-            app:background="@{vm.test.name}"
-            tools:background="?colorPrimary">
+            android:paddingBottom="20dp">
 
             <TextView
-                android:id="@+id/textTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-light"
-                android:text="@{vm.test.name}"
-                android:textColor="#fff"
-                android:textSize="30sp"
-                tools:text="Contaminant" />
-
-            <TextView
-                android:id="@+id/textDilution"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-8dp"
-                android:paddingBottom="20dp"
-                android:textColor="#d6f6fdf6"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="@string/noDilution" />
-
-            <TextView
-                android:id="@+id/textSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/placeDevice"
-                android:textColor="#d6f6fdf6"
+                android:text="@string/c_place_phone"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -130,6 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_margin="16sp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
                     android:src="@drawable/place_device"

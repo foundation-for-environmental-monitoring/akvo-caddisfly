@@ -85,15 +85,6 @@ public class BaseRunTest extends Fragment implements RunTest {
     private Camera mCamera;
     private OnResultListener mListener;
     private ChamberCameraPreview mCameraPreview;
-    private final Runnable mRunnableCode = () -> {
-        if (pictureCount < AppPreferences.getSamplingTimes()) {
-            pictureCount++;
-            SoundUtil.playShortResource(getActivity(), R.raw.beep);
-            takePicture();
-        } else {
-            releaseResources();
-        }
-    };
     private final Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
         @Override
@@ -111,6 +102,15 @@ public class BaseRunTest extends Fragment implements RunTest {
             } else {
                 mHandler.postDelayed(mRunnableCode, ChamberTestConfig.DELAY_BETWEEN_SAMPLING * 1000);
             }
+        }
+    };
+    private final Runnable mRunnableCode = () -> {
+        if (pictureCount < AppPreferences.getSamplingTimes()) {
+            pictureCount++;
+            SoundUtil.playShortResource(getActivity(), R.raw.beep);
+            takePicture();
+        } else {
+            releaseResources();
         }
     };
 
@@ -241,12 +241,12 @@ public class BaseRunTest extends Fragment implements RunTest {
 
         initializeTest();
 
-//        if (mCalibration != null) {
-//            binding.textDilution.setText(String.valueOf(mCalibration.value));
-//        } else {
-//            binding.textDilution.setText(getResources()
-//                    .getQuantityString(R.plurals.dilutions, dilution, dilution));
-//        }
+        if (mCalibration != null) {
+            binding.textDilution.setText(String.valueOf(mCalibration.value));
+        } else {
+            binding.textDilution.setText(getResources()
+                    .getQuantityString(R.plurals.dilutions, dilution, dilution));
+        }
 
         countdown[0] = 0;
 

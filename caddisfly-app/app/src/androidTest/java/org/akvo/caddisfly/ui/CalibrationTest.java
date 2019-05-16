@@ -46,7 +46,6 @@ import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -57,6 +56,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.currentHashMap;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
@@ -107,10 +107,10 @@ public class CalibrationTest {
 
     @Test
     @RequiresDevice
-    @Ignore
+    @Ignore("Feature removed")
     public void testOutOfSequence() {
 
-        saveCalibration("OutOfSequence", TestConstants.CUVETTE_TEST_ID_1);
+        saveCalibration("OutOfSequence", TestConstants.IS_TEST_ID);
 
         goToMainScreen();
 
@@ -130,7 +130,7 @@ public class CalibrationTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -192,7 +192,7 @@ public class CalibrationTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         if (TestUtil.isEmulator()) {
 
@@ -218,7 +218,7 @@ public class CalibrationTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         onView(withId(R.id.fabEditCalibration)).perform(click());
 
@@ -261,7 +261,7 @@ public class CalibrationTest {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         sleep(500);
 
@@ -287,7 +287,7 @@ public class CalibrationTest {
                 childAtPosition(
                         withClassName(is("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition(
-                TestConstants.TEST_INDEX, click()));
+                TestConstants.IS_TEST_INDEX, click()));
 
         onView(withId(R.id.fabEditCalibration)).perform(click());
 
@@ -311,7 +311,7 @@ public class CalibrationTest {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         sleep(500);
 

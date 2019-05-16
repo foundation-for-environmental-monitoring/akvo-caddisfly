@@ -129,7 +129,7 @@ public class ChamberInstructions {
 
         gotoSurveyForm();
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1);
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
 
         sleep(1000);
 
@@ -137,8 +137,8 @@ public class ChamberInstructions {
 
         TestUtil.sleep(1000);
 
-        String id = TestConstants.CUVETTE_TEST_ID_1.substring(
-                TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1);
+        String id = TestConstants.IS_TEST_ID.substring(
+                TestConstants.IS_TEST_ID.lastIndexOf("-") + 1);
 
         takeScreenshot(id, -1);
 

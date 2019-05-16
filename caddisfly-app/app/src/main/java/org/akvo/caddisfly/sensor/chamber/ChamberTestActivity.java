@@ -507,7 +507,7 @@ public class ChamberTestActivity extends BaseActivity implements
                         .beginTransaction()
                         .addToBackStack(null)
                         .replace(R.id.fragment_container,
-                                ResultFragment.newInstance(testInfo, isInternal), null).commit();
+                                ChamberResultFragment.newInstance(testInfo, isInternal), null).commit();
 
                 testInfo.setResultDetail(resultDetail);
 
