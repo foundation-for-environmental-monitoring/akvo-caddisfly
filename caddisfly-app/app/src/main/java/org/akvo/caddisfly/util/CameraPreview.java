@@ -25,13 +25,14 @@ import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.common.Constants;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static android.hardware.Camera.Parameters.FLASH_MODE_OFF;
@@ -50,7 +51,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         this(context, FLASH_MODE_OFF);
     }
 
-    private CameraPreview(Context context, String flashModeTorch) {
+    public CameraPreview(Context context, String flashModeTorch) {
         // create surfaceView
         super(context);
 

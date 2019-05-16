@@ -26,7 +26,7 @@ public final class AppTest {
     };
 
     private static final String MERGED_MANIFEST =
-            "build/intermediates/merged_manifests/waterDebug/processWaterDebugManifest/merged/AndroidManifest.xml";
+            "build/intermediates/merged_manifests/waterDebug/AndroidManifest.xml";
 
     @Test
     public void shouldMatchPermissions() {

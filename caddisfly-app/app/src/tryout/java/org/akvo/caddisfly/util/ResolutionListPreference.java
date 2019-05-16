@@ -1,4 +1,4 @@
-package io.ffem.tryout;
+package org.akvo.caddisfly.util;
 
 import android.content.Context;
 import android.hardware.Camera;

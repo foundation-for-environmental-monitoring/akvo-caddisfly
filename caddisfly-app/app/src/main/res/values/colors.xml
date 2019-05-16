@@ -61,4 +61,6 @@
 
     <color name="main_button_blue">#CDCDCD</color>
 
+    <color name="colorAccent">#d9161616</color>
+
 </resources>

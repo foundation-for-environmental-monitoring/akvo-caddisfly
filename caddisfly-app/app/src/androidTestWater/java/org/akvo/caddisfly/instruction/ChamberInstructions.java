@@ -24,6 +24,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.RequiresDevice;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.common.TestConstants;
@@ -43,14 +51,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
-
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.filters.LargeTest;
-import androidx.test.filters.RequiresDevice;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
-import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onView;
@@ -93,7 +93,8 @@ public class ChamberInstructions {
     }
 
     private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
+            final Matcher<View> parentMatcher,
+            @SuppressWarnings("SameParameterValue") final int position) {
 
         return new TypeSafeMatcher<View>() {
             @Override
@@ -140,8 +141,8 @@ public class ChamberInstructions {
         TestUtil.sleep(1000);
 
         String id = TestConstants.CUVETTE_TEST_ID_1.substring(
-                TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1,
-                TestConstants.CUVETTE_TEST_ID_1.length());
+                TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1
+        );
 
         takeScreenshot(id, -1);
 
@@ -183,7 +184,7 @@ public class ChamberInstructions {
         TestUtil.sleep(1000);
 
         String id = Constants.FREE_CHLORINE_ID.substring(
-                Constants.FREE_CHLORINE_ID.lastIndexOf("-") + 1, Constants.FREE_CHLORINE_ID.length());
+                Constants.FREE_CHLORINE_ID.lastIndexOf("-") + 1);
 
         takeScreenshot(id, -1);
 
@@ -229,7 +230,7 @@ public class ChamberInstructions {
                 assertEquals(testList.get(i).getSubtype(), TestType.STRIP_TEST);
 
                 String id = testList.get(i).getUuid();
-                id = id.substring(id.lastIndexOf("-") + 1, id.length());
+                id = id.substring(id.lastIndexOf("-") + 1);
 
                 int pages = navigateToTest(i, id);
 
