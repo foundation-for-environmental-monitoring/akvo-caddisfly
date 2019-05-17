@@ -241,11 +241,18 @@ public class BaseRunTest extends Fragment implements RunTest {
 
         initializeTest();
 
-        if (mCalibration != null) {
-            binding.textDilution.setText(String.valueOf(mCalibration.value));
+        if (AppPreferences.getTestMetaDataVersionInt() == 1) {
+            if (mCalibration != null) {
+                binding.textDilution.setText(String.valueOf(mCalibration.value));
+            } else {
+                binding.textDilution.setText(getResources()
+                        .getQuantityString(R.plurals.dilutions, dilution, dilution));
+            }
+            binding.textInfo.setVisibility(View.GONE);
+            binding.imageIllustration.setImageResource(R.drawable.place_device);
         } else {
-            binding.textDilution.setText(getResources()
-                    .getQuantityString(R.plurals.dilutions, dilution, dilution));
+            binding.layoutTitleBar.setVisibility(View.GONE);
+            binding.textInfo.setVisibility(View.VISIBLE);
         }
 
         countdown[0] = 0;

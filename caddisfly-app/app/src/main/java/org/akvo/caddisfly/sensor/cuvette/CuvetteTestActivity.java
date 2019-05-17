@@ -116,6 +116,7 @@ import io.ffem.tryout.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+import static org.akvo.caddisfly.common.AppConfig.STOP_ANIMATIONS;
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.helper.CameraHelper.getMaxSupportedMegaPixelsByCamera;
 
@@ -156,7 +157,6 @@ public class CuvetteTestActivity extends BaseActivity implements
     private PageIndicatorView pagerIndicator;
     private RelativeLayout footerLayout;
     private LinearLayout waitingLayout;
-    private int currentPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +174,9 @@ public class CuvetteTestActivity extends BaseActivity implements
                 .setColorFilter(ContextCompat.getColor(this, R.color.white),
                         PorterDuff.Mode.SRC_IN);
 
-//        waitingProgressBar.setVisibility(View.GONE);
+        if (STOP_ANIMATIONS) {
+            waitingProgressBar.setVisibility(View.GONE);
+        }
 
         fragmentManager = getSupportFragmentManager();
 
@@ -211,24 +213,6 @@ public class CuvetteTestActivity extends BaseActivity implements
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (currentPage == position) {
-                    return;
-                }
-
-                if (position == testPageNumber) {
-                    runTest();
-                } else {
-                    stopTest();
-                }
-
-                if (position == resultPageNumber + 1) {
-                    setTitle(R.string.finish);
-                } else if (position == resultPageNumber) {
-                    setTitle(R.string.result);
-                } else {
-                    setTitle(testInfo.getName());
-                }
-                invalidateOptionsMenu();
             }
 
             @Override
@@ -245,6 +229,21 @@ public class CuvetteTestActivity extends BaseActivity implements
                 } else {
                     imagePageLeft.setVisibility(View.VISIBLE);
                 }
+
+                if (position == testPageNumber) {
+                    runTest();
+                } else {
+                    stopTest();
+                }
+
+                if (position == resultPageNumber + 1) {
+                    setTitle(R.string.finish);
+                } else if (position == resultPageNumber) {
+                    setTitle(R.string.result);
+                } else {
+                    setTitle(testInfo.getName());
+                }
+                invalidateOptionsMenu();
 
                 showHideFooter();
             }
@@ -784,6 +783,9 @@ public class CuvetteTestActivity extends BaseActivity implements
         pageNext();
         boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
         testInfo.setDilution(dilution);
+        final TestInfoViewModel model =
+                ViewModelProviders.of(this).get(TestInfoViewModel.class);
+        model.setTest(testInfo);
         if (testInfo.getCameraAbove()) {
             runTestFragment = ChamberBelowFragment.newInstance(testInfo);
         } else {
@@ -894,12 +896,10 @@ public class CuvetteTestActivity extends BaseActivity implements
     }
 
     private void pageNext() {
-        currentPage = viewPager.getCurrentItem();
         viewPager.setCurrentItem(Math.min(totalPageCount, viewPager.getCurrentItem() + 1));
     }
 
     private void pageBack() {
-        currentPage = viewPager.getCurrentItem();
         viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
     }
 
@@ -921,6 +921,8 @@ public class CuvetteTestActivity extends BaseActivity implements
                     } else if (text.contains("<dilution>")) {
                         dilutionPageNumber = instructionIndex;
                     } else if (currentDilution == 1 && text.contains("dilution")) {
+                        continue;
+                    } else if (currentDilution != 1 && text.contains("normal")) {
                         continue;
                     } else if (resultPageNumber < 1) {
                         instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));

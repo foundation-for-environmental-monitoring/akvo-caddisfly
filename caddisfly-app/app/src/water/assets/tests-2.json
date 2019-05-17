@@ -361,6 +361,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,0.5,1,1.5,2",
       "monthsValid": 12,
       "dilutions": [
@@ -377,42 +378,30 @@
         {
           "section": [
             "c_dilution_1",
-            "image:c_dilution1"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_2",
-            "image:c_dilution2"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_3",
-            "image:c_dilution_3"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_4",
-            "image:c_dilution_4"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_5",
-            "image:c_dilution_5"
-          ]
-        },
-        {
-          "section": [
-            "c_rinse",
             "image:c_rinse"
           ]
         },
         {
           "section": [
-            "c_measure",
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
             "image:c_measure_sample"
           ]
         },

@@ -35,11 +35,11 @@ import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
 
 import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestType;
+import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.repository.TestConfigRepository;
 import org.akvo.caddisfly.ui.MainActivity;
 import org.akvo.caddisfly.util.TestUtil;
@@ -68,6 +68,7 @@ import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_INITIAL;
 import static org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT;
 import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
+import static org.akvo.caddisfly.common.TestConstants.IS_EXTRA_DELAY;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.getString;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
@@ -134,6 +135,91 @@ public class CuvetteInstructions {
 //        resetLanguage();
     }
 
+
+    @Test
+    @RequiresDevice
+    public void testInstructionsNoDilution() {
+
+        int screenShotIndex = -1;
+
+        leaveDiagnosticMode();
+
+        setJsonVersion(2);
+
+        goToMainScreen();
+
+        gotoSurveyForm();
+
+        clickExternalSourceButton(TestConstants.IS_TEST_ID);
+
+        sleep(1000);
+
+        mDevice.waitForIdle();
+
+        TestUtil.sleep(1000);
+
+        String id = TestConstants.IS_TEST_ID.substring(
+                TestConstants.IS_TEST_ID.lastIndexOf("-") + 1
+        );
+
+        takeScreenshot(id, screenShotIndex);
+        screenShotIndex++;
+
+        mDevice.waitForIdle();
+
+        onView(withText(getString(mActivityTestRule.getActivity(), R.string.next))).perform(click());
+
+        takeScreenshot(id, screenShotIndex);
+        screenShotIndex++;
+
+        onView(withText(
+                mActivityTestRule.getActivity().getString(R.string.noDilution)))
+                .perform(click());
+
+        for (int i = 0; i < 20; i++) {
+
+            try {
+                takeScreenshot(id, screenShotIndex);
+                screenShotIndex++;
+                onView(withId(R.id.image_pageRight)).perform(click());
+                mDevice.waitForIdle();
+            } catch (Exception e) {
+                TestUtil.sleep(600);
+                break;
+            }
+        }
+
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
+
+        takeScreenshot(id, screenShotIndex);
+        screenShotIndex++;
+
+        onView(withText("Result")).check(matches(isDisplayed()));
+//        onView(withText("0.49")).check(matches(isDisplayed()));
+
+//        List<UiObject2> button1s = mDevice.findObjects(By.text(
+//                getString(mActivityTestRule.getActivity(), R.string.next)));
+//        if (button1s.size() > 0) {
+//            button1s.get(0).click();
+//        }
+
+        sleep(1000);
+
+        onView(withId(R.id.image_pageRight)).perform(click());
+
+        takeScreenshot(id, screenShotIndex);
+
+        onView(withText("Finish")).check(matches(isDisplayed()));
+
+        List<UiObject2> buttonAccept = mDevice.findObjects(By.text(
+                getString(mActivityTestRule.getActivity(), R.string.acceptResult)));
+        if (buttonAccept.size() > 0) {
+            buttonAccept.get(0).click();
+        }
+
+    }
+
     @Test
     @RequiresDevice
     public void testInstructionsCuvette() {
@@ -189,9 +275,8 @@ public class CuvetteInstructions {
             }
         }
 
-        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT)))
-                * 1000);
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         takeScreenshot(id, screenShotIndex);
         screenShotIndex++;
@@ -204,6 +289,8 @@ public class CuvetteInstructions {
 //        if (button1s.size() > 0) {
 //            button1s.get(0).click();
 //        }
+
+        sleep(1000);
 
         onView(withId(R.id.image_pageRight)).perform(click());
 
