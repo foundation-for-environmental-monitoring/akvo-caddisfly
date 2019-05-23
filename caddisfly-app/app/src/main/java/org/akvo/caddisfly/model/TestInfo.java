@@ -136,7 +136,7 @@ public class TestInfo implements Parcelable {
     private String md610Id;
     @SerializedName("sampleQuantity")
     @Expose
-    private Integer sampleQuantity;
+    private Integer sampleQuantity = 0;
     @SerializedName("selectInstruction")
     @Expose
     private String selectInstruction;

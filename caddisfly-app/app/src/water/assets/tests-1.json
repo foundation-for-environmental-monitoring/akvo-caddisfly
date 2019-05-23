@@ -308,6 +308,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,0.5,1,1.5,2",
       "monthsValid": 12,
       "dilutions": [
@@ -318,62 +319,83 @@
       "instructions": [
         {
           "section": [
-            "bc_rinse",
-            "image:bc_rinse"
+            "<dilution>"
           ]
         },
         {
           "section": [
-            "bc_fill",
-            "image:bc_fill"
+            "c_dilution_1",
+            "image:c_rinse"
           ]
         },
         {
           "section": [
-            "bc_add_capsule",
-            "image:bc_add_capsule"
+            "c_dilution_2",
+            "image:c_measure_sample"
           ]
         },
         {
           "section": [
-            "bc_screw",
-            "image:bc_screw"
+            "c_dilution_3",
+            "image:c_measure_sample"
           ]
         },
         {
           "section": [
-            "bc_shake",
-            "image:bc_shake"
+            "c_normal_rinse",
+            "image:c_rinse"
           ]
         },
         {
           "section": [
-            "bc_wipe_bottom",
-            "image:bc_wipe_bottom"
+            "c_normal_measure",
+            "image:c_measure_sample"
           ]
         },
         {
           "section": [
-            "bc_wipe_camera",
-            "image:bc_wipe_camera"
+            "c_open_reagent",
+            "image:c_open_reagent"
           ]
         },
         {
           "section": [
-            "bc_place_chamber",
-            "image:bc_place_chamber"
+            "c_add_reagent",
+            "image:c_add_reagent"
           ]
         },
         {
           "section": [
-            "bc_select_dilution",
-            "image:bc_select_dilution"
+            "c_shake",
+            "image:c_shake"
           ]
         },
         {
           "section": [
-            "bc_place_phone",
-            "image:bc_place_phone"
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
           ]
         }
       ],

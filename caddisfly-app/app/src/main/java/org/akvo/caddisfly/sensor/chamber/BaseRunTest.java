@@ -85,6 +85,15 @@ public class BaseRunTest extends Fragment implements RunTest {
     private Camera mCamera;
     private OnResultListener mListener;
     private ChamberCameraPreview mCameraPreview;
+    private final Runnable mRunnableCode = () -> {
+        if (pictureCount < AppPreferences.getSamplingTimes()) {
+            pictureCount++;
+            SoundUtil.playShortResource(getActivity(), R.raw.beep);
+            takePicture();
+        } else {
+            releaseResources();
+        }
+    };
     private final Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
         @Override
@@ -102,15 +111,6 @@ public class BaseRunTest extends Fragment implements RunTest {
             } else {
                 mHandler.postDelayed(mRunnableCode, ChamberTestConfig.DELAY_BETWEEN_SAMPLING * 1000);
             }
-        }
-    };
-    private final Runnable mRunnableCode = () -> {
-        if (pictureCount < AppPreferences.getSamplingTimes()) {
-            pictureCount++;
-            SoundUtil.playShortResource(getActivity(), R.raw.beep);
-            takePicture();
-        } else {
-            releaseResources();
         }
     };
 
@@ -240,20 +240,6 @@ public class BaseRunTest extends Fragment implements RunTest {
         binding.setVm(model);
 
         initializeTest();
-
-        if (AppPreferences.getTestMetaDataVersionInt() == 1) {
-            if (mCalibration != null) {
-                binding.textDilution.setText(String.valueOf(mCalibration.value));
-            } else {
-                binding.textDilution.setText(getResources()
-                        .getQuantityString(R.plurals.dilutions, dilution, dilution));
-            }
-            binding.textInfo.setVisibility(View.GONE);
-            binding.imageIllustration.setImageResource(R.drawable.place_device);
-        } else {
-            binding.layoutTitleBar.setVisibility(View.GONE);
-            binding.textInfo.setVisibility(View.VISIBLE);
-        }
 
         countdown[0] = 0;
 

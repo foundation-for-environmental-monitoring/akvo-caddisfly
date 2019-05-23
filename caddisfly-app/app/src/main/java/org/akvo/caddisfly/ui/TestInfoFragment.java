@@ -94,12 +94,6 @@ public class TestInfoFragment extends Fragment {
 
                 b.setTestInfo(testInfo);
 
-                if (AppPreferences.getTestMetaDataVersionInt() > 1 ||
-                        testInfo.getInstructions() == null ||
-                        testInfo.getInstructions().size() == 0) {
-                    b.buttonInstructions.setVisibility(View.GONE);
-                }
-
                 if (testInfo.getSubtype() == TestType.STRIP_TEST) {
                     b.buttonPrepare.setText(R.string.prepare_test);
                 }

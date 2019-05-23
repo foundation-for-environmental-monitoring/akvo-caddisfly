@@ -255,6 +255,12 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         viewPager.setAdapter(mSectionsPagerAdapter);
 
+        if (testInfo.getCameraAbove()) {
+            runTestFragment = ChamberBelowFragment.newInstance(testInfo);
+        } else {
+            runTestFragment = ChamberAboveFragment.newInstance(testInfo);
+        }
+
         showHideFooter();
     }
 

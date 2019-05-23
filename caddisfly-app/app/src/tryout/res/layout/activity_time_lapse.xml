@@ -108,6 +108,6 @@
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
-            android:src="@drawable/place_device" />
+            android:src="@drawable/in_c_wait" />
     </LinearLayout>
 </LinearLayout>
