@@ -8,7 +8,7 @@ android {
         applicationId "io.ffem"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 242
+        versionCode 243
         versionName "Experiment"
         resConfigs "en", "en_US"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -27,7 +27,7 @@ android {
         }
         tryout {
             applicationIdSuffix ".experiment"
-            versionCode 248
+            versionCode 249
             versionName "Experiment"
             buildConfigField 'boolean', 'showExperimentalTests', 'true'
         }
@@ -58,24 +58,24 @@ android {
         }
     }
 
-    signingConfigs {
-        appRelease {
-            storeFile file(FFEM_CADDISFLY_RELEASE_STORE_FILE)
-            storePassword FFEM_CADDISFLY_RELEASE_STORE_PASSWORD
-            keyAlias FFEM_CADDISFLY_RELEASE_KEY_ALIAS
-            keyPassword FFEM_CADDISFLY_RELEASE_KEY_PASSWORD
-        }
-    }
-
-    buildTypes {
-        release {
-            signingConfig signingConfigs.appRelease
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlignEnabled true
-        }
-    }
+//    signingConfigs {
+//        appRelease {
+//            storeFile file(FFEM_RELEASE_STORE_FILE)
+//            storePassword FFEM_RELEASE_STORE_PASSWORD
+//            keyAlias FFEM_RELEASE_KEY_ALIAS
+//            keyPassword FFEM_RELEASE_KEY_PASSWORD
+//        }
+//    }
+//
+//    buildTypes {
+//        release {
+//            signingConfig signingConfigs.appRelease
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            zipAlignEnabled true
+//        }
+//    }
 
     lintOptions {
         checkReleaseBuilds true
@@ -144,12 +144,12 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.8.0'
 
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation "androidx.test.ext:junit:1.1.0"
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation "androidx.test.ext:junit:1.1.1"
 
     // Espresso
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
     androidTestImplementation('androidx.test.espresso:espresso-contrib:3.1.1') {
         exclude group: 'com.android.support'
         exclude group: 'javax.inject'
@@ -167,11 +167,11 @@ dependencies {
 
     // Firebase (Experiment Flavor)
     tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:16.0.8'
-    tryoutImplementation 'com.google.firebase:firebase-database:16.1.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:18.2.0'
-    tryoutImplementation 'com.google.firebase:firebase-storage:16.1.0'
-    tryoutImplementation 'com.google.firebase:firebase-auth:16.2.1'
+    tryoutImplementation 'com.google.firebase:firebase-core:16.0.9'
+    tryoutImplementation 'com.google.firebase:firebase-database:17.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:19.0.1'
+    tryoutImplementation 'com.google.firebase:firebase-storage:17.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-auth:17.0.0'
 }
 apply plugin: 'com.google.gms.google-services'
 
