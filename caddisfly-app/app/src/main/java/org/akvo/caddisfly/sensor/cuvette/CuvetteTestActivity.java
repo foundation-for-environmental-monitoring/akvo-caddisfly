@@ -163,7 +163,7 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_chamber_test_pager);
+        setContentView(R.layout.activity_cuvette_test);
 
         viewPager = findViewById(R.id.viewPager);
         pagerIndicator = findViewById(R.id.pager_indicator);
