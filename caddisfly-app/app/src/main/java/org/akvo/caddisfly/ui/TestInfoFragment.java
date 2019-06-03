@@ -43,6 +43,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.Constants;
@@ -54,12 +60,6 @@ import org.akvo.caddisfly.sensor.striptest.utils.BitmapUtils;
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
 
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 
 public class TestInfoFragment extends Fragment {
 
@@ -101,14 +101,8 @@ public class TestInfoFragment extends Fragment {
 
                 b.setTestInfo(testInfo);
 
-                if (testInfo.getInstructions() == null || testInfo.getInstructions().size() == 0) {
-                    b.buttonInstructions.setVisibility(View.GONE);
-                }
-
                 if (testInfo.getSubtype() == TestType.STRIP_TEST) {
                     b.buttonPrepare.setText(R.string.prepare_test);
-                } else if (testInfo.getSubtype() == TestType.BLUETOOTH) {
-                    b.buttonInstructions.setVisibility(View.GONE);
                 }
 
                 byte[] byteArray = Objects.requireNonNull(getActivity()).getIntent().getByteArrayExtra("image");

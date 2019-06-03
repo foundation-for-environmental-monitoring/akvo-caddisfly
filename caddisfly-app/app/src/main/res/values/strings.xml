@@ -37,6 +37,14 @@
     <string name="runTest">Run Test</string>
     <string name="stage_one"><b>Stage 1:</b></string>
     <string name="stage_two"><b>Stage 2:</b></string>
+    <string name="start">Start</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="previous">Previous</string>
+    <string name="close">Close</string>
+    <string name="skip">Skip</string>
+    <string name="finish">Finish</string>
+    <string name="retest">Retest</string>
     <string name="navigate_up">Navigate Up</string>
     <string name="print">Print</string>
 
@@ -179,7 +187,6 @@
     <string name="button_scan">Scan for devices</string>
     <string name="graph">Graph</string>
     <string name="screen_pinned">Screen pinned. Tap Home button for more information.</string>
-    <string name="close">Close</string>
     <string name="water_not_safe_message">Contamination is higher than the acceptable safe level standard for drinking water.</string>
     <string name="water_safe_message">Contamination is within the acceptable safe level standard for drinking water.</string>
     <string name="edit_calibration_details">Edit calibration details</string>

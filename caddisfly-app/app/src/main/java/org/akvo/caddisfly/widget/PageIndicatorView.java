@@ -25,20 +25,22 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.akvo.caddisfly.R;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-public class PageIndicatorView extends View {
+import org.akvo.caddisfly.R;
 
-    private static final float DISTANCE = 24;
-    private static final int BULLET_RADIUS = 6;
+public class PageIndicatorView extends View {
 
     @NonNull
     private final Paint fillPaint;
+    private final Paint strokePaint;
+    private float distanceBetweenBullets = 36;
+    private int bulletRadius = 6;
+    private float activeBulletRadius;
     private int pageCount;
     private int activePage;
+    private boolean showDots;
 
     public PageIndicatorView(@NonNull Context context) {
         this(context, null);
@@ -52,13 +54,36 @@ public class PageIndicatorView extends View {
         super(context, attrs, defStyleAttr);
 
         fillPaint = new Paint();
-        fillPaint.setStyle(Paint.Style.FILL);
-        fillPaint.setColor(ContextCompat.getColor(context, R.color.accent));
+        fillPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        fillPaint.setStrokeWidth(2);
+        fillPaint.setColor(ContextCompat.getColor(context, R.color.colorAccent));
         fillPaint.setAntiAlias(true);
+
+        strokePaint = new Paint();
+        strokePaint.setStyle(Paint.Style.STROKE);
+        strokePaint.setStrokeWidth(2);
+        strokePaint.setColor(ContextCompat.getColor(context, R.color.colorAccent));
+        strokePaint.setAntiAlias(true);
     }
 
     public void setPageCount(int value) {
         pageCount = value;
+
+        final float scale = getResources().getDisplayMetrics().density;
+        if (scale <= 1.5) {
+            distanceBetweenBullets = 26;
+            bulletRadius = 4;
+        } else if (scale >= 3) {
+            distanceBetweenBullets = 46;
+            bulletRadius = 6;
+        }
+
+        setActiveBulletSize(false, scale);
+
+        if (pageCount > 12) {
+            distanceBetweenBullets -= 10;
+        }
+
         invalidate();
     }
 
@@ -70,21 +95,47 @@ public class PageIndicatorView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension((int) Math.ceil(DISTANCE * pageCount), heightMeasureSpec);
+        setMeasuredDimension((int) Math.ceil(distanceBetweenBullets * pageCount), heightMeasureSpec);
     }
 
     @Override
     public void onDraw(@NonNull Canvas canvas) {
-
         if (pageCount > 1) {
             for (int i = 0; i < pageCount; i++) {
                 if (activePage == i) {
-                    canvas.drawCircle(DISTANCE * i + BULLET_RADIUS * 2, canvas.getHeight() / 2f,
-                            BULLET_RADIUS * 2, fillPaint);
+                    canvas.drawCircle(distanceBetweenBullets * i + bulletRadius * 2, getHeight() / 2f,
+                            activeBulletRadius, fillPaint);
                 } else {
-                    canvas.drawCircle(DISTANCE * i + BULLET_RADIUS * 2, canvas.getHeight() / 2f,
-                            BULLET_RADIUS, fillPaint);
+                    if (showDots) {
+                        canvas.drawCircle(distanceBetweenBullets * i + bulletRadius * 2, getHeight() / 2f,
+                                bulletRadius / 2f, fillPaint);
+                    } else {
+                        canvas.drawCircle(distanceBetweenBullets * i + bulletRadius * 2, getHeight() / 2f,
+                                bulletRadius, strokePaint);
+                    }
                 }
+            }
+        }
+    }
+
+    public void showDots(boolean value) {
+        showDots = value;
+
+        final float scale = getResources().getDisplayMetrics().density;
+        setActiveBulletSize(value, scale);
+    }
+
+    private void setActiveBulletSize(boolean dots, float scale) {
+
+        if (scale <= 1.5) {
+            activeBulletRadius = bulletRadius * 1.7f;
+        } else if (scale >= 3) {
+            activeBulletRadius = bulletRadius * 2f;
+        } else {
+            if (dots) {
+                activeBulletRadius = bulletRadius * 1.4f;
+            } else {
+                activeBulletRadius = bulletRadius * 1.8f;
             }
         }
     }

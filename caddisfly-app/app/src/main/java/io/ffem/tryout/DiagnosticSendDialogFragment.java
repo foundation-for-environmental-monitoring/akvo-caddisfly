@@ -1,4 +1,4 @@
-package io.ffem.experiment;
+package io.ffem.tryout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -12,12 +12,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import org.akvo.caddisfly.R;
 
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 
 public class DiagnosticSendDialogFragment extends DialogFragment {

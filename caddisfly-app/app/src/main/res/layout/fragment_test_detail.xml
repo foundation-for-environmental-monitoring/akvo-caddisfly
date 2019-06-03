@@ -83,7 +83,7 @@
 
             <Button
                 android:id="@+id/button_prepare"
-                style="?primaryButtonStyle"
+                style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -94,24 +94,7 @@
                 android:minWidth="230dp"
                 android:onClick="onStartTestClick"
                 android:text="@string/next"
-                android:textColor="?primaryButtonColor" />
-
-            <Button
-                android:id="@+id/button_instructions"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="16dp"
-                android:drawableEnd="?forwardArrow"
-                android:onClick="onInstructionsClick"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:text="@string/instructions"
-                android:textAlignment="textEnd"
-                android:textColor="?linkTextColor"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:theme="?primaryButtonStyle" />
 
         </LinearLayout>
     </LinearLayout>

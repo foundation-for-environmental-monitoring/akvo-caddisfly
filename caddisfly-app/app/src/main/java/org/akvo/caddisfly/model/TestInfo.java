@@ -136,7 +136,7 @@ public class TestInfo implements Parcelable {
     private String md610Id;
     @SerializedName("sampleQuantity")
     @Expose
-    private String sampleQuantity;
+    private Integer sampleQuantity = 0;
     @SerializedName("selectInstruction")
     @Expose
     private String selectInstruction;
@@ -249,7 +249,11 @@ public class TestInfo implements Parcelable {
             monthsValid = in.readInt();
         }
         md610Id = in.readString();
-        sampleQuantity = in.readString();
+        if (in.readByte() == 0) {
+            sampleQuantity = null;
+        } else {
+            sampleQuantity = in.readInt();
+        }
 
         results = new ArrayList<>();
         in.readTypedList(results, Result.CREATOR);
@@ -397,9 +401,11 @@ public class TestInfo implements Parcelable {
 
                 String text;
                 if (dilutions.size() > 3) {
-                    text = String.format(" (More than %s with dilution)", maxDilution * maxRangeValue);
+                    text = String.format(Locale.US, " (<dilutionRange>%s+</dilutionRange>)",
+                            decimalFormat.format(maxDilution * maxRangeValue));
                 } else {
-                    text = String.format(" (Upto %s with dilution)", maxDilution * maxRangeValue);
+                    text = String.format(" (<dilutionRange>%s</dilutionRange>)",
+                            decimalFormat.format(maxDilution * maxRangeValue));
                 }
 
                 return minMaxRange.toString() + text;
@@ -430,7 +436,7 @@ public class TestInfo implements Parcelable {
         this.height = height;
     }
 
-    public String getSampleQuantity() {
+    public int getSampleQuantity() {
         return sampleQuantity;
     }
 
@@ -513,7 +519,12 @@ public class TestInfo implements Parcelable {
             parcel.writeInt(monthsValid);
         }
         parcel.writeString(md610Id);
-        parcel.writeString(sampleQuantity);
+        if (sampleQuantity == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(sampleQuantity);
+        }
         parcel.writeTypedList(results);
         parcel.writeTypedList(instructions);
         parcel.writeString(selectInstruction);

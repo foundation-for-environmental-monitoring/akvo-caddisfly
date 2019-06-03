@@ -41,6 +41,9 @@
 
     <color name="text_primary">#d9222222</color>
     <color name="text_secondary">#d9161616</color>
+
+    <color name="text_links">#0078A7</color>
+
     <color name="window_background">#fff</color>
 
     <color name="gray">#2d2d2d</color>
@@ -59,6 +62,8 @@
     <color name="card_shadow_2">#dddddd</color>
 
     <color name="main_button_blue">#CDCDCD</color>
+
+    <color name="colorAccent">#ffffff</color>
 
     <!--Green theme-->
     <color name="primary_2">#8BC34A</color>

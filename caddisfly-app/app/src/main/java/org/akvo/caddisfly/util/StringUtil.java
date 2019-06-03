@@ -33,17 +33,17 @@ import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.widget.CenteredImageSpan;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 public final class StringUtil {
 
@@ -98,7 +98,22 @@ public final class StringUtil {
         // Set sample quantity in the string
         Matcher m1 = Pattern.compile("%sampleQuantity").matcher(builder);
         while (m1.find()) {
-            builder.replace(m1.start(), m1.end(), testInfo.getSampleQuantity());
+            builder.replace(m1.start(), m1.end(), String.valueOf(testInfo.getSampleQuantity()));
+        }
+
+        // Set sample quantity in the string
+        Matcher m3 = Pattern.compile("%dilutedSampleQty").matcher(builder);
+        while (m3.find()) {
+            builder.replace(m3.start(), m3.end(),
+                    String.valueOf(testInfo.getSampleQuantity() / testInfo.getDilution()));
+        }
+
+        // Set sample quantity in the string
+        Matcher m4 = Pattern.compile("%distilledQty").matcher(builder);
+        while (m4.find()) {
+            builder.replace(m4.start(), m4.end(),
+                    String.valueOf(testInfo.getSampleQuantity()
+                            - (testInfo.getSampleQuantity() / testInfo.getDilution())));
         }
 
         // Set reaction time in the string
@@ -131,7 +146,7 @@ public final class StringUtil {
                 String finalTopic = topic;
                 ClickableSpan clickableSpan = new ClickableSpan() {
                     @Override
-                    public void onClick(View textView) {
+                    public void onClick(@NonNull View textView) {
                         if (finalTopic.equalsIgnoreCase("sulfide")) {
                             DialogFragment newFragment = new SulfideDialogFragment();
                             newFragment.show(context.getSupportFragmentManager(), "sulfideDialog");
@@ -142,9 +157,10 @@ public final class StringUtil {
                     }
 
                     @Override
-                    public void updateDrawState(TextPaint ds) {
+                    public void updateDrawState(@NonNull TextPaint ds) {
                         super.updateDrawState(ds);
                         ds.setUnderlineText(false);
+                        ds.setColor(context.getResources().getColor(R.color.text_links));
                     }
                 };
                 builder.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

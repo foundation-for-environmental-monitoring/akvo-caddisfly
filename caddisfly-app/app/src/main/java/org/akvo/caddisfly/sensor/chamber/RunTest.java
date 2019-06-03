@@ -27,5 +27,9 @@ public interface RunTest {
 
     void setDilution(int dilution);
 
+    void start();
+
+    void stop();
+
     void setRetryCount(int retryCount);
 }

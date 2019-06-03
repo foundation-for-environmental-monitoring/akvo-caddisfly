@@ -29,13 +29,15 @@ public final class AppConfig {
     public static final boolean SOUND_ON = true;
     public static final boolean USE_SCREEN_PINNING = true;
 
+    public static final boolean STOP_ANIMATIONS = true;
+
     /**
      * Date on which the app version will expire.
      * This is to ensure that installs from apk meant for testing only are not used for too long.
      */
     public static final boolean APP_EXPIRY = true;
     public static final int APP_EXPIRY_DAY = 15;
-    public static final int APP_EXPIRY_MONTH = 5;
+    public static final int APP_EXPIRY_MONTH = 6;
     public static final int APP_EXPIRY_YEAR = 2019;
 
     /**

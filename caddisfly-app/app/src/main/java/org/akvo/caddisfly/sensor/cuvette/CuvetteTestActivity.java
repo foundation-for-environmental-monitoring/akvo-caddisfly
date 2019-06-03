@@ -17,9 +17,8 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.sensor.chamber;
+package org.akvo.caddisfly.sensor.cuvette;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -31,27 +30,36 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.SparseArray;
-import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.core.content.ContextCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.viewpager.widget.ViewPager;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -60,27 +68,41 @@ import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.common.SensorConstants;
 import org.akvo.caddisfly.dao.CalibrationDao;
+import org.akvo.caddisfly.databinding.FragmentInstructionBinding;
 import org.akvo.caddisfly.diagnostic.DiagnosticResultDialog;
 import org.akvo.caddisfly.diagnostic.DiagnosticSwatchActivity;
 import org.akvo.caddisfly.entity.Calibration;
-import org.akvo.caddisfly.entity.CalibrationDetail;
 import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.helper.SoundUtil;
 import org.akvo.caddisfly.helper.SwatchHelper;
 import org.akvo.caddisfly.helper.TestConfigHelper;
 import org.akvo.caddisfly.model.ColorInfo;
+import org.akvo.caddisfly.model.Instruction;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.ResultDetail;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.preference.AppPreferences;
+import org.akvo.caddisfly.sensor.chamber.BaseRunTest;
+import org.akvo.caddisfly.sensor.chamber.CalibrationFile;
+import org.akvo.caddisfly.sensor.chamber.CalibrationGraphActivity;
+import org.akvo.caddisfly.sensor.chamber.CalibrationResultDialog;
+import org.akvo.caddisfly.sensor.chamber.ChamberAboveFragment;
+import org.akvo.caddisfly.sensor.chamber.ChamberBelowFragment;
+import org.akvo.caddisfly.sensor.chamber.EditCustomDilution;
+import org.akvo.caddisfly.sensor.chamber.RunTest;
+import org.akvo.caddisfly.sensor.chamber.SelectDilutionFragment;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ConfigDownloader;
 import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.NetUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
-import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel;
+import org.akvo.caddisfly.widget.ButtonType;
+import org.akvo.caddisfly.widget.CustomViewPager;
+import org.akvo.caddisfly.widget.PageIndicatorView;
+import org.akvo.caddisfly.widget.SwipeDirection;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -93,13 +115,13 @@ import java.util.UUID;
 import io.ffem.tryout.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
+import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+import static org.akvo.caddisfly.common.AppConfig.STOP_ANIMATIONS;
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.helper.CameraHelper.getMaxSupportedMegaPixelsByCamera;
 
-public class ChamberTestActivity extends BaseActivity implements
+public class CuvetteTestActivity extends BaseActivity implements
         BaseRunTest.OnResultListener,
-        CalibrationItemFragment.OnCalibrationSelectedListener,
-        SaveCalibrationDialogFragment.OnCalibrationDetailsSavedListener,
         SelectDilutionFragment.OnDilutionSelectedListener,
         EditCustomDilution.OnCustomDilutionListener,
         DiagnosticSendDialogFragment.OnDetailsSavedListener,
@@ -112,24 +134,49 @@ public class ChamberTestActivity extends BaseActivity implements
             finish();
         }
     };
-    Calibration selectedCalibration;
-    boolean isInternal;
+    SectionsPagerAdapter mSectionsPagerAdapter =
+            new SectionsPagerAdapter(getSupportFragmentManager(),
+                    BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+    TextView imagePageLeft;
+    TextView imagePageRight;
     private RunTest runTestFragment;
-    private CalibrationItemFragment calibrationItemFragment;
+    private SelectDilutionFragment selectDilutionFragment;
+    private ResultFragment resultFragment;
     private FragmentManager fragmentManager;
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
-    private int currentDilution = 1;
+    private int currentDilution = 0;
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
-    private int retryCount = 0;
+    private int dilutionPageNumber;
+    private int resultPageNumber;
+    private int testPageNumber;
+    private int totalPageCount;
+    private ArrayList<Instruction> instructions = new ArrayList<>();
+    private CustomViewPager viewPager;
+    private PageIndicatorView pagerIndicator;
+    private RelativeLayout footerLayout;
+    private LinearLayout waitingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_chamber_test);
+        setContentView(R.layout.activity_cuvette_test);
+
+        viewPager = findViewById(R.id.viewPager);
+        pagerIndicator = findViewById(R.id.pager_indicator);
+        footerLayout = findViewById(R.id.layout_footer);
+        waitingLayout = findViewById(R.id.waitingLayout);
+        ProgressBar waitingProgressBar = findViewById(R.id.waitingProgressBar);
+        waitingProgressBar.getIndeterminateDrawable()
+                .setColorFilter(ContextCompat.getColor(this, R.color.white),
+                        PorterDuff.Mode.SRC_IN);
+
+        if (STOP_ANIMATIONS) {
+            waitingProgressBar.setVisibility(View.GONE);
+        }
 
         fragmentManager = getSupportFragmentManager();
 
@@ -145,54 +192,87 @@ public class ChamberTestActivity extends BaseActivity implements
                 return;
             }
 
-            if (testInfo.getCameraAbove()) {
-                runTestFragment = ChamberBelowFragment.newInstance(testInfo);
-            } else {
-                runTestFragment = ChamberAboveFragment.newInstance(testInfo);
-            }
-
             if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
                 start();
             } else {
                 setTitle(R.string.calibration);
-                isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
-                calibrationItemFragment = CalibrationItemFragment.newInstance(testInfo, isInternal);
-                goToFragment(calibrationItemFragment);
+//                boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
             }
         }
-    }
 
-    private void goToFragment(Fragment fragment) {
-        if (fragmentManager.getFragments().size() > 0) {
-            fragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.fragment_container, fragment).commit();
+        setupInstructions();
+
+        pagerIndicator.showDots(true);
+
+        imagePageRight = findViewById(R.id.image_pageRight);
+        imagePageRight.setOnClickListener(view -> pageNext());
+
+        imagePageLeft = findViewById(R.id.image_pageLeft);
+        imagePageLeft.setOnClickListener(view -> pageBack());
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                if (position < resultPageNumber) {
+                    pagerIndicator.setActiveIndex(position - 1);
+                } else {
+                    pagerIndicator.setActiveIndex(position - resultPageNumber);
+                }
+
+                if (position < 1) {
+                    imagePageLeft.setVisibility(View.INVISIBLE);
+                } else {
+                    imagePageLeft.setVisibility(View.VISIBLE);
+                }
+
+                if (position == testPageNumber) {
+                    runTest();
+                } else {
+                    stopTest();
+                }
+
+                if (position == resultPageNumber + 1) {
+                    setTitle(R.string.finish);
+                } else if (position == resultPageNumber) {
+                    setTitle(R.string.result);
+                } else {
+                    setTitle(testInfo.getName());
+                }
+                invalidateOptionsMenu();
+
+                showHideFooter();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
+        viewPager.setAdapter(mSectionsPagerAdapter);
+
+        if (testInfo.getCameraAbove()) {
+            runTestFragment = ChamberBelowFragment.newInstance(testInfo);
         } else {
-            fragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, fragment).commit();
+            runTestFragment = ChamberAboveFragment.newInstance(testInfo);
         }
 
-        if (fragment instanceof SelectDilutionFragment) {
-            testStarted = true;
-        } else if (fragment != runTestFragment) {
-            testStarted = false;
-        }
-
-        invalidateOptionsMenu();
+        showHideFooter();
     }
 
     private void start() {
 
-        retryCount = 0;
-
         if (testInfo.getDilutions().size() > 0) {
-            Fragment selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
-            goToFragment(selectDilutionFragment);
+            selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
         } else {
             runTest();
         }
 
-        setTitle(R.string.analyze);
+        setTitle(testInfo.getName());
 
         invalidateOptionsMenu();
 
@@ -201,31 +281,14 @@ public class ChamberTestActivity extends BaseActivity implements
     private void runTest() {
         if (cameraIsOk) {
 
+            runTestFragment.start();
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                     && AppConfig.USE_SCREEN_PINNING) {
                 startLockTask();
             }
 
-            if (fragmentManager.getFragments().size() > 0 && retryCount > 0) {
-
-                for (int i = 0; i < fragmentManager.getFragments().size(); i++) {
-                    fragmentManager.popBackStackImmediate();
-                }
-
-//                for (Fragment fragment : fragmentManager.getFragments()) {
-//                    fragmentManager.beginTransaction().remove(fragment).commit();
-//                }
-
-                if (testInfo.getCameraAbove()) {
-                    runTestFragment = ChamberBelowFragment.newInstance(testInfo);
-                } else {
-                    runTestFragment = ChamberAboveFragment.newInstance(testInfo);
-                }
-            }
-
             runTestFragment.setDilution(currentDilution);
-            runTestFragment.setRetryCount(retryCount);
-            goToFragment((Fragment) runTestFragment);
 
             testStarted = true;
 
@@ -236,62 +299,21 @@ public class ChamberTestActivity extends BaseActivity implements
         invalidateOptionsMenu();
     }
 
+    private void stopTest() {
+        if (runTestFragment != null) {
+            runTestFragment.stop();
+        }
+        stopScreenPinning();
+        testStarted = false;
+        invalidateOptionsMenu();
+    }
+
     @SuppressWarnings("unused")
     public void runTestClick(View view) {
         if (runTestFragment != null) {
             runTestFragment.setCalibration(null);
         }
         start();
-    }
-
-    @Override
-    public void onCalibrationSelected(Calibration item) {
-
-        selectedCalibration = item;
-        CalibrationDetail calibrationDetail = CaddisflyApp.getApp().getDb()
-                .calibrationDao().getCalibrationDetails(testInfo.getUuid());
-
-        if (calibrationDetail == null) {
-            showEditCalibrationDetailsDialog(true);
-        } else {
-            long milliseconds = calibrationDetail.expiry;
-            //Show edit calibration details dialog if required
-            if (milliseconds <= new Date().getTime()) {
-                showEditCalibrationDetailsDialog(true);
-            } else {
-                selectedCalibration = null;
-                (new Handler()).postDelayed(() -> {
-                    runTestFragment.setCalibration(item);
-                    setTitle(R.string.calibrate);
-                    runTest();
-//                    invalidateOptionsMenu();
-                }, 150);
-            }
-        }
-    }
-
-    @Override
-    public void onCalibrationLongClick(Calibration item, int position) {
-        if (null != testInfo) {
-            if (item.color != Color.TRANSPARENT
-                    && testInfo.getReferenceColors().size() > position
-                    && testInfo.getPivotCalibration() != item.value
-                    && testInfo.getReferenceColors().get(position).getRgbInt() != Color.TRANSPARENT) {
-                AlertUtil.askQuestion(this, R.string.confirm,
-                        R.string.setDefaultCalibration, R.string.ok, R.string.cancel, true,
-                        (dialogInterface1, i1) -> {
-                            PreferencesUtil.setDouble(this, "pivot_" + testInfo.getUuid(), item.value);
-                            try {
-                                testInfo.setPivotCalibration(item.value);
-                                loadDetails();
-                            } catch (Exception e) {
-                                Toast.makeText(this, StringUtil
-                                                .getStringByName(this, e.getLocalizedMessage()),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }, null);
-            }
-        }
     }
 
     @Override
@@ -307,8 +329,14 @@ public class ChamberTestActivity extends BaseActivity implements
                 stopScreenPinning();
             }
         } else {
-            if (!fragmentManager.popBackStackImmediate()) {
-                super.onBackPressed();
+            if (viewPager.getCurrentItem() == 0) {
+                if (!fragmentManager.popBackStackImmediate()) {
+                    super.onBackPressed();
+                }
+            } else {
+                if (viewPager.getCurrentItem() != resultPageNumber) {
+                    pageBack();
+                }
             }
             refreshTitle();
             testStarted = false;
@@ -318,47 +346,22 @@ public class ChamberTestActivity extends BaseActivity implements
 
     private void refreshTitle() {
         if (fragmentManager.getBackStackEntryCount() == 0) {
-            if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                setTitle(R.string.analyze);
-            } else {
+            if (!getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
                 setTitle(R.string.calibration);
             }
         }
     }
 
-    @SuppressWarnings("unused")
-    public void onEditCalibration(View view) {
-        showEditCalibrationDetailsDialog(true);
-    }
-
-    private void showEditCalibrationDetailsDialog(boolean isEdit) {
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        SaveCalibrationDialogFragment saveCalibrationDialogFragment =
-                SaveCalibrationDialogFragment.newInstance(testInfo, isEdit);
-        saveCalibrationDialogFragment.show(ft, "saveCalibrationDialog");
-    }
-
-    @Override
-    public void onCalibrationDetailsSaved() {
-        loadDetails();
-        if (selectedCalibration != null) {
-            onCalibrationSelected(selectedCalibration);
-        }
-    }
-
-    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (AppPreferences.isDiagnosticMode() && !testStarted
-                && (calibrationItemFragment != null && calibrationItemFragment.isVisible())) {
-            getMenuInflater().inflate(R.menu.menu_calibrate_dev, menu);
-
-            if (menu instanceof MenuBuilder) {
-                MenuBuilder m = (MenuBuilder) menu;
-                m.setOptionalIconsVisible(true);
+        if (!testStarted) {
+            if (AppPreferences.isDiagnosticMode()) {
+                getMenuInflater().inflate(R.menu.menu_calibrate_dev, menu);
+            } else if (viewPager.getCurrentItem() > 0 &&
+                    viewPager.getCurrentItem() < testPageNumber - 1) {
+                getMenuInflater().inflate(R.menu.menu_instructions, menu);
             }
         }
-
         return true;
     }
 
@@ -379,28 +382,6 @@ public class ChamberTestActivity extends BaseActivity implements
                 loadCalibrationFromFile(this);
                 return true;
             case R.id.menuSave:
-                showEditCalibrationDetailsDialog(false);
-                return true;
-            case R.id.clearCalibration:
-                final Activity activity = this;
-                AlertUtil.askQuestion(activity, R.string.delete,
-                        R.string.calibrationWillBeDeleted, R.string.delete, R.string.cancel, true,
-                        (dialogInterface1, i1) -> {
-                            testInfo.clearCalibration();
-
-                            CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();
-                            dao.deleteCalibrations(testInfo.getUuid());
-
-                            CalibrationDetail calibrationDetail = new CalibrationDetail();
-                            calibrationDetail.uid = testInfo.getUuid();
-                            dao.insert(calibrationDetail);
-
-                            Toast.makeText(activity, "Calibration deleted", Toast.LENGTH_SHORT).show();
-
-                            loadDetails();
-
-                        }, null);
-
                 return true;
             case android.R.id.home:
                 if (isAppInLockTaskMode()) {
@@ -416,12 +397,14 @@ public class ChamberTestActivity extends BaseActivity implements
                 } else {
                     stopScreenPinning();
                     releaseResources();
-                    if (!fragmentManager.popBackStackImmediate()) {
-                        super.onBackPressed();
-                    }
                     refreshTitle();
                     testStarted = false;
                     invalidateOptionsMenu();
+                    if (viewPager.getCurrentItem() == testPageNumber) {
+                        pageBack();
+                    } else if (!fragmentManager.popBackStackImmediate()) {
+                        super.onBackPressed();
+                    }
                 }
                 return true;
             default:
@@ -438,22 +421,14 @@ public class ChamberTestActivity extends BaseActivity implements
 
         try {
             testInfo.setCalibrations(calibrations);
-
-            if (calibrationItemFragment != null) {
-                calibrationItemFragment.setAdapter(testInfo);
-            }
-
-            final TestInfoViewModel model =
-                    ViewModelProviders.of(this).get(TestInfoViewModel.class);
-
-            model.setTest(testInfo);
-
-            calibrationItemFragment.loadDetails();
         } catch (Exception e) {
-            Toast.makeText(this, StringUtil
-                            .getStringByName(this, e.getLocalizedMessage()),
-                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
+        final TestInfoViewModel model =
+                ViewModelProviders.of(this).get(TestInfoViewModel.class);
+
+        model.setTest(testInfo);
+
     }
 
     /**
@@ -491,15 +466,6 @@ public class ChamberTestActivity extends BaseActivity implements
                             try {
                                 SwatchHelper.loadCalibrationFromFile(testInfo, fileName);
                                 loadDetails();
-                                PreferencesUtil.setDouble(this, "pivot_" + testInfo.getUuid(), testInfo.getPivotCalibration());
-                                loadDetails();
-
-                                Toast toast = Toast.makeText(this,
-                                        String.format(getString(R.string.calibrationLoaded), fileName),
-                                        Toast.LENGTH_SHORT);
-                                toast.setGravity(Gravity.BOTTOM, 0, 200);
-                                toast.show();
-
                             } catch (Exception ex) {
                                 AlertUtil.showError(context, R.string.error, getString(R.string.errorLoadingFile),
                                         null, R.string.ok,
@@ -542,6 +508,12 @@ public class ChamberTestActivity extends BaseActivity implements
     public void onResult(ArrayList<ResultDetail> resultDetails, ArrayList<ResultDetail> oneStepResults,
                          Calibration calibration, int cancelled) {
 
+        if (cancelled == Activity.RESULT_CANCELED) {
+            stopScreenPinning();
+            pageBack();
+            return;
+        }
+
         ColorInfo colorInfo = new ColorInfo(SwatchHelper.getAverageColor(resultDetails), 0);
         ResultDetail resultDetail = SwatchHelper.analyzeColor(testInfo.getSwatches().size(),
                 colorInfo, testInfo.getSwatches());
@@ -550,12 +522,8 @@ public class ChamberTestActivity extends BaseActivity implements
         ResultDetail oneStepResultDetail = SwatchHelper.analyzeColor(testInfo.getOneStepSwatches().size(),
                 colorInfo, testInfo.getOneStepSwatches());
 
-        ResultDetail lastResult = resultDetails.get(resultDetails.size() - 1);
-        resultDetail.setBitmap(lastResult.getBitmap());
-        resultDetail.setCroppedBitmap(lastResult.getCroppedBitmap());
-        resultDetail.setQuality(lastResult.getQuality());
-
-        testStarted = false;
+        resultDetail.setBitmap(resultDetails.get(resultDetails.size() - 1).getBitmap());
+        resultDetail.setCroppedBitmap(resultDetails.get(resultDetails.size() - 1).getCroppedBitmap());
 
         if (calibration == null) {
 
@@ -580,44 +548,38 @@ public class ChamberTestActivity extends BaseActivity implements
                     SoundUtil.playShortResource(this, R.raw.done);
                 }
 
-                boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
-
-                fragmentManager.popBackStack();
-                fragmentManager
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.fragment_container,
-                                ResultFragment.newInstance(testInfo, isInternal), null).commit();
-
                 testInfo.setResultDetail(resultDetail);
 
+                resultFragment.setInfo(testInfo);
+
+                pageNext();
+
                 if (AppPreferences.getShowDebugInfo()) {
-                    showDiagnosticResultDialog(false, resultDetail, oneStepResultDetail,
-                            resultDetails, false);
+                    showDiagnosticResultDialog(false, resultDetail, oneStepResultDetail, resultDetails, false);
                 }
 
             } else {
-
-                releaseResources();
-
-                setResult(Activity.RESULT_CANCELED);
-
-                stopScreenPinning();
-
-                fragmentManager.popBackStack();
-
-                if (testInfo.getDilutions().size() > 0) {
-                    fragmentManager.popBackStack();
-                }
 
                 if (AppPreferences.getShowDebugInfo()) {
 
                     SoundUtil.playShortResource(this, R.raw.err);
 
-                    showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail,
-                            resultDetails, false);
+                    releaseResources();
+
+                    setResult(Activity.RESULT_CANCELED);
+
+                    stopScreenPinning();
+
+                    fragmentManager.popBackStack();
+                    if (testInfo.getDilutions().size() > 0) {
+                        fragmentManager.popBackStack();
+                    }
+
+                    showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail, resultDetails, false);
 
                 } else {
+
+                    fragmentManager.popBackStack();
 
                     showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.errorTestFailed),
                             getString(R.string.checkChamberPlacement)),
@@ -641,11 +603,6 @@ public class ChamberTestActivity extends BaseActivity implements
 
                 CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();
                 calibration.color = color;
-                calibration.quality = resultDetail.getQuality();
-                calibration.centerOffset = AppPreferences.getCameraCenterOffset();
-                calibration.resWidth = resultDetail.getBitmap().getWidth();
-                calibration.resHeight = resultDetail.getBitmap().getHeight();
-                calibration.zoom = AppPreferences.getCameraZoom();
                 calibration.date = new Date().getTime();
                 if (AppPreferences.isDiagnosticMode()) {
 
@@ -661,9 +618,6 @@ public class ChamberTestActivity extends BaseActivity implements
                 }
                 dao.insert(calibration);
                 CalibrationFile.saveCalibratedData(this, testInfo, calibration, color);
-
-                loadDetails();
-                PreferencesUtil.setDouble(this, "pivot_" + testInfo.getUuid(), testInfo.getPivotCalibration());
                 loadDetails();
 
                 SoundUtil.playShortResource(this, R.raw.done);
@@ -695,17 +649,16 @@ public class ChamberTestActivity extends BaseActivity implements
     /**
      * In diagnostic mode show the diagnostic results dialog.
      *
-     * @param testFailed          if test has failed then dialog knows to show the retry button
-     * @param resultDetail        the result shown to the user
-     * @param oneStepResultDetail the one step result
-     * @param resultDetails       the result details
-     * @param isCalibration       is this a calibration result
+     * @param testFailed    if test has failed then dialog knows to show the retry button
+     * @param resultDetail  the result shown to the user
+     * @param resultDetails the result details
+     * @param isCalibration is this a calibration result
      */
     private void showDiagnosticResultDialog(boolean testFailed, ResultDetail resultDetail,
                                             ResultDetail oneStepResultDetail,
                                             ArrayList<ResultDetail> resultDetails, boolean isCalibration) {
         DialogFragment resultFragment = DiagnosticResultDialog.newInstance(
-                testFailed, retryCount, resultDetail, oneStepResultDetail, resultDetails, isCalibration);
+                testFailed, 0, resultDetail, oneStepResultDetail, resultDetails, isCalibration);
         final android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         android.app.Fragment prev = getFragmentManager().findFragmentByTag("gridDialog");
@@ -740,20 +693,26 @@ public class ChamberTestActivity extends BaseActivity implements
      * Create result json to send back.
      */
     @SuppressWarnings("unused")
-    public void onClickAcceptResult(View view) {
-        sendResult();
+    public void onAcceptResultClick(View view) {
+        submitResult();
     }
 
-    private void sendResult() {
+    public void submitResult() {
         Intent resultIntent = new Intent();
         SparseArray<String> results = new SparseArray<>();
 
         for (int i = 0; i < testInfo.getResults().size(); i++) {
             Result result = testInfo.getResults().get(i);
-            resultIntent.putExtra(result.getName().replace(" ", "_")
+
+            String testName = result.getName().replace(" ", "_");
+            if (testInfo.getNameSuffix() != null && !testInfo.getNameSuffix().isEmpty()) {
+                testName += "_" + testInfo.getNameSuffix().replace(" ", "_");
+            }
+
+            resultIntent.putExtra(testName
                     + testInfo.getResultSuffix(), result.getResult());
 
-            resultIntent.putExtra(result.getName().replace(" ", "_")
+            resultIntent.putExtra(testName
                     + "_" + SensorConstants.DILUTION
                     + testInfo.getResultSuffix(), testInfo.getDilution());
 
@@ -777,6 +736,39 @@ public class ChamberTestActivity extends BaseActivity implements
         stopScreenPinning();
 
         finish();
+    }
+
+    /**
+     * Show an error message dialog.
+     *
+     * @param message the message to be displayed
+     * @param bitmap  any bitmap image to displayed along with error message
+     */
+    private void showError(String message, final Bitmap bitmap) {
+
+        stopScreenPinning();
+
+        SoundUtil.playShortResource(this, R.raw.err);
+
+        releaseResources();
+
+        alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
+                (dialogInterface, i) -> {
+                    stopScreenPinning();
+                    if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
+                        start();
+                    } else {
+                        runTest();
+                    }
+                },
+                (dialogInterface, i) -> {
+                    stopScreenPinning();
+                    dialogInterface.dismiss();
+                    releaseResources();
+                    setResult(Activity.RESULT_CANCELED);
+                    finish();
+                }, null
+        );
     }
 
     private void releaseResources() {
@@ -803,7 +795,20 @@ public class ChamberTestActivity extends BaseActivity implements
     @Override
     public void onDilutionSelected(int dilution) {
         currentDilution = dilution;
-        runTest();
+        setupInstructions();
+        pageNext();
+        boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
+        testInfo.setDilution(dilution);
+        final TestInfoViewModel model =
+                ViewModelProviders.of(this).get(TestInfoViewModel.class);
+        model.setTest(testInfo);
+        if (testInfo.getCameraAbove()) {
+            runTestFragment = ChamberBelowFragment.newInstance(testInfo);
+        } else {
+            runTestFragment = ChamberAboveFragment.newInstance(testInfo);
+        }
+        runTestFragment.setDilution(dilution);
+        resultFragment = ResultFragment.newInstance(testInfo, isInternal);
     }
 
     @Override
@@ -880,7 +885,7 @@ public class ChamberTestActivity extends BaseActivity implements
         ConfigDownloader.sendDataToCloudDatabase(this, testInfo, comment);
     }
 
-    public boolean isAppInLockTaskMode() {
+    private boolean isAppInLockTaskMode() {
         ActivityManager activityManager;
 
         activityManager = (ActivityManager)
@@ -900,72 +905,209 @@ public class ChamberTestActivity extends BaseActivity implements
         return false;
     }
 
-    /**
-     * Show an error message dialog.
-     *
-     * @param message the message to be displayed
-     * @param bitmap  any bitmap image to displayed along with error message
-     */
-    private void showError(String message, final Bitmap bitmap) {
-
-        stopScreenPinning();
-
-        SoundUtil.playShortResource(this, R.raw.err);
-
-        releaseResources();
-
-        if (retryCount < 1) {
-            alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
-                    (dialogInterface, i) -> {
-                        retryCount++;
-                        runTest();
-                    },
-                    (dialogInterface, i) -> {
-                        stopScreenPinning();
-                        dialogInterface.dismiss();
-                        releaseResources();
-                        setResult(Activity.RESULT_CANCELED);
-                        if (!isInternal) {
-                            finish();
-                        }
-                    }, null
-            );
-        } else {
-            alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.ok,
-                    null,
-                    (dialogInterface, i) -> {
-                        stopScreenPinning();
-                        dialogInterface.dismiss();
-                        releaseResources();
-                        setResult(Activity.RESULT_CANCELED);
-                        if (!isInternal) {
-                            finish();
-                        }
-                    }, null
-            );
-        }
-    }
-
     @Override
     public void onDismissed(boolean retry) {
         testStarted = false;
         invalidateOptionsMenu();
-        if (retry) {
-            if (retryCount < 1) {
-                retryCount++;
-                runTest();
-            } else {
-                setResult(Activity.RESULT_CANCELED);
+    }
 
-                stopScreenPinning();
+    private void pageNext() {
+        viewPager.setCurrentItem(Math.min(totalPageCount, viewPager.getCurrentItem() + 1));
+    }
 
-                finish();
+    private void pageBack() {
+        viewPager.setCurrentItem(Math.max(0, viewPager.getCurrentItem() - 1));
+    }
+
+    private void setupInstructions() {
+        int instructionIndex = 0;
+        resultPageNumber = 0;
+
+        instructions.clear();
+        for (int i = 0; i < testInfo.getInstructions().size(); i++) {
+            Instruction instruction;
+            try {
+                instruction = testInfo.getInstructions().get(i).clone();
+                if (instruction != null) {
+                    String text = instruction.section.get(0);
+                    if (text.contains("<test>")) {
+                        testPageNumber = instructionIndex;
+                    } else if (text.contains("<result>")) {
+                        resultPageNumber = instructionIndex;
+                    } else if (text.contains("<dilution>")) {
+                        dilutionPageNumber = instructionIndex;
+                    } else if (currentDilution == 1 && text.contains("dilution")) {
+                        continue;
+                    } else if (currentDilution != 1 && text.contains("normal")) {
+                        continue;
+                    } else if (resultPageNumber < 1) {
+                        instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));
+                    }
+                }
+                instructions.add(instruction);
+
+                instructionIndex++;
+
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
             }
+        }
+
+        totalPageCount = instructionIndex;
+        pagerIndicator.setPageCount(totalPageCount - 3);
+        pagerIndicator.setVisibility(View.GONE);
+        pagerIndicator.invalidate();
+        pagerIndicator.setVisibility(View.VISIBLE);
+
+        viewPager.setAdapter(mSectionsPagerAdapter);
+    }
+
+    private void showHideFooter() {
+        imagePageLeft.setVisibility(View.VISIBLE);
+        imagePageRight.setVisibility(View.VISIBLE);
+        pagerIndicator.setVisibility(View.VISIBLE);
+        waitingLayout.setVisibility(View.GONE);
+        if (viewPager.getCurrentItem() == testPageNumber) {
+            footerLayout.setVisibility(View.VISIBLE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+            pagerIndicator.setVisibility(View.GONE);
+            imagePageLeft.setVisibility(View.INVISIBLE);
+            imagePageRight.setVisibility(View.INVISIBLE);
+            waitingLayout.setVisibility(View.VISIBLE);
+        } else if (viewPager.getCurrentItem() == dilutionPageNumber) {
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+        } else if (viewPager.getCurrentItem() == resultPageNumber) {
+            pagerIndicator.setVisibility(View.GONE);
+            footerLayout.setVisibility(View.VISIBLE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.right);
+            imagePageRight.setVisibility(View.VISIBLE);
+            imagePageLeft.setVisibility(View.INVISIBLE);
+        } else if (viewPager.getCurrentItem() == totalPageCount - 1) {
+            pagerIndicator.setVisibility(View.GONE);
+            footerLayout.setVisibility(View.GONE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+            imagePageRight.setVisibility(View.INVISIBLE);
+            imagePageLeft.setVisibility(View.VISIBLE);
         } else {
-            if (!isInternal) {
-                sendResult();
-                finish();
+            footerLayout.setVisibility(View.VISIBLE);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.all);
+        }
+    }
+
+    public void onClickNext(View view) {
+        pageNext();
+    }
+
+    public void onSkipClick(MenuItem item) {
+        viewPager.setCurrentItem(testPageNumber);
+    }
+
+    public void onRetestClick(View view) {
+        viewPager.setCurrentItem(dilutionPageNumber, false);
+    }
+
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
+
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_SHOW_OK = "show_ok";
+        FragmentInstructionBinding fragmentInstructionBinding;
+        Instruction instruction;
+        private ButtonType showOk;
+
+        /**
+         * Returns a new instance of this fragment for the given section number.
+         *
+         * @param instruction The information to to display
+         * @return The instance
+         */
+        static PlaceholderFragment newInstance(Instruction instruction,
+                                               ButtonType button) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putParcelable(ARG_SECTION_NUMBER, instruction);
+            args.putSerializable(ARG_SHOW_OK, button);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+
+            fragmentInstructionBinding = DataBindingUtil.inflate(inflater,
+                    R.layout.fragment_instruction, container, false);
+
+            if (getArguments() != null) {
+                instruction = getArguments().getParcelable(ARG_SECTION_NUMBER);
+                showOk = (ButtonType) getArguments().getSerializable(ARG_SHOW_OK);
+                fragmentInstructionBinding.setInstruction(instruction);
             }
+
+            View view = fragmentInstructionBinding.getRoot();
+
+            view.findViewById(R.id.buttonRetest).setVisibility(View.GONE);
+            view.findViewById(R.id.textDilutionInfo).setVisibility(View.GONE);
+            view.findViewById(R.id.buttonAcceptResult).setVisibility(View.GONE);
+
+            if (showOk == ButtonType.ACCEPT) {
+                view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.buttonRetest).setVisibility(View.GONE);
+            }
+
+            if (showOk == ButtonType.RETEST) {
+                view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.buttonRetest).setVisibility(View.VISIBLE);
+                view.findViewById(R.id.textDilutionInfo).setVisibility(View.VISIBLE);
+            }
+
+            return view;
+        }
+    }
+
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    class SectionsPagerAdapter extends FragmentStatePagerAdapter {
+
+        SectionsPagerAdapter(FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        @NotNull
+        @Override
+        public Fragment getItem(int position) {
+            if (position == testPageNumber) {
+                return (Fragment) runTestFragment;
+            } else if (position == resultPageNumber) {
+                return resultFragment;
+            } else if (position == resultPageNumber + 1) {
+                if (testInfo.getResults().get(0).highLevelsFound()) {
+                    return PlaceholderFragment.newInstance(
+                            instructions.get(position), ButtonType.RETEST);
+                } else {
+                    return PlaceholderFragment.newInstance(
+                            instructions.get(position), ButtonType.ACCEPT);
+                }
+            } else if (position == dilutionPageNumber) {
+                return selectDilutionFragment;
+            } else {
+                return PlaceholderFragment.newInstance(
+                        instructions.get(position), ButtonType.NONE);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return totalPageCount;
         }
     }
 }

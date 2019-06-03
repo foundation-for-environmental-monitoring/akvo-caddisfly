@@ -27,6 +27,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.entity.Calibration;
@@ -43,9 +46,6 @@ import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 
 import java.util.ArrayList;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 public class ChamberPreviewActivity extends BaseActivity implements
         BaseRunTest.OnResultListener,
@@ -125,8 +125,8 @@ public class ChamberPreviewActivity extends BaseActivity implements
     }
 
     @Override
-    public void onResult(ArrayList<ResultDetail> resultDetails,
-                         ArrayList<ResultDetail> oneStepResults, Calibration calibration) {
+    public void onResult(ArrayList<ResultDetail> resultDetails, ArrayList<ResultDetail> oneStepResults,
+                         Calibration calibration, int cancelled) {
 
         ColorInfo colorInfo = new ColorInfo(SwatchHelper.getAverageColor(resultDetails),
                 resultDetails.get(resultDetails.size() - 1).getQuality());
