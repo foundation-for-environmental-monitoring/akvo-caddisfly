@@ -82,7 +82,20 @@
     <string name="bc_dilution_5">Next remove the cap and pour the deionised water into the mixing chamber. For <b>two times dilution</b> add one measure of deionised water and one measure of your sample. For <b>five times dilution</b> add four measures of deionised water and one measure of your sample.</string>
     <string name="bc_dilution_6">Shake the mixing chamber so the deionised water and sample mix thoroughly. Pour the mixture into the Test Chamber. Use this mixture for your measurement.</string>
 
-    <!--About Screen-->
+    <string name="c_normal_rinse">Rinse the empty cuvette and measuring tube <b>twice</b> with the sample to remove any traces of previous solutions.</string>
+    <string name="c_normal_measure"><b>Measure 10 ml</b> of the sample with the measuring tube.</string>
+    <string name="c_open_reagent">Open the vial of <b>Reagent A</b>.</string>
+    <string name="c_add_reagent">Add <b>Reagent A</b> to the measuring tube.</string>
+    <string name="c_shake">Close the lid of the measuring tube and shake it to ensure proper mixing of the reagent and sample.</string>
+    <string name="c_pour">Pour the contents of the mixing tube into the provided cuvette.</string>
+    <string name="c_close">Close the lid, wipe any excess water and fit the cuvette into the pipe.</string>
+    <string name="c_press_place_phone">Press the start button below and then place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
+    <string name="c_place_phone">Accept the screen pin alert. Then place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
+    <string name="c_empty">Empty the contents of the cuvette and rinse it once.</string>
+    <string name="c_dilution_1">Rinse the measuring tube and the test cuvette <b>twice</b> with <b>distilled water</b> to remove any traces of previous solutions.</string>
+    <string name="c_dilution_2">Measure <b>%dilutedSampleQty ml</b> of the sample</string>
+    <string name="c_dilution_3">Add <b>%distilledQty ml of distilled water</b> to the sample to bring the total volume up to <b>10 ml</b></string>
+    <!-- About Screen -->
     <string name="copyrightMessage">Copyright © ffem</string>
     <string name="legalInformation">Legal Information</string>
 
