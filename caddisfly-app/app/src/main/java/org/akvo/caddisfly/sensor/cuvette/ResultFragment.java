@@ -29,7 +29,6 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.databinding.FragmentResult2Binding;
 import org.akvo.caddisfly.model.Result;
@@ -61,12 +60,6 @@ public class ResultFragment extends Fragment {
         b = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_result_2, container, false);
         View view = b.getRoot();
-
-        if (!BuildConfig.showExperimentalTests) {
-            b.buttonSendToServer.setVisibility(View.GONE);
-        }
-
-        b.buttonAccept.setVisibility(View.GONE);
 
         if (getArguments() != null) {
             TestInfo testInfo = getArguments().getParcelable(TEST_INFO);

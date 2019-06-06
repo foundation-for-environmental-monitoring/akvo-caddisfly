@@ -61,6 +61,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.viewpager.widget.ViewPager;
 
+import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.common.AppConfig;
@@ -355,8 +356,9 @@ public class CuvetteTestActivity extends BaseActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!testStarted) {
-            if (AppPreferences.isDiagnosticMode()) {
-                getMenuInflater().inflate(R.menu.menu_calibrate_dev, menu);
+            if (viewPager.getCurrentItem() == resultPageNumber
+                    && BuildConfig.showExperimentalTests) {
+                getMenuInflater().inflate(R.menu.menu_dash, menu);
             } else if (viewPager.getCurrentItem() > 0 &&
                     viewPager.getCurrentItem() < testPageNumber - 1) {
                 getMenuInflater().inflate(R.menu.menu_instructions, menu);
@@ -867,7 +869,7 @@ public class CuvetteTestActivity extends BaseActivity implements
         }
     }
 
-    public void sendTestResultClick(View view) {
+    public void sendTestResultClick(MenuItem item) {
         if (!NetUtil.isNetworkAvailable(this)) {
             Toast.makeText(this,
                     "No data connection. Please connect to the internet and try again.", Toast.LENGTH_LONG).show();
@@ -993,10 +995,6 @@ public class CuvetteTestActivity extends BaseActivity implements
             footerLayout.setVisibility(View.VISIBLE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.all);
         }
-    }
-
-    public void onClickNext(View view) {
-        pageNext();
     }
 
     public void onSkipClick(MenuItem item) {
