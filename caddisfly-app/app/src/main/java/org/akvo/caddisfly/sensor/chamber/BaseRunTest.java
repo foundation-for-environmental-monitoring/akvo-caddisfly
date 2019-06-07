@@ -68,14 +68,14 @@ import java.util.Objects;
 
 public class BaseRunTest extends Fragment implements RunTest {
     private static final double SHORT_DELAY = 1;
-    final int[] countdown = {0};
+    private final int[] countdown = {0};
     private final ArrayList<ResultDetail> results = new ArrayList<>();
     private final ArrayList<ResultDetail> oneStepResults = new ArrayList<>();
     private final Handler delayHandler = new Handler();
     protected FragmentRunTestBinding binding;
     protected boolean cameraStarted;
     protected int pictureCount = 0;
-    int timeDelay = 0;
+    private int timeDelay = 0;
     private Handler mHandler;
     private AlertDialog alertDialogToBeDestroyed;
     private TestInfo mTestInfo;
@@ -137,8 +137,14 @@ public class BaseRunTest extends Fragment implements RunTest {
 
             countdown[0]++;
 
-            if (timeDelay > 10 && (timeDelay - countdown[0]) % 15 == 0) {
-                SoundUtil.playShortResource(getActivity(), R.raw.beep);
+            if (timeDelay > 10) {
+                if ((timeDelay - countdown[0]) % 15 == 0) {
+                    SoundUtil.playShortResource(getActivity(), R.raw.beep);
+                } else if ((timeDelay - countdown[0]) < 15) {
+                    SoundUtil.playShortResource(getActivity(), R.raw.beep);
+                    (new Handler()).postDelayed(() ->
+                            SoundUtil.playShortResource(getActivity(), R.raw.beep), 500);
+                }
             }
 
 //            binding.countdownTimer.setProgress(timeDelay - countdown[0], timeDelay);
