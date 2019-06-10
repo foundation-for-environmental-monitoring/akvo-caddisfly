@@ -402,8 +402,8 @@ public class CuvetteTestActivity extends BaseActivity implements
                     refreshTitle();
                     testStarted = false;
                     invalidateOptionsMenu();
-                    if (viewPager.getCurrentItem() == testPageNumber) {
-                        pageBack();
+                    if (viewPager.getCurrentItem() > 0) {
+                        viewPager.setCurrentItem(0);
                     } else if (!fragmentManager.popBackStackImmediate()) {
                         super.onBackPressed();
                     }

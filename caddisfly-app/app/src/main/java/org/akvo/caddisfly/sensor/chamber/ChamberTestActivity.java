@@ -106,6 +106,7 @@ public class ChamberTestActivity extends BaseActivity implements
         DiagnosticResultDialog.OnDismissed {
 
     private static final String TWO_SENTENCE_FORMAT = "%s%n%n%s";
+    //    private static final int REQUEST_TEST = 100;
     private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -241,6 +242,11 @@ public class ChamberTestActivity extends BaseActivity implements
         if (runTestFragment != null) {
             runTestFragment.setCalibration(null);
         }
+//        Intent intent = new Intent(this, CuvetteTestActivity.class);
+//        intent.putExtra(ConstantKey.RUN_TEST, true);
+//        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
+//        startActivityForResult(intent, REQUEST_TEST);
+
         start();
     }
 

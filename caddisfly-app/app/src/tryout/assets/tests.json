@@ -104,6 +104,89 @@
         5,
         -1
       ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -129,6 +212,89 @@
         2,
         5,
         -1
+      ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
       ],
       "results": [
         {
@@ -156,6 +322,89 @@
         5,
         -1
       ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -181,6 +430,89 @@
         2,
         5,
         -1
+      ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
       ],
       "results": [
         {
@@ -208,6 +540,89 @@
         5,
         -1
       ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -229,6 +644,84 @@
       "calibrate": true,
       "ranges": "4,5,6,7,8,9,10",
       "monthsValid": 6,
+      "instructions": [
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -291,6 +784,84 @@
       "calibrate": true,
       "ranges": "0,0.1,0.2,0.3",
       "monthsValid": 12,
+      "instructions": [
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -313,6 +884,89 @@
         1,
         2,
         5
+      ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
       ],
       "results": [
         {
@@ -338,6 +992,89 @@
         2,
         5
       ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -362,6 +1099,89 @@
         2,
         5
       ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -380,6 +1200,84 @@
       "calibrate": true,
       "ranges": "0,8",
       "monthsValid": 12,
+      "instructions": [
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -576,6 +1474,22 @@
             "bc_place_phone",
             "image:bc_place_phone"
           ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
         }
       ],
       "results": [
@@ -603,6 +1517,84 @@
       "calibrate": true,
       "ranges": "0, 0.05, 0.1, 0.5, 1.0",
       "monthsValid": 2,
+      "instructions": [
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -626,6 +1618,89 @@
         2,
         5
       ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -645,6 +1720,84 @@
       "calibrate": true,
       "ranges": "4,5,6,7,8,9,10",
       "monthsValid": 12,
+      "instructions": [
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -667,6 +1820,89 @@
         1,
         2,
         5
+      ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
       ],
       "results": [
         {
@@ -692,6 +1928,89 @@
         2,
         5
       ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
       "results": [
         {
           "id": 1,
@@ -714,6 +2033,89 @@
         1,
         2,
         5
+      ],
+      "instructions": [
+        {
+          "section": [
+            "<dilution>"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_1",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_2",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_dilution_3",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_normal_measure",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_open_reagent",
+            "image:c_open_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_add_reagent",
+            "image:c_add_reagent"
+          ]
+        },
+        {
+          "section": [
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_pour",
+            "image:c_pour"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
       ],
       "results": [
         {
