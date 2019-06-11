@@ -20,7 +20,15 @@
 package org.akvo.caddisfly.misc;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
+
+import androidx.test.espresso.Espresso;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.UiDevice;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -28,16 +36,9 @@ import org.akvo.caddisfly.common.TestConstantKeys;
 import org.akvo.caddisfly.ui.MainActivity;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import androidx.test.espresso.Espresso;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -74,9 +75,7 @@ public class LanguageTest {
 
     @Before
     public void setUp() {
-
         loadData(mActivityRule.getActivity(), mCurrentLanguage);
-
     }
 
     @Test
@@ -102,9 +101,14 @@ public class LanguageTest {
     }
 
     @Test
-    @Ignore
-    public void testLanguageFrench() {
-        languageTest("fr");
+    public void testLanguageHindi() {
+        languageTest("hi");
+
+        SharedPreferences prefs =
+                PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
+        prefs.edit().clear().apply();
+
+        loadData(mActivityRule.getActivity(), "en");
     }
 
     @Test

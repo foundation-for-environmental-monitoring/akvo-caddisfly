@@ -20,13 +20,6 @@
 <!--Strings used for diagnostics, automated and unit tests-->
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,MissingTranslation">
 
-    <!--Test Types-->
-    <string name="testName">Fluoride</string>
-    <string name="freeChlorine">Free Chlorine</string>
-    <string name="coliforms">Coliforms</string>
-    <string name="arsenic">Arsenic</string>
-    <string name="iron">Total Iron</string>
-    <string name="electricalConductivity">Electrical Conductivity</string>
-    <string name="launch">Launch</string>
-
+    <string name="testName">फ्लोराइड</string>
+    <string name="launch">जारी करें</string>
 </resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_slogan">जल गुणवत्ता पद्धति</string>
+    <string name="ok">ठीक</string>
+    <string name="retry">पुन: प्रयास</string>
+    <string name="cancel">रद्द</string>
+    <string name="error">गलती</string>
+    <string name="calibrate">कैलिब्रेट</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="about">बारे में</string>
+    <string name="version">संस्करण</string>
+    <string name="result">परिणाम</string>
+    <string name="language">भाषा</string>
+    <string name="notSupported">समर्थित नहीं</string>
+    <string name="cameraBusy">कैमरा व्यस्त</string>
+    <string name="selectTest">जाँच का चयन करें</string>
+    <string name="save">संरक्षित करें</string>
+    <string name="pleaseWait">कृपया प्रतीक्षा करें…</string>
+    <string name="instructions">निर्देश</string>
+    <string name="analyze">विश्लेषण</string>
+    <!-- Tests -->
+    <string name="aluminum">अल्युमीनियम</string>
+    <string name="arsenic_iii">आर्सेनिक (III)</string>
+    <string name="chromium">क्रोमियम</string>
+    <string name="copper">कॉपर</string>
+    <string name="dissolved_oxygen_high_range">विघटित ऑक्सीजन (उच्च रेंज)</string>
+    <string name="dissolved_oxygen_low_range">विघटित ऑक्सीजन (कम रेंज)</string>
+    <string name="fluoride">फ्लोराइड</string>
+    <string name="free_chlorine">अवशिष्ट क्लोरीन</string>
+    <string name="hydrogen_peroxide">हाइड्रोजन पेरोक्साइड</string>
+    <string name="nitrate">नाइट्रेट</string>
+    <string name="ph">पी एच</string>
+    <string name="phosphate">फॉस्फेट</string>
+    <string name="sulphate">सल्फेट</string>
+    <string name="total_iron">कुल लौह</string>
+    <string name="chlorophyll_a">क्लोरोफिल-ए</string>
+
+    <!-- Calibration Screen -->
+    <string name="calibration">कैलिब्रेशन</string>
+    <string name="calibrated">कैलिब्रेटेड</string>
+    <string name="calibrationDetails">कैलिब्रेशन जानकारी</string>
+    <string name="expires">अवधि समाप्त होना</string>
+    <string name="expired">अवधि समाप्त</string>
+    <string name="couldNotCalibrate">कैलिब्रेट नहीं कर सका</string>
+    <string name="calibrationIsInvalid">अमान्य कैलिब्रेशन</string>
+    <string name="tryRecalibrating">पुनः कैलिब्रेट करने का प्रयास करें</string>
+    <string name="reagentExpiry">रीएजॅन्ट समाप्ति</string>
+    <!-- Dilution Selection Dialog -->
+    <string name="dilution">डाइलूशन</string>
+    <string name="selectDilution">डाइलूशन की मात्रा का चयन करें</string>
+    <string name="noDilution">डाइलूशन नहीं</string>
+    <string name="timesDilution" tools:ignore="PluralsCandidate">%1$d बार डाइलूशन</string>
+    <string name="calibrateWithNewReagent">ताजा रीएजॅन्ट के साथ पुनः कैलिब्रेट करें</string>
+    <!-- Test Progress Screen -->
+    <string name="placeDevice">एक सपाट सतह पर डिवाइस का सामना करें</string>
+    <string name="errorTestInterrupted">जाँच बाधित हुई ।</string>
+    <string name="doNotMoveDeviceDuringTest">जाँच के दौरान फोन को हिलाए मत</string>
+    <string name="errorTestFailed">रंग किसी भी कैलिब्रेटेड रंगों से मेल नहीं खाता है।</string>
+    <string name="chamberNotFound">जाँच पूरा नहीं कर सका।</string>
+    <string name="checkChamberPlacement">जांचें कि कक्ष सही ढंग से रखा गया है।</string>
+    <string name="acceptResult">परिणाम स्वीकार करें</string>
+    <!-- Permission -->
+    <string name="storagePermission">स्टोरेज अनुमति की आवश्यकता है</string>
+    <string name="cameraAndStoragePermissions">कैमरा और स्टोरेज अनुमतियों की आवश्यकता है</string>
+    <!-- Alerts -->
+    <string name="cannotStartTest">परीक्षण शुरू नहीं कर सकता</string>
+    <string name="errorTestNotAvailable">अनुरोधित परीक्षण उपलब्ध नहीं है</string>
+    <string name="pleaseContactSupport">तकनीकी सहायता से संपर्क करें</string>
+    <string name="camera_not_good">कैमरा न्यूनतम आवश्यकताओं को पूरा नहीं करता है। \n\n सर्वोत्तम परिणामों के लिए, कम से कम 8 मेगापिक्सल का कैमरा आवश्यक है।</string>
+    <string name="continue_anyway">फिर भी जारी रखें</string>
+    <!-- Messages -->
+    <string name="phoneDoesNotSupport">यह सुविधा इस डिवाइस द्वारा समर्थित नहीं है</string>
+    <string name="cannotUseCamera">कैमरा का उपयोग नहीं कर सकते. सुनिश्चित करें कि फ्लैशलाइट बंद है और कैमरे का उपयोग कर रहे किसी भी ऐप को बंद कर दें</string>
+    <string name="cameraNotAvailable">कैमरा उपलब्ध नहीं है</string>
+    <string name="cameraRequired">कलरिमेट्रिक विश्लेषण के लिए एक बैक फेस कैमरा आवश्यक है</string>
+    <string name="tryRestarting">अगर समस्या बनी रहती है, तो इस डिवाइस को रीस्टार्ट करें</string>
+    <string name="cannotCalibrate">कैलिब्रेट नहीं कर सकता</string>
+    <string name="errorCameraFlashRequired">इस डिवाइस पर कैमरा फ्लैश नहीं मिला था</string>
+    <string name="errorCalibrationIncomplete">%1$s लिए कैलिब्रेशन अधूरा है</string>
+    <string name="doYouWantToCalibrate">क्या आप अभी कैलिब्रेट करना चाहते हैं?</string>
+    <string name="screen_pinned">स्क्रीन पिन किया गया। अधिक जानकारी के लिए \'होम\' बटन दबाएं।</string>
+    <!-- Support -->
+    <string name="emailSupport">ईमेल समर्थन</string>
+    <string name="send_details_to_support">सहायता के लिए सहायता टीम को जानकारी भेजें</string>
+    <string name="if_you_need_assistance">ऐप का उपयोग करने में सहायता प्रदान करने के लिए हमारी सहायता टीम को जानकारी भेजें ।</string>
+    <string name="select_email_app">कृपया अगले चरण में अपना ईमेल ऐप चुनें और उत्पन्न ईमेल भेजें।</string>
+    <string name="creatingMessage">संदेश बनाया जा रहा है</string>
+    <!-- About Screen -->
+    <string name="copyrightMessage">कॉपीराइट © ffem</string>
+    <string name="legalInformation">कानूनी जानकारी</string>
+    <string name="create_support_email">समर्थन ईमेल बनाएँ</string>
+    <string name="up_to_with_dilution">%s तक डाइलूशन के साथ</string>
+    <string name="errorCalibrationExpired">कैलिब्रेशन अपनी रीएजॅन्ट समाप्ति दिनांक के पार है</string>
+    <string name="orderFreshBatch">कृपया रीएजॅन्ट के एक ताजा बैच ऑर्डर करें और पुनः कैलिब्रेट करें</string>
+    <string name="highLevelRecommendation">डिल्यूशन के साथ जाँच की सिफारिश की जाती है क्योंकि प्रदूषण का स्तर उच्च है।</string>
+    <string name="do_not_show_again">फिर से न दिखाएं</string>
+    <string name="stop_test">जाँच रोकें</string>
+    <!-- Software notices -->
+    <string name="software_notices">सॉफ्टवेयर नोटिस</string>
+    <string name="software_incorporates_material">इस सॉफ्टवेयर में नीचे सूचीबद्ध परियोजनाओं से सामग्री शामिल है</string>
+    <string name="testWithDilution">डाइलूशन करने के साथ जाँच</string>
+</resources>

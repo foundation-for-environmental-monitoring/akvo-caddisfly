@@ -17,6 +17,23 @@
     <string name="notSupported">Not Supported</string>
     <string name="cameraBusy">Camera Busy</string>
     <string name="analyze">Analyse</string>
+    <!-- Tests -->
+    <string name="aluminum">.</string>
+    <string name="arsenic_iii">.</string>
+    <string name="chromium">.</string>
+    <string name="copper">.</string>
+    <string name="dissolved_oxygen_high_range">.</string>
+    <string name="dissolved_oxygen_low_range">.</string>
+    <string name="fluoride">.</string>
+    <string name="free_chlorine">.</string>
+    <string name="hydrogen_peroxide">.</string>
+    <string name="nitrate">.</string>
+    <string name="ph">.</string>
+    <string name="phosphate">.</string>
+    <string name="sulphate">.</string>
+    <string name="total_iron">.</string>
+    <string name="chlorophyll_a">.</string>
+    <string name="up_to_with_dilution">Up to %s with dilution</string>
 
     <!--Calibration Screen-->
     <string name="calibrationIsInvalid">Invalid calibration</string>

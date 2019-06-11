@@ -31,6 +31,18 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
+import androidx.annotation.StringRes;
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObject2;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -43,17 +55,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import androidx.annotation.StringRes;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.NoMatchingViewException;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.By;
-import androidx.test.uiautomator.UiDevice;
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
-import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.UiSelector;
 import timber.log.Timber;
 
 import static androidx.test.espresso.Espresso.onData;
@@ -71,8 +72,7 @@ import static org.akvo.caddisfly.util.TestUtil.sleep;
 public final class TestHelper {
 
     private static final Map<String, String> STRING_HASH_MAP_EN = new HashMap<>();
-    private static final Map<String, String> STRING_HASH_MAP_FR = new HashMap<>();
-    private static final Map<String, String> STRING_HASH_MAP_IN = new HashMap<>();
+    private static final Map<String, String> STRING_HASH_MAP_HI = new HashMap<>();
     private static final Map<String, String> CALIBRATION_HASH_MAP = new HashMap<>();
     private static final boolean TAKE_SCREENSHOTS = false;
     public static Map<String, String> currentHashMap;
@@ -86,12 +86,7 @@ public final class TestHelper {
 
     private static void addString(String key, String... values) {
         STRING_HASH_MAP_EN.put(key, values[0]);
-        STRING_HASH_MAP_FR.put(key, values[1]);
-        if (values.length > 2) {
-            STRING_HASH_MAP_IN.put(key, values[2]);
-        } else {
-            STRING_HASH_MAP_IN.put(key, values[0]);
-        }
+        STRING_HASH_MAP_HI.put(key, values[1]);
     }
 
     private static void addCalibration(String key, String colors) {
@@ -110,13 +105,11 @@ public final class TestHelper {
 
     }
 
-    @SuppressWarnings("deprecation")
     public static void loadData(Activity activity, String languageCode) {
         mCurrentLanguage = languageCode;
 
         STRING_HASH_MAP_EN.clear();
-        STRING_HASH_MAP_FR.clear();
-        STRING_HASH_MAP_IN.clear();
+        STRING_HASH_MAP_HI.clear();
         CALIBRATION_HASH_MAP.clear();
 
         Resources currentResources = activity.getResources();
@@ -126,8 +119,8 @@ public final class TestHelper {
         config.locale = new Locale(languageCode);
         Resources res = new Resources(assets, metrics, config);
 
-        addString(TestConstant.LANGUAGE, "English", "Français", "Bahasa Indonesia");
-        addString("otherLanguage", "Français", "English");
+        addString(TestConstant.LANGUAGE, "English", "Hindi");
+        addString("otherLanguage", "Hindi", "English");
         addString(TestConstant.FLUORIDE, "Water - Fluoride", res.getString(R.string.testName));
         addString("chlorine", "Water - Free Chlorine", res.getString(R.string.freeChlorine));
         addString("survey", "Survey", res.getString(R.string.survey));
@@ -147,7 +140,8 @@ public final class TestHelper {
         addCalibration("Fluoride_Valid", "0.0=255  38  186\n"
                 + "0.5=255  51  129\n"
                 + "1.0=255  59  89\n"
-                + "1.5=255  24  1\n"
+//                + "1.5=255  24  1\n"
+                + "1.5=172  12  0\n"
                 + "2.0=255  81  34\n");
 
         addCalibration("pH_NoMatch", "4=255  103  68\n"
@@ -214,10 +208,8 @@ public final class TestHelper {
 
         if ("en".equals(languageCode)) {
             currentHashMap = STRING_HASH_MAP_EN;
-        } else if ("in".equals(languageCode)) {
-            currentHashMap = STRING_HASH_MAP_IN;
         } else {
-            currentHashMap = STRING_HASH_MAP_FR;
+            currentHashMap = STRING_HASH_MAP_HI;
         }
     }
 
@@ -312,7 +304,9 @@ public final class TestHelper {
         String buttonText = currentHashMap.get(text);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            buttonText = buttonText.toUpperCase();
+            if (buttonText != null) {
+                buttonText = buttonText.toUpperCase();
+            }
         }
 
         findButtonInScrollable(buttonText);
@@ -331,12 +325,15 @@ public final class TestHelper {
             String buttonText = currentHashMap.get(text);
 
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                buttonText = buttonText.toUpperCase();
+                if (buttonText != null) {
+                    buttonText = buttonText.toUpperCase();
+                }
             }
 
-            findButtonInScrollable(buttonText);
-
-            mDevice.findObject(new UiSelector().text(buttonText)).click();
+            if (buttonText != null) {
+                findButtonInScrollable(buttonText);
+                mDevice.findObject(new UiSelector().text(buttonText)).click();
+            }
 
             // New Android OS seems to popup a button for external app
             if (android.os.Build.VERSION.SDK_INT == Build.VERSION_CODES.M

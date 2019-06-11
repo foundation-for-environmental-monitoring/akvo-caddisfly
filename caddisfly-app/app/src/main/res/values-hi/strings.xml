@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="next">अगले</string>
+    <string name="close">बंद</string>
+    <string name="to_get_started">आरंभ करने के लिए, लिंक पर जाएं</string>
+</resources>
