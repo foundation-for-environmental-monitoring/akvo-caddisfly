@@ -4,12 +4,19 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.RequiresDevice;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
-import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.model.TestSampleType;
+import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.ui.MainActivity;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -20,36 +27,32 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.filters.RequiresDevice;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.By;
-import androidx.test.uiautomator.UiDevice;
-
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING;
+import static org.akvo.caddisfly.common.ChamberTestConfig.DELAY_INITIAL;
+import static org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT;
+import static org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_EXPECTED_RESULT;
+import static org.akvo.caddisfly.common.TestConstants.IS_EXTRA_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_HAS_DILUTION;
-import static org.akvo.caddisfly.common.TestConstants.IS_START_DELAY;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_GROUP;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_ID;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_NAME;
 import static org.akvo.caddisfly.common.TestConstants.IS_TEST_TYPE;
-import static org.akvo.caddisfly.common.TestConstants.IS_TIME_DELAY;
 import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
@@ -64,16 +67,17 @@ import static org.akvo.caddisfly.util.TestUtil.childAtPosition;
 import static org.akvo.caddisfly.util.TestUtil.clickListViewItem;
 import static org.akvo.caddisfly.util.TestUtil.doesNotExistOrGone;
 import static org.akvo.caddisfly.util.TestUtil.getText;
+import static org.akvo.caddisfly.util.TestUtil.nextPage;
 import static org.akvo.caddisfly.util.TestUtil.sleep;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 
-@Ignore
 @SuppressWarnings("ConstantConditions")
 @RunWith(AndroidJUnit4.class)
 @LargeTest
+@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RetryTest {
 
@@ -95,10 +99,6 @@ public class RetryTest {
 
     public static void runTest(String testId, boolean useDiagnosticMode,
                                boolean showDebugInfo, boolean hasDilution, boolean isExternal) {
-
-        saveCalibration(IS_TEST_NAME + "_Valid", TestConstants.IS_TEST_ID);
-
-        saveCalibration(IS_TEST_NAME + "_NoMatch", TestConstants.IS_TEST_ID);
 
         Log.i(TAG, "Test 1");
 
@@ -150,6 +150,8 @@ public class RetryTest {
             leaveDiagnosticMode();
         }
 
+        goToMainScreen();
+
         if (isExternal) {
 
             gotoSurveyForm();
@@ -163,8 +165,6 @@ public class RetryTest {
             onView(withId(R.id.button_prepare)).perform(click());
 
         } else {
-
-            goToMainScreen();
 
             try {
                 onView(withText(R.string.calibrate)).perform(click());
@@ -189,19 +189,16 @@ public class RetryTest {
             onView(withId(R.id.buttonNoDilution)).check(matches(isDisplayed()));
 
             onView(withId(R.id.buttonNoDilution)).perform(click());
-
-            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
-                    .check(matches(isCompletelyDisplayed()));
-
-            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
-                    .check(matches(isCompletelyDisplayed()));
         }
 
-        onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
+        for (int i = 0; i < 7; i++) {
+            nextPage();
+        }
 
-        sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
+//        onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
+
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         onView(withText(R.string.cancel)).perform(click());
 
@@ -217,6 +214,16 @@ public class RetryTest {
 
         } else {
 
+            onView(allOf(withContentDescription("Navigate up"),
+                    withParent(withId(R.id.toolbar)),
+                    isDisplayed())).perform(click());
+
+            onView(allOf(withId(R.id.list_types),
+                    childAtPosition(
+                            withClassName(is("android.widget.LinearLayout")),
+                            0))).perform(actionOnItemAtPosition(
+                    TestConstants.IS_TEST_INDEX, click()));
+
             onView(withId(R.id.buttonRunTest)).perform(click());
         }
 
@@ -225,28 +232,26 @@ public class RetryTest {
 
             onView(withId(R.id.buttonNoDilution)).perform(click());
 
-            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
-                    .check(matches(isCompletelyDisplayed()));
-
-            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
-                    .check(matches(isCompletelyDisplayed()));
         }
 
-        onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
+//        onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
+//        onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
+//                .check(matches(isCompletelyDisplayed()));
+
+        for (int i = 0; i < 7; i++) {
+            nextPage();
+        }
 
         Log.i(TAG, "Test 2");
 
-        sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
-
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
         onView(withText(R.string.retry)).perform(click());
 
         Log.i(TAG, "Test 3");
 
-        sleep((IS_START_DELAY +
-                (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         onView(withText(R.string.retry)).check(doesNotExistOrGone());
 
@@ -261,6 +266,10 @@ public class RetryTest {
         SharedPreferences prefs =
                 PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
         prefs.edit().clear().apply();
+
+        saveCalibration(IS_TEST_NAME + "_Valid", IS_TEST_ID);
+
+        saveCalibration(IS_TEST_NAME + "_NoMatch", IS_TEST_ID);
     }
 
     @Test
@@ -432,19 +441,16 @@ public class RetryTest {
             onView(withId(R.id.buttonNoDilution)).check(matches(isDisplayed()));
 
             onView(withId(R.id.buttonNoDilution)).perform(click());
+        }
 
-            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
-                    .check(matches(isCompletelyDisplayed()));
-
-            onView(allOf(withId(R.id.textDilution), withText(R.string.noDilution)))
-                    .check(matches(isCompletelyDisplayed()));
+        for (int i = 0; i < 7; i++) {
+            nextPage();
         }
 
         onView(withId(R.id.layoutWait)).check(matches(isDisplayed()));
 
-        sleep((IS_START_DELAY + IS_TIME_DELAY
-                + (DELAY_BETWEEN_SAMPLING * ChamberTestConfig.SAMPLING_COUNT_DEFAULT))
-                * 1000);
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
         String resultString = getText(withId(R.id.textResult));
 
@@ -454,7 +460,8 @@ public class RetryTest {
         if (showDebugInfo) {
             onView(withText(R.string.ok)).perform(click());
         } else {
-            onView(withId(R.id.buttonAccept)).perform(click());
+            nextPage();
+            onView(withText(R.string.acceptResult)).perform(click());
         }
 
         if (isExternal) {
