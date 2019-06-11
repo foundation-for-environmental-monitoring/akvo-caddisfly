@@ -23,6 +23,15 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.DatePicker;
 
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.PickerActions;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.RequiresDevice;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.common.ChamberTestConfig;
@@ -33,20 +42,12 @@ import org.akvo.caddisfly.util.TestUtil;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.Calendar;
-
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.contrib.PickerActions;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.filters.RequiresDevice;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.By;
-import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -129,6 +130,7 @@ public class ChamberTest {
 
     @Test
     @RequiresDevice
+    @Ignore
     public void testStartHighLevelTest() {
 
         saveCalibration(TestConstants.IS_TEST_HIGH_CALIBRATION, TestConstants.IS_TEST_ID);
@@ -340,6 +342,7 @@ public class ChamberTest {
 
     @Test
     @RequiresDevice
+    @Ignore
     public void testStartNoDilutionTest() {
 
         saveCalibration(TestConstants.IS_TEST_VALID_CALIBRATION, TestConstants.IS_TEST_ID);

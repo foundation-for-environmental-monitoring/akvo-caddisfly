@@ -28,7 +28,6 @@
         android:layout_marginTop="10dp"
         android:paddingEnd="22dp"
         android:paddingStart="22dp"
-        android:text="@string/check_bluetooth_turned_on"
         android:textSize="17sp" />
 
     <ScrollView
@@ -47,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="15dp"
-                android:text="@string/to_turn_md610_on"
                 android:textColor="#444"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -69,7 +67,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/press_on_button"
                     android:textSize="17sp" />
 
             </LinearLayout>
@@ -109,7 +106,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
-                        android:text="@string/press_mode_button"
                         android:textSize="17sp" />
                 </TableRow>
 
@@ -134,7 +130,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
-                        android:text="@string/select_bluetooth"
                         android:textSize="17sp" />
                 </TableRow>
 
@@ -159,7 +154,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
-                        android:text="@string/turn_bluetooth_on"
                         android:textSize="17sp" />
                 </TableRow>
 
@@ -182,7 +176,6 @@
                     <org.akvo.caddisfly.widget.HtmlTextView
                         android:layout_width="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/escape_to_menu"
                         android:textSize="17sp" />
                 </TableRow>
             </TableLayout>
