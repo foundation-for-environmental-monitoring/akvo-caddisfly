@@ -10,7 +10,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.SensorConstants;
@@ -28,17 +31,11 @@ import org.akvo.caddisfly.helper.TestConfigHelper;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.preference.AppPreferences;
-import org.akvo.caddisfly.util.StringUtil;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -141,10 +138,10 @@ public class BluetoothResultFragment extends Fragment {
 
         });
 
-        TextView textPerformTest = view.findViewById(R.id.textPerformTest);
-        textPerformTest.setText(StringUtil.toInstruction((AppCompatActivity) getActivity(), testInfo,
-                String.format(getString(R.string.perform_test), testInfo.getName())));
-
+//        TextView textPerformTest = view.findViewById(R.id.textPerformTest);
+//        textPerformTest.setText(StringUtil.toInstruction((AppCompatActivity) getActivity(), testInfo,
+//                String.format(getString(R.string.perform_test), testInfo.getName())));
+//
         if (AppPreferences.isDiagnosticMode()) {
             LinearLayout layoutTitle = view.findViewById(R.id.layoutTitleBar);
             if (layoutTitle != null) {
@@ -158,15 +155,15 @@ public class BluetoothResultFragment extends Fragment {
     private void showError(Activity activity) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
-        alertDialog.setTitle(R.string.incorrect_test_selected);
-
-        alertDialog.setMessage(TextUtils.concat(
-                StringUtil.toInstruction((AppCompatActivity) getActivity(),
-                        null, getString(R.string.data_does_not_match) + "<br /><br />"),
-
-                StringUtil.toInstruction((AppCompatActivity) getActivity(),
-                        null, getString(R.string.select_correct_test))
-        ));
+//        alertDialog.setTitle(R.string.incorrect_test_selected);
+//
+//        alertDialog.setMessage(TextUtils.concat(
+//                StringUtil.toInstruction((AppCompatActivity) getActivity(),
+//                        null, getString(R.string.data_does_not_match) + "<br /><br />"),
+//
+//                StringUtil.toInstruction((AppCompatActivity) getActivity(),
+//                        null, getString(R.string.select_correct_test))
+//        ));
 
         alertDialog.setPositiveButton(R.string.ok, (dialogInterface, i) -> dialogInterface.dismiss());
 

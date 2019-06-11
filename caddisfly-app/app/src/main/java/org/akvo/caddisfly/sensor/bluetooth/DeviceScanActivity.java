@@ -69,6 +69,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.helper.PermissionsDelegate;
@@ -78,9 +81,6 @@ import org.akvo.caddisfly.util.AlertUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 /**
  * Activity for scanning and displaying available Bluetooth LE devices.
@@ -496,7 +496,7 @@ public class DeviceScanActivity extends BaseActivity implements DeviceConnectDia
             BluetoothDevice device = mLeDevices.get(position);
             @SuppressLint("MissingPermission") final String deviceName = device.getName();
             if (deviceName != null && deviceName.length() > 0) {
-                viewHolder.deviceName.setText(R.string.md610_photometer);
+                viewHolder.deviceName.setText(R.string.unknown_device);
             } else {
                 viewHolder.deviceName.setText(R.string.unknown_device);
             }
