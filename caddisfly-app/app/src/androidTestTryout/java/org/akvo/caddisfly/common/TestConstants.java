@@ -60,6 +60,6 @@ public final class TestConstants {
     public static final boolean IS_HAS_DILUTION = true;
 
     public static final int CUVETTE_TEST_TIME_DELAY = 0;
-    public static final int IS_EXTRA_DELAY = 3;
+    public static final int IS_EXTRA_DELAY = 5;
 
 }

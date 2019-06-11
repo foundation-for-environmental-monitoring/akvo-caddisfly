@@ -31,5 +31,7 @@ public interface RunTest {
 
     void stop();
 
+    void reset();
+
     void setRetryCount(int retryCount);
 }

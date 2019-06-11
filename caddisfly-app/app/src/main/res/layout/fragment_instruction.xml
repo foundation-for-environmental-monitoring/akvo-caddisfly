@@ -59,7 +59,8 @@
             android:layout_centerHorizontal="true"
             android:onClick="onAcceptResultClick"
             android:text="@string/acceptResult"
-            android:theme="?primaryButtonStyle" />
+            android:theme="?primaryButtonStyle"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/buttonRetest"

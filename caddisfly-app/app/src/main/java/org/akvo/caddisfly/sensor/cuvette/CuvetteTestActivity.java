@@ -30,10 +30,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,13 +44,11 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -117,7 +115,6 @@ import io.ffem.tryout.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
-import static org.akvo.caddisfly.common.AppConfig.STOP_ANIMATIONS;
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.helper.CameraHelper.getMaxSupportedMegaPixelsByCamera;
 
@@ -140,6 +137,7 @@ public class CuvetteTestActivity extends BaseActivity implements
                     BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     TextView imagePageLeft;
     TextView imagePageRight;
+    boolean isInternal;
     private RunTest runTestFragment;
     private SelectDilutionFragment selectDilutionFragment;
     private ResultFragment resultFragment;
@@ -149,6 +147,7 @@ public class CuvetteTestActivity extends BaseActivity implements
     private int currentDilution = 0;
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
+    private int retryCount = 0;
     private int dilutionPageNumber;
     private int resultPageNumber;
     private int testPageNumber;
@@ -170,14 +169,6 @@ public class CuvetteTestActivity extends BaseActivity implements
         pagerIndicator = findViewById(R.id.pager_indicator);
         footerLayout = findViewById(R.id.layout_footer);
         waitingLayout = findViewById(R.id.waitingLayout);
-        ProgressBar waitingProgressBar = findViewById(R.id.waitingProgressBar);
-        waitingProgressBar.getIndeterminateDrawable()
-                .setColorFilter(ContextCompat.getColor(this, R.color.white),
-                        PorterDuff.Mode.SRC_IN);
-
-        if (STOP_ANIMATIONS) {
-            waitingProgressBar.setVisibility(View.GONE);
-        }
 
         fragmentManager = getSupportFragmentManager();
 
@@ -197,7 +188,7 @@ public class CuvetteTestActivity extends BaseActivity implements
                 start();
             } else {
                 setTitle(R.string.calibration);
-//                boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
+                isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
             }
         }
 
@@ -267,6 +258,8 @@ public class CuvetteTestActivity extends BaseActivity implements
 
     private void start() {
 
+        retryCount = 0;
+
         if (testInfo.getDilutions().size() > 0) {
             selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
         } else {
@@ -290,6 +283,7 @@ public class CuvetteTestActivity extends BaseActivity implements
             }
 
             runTestFragment.setDilution(currentDilution);
+            runTestFragment.setRetryCount(retryCount);
 
             testStarted = true;
 
@@ -468,6 +462,15 @@ public class CuvetteTestActivity extends BaseActivity implements
                             try {
                                 SwatchHelper.loadCalibrationFromFile(testInfo, fileName);
                                 loadDetails();
+                                PreferencesUtil.setDouble(this, "pivot_" + testInfo.getUuid(), testInfo.getPivotCalibration());
+                                loadDetails();
+
+                                Toast toast = Toast.makeText(this,
+                                        String.format(getString(R.string.calibrationLoaded), fileName),
+                                        Toast.LENGTH_SHORT);
+                                toast.setGravity(Gravity.BOTTOM, 0, 200);
+                                toast.show();
+
                             } catch (Exception ex) {
                                 AlertUtil.showError(context, R.string.error, getString(R.string.errorLoadingFile),
                                         null, R.string.ok,
@@ -572,16 +575,13 @@ public class CuvetteTestActivity extends BaseActivity implements
 
                     stopScreenPinning();
 
-                    fragmentManager.popBackStack();
-                    if (testInfo.getDilutions().size() > 0) {
-                        fragmentManager.popBackStack();
-                    }
+                    pageBack();
 
                     showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail, resultDetails, false);
 
                 } else {
 
-                    fragmentManager.popBackStack();
+                    pageBack();
 
                     showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.errorTestFailed),
                             getString(R.string.checkChamberPlacement)),
@@ -605,6 +605,11 @@ public class CuvetteTestActivity extends BaseActivity implements
 
                 CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();
                 calibration.color = color;
+                calibration.quality = resultDetail.getQuality();
+                calibration.centerOffset = AppPreferences.getCameraCenterOffset();
+                calibration.resWidth = resultDetail.getBitmap().getWidth();
+                calibration.resHeight = resultDetail.getBitmap().getHeight();
+                calibration.zoom = AppPreferences.getCameraZoom();
                 calibration.date = new Date().getTime();
                 if (AppPreferences.isDiagnosticMode()) {
 
@@ -620,6 +625,9 @@ public class CuvetteTestActivity extends BaseActivity implements
                 }
                 dao.insert(calibration);
                 CalibrationFile.saveCalibratedData(this, testInfo, calibration, color);
+
+                loadDetails();
+                PreferencesUtil.setDouble(this, "pivot_" + testInfo.getUuid(), testInfo.getPivotCalibration());
                 loadDetails();
 
                 SoundUtil.playShortResource(this, R.raw.done);
@@ -660,7 +668,7 @@ public class CuvetteTestActivity extends BaseActivity implements
                                             ResultDetail oneStepResultDetail,
                                             ArrayList<ResultDetail> resultDetails, boolean isCalibration) {
         DialogFragment resultFragment = DiagnosticResultDialog.newInstance(
-                testFailed, 0, resultDetail, oneStepResultDetail, resultDetails, isCalibration);
+                testFailed, retryCount, resultDetail, oneStepResultDetail, resultDetails, isCalibration);
         final android.app.FragmentTransaction ft = getFragmentManager().beginTransaction();
 
         android.app.Fragment prev = getFragmentManager().findFragmentByTag("gridDialog");
@@ -754,23 +762,37 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         releaseResources();
 
-        alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
-                (dialogInterface, i) -> {
-                    stopScreenPinning();
-                    if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                        start();
-                    } else {
-                        runTest();
-                    }
-                },
-                (dialogInterface, i) -> {
-                    stopScreenPinning();
-                    dialogInterface.dismiss();
-                    releaseResources();
-                    setResult(Activity.RESULT_CANCELED);
-                    finish();
-                }, null
-        );
+        if (retryCount < 1) {
+            alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
+                    (dialogInterface, i) -> {
+                        retryCount++;
+                        runTestFragment.reset();
+                        pageNext();
+                    },
+                    (dialogInterface, i) -> {
+                        stopScreenPinning();
+                        dialogInterface.dismiss();
+                        releaseResources();
+                        setResult(Activity.RESULT_CANCELED);
+                        if (!isInternal) {
+                            finish();
+                        }
+                    }, null
+            );
+        } else {
+            alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.ok,
+                    null,
+                    (dialogInterface, i) -> {
+                        stopScreenPinning();
+                        dialogInterface.dismiss();
+                        releaseResources();
+                        setResult(Activity.RESULT_CANCELED);
+                        if (!isInternal) {
+                            finish();
+                        }
+                    }, null
+            );
+        }
     }
 
     private void releaseResources() {
@@ -911,6 +933,22 @@ public class CuvetteTestActivity extends BaseActivity implements
     public void onDismissed(boolean retry) {
         testStarted = false;
         invalidateOptionsMenu();
+        if (retry) {
+            if (retryCount < 1) {
+                retryCount++;
+                runTestFragment.reset();
+                pageNext();
+            } else {
+                setResult(Activity.RESULT_CANCELED);
+                stopScreenPinning();
+                finish();
+            }
+        } else {
+            if (!isInternal) {
+                submitResult();
+                finish();
+            }
+        }
     }
 
     private void pageNext() {
@@ -970,7 +1008,7 @@ public class CuvetteTestActivity extends BaseActivity implements
         pagerIndicator.setVisibility(View.VISIBLE);
         waitingLayout.setVisibility(View.GONE);
         if (viewPager.getCurrentItem() == testPageNumber) {
-            footerLayout.setVisibility(View.VISIBLE);
+            footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.none);
             pagerIndicator.setVisibility(View.GONE);
             imagePageLeft.setVisibility(View.INVISIBLE);

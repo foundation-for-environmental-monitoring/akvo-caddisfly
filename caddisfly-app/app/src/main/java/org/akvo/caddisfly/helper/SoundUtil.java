@@ -23,10 +23,10 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
+import androidx.annotation.RawRes;
+
 import org.akvo.caddisfly.common.AppConfig;
 import org.akvo.caddisfly.preference.AppPreferences;
-
-import androidx.annotation.RawRes;
 
 import static android.content.Context.AUDIO_SERVICE;
 
@@ -47,7 +47,6 @@ public class SoundUtil {
             final int originalVolume;
             if (audioManager != null) {
                 originalVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                //noinspection ConstantConditions
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                         AppConfig.SOUND_ON ? audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) : 1,
                         0);

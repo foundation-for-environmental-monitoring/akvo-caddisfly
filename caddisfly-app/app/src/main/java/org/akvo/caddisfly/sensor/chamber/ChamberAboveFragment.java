@@ -108,6 +108,7 @@ public class ChamberAboveFragment extends BaseRunTest implements RunTest {
     }
 
     protected void waitForStillness() {
+        mWaitingForStillness = true;
         mSensorManager.registerListener(mShakeDetector, mAccelerometer,
                 SensorManager.SENSOR_DELAY_UI);
     }
@@ -144,6 +145,7 @@ public class ChamberAboveFragment extends BaseRunTest implements RunTest {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(mShakeDetector);
         }
+        mWaitingForStillness = false;
         super.releaseResources();
     }
 }

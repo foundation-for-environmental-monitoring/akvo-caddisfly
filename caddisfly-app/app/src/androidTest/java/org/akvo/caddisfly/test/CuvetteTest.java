@@ -215,7 +215,7 @@ public class CuvetteTest {
         sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
                 (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
 
-        onView(withId(R.id.buttonOk)).perform(click());
+        onView(withText(R.string.close)).perform(click());
 
         goToMainScreen();
 

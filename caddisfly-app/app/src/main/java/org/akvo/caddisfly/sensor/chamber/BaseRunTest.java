@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -64,6 +66,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import static org.akvo.caddisfly.common.AppConfig.STOP_ANIMATIONS;
+
 //import timber.log.Timber;
 
 public class BaseRunTest extends Fragment implements RunTest {
@@ -76,6 +80,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     protected boolean cameraStarted;
     protected int pictureCount = 0;
     private int timeDelay = 0;
+    private final Runnable mCountdown = this::setCountDown;
     private Handler mHandler;
     private AlertDialog alertDialogToBeDestroyed;
     private TestInfo mTestInfo;
@@ -113,7 +118,6 @@ public class BaseRunTest extends Fragment implements RunTest {
             }
         }
     };
-    private Runnable mCountdown = this::setCountDown;
 
     private static String timeConversion(int seconds) {
 
@@ -138,12 +142,10 @@ public class BaseRunTest extends Fragment implements RunTest {
             countdown[0]++;
 
             if (timeDelay > 10) {
-                if ((timeDelay - countdown[0]) % 15 == 0) {
+                if ((timeDelay - countdown[0]) < 31) {
                     SoundUtil.playShortResource(getActivity(), R.raw.beep);
-                } else if ((timeDelay - countdown[0]) < 15) {
+                } else if ((timeDelay - countdown[0]) % 15 == 0) {
                     SoundUtil.playShortResource(getActivity(), R.raw.beep);
-                    (new Handler()).postDelayed(() ->
-                            SoundUtil.playShortResource(getActivity(), R.raw.beep), 500);
                 }
             }
 
@@ -183,7 +185,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     protected void initializeTest() {
         results.clear();
         oneStepResults.clear();
-
+        binding.cameraView.setVisibility(View.GONE);
         mHandler = new Handler();
     }
 
@@ -230,6 +232,14 @@ public class BaseRunTest extends Fragment implements RunTest {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_run_test,
                 container, false);
 
+        binding.waitingProgressBar.getIndeterminateDrawable()
+                .setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getActivity()),
+                        R.color.white), PorterDuff.Mode.SRC_IN);
+
+        if (STOP_ANIMATIONS) {
+            binding.waitingProgressBar.setVisibility(View.GONE);
+        }
+
         pictureCount = 0;
 
         if (getArguments() != null) {
@@ -248,13 +258,6 @@ public class BaseRunTest extends Fragment implements RunTest {
         binding.setVm(model);
 
         initializeTest();
-
-        if (mCalibration != null) {
-            binding.textDilution.setText(String.valueOf(mCalibration.value));
-        } else {
-            binding.textDilution.setText(getResources()
-                    .getQuantityString(R.plurals.dilutions, dilution, dilution));
-        }
 
         countdown[0] = 0;
 
@@ -369,7 +372,6 @@ public class BaseRunTest extends Fragment implements RunTest {
             timeDelay = (int) Math.max(SHORT_DELAY, mTestInfo.getResults().get(0).getTimeDelay());
 
             binding.timeLayout.setVisibility(View.VISIBLE);
-            binding.countdownTimer.setProgress(timeDelay, timeDelay);
 
             setCountDown();
         } else {
@@ -380,6 +382,13 @@ public class BaseRunTest extends Fragment implements RunTest {
     @Override
     public void stop() {
     }
+
+    @Override
+    public void reset() {
+        initializeTest();
+        countdown[0] = 0;
+    }
+
 
     @Override
     public void setRetryCount(int retryCount) {

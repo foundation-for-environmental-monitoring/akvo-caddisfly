@@ -101,10 +101,9 @@ public final class FileUtil {
 
         PrintWriter pw = null;
         try {
-            Writer w = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+            Writer w = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
             pw = new PrintWriter(w);
             pw.write(data);
-
         } catch (IOException e) {
             Timber.e(e);
         } finally {
@@ -407,7 +406,7 @@ public final class FileUtil {
                 destination.mkdir();
             }
 
-            String files[] = source.list();
+            String[] files = source.list();
             for (String file : files) {
                 File srcFile = new File(source, file);
                 File destFile = new File(destination, file);

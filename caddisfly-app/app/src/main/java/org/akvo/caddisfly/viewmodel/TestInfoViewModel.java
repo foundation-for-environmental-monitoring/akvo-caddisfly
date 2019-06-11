@@ -31,6 +31,14 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.ObservableField;
+import androidx.lifecycle.AndroidViewModel;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
@@ -46,17 +54,10 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.ObservableField;
-import androidx.lifecycle.AndroidViewModel;
-
 public class TestInfoViewModel extends AndroidViewModel {
 
     private static TestInfo testInfo;
-    public ObservableField<TestInfo> test = new ObservableField<>();
+    public final ObservableField<TestInfo> test = new ObservableField<>();
 
     public TestInfoViewModel(@NonNull Application application) {
         super(application);
@@ -138,6 +139,19 @@ public class TestInfoViewModel extends AndroidViewModel {
         }
     }
 
+    @BindingAdapter("testSubtitle")
+    public static void setSubtitle(TextView view, TestInfo testInfo) {
+        String subTitle = testInfo.getMinMaxRange();
+        if (!testInfo.getMinMaxRange().isEmpty()) {
+            Matcher matcher = Pattern.compile("<dilutionRange>(.*?)</dilutionRange>").matcher(subTitle);
+            if (matcher.find()) {
+                subTitle = matcher.replaceAll(String.format(view.getResources()
+                        .getString(R.string.up_to_with_dilution), matcher.group(1)));
+            }
+        }
+        view.setText(subTitle);
+    }
+
     private static void replaceReagentTags(LinearLayout linearLayout, Context context, SpannableStringBuilder builder) {
         for (int j = 1; j < 5; j++) {
             Matcher m2 = Pattern.compile("%reagent" + j).matcher(builder);
@@ -164,7 +178,7 @@ public class TestInfoViewModel extends AndroidViewModel {
     private static void insertImage(LinearLayout linearLayout, Context context, Point size,
                                     DisplayMetrics displayMetrics, int i, String text) {
 
-        String imageName = text.substring(text.indexOf(":") + 1, text.length());
+        String imageName = text.substring(text.indexOf(":") + 1);
 
         int resourceId = context.getResources().getIdentifier("drawable/in_" + imageName,
                 "id", BuildConfig.APPLICATION_ID);
@@ -190,6 +204,9 @@ public class TestInfoViewModel extends AndroidViewModel {
             imageView.setImageResource(resourceId);
             imageView.setLayoutParams(llp);
             imageView.setContentDescription(imageName);
+
+            // set an id for the view to be able to find it for unit testing
+            imageView.setId(i);
 
             linearLayout.addView(imageView);
 

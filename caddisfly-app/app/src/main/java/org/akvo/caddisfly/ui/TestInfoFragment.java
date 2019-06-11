@@ -101,8 +101,14 @@ public class TestInfoFragment extends Fragment {
 
                 b.setTestInfo(testInfo);
 
+                if (testInfo.getInstructions() == null || testInfo.getInstructions().size() == 0) {
+                    b.buttonInstructions.setVisibility(View.GONE);
+                }
+
                 if (testInfo.getSubtype() == TestType.STRIP_TEST) {
                     b.buttonPrepare.setText(R.string.prepare_test);
+                } else {
+                    b.buttonInstructions.setVisibility(View.GONE);
                 }
 
                 byte[] byteArray = Objects.requireNonNull(getActivity()).getIntent().getByteArrayExtra("image");

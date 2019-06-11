@@ -18,7 +18,6 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -31,57 +30,27 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        android:orientation="vertical">
+        android:keepScreenOn="true">
 
-        <LinearLayout
-            android:id="@+id/layoutTitleBar"
+        <TextView
+            android:id="@+id/textInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
-            android:paddingEnd="10dp"
             android:paddingStart="20dp"
-            app:background="@{vm.test.name}"
-            tools:background="?colorPrimary">
-
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-light"
-                android:text="@{vm.test.name}"
-                android:textColor="#fff"
-                android:textSize="30sp"
-                tools:text="Contaminant" />
-
-            <TextView
-                android:id="@+id/textDilution"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-8dp"
-                android:paddingBottom="20dp"
-                android:textColor="#d6f6fdf6"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="@string/noDilution" />
-
-            <TextView
-                android:id="@+id/textSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/placeDevice"
-                android:textColor="#d6f6fdf6"
-                android:textSize="16sp" />
-        </LinearLayout>
+            android:paddingTop="16dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="20dp"
+            android:text="@string/c_place_phone"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textInfo">
 
             <FrameLayout
                 android:id="@+id/timeLayout"
@@ -91,36 +60,22 @@
                 android:background="@color/button_green"
                 android:visibility="gone">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textTimeRemaining"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <org.akvo.caddisfly.widget.TimerView
-                        android:id="@+id/countdownTimer"
-                        android:layout_width="190dp"
-                        android:layout_height="190dp"
-                        android:visibility="gone"
-                        app:circleColor="#016ec6" />
-
-                    <TextView
-                        android:id="@+id/textTimeRemaining"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="16dp"
-                        android:textSize="32dp"
-                        tools:ignore="SpUsage"
-                        tools:text="00:05:00" />
-                </LinearLayout>
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="16dp"
+                    android:textSize="32dp"
+                    tools:ignore="SpUsage"
+                    tools:text="00:05:00" />
             </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/layoutWait"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/timeLayout"
                 android:orientation="vertical"
                 android:visibility="visible">
@@ -130,9 +85,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_margin="16sp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
-                    android:src="@drawable/place_device"
+                    android:src="@drawable/in_c_place"
                     android:visibility="@{vm.test.cameraAbove ? View.GONE : View.VISIBLE}" />
 
                 <FrameLayout
@@ -156,9 +112,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="24dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="24dp"
                     android:enabled="true"
                     android:minWidth="230dp"
                     android:onClick="onStartTestClick"
@@ -167,5 +123,39 @@
                     android:visibility="gone" />
             </FrameLayout>
         </RelativeLayout>
-    </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_footer"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="#585858">
+
+            <LinearLayout
+                android:id="@+id/waitingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true">
+
+                <ProgressBar
+                    android:id="@+id/waitingProgressBar"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/waiting"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                    android:textColor="?textColorPrimary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
 </layout>
