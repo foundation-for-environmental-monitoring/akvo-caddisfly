@@ -3,6 +3,8 @@ package org.akvo.caddisfly.sensor.striptest.decode;
 import android.os.Handler;
 import android.os.HandlerThread;
 
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.sensor.striptest.models.CalibrationCardData;
 import org.akvo.caddisfly.sensor.striptest.models.DecodeData;
@@ -25,8 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import androidx.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * Created by mark westra on 17/05/2017
@@ -193,7 +194,7 @@ public class DecodeProcessor {
             }
 
             // compute and store tilt and distance check
-            decodeData.setTilt(getDegrees(getTilt(patternInfo)));
+            decodeData.setTilt(getDegrees(Objects.requireNonNull(getTilt(patternInfo))));
             decodeData.setDistanceOk(distanceOk(patternInfo, decodeHeight));
 
             // store finder patterns
@@ -226,8 +227,8 @@ public class DecodeProcessor {
     }
 
     /*
-    * checks exposure of image, by looking at the Y value of the white. It should be as high as
-    * possible, without being overexposed.
+     * checks exposure of image, by looking at the Y value of the white. It should be as high as
+     * possible, without being overexposed.
      */
     private void checkExposureQuality() {
         DecodeData decodeData = StriptestHandler.getDecodeData();
@@ -269,7 +270,7 @@ public class DecodeProcessor {
     }
 
     /*
-    * checks exposure of image, by looking at the homogeneity of the white values.
+     * checks exposure of image, by looking at the homogeneity of the white values.
      */
     private void checkShadowQuality() {
         DecodeData decodeData = StriptestHandler.getDecodeData();
@@ -346,7 +347,7 @@ public class DecodeProcessor {
 
             // compute percentage of good points
             float devPercent = 100f - (100.0f * numDev) / points.length;
-            decodeData.setPercentageShadow(Math.min(Math.max(50f, devPercent), 100f));
+//            decodeData.setPercentageShadow(Math.min(Math.max(50f, devPercent), 100f));
 
             // if the percentage of good point is under the limit (something like 90%), we fail the test
             if (devPercent < Constants.SHADOW_PERCENTAGE_LIMIT) {
@@ -531,6 +532,7 @@ public class DecodeProcessor {
             decodeData.addStripImage(result, mCurrentDelay);
             decodeData.setStripPixelWidth(result[0].length);
         } else {
+            //todo: check null argument
             decodeData.addStripImage(null, mCurrentDelay);
             decodeData.setStripPixelWidth(0);
         }
@@ -568,8 +570,8 @@ public class DecodeProcessor {
 //        Map<String, float[]> patchXYZMap = CalibrationCardUtils.linearRGBtoXYZ(patchRGBMap);
 
         // Set calibration goal RGB values so we can display them later
-        Map<String, int[]> patchCalRGBMap = CalibrationCardUtils.XYZtoRGBint(calXYZMap);
-        StriptestHandler.getDecodeData().setCalibrationPatchRGB(patchCalRGBMap);
+//        Map<String, int[]> patchCalRGBMap = CalibrationCardUtils.XYZtoRGBint(calXYZMap);
+//        StriptestHandler.getDecodeData().setCalibrationPatchRGB(patchCalRGBMap);
 
         // measure the distance in terms of deltaE2000
 //        float[] deltaE2000Stats = CalibrationCardUtils.deltaE2000stats(calXYZMap, patchXYZMap);
@@ -587,8 +589,8 @@ public class DecodeProcessor {
 //        String[] worst = CalibrationCardUtils.worstPatches(calXYZMap, resultXYZMap);
 
         // set calibrated colours so we can display them
-        Map<String, int[]> patchRGBCalMap = CalibrationCardUtils.XYZtoRGBint(resultXYZMap);
-        decodeData.setMeasuredPatchRGB(patchRGBCalMap);
+//        Map<String, int[]> patchRGBCalMap = CalibrationCardUtils.XYZtoRGBint(resultXYZMap);
+//        decodeData.setMeasuredPatchRGB(patchRGBCalMap);
 
         // set deltaE2000 stats
         decodeData.setDeltaEStats(deltaE2000Stats);

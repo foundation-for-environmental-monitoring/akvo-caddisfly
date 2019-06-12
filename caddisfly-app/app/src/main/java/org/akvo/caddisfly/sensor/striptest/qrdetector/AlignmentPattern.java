@@ -16,6 +16,7 @@
 
 package org.akvo.caddisfly.sensor.striptest.qrdetector;
 
+
 /**
  * <p>Encapsulates an alignment pattern, which are the smaller square patterns found in
  * all but the simplest QR Codes.</p>

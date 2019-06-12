@@ -28,6 +28,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.helper.SoundUtil;
@@ -48,13 +50,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**
  * Created by markwestra on 19/07/2017
  */
-@SuppressWarnings("deprecation")
 public class StripMeasureActivity extends BaseActivity implements
         StripMeasureListener {
 
@@ -114,7 +114,7 @@ public class StripMeasureActivity extends BaseActivity implements
         // So we don't want to do actual work on it - just coordinate.
         // The camera and the decoder get their own thread.
         if (mStriptestHandler == null) {
-            mStriptestHandler = new StriptestHandler(this, getApplicationContext(),
+            mStriptestHandler = new StriptestHandler(this,
                     mCameraOpsManager, mFinderPatternIndicatorView, testInfo);
         }
 
@@ -287,10 +287,10 @@ public class StripMeasureActivity extends BaseActivity implements
      */
     public void setPreviewProperties(int w, int h, int previewImageWidth, int previewImageHeight) {
         if (mCamera != null && mCameraPreview != null) {
-            StriptestHandler.mDecodeData.setPreviewWidth(w);
-            StriptestHandler.mDecodeData.setPreviewHeight(h);
-            StriptestHandler.mDecodeData.setDecodeWidth(previewImageWidth);
-            StriptestHandler.mDecodeData.setDecodeHeight(previewImageHeight);
+//            StriptestHandler.mDecodeData.setPreviewWidth(w);
+//            StriptestHandler.mDecodeData.setPreviewHeight(h);
+            StriptestHandler.getDecodeData().setDecodeWidth(previewImageWidth);
+            StriptestHandler.getDecodeData().setDecodeHeight(previewImageHeight);
 
             mFinderPatternIndicatorView.setMeasure(w, h, previewImageWidth, previewImageHeight);
         }
