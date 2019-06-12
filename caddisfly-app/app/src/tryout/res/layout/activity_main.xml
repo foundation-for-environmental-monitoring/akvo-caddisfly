@@ -169,6 +169,29 @@
                     android:layout_height="match_parent">
 
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/link"
+                        android:layout_marginBottom="7dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/to_get_started"
+                        android:textColor="#b4ffffff"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/link"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/textVersionExpiry"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="100dp"
+                        android:gravity="center_horizontal"
+                        android:onClick="onGetStartedClicked"
+                        android:text="http://ffem.io/start"
+                        android:textColor="@color/text_links_2"
+                        android:textSize="16sp" />
+
+                    <TextView
                         android:id="@+id/textVersionExpiry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -207,7 +230,6 @@
                 android:ellipsize="none"
                 android:gravity="start"
                 android:singleLine="true"
-                android:text="@string/diagnostics"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#4301bc77"
                 android:textSize="46dp"

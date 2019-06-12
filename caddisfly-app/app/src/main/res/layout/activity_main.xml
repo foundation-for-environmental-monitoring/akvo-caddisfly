@@ -86,21 +86,6 @@
                     android:visibility="gone" />
 
                 <Button
-                    android:id="@+id/buttonColiformCount"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onColiformCountClick"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:text="@string/coliformCount"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:visibility="gone" />
-
-                <Button
                     android:id="@+id/buttonCalibrate"
                     style="?listButtonStyle"
                     android:layout_width="match_parent"
@@ -117,6 +102,28 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/link"
+                        android:layout_marginBottom="7dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/to_get_started"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/link"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/textVersionExpiry"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="150dp"
+                        android:gravity="center_horizontal"
+                        android:onClick="onGetStartedClicked"
+                        android:text="http://ffem.io/start"
+                        android:textColor="@color/text_links"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textVersionExpiry"

@@ -23,6 +23,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,6 +31,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
@@ -66,10 +71,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
-
+import static org.akvo.caddisfly.common.AppConfig.GET_STARTED_URL;
 import static org.akvo.caddisfly.model.TestType.BLUETOOTH;
 import static org.akvo.caddisfly.model.TestType.CHAMBER_TEST;
 
@@ -424,6 +426,11 @@ public class MainActivity extends BaseActivity {
                 permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
             }
         }
+    }
+
+    public void onGetStartedClicked(View view) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GET_STARTED_URL));
+        startActivity(browserIntent);
     }
 
     /**
