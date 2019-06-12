@@ -41,6 +41,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -1096,19 +1097,26 @@ public class CuvetteTestActivity extends BaseActivity implements
 
             View view = fragmentInstructionBinding.getRoot();
 
-            view.findViewById(R.id.buttonRetest).setVisibility(View.GONE);
-            view.findViewById(R.id.textDilutionInfo).setVisibility(View.GONE);
+            Button retestButton = view.findViewById(R.id.buttonRetest);
+            retestButton.setVisibility(View.GONE);
+
+            TextView dilutionText = view.findViewById(R.id.textDilutionInfo);
+            dilutionText.setVisibility(View.GONE);
+
+            Button acceptButton = view.findViewById(R.id.buttonAcceptResult);
+            acceptButton.setVisibility(View.GONE);
+
             view.findViewById(R.id.buttonAcceptResult).setVisibility(View.GONE);
 
             if (showOk == ButtonType.ACCEPT) {
-                view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.buttonRetest).setVisibility(View.GONE);
+                acceptButton.setVisibility(View.VISIBLE);
+                retestButton.setVisibility(View.GONE);
             }
 
             if (showOk == ButtonType.RETEST) {
-                view.findViewById(R.id.buttonAcceptResult).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.buttonRetest).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.textDilutionInfo).setVisibility(View.VISIBLE);
+                acceptButton.setVisibility(View.VISIBLE);
+                retestButton.setVisibility(View.GONE);
+                dilutionText.setVisibility(View.VISIBLE);
             }
 
             return view;

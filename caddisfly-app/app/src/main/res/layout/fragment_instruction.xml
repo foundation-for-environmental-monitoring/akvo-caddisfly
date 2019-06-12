@@ -77,7 +77,8 @@
             android:textAlignment="textStart"
             android:textColor="@android:color/holo_blue_dark"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textDilutionInfo"
@@ -92,7 +93,8 @@
             android:paddingBottom="20dp"
             android:text="@string/highLevelRecommendation"
             android:textColor="#444"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </layout>
