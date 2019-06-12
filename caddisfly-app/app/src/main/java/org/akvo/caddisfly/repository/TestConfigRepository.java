@@ -4,6 +4,8 @@ package org.akvo.caddisfly.repository;
 import android.content.Context;
 import android.graphics.Color;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -29,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class TestConfigRepository {
@@ -123,6 +124,12 @@ public class TestConfigRepository {
         } else {
             testMap.put(testType.toString() + testSampleType.toString(), testInfoList);
         }
+
+        for (int i = testInfoList.size() - 1; i >= 0; i--) {
+            TestInfo testInfo = testInfoList.get(i);
+            localizeTestName(testInfo);
+        }
+
         return testInfoList;
     }
 
@@ -168,23 +175,39 @@ public class TestConfigRepository {
 
         TestInfo testInfo;
         testInfo = getTestInfoItem(assetsManager.getJson(), id);
-        if (testInfo != null) {
-            return testInfo;
-        }
 
-        if (AppPreferences.isDiagnosticMode()) {
-            testInfo = getTestInfoItem(assetsManager.getExperimentalJson(), id);
-            if (testInfo != null) {
-                return testInfo;
+        if (testInfo == null) {
+            if (AppPreferences.isDiagnosticMode()) {
+                testInfo = getTestInfoItem(assetsManager.getExperimentalJson(), id);
+            }
+
+            if (testInfo == null) {
+                testInfo = getTestInfoItem(assetsManager.getCustomJson(), id);
             }
         }
-
-        testInfo = getTestInfoItem(assetsManager.getCustomJson(), id);
         if (testInfo != null) {
-            return testInfo;
+            localizeTestName(testInfo);
         }
 
-        return null;
+        return testInfo;
+    }
+
+    private void localizeTestName(TestInfo testInfo) {
+        if (testInfo.getName() != null) {
+            String name = testInfo.getName().toLowerCase()
+                    .replace(")", "")
+                    .replace("(", "")
+                    .replace(" ", "_");
+            int nameId = CaddisflyApp.getApp().getResources()
+                    .getIdentifier(name, "string",
+                            CaddisflyApp.getApp().getPackageName());
+            if (nameId > 0) {
+                name = CaddisflyApp.getApp().getString(nameId);
+                if (!name.equals(".")) {
+                    testInfo.setName(name);
+                }
+            }
+        }
     }
 
     @Nullable

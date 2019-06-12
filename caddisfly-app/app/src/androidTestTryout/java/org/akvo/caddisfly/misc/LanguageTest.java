@@ -102,18 +102,23 @@ public class LanguageTest {
 
     @Test
     public void testLanguageHindi() {
+
+        String currentLanguage = mCurrentLanguage;
+
         languageTest("hi");
 
         SharedPreferences prefs =
                 PreferenceManager.getDefaultSharedPreferences(mActivityRule.getActivity());
         prefs.edit().clear().apply();
 
-        loadData(mActivityRule.getActivity(), "en");
+        loadData(mActivityRule.getActivity(), currentLanguage);
     }
 
     @Test
     public void testLanguageEnglish() {
+        String currentLanguage = mCurrentLanguage;
         languageTest("en");
+        loadData(mActivityRule.getActivity(), currentLanguage);
     }
 
     private void languageTest(String language) {
@@ -145,8 +150,6 @@ public class LanguageTest {
         mDevice.waitForIdle();
 
         Espresso.pressBack();
-
-        //mDevice.pressBack();
 
         onView(withId(R.id.actionSettings)).perform(click());
 

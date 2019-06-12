@@ -22,8 +22,7 @@
     <string name="arsenic_iii">.</string>
     <string name="chromium">.</string>
     <string name="copper">.</string>
-    <string name="dissolved_oxygen_high_range">.</string>
-    <string name="dissolved_oxygen_low_range">.</string>
+    <string name="dissolved_oxygen">.</string>
     <string name="fluoride">.</string>
     <string name="free_chlorine">.</string>
     <string name="hydrogen_peroxide">.</string>
@@ -33,6 +32,8 @@
     <string name="sulphate">.</string>
     <string name="total_iron">.</string>
     <string name="chlorophyll_a">.</string>
+    <string name="blood_sugar">.</string>
+    <string name="organophosphate">.</string>
     <string name="up_to_with_dilution">Up to %s with dilution</string>
 
     <!--Calibration Screen-->

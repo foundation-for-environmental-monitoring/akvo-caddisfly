@@ -21,7 +21,6 @@ import org.akvo.caddisfly.ui.MainActivity;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,7 +76,6 @@ import static org.hamcrest.Matchers.startsWith;
 @SuppressWarnings("ConstantConditions")
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-@Ignore
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RetryTest {
 
@@ -214,7 +212,7 @@ public class RetryTest {
 
         } else {
 
-            onView(allOf(withContentDescription("Navigate up"),
+            onView(allOf(withContentDescription(R.string.navigate_up),
                     withParent(withId(R.id.toolbar)),
                     isDisplayed())).perform(click());
 

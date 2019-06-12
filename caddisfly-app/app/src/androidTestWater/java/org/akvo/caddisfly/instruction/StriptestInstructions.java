@@ -132,15 +132,8 @@ public class StriptestInstructions {
         onView(withText("Arsenic (0 - 500)"))
                 .check(matches(isDisplayed()));
 
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.button_instructions), withText("Instructions"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                1),
-                        isDisplayed()));
-        appCompatButton2.perform(click());
+        onView(allOf(withId(R.id.button_instructions), withText(R.string.instructions),
+                isDisplayed())).perform(click());
 
         onView(withText(R.string.as_safety))
                 .check(matches(isDisplayed()));
@@ -159,20 +152,10 @@ public class StriptestInstructions {
                 .perform(swipeLeft());
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription("Navigate up"),
+                allOf(withContentDescription(R.string.navigate_up),
                         withParent(withId(R.id.toolbar)),
                         isDisplayed()));
         appCompatImageButton.perform(click());
-
-//        ViewInteraction imageView2 = onView(
-//                allOf(withId(R.id.imageBrand),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.coordinatorLayout),
-//                                        0),
-//                                1),
-//                        isDisplayed()));
-//        imageView2.check(matches(isDisplayed()));
 
         ViewInteraction button1 = onView(
                 allOf(withId(R.id.button_prepare),
@@ -184,27 +167,10 @@ public class StriptestInstructions {
                         isDisplayed()));
         button1.check(matches(isDisplayed()));
 
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(R.id.button_instructions), withText("Instructions"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        1),
-                                1),
-                        isDisplayed()));
-        appCompatButton3.perform(click());
+        onView(allOf(withId(R.id.button_instructions), withText(R.string.instructions),
+                isDisplayed())).perform(click());
 
         pressBack();
-
-//        ViewInteraction imageView3 = onView(
-//                allOf(withId(R.id.imageBrand),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.coordinatorLayout),
-//                                        0),
-//                                1),
-//                        isDisplayed()));
-//        imageView3.check(matches(isDisplayed()));
 
         ViewInteraction button2 = onView(
                 allOf(withId(R.id.button_prepare),
@@ -216,10 +182,9 @@ public class StriptestInstructions {
                         isDisplayed()));
         button2.check(matches(isDisplayed()));
 
-        onView(allOf(withContentDescription("Navigate up"),
+        onView(allOf(withContentDescription(R.string.navigate_up),
                 withParent(withId(R.id.toolbar)),
                 isDisplayed())).perform(click());
 
     }
-
 }
