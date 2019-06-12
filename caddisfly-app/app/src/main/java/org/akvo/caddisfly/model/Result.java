@@ -323,7 +323,7 @@ public class Result implements Parcelable {
 
     public void setResult(double resultDouble, int dilution, Integer maxDilution) {
 
-        this.dilution = dilution;
+        this.dilution = Math.max(1, dilution);
 
         if (resultDouble == -1) {
             result = "";

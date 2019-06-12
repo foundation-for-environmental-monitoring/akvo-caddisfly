@@ -144,11 +144,11 @@ public class CuvetteTestActivity extends BaseActivity implements
     private FragmentManager fragmentManager;
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
-    private int currentDilution = 0;
+    private int currentDilution = 1;
     private AlertDialog alertDialogToBeDestroyed;
     private boolean testStarted;
     private int retryCount = 0;
-    private int dilutionPageNumber;
+    private int dilutionPageNumber = -1;
     private int resultPageNumber;
     private int testPageNumber;
     private int totalPageCount;
@@ -157,6 +157,7 @@ public class CuvetteTestActivity extends BaseActivity implements
     private PageIndicatorView pagerIndicator;
     private RelativeLayout footerLayout;
     private LinearLayout waitingLayout;
+    private int instructionFirstIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,7 +212,7 @@ public class CuvetteTestActivity extends BaseActivity implements
             public void onPageSelected(int position) {
 
                 if (position < resultPageNumber) {
-                    pagerIndicator.setActiveIndex(position - 1);
+                    pagerIndicator.setActiveIndex(position - (1 - instructionFirstIndex));
                 } else {
                     pagerIndicator.setActiveIndex(position - resultPageNumber);
                 }
@@ -254,6 +255,8 @@ public class CuvetteTestActivity extends BaseActivity implements
         }
 
         showHideFooter();
+
+        resultFragment = ResultFragment.newInstance(testInfo, isInternal);
     }
 
     private void start() {
@@ -262,8 +265,6 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         if (testInfo.getDilutions().size() > 0) {
             selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
-        } else {
-            runTest();
         }
 
         setTitle(testInfo.getName());
@@ -353,7 +354,7 @@ public class CuvetteTestActivity extends BaseActivity implements
             if (viewPager.getCurrentItem() == resultPageNumber
                     && BuildConfig.showExperimentalTests) {
                 getMenuInflater().inflate(R.menu.menu_dash, menu);
-            } else if (viewPager.getCurrentItem() > 0 &&
+            } else if (!instructions.get(viewPager.getCurrentItem()).section.get(0).contains("<dilution") &&
                     viewPager.getCurrentItem() < testPageNumber - 1) {
                 getMenuInflater().inflate(R.menu.menu_instructions, menu);
             }
@@ -818,10 +819,18 @@ public class CuvetteTestActivity extends BaseActivity implements
 
     @Override
     public void onDilutionSelected(int dilution) {
+        setDilution(dilution);
+    }
+
+    @Override
+    public void onCustomDilution(Integer dilution) {
+        setDilution(dilution);
+    }
+
+    private void setDilution(int dilution) {
         currentDilution = dilution;
         setupInstructions();
         pageNext();
-        boolean isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
         testInfo.setDilution(dilution);
         final TestInfoViewModel model =
                 ViewModelProviders.of(this).get(TestInfoViewModel.class);
@@ -832,13 +841,6 @@ public class CuvetteTestActivity extends BaseActivity implements
             runTestFragment = ChamberAboveFragment.newInstance(testInfo);
         }
         runTestFragment.setDilution(dilution);
-        resultFragment = ResultFragment.newInstance(testInfo, isInternal);
-    }
-
-    @Override
-    public void onCustomDilution(Integer dilution) {
-        currentDilution = dilution;
-        runTest();
     }
 
     private void checkCameraMegaPixel() {
@@ -976,12 +978,17 @@ public class CuvetteTestActivity extends BaseActivity implements
                         resultPageNumber = instructionIndex;
                     } else if (text.contains("<dilution>")) {
                         dilutionPageNumber = instructionIndex;
+                        instructionFirstIndex = 0;
                     } else if (currentDilution == 1 && text.contains("dilution")) {
                         continue;
                     } else if (currentDilution != 1 && text.contains("normal")) {
                         continue;
                     } else if (resultPageNumber < 1) {
-                        instruction.section.set(0, instructionIndex + ". " + instruction.section.get(0));
+                        if (instructionIndex == 0) {
+                            instructionFirstIndex = 1;
+                        }
+                        instruction.section.set(0, (instructionIndex + instructionFirstIndex)
+                                + ". " + instruction.section.get(0));
                     }
                 }
                 instructions.add(instruction);
@@ -994,7 +1001,7 @@ public class CuvetteTestActivity extends BaseActivity implements
         }
 
         totalPageCount = instructionIndex;
-        pagerIndicator.setPageCount(totalPageCount - 3);
+        pagerIndicator.setPageCount(totalPageCount - (3 - instructionFirstIndex));
         pagerIndicator.setVisibility(View.GONE);
         pagerIndicator.invalidate();
         pagerIndicator.setVisibility(View.VISIBLE);
