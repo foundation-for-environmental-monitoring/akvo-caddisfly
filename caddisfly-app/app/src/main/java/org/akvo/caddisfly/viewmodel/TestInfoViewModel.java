@@ -45,6 +45,7 @@ import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.model.Instruction;
 import org.akvo.caddisfly.model.TestInfo;
+import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.sensor.bluetooth.ReagentLabel;
 import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.widget.RowView;
@@ -149,6 +150,11 @@ public class TestInfoViewModel extends AndroidViewModel {
                         .getString(R.string.up_to_with_dilution), matcher.group(1)));
             }
         }
+
+        if (testInfo.getSubtype() == TestType.STRIP_TEST) {
+            subTitle = StringUtil.toTitleCase(testInfo.getSampleType().toString()) + ", " + subTitle;
+        }
+
         view.setText(subTitle);
     }
 
