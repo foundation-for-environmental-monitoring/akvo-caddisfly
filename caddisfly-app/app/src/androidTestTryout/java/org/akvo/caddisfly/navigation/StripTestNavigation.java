@@ -65,10 +65,6 @@ public class StripTestNavigation {
     public static void initialize() {
         if (mDevice == null) {
             mDevice = UiDevice.getInstance(getInstrumentation());
-
-            for (int i = 0; i < 5; i++) {
-                mDevice.pressBack();
-            }
         }
     }
 
@@ -142,25 +138,19 @@ public class StripTestNavigation {
 
         TestUtil.nextPage();
 
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription(R.string.navigate_up),
-                        withParent(withId(R.id.toolbar)),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
+        onView(allOf(withContentDescription(R.string.navigate_up),
+                withParent(withId(R.id.toolbar)),
+                isDisplayed())).perform(click());
 
-        ViewInteraction appCompatImageButton2 = onView(
-                allOf(withContentDescription(R.string.navigate_up),
-                        withParent(withId(R.id.toolbar)),
-                        isDisplayed()));
-        appCompatImageButton2.perform(click());
+        onView(allOf(withContentDescription(R.string.navigate_up),
+                withParent(withId(R.id.toolbar)),
+                isDisplayed())).perform(click());
 
         onView(withText(R.string.selectTest)).check(matches(isDisplayed()));
 
-        ViewInteraction appCompatImageButton3 = onView(
-                allOf(withContentDescription(R.string.navigate_up),
-                        withParent(withId(R.id.toolbar)),
-                        isDisplayed()));
-        appCompatImageButton3.perform(click());
+        onView(allOf(withContentDescription(R.string.navigate_up),
+                withParent(withId(R.id.toolbar)),
+                isDisplayed())).perform(click());
 
         onView(withText(R.string.stripTest)).check(matches(isDisplayed()));
 

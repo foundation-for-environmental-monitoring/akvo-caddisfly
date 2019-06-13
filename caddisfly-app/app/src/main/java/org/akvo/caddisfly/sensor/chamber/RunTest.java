@@ -34,4 +34,6 @@ public interface RunTest {
     void reset();
 
     void setRetryCount(int retryCount);
+
+    void setSkipTimeDelay(boolean value);
 }

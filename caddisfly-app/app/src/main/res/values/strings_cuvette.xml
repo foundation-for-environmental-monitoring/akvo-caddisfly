@@ -109,7 +109,8 @@
     <string name="c_close">Close the lid, wipe any excess water and fit the cuvette into the pipe.</string>
     <string name="c_press_place_phone">Press the start button below and then place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
     <string name="c_place_phone">Accept the screen pin alert. Then place the phone face down, and use the sticker to help center the cuvette over the camera.</string>
-    <string name="c_empty">Empty the contents of the cuvette and rinse it once.</string>
+    <string name="c_start_timer">Have you done this, this and this? Okay now start the timer.</string>
+    <string name="c_empty">Empty contents of the cuvette and rinse it</string>
     <string name="c_dilution_1">Rinse the measuring tube and the test cuvette <b>twice</b> with <b>distilled water</b> to remove any traces of previous solutions.</string>
     <string name="c_dilution_2">Measure <b>%dilutedSampleQty ml</b> of the sample</string>
     <string name="c_dilution_3">Add <b>%distilledQty ml of distilled water</b> to the sample to bring the total volume up to <b>10 ml</b></string>

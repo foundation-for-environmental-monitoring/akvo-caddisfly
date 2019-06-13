@@ -20,6 +20,7 @@
 package org.akvo.caddisfly.sensor.cuvette;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,10 +30,21 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.google.gson.Gson;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.databinding.FragmentResult2Binding;
+import org.akvo.caddisfly.model.QualityGuide;
 import org.akvo.caddisfly.model.Result;
+import org.akvo.caddisfly.model.Standard;
 import org.akvo.caddisfly.model.TestInfo;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Objects;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.common.ConstantKey.TEST_INFO;
@@ -51,6 +63,27 @@ public class ResultFragment extends Fragment {
         args.putBoolean(IS_INTERNAL, isInternal);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private static String readStringFromResource(Context ctx, int resourceID) {
+        StringBuilder contents = new StringBuilder();
+        String sep = System.getProperty("line.separator");
+
+        try {
+            InputStream is = ctx.getResources().openRawResource(resourceID);
+
+            try (BufferedReader input = new BufferedReader(new InputStreamReader(is), 1024 * 8)) {
+                String line;
+                while ((line = input.readLine()) != null) {
+                    contents.append(line);
+                    contents.append(sep);
+                }
+            }
+        } catch (IOException ex) {
+            return null;
+        }
+
+        return contents.toString();
     }
 
     @Override
@@ -74,20 +107,42 @@ public class ResultFragment extends Fragment {
     public void setInfo(TestInfo testInfo) {
         Result result = testInfo.getResults().get(0);
 
-        b.textResult.setText(result.getResult());
-        b.textTitle.setText(testInfo.getName());
-        b.textDilution.setText(getResources().getQuantityString(R.plurals.dilutions,
-                testInfo.getDilution(), testInfo.getDilution()));
-        b.textUnit.setText(result.getUnit());
+        if (result != null) {
+            String json = readStringFromResource(Objects.requireNonNull(getActivity()),
+                    R.raw.quality_guide_ind);
 
-        if (testInfo.getDilution() == testInfo.getMaxDilution()) {
-            b.textDilutionInfo.setVisibility(View.GONE);
-        } else if (result.highLevelsFound()) {
-            b.textDilutionInfo.setVisibility(View.VISIBLE);
-        } else {
-            b.textDilutionInfo.setVisibility(View.GONE);
+            b.safeInfoLayout.setVisibility(View.VISIBLE);
+
+            List<Standard> standards = new Gson().fromJson(json, QualityGuide.class).getStandards();
+            for (Standard standard : standards) {
+                if (standard.getUuid() != null && standard.getUuid().equalsIgnoreCase(testInfo.getUuid())) {
+                    if (standard.getMax() != null && result.getResultValue() > standard.getMax()) {
+                        b.unsafeInfoLayout.setVisibility(View.VISIBLE);
+                        b.safeInfoLayout.setVisibility(View.GONE);
+                    }
+
+                    if (standard.getMin() != null && standard.getMin() < result.getResultValue()) {
+                        b.unsafeInfoLayout.setVisibility(View.VISIBLE);
+                        b.safeInfoLayout.setVisibility(View.GONE);
+                    }
+                    break;
+                }
+            }
+
+            b.textResult.setText(result.getResult());
+            b.textTitle.setText(testInfo.getName());
+            b.textDilution.setText(getResources().getQuantityString(R.plurals.dilutions,
+                    testInfo.getDilution(), testInfo.getDilution()));
+            b.textUnit.setText(result.getUnit());
+
+            if (testInfo.getDilution() == testInfo.getMaxDilution()) {
+                b.textDilutionInfo.setVisibility(View.GONE);
+            } else if (result.highLevelsFound()) {
+                b.textDilutionInfo.setVisibility(View.VISIBLE);
+            } else {
+                b.textDilutionInfo.setVisibility(View.GONE);
+            }
         }
     }
-
 }
 

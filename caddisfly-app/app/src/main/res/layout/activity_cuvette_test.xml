@@ -107,31 +107,6 @@
             android:layout_centerHorizontal="true"
             android:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/waitingLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true">
-
-            <ProgressBar
-                android:id="@+id/waitingProgressBar"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="12dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/waiting"
-                android:textAllCaps="true"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                android:textColor="?textColorPrimary"
-                android:textStyle="bold" />
-        </LinearLayout>
-
         <TextView
             android:id="@+id/image_pageRight"
             android:layout_width="wrap_content"
@@ -151,6 +126,7 @@
             android:textAllCaps="true"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
             android:textColor="?textColorPrimary"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 </RelativeLayout>

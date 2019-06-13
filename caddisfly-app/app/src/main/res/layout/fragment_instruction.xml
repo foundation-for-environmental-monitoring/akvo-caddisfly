@@ -57,9 +57,36 @@
             style="@style/Button"
             android:layout_below="@id/scrollView"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="-12dp"
             android:onClick="onAcceptResultClick"
             android:text="@string/acceptResult"
             android:theme="?primaryButtonStyle"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/buttonStartTimer"
+            style="@style/Button"
+            android:layout_below="@id/scrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="-12dp"
+            android:onClick="onStartTimerClick"
+            android:text="@string/startTimer"
+            android:theme="?primaryButtonStyle"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/buttonSkipTimer"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonStartTimer"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:onClick="onSkipTimeDelayClick"
+            android:text="@string/skip_time_delay"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:visibility="gone" />
 
         <Button
@@ -68,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/textDilutionInfo"
+            android:layout_marginBottom="-8dp"
             android:background="#e9e9e9"
             android:drawableStart="@drawable/ic_flipped_play_arrow"
             android:onClick="onRetestClick"

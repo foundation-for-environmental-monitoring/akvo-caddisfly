@@ -22,6 +22,13 @@ package org.akvo.caddisfly.diagnostic;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.RequiresDevice;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.ui.MainActivity;
@@ -31,13 +38,6 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.filters.RequiresDevice;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -70,10 +70,6 @@ public class DiagnosticTest {
     public static void initialize() {
         if (mDevice == null) {
             mDevice = UiDevice.getInstance(getInstrumentation());
-
-            for (int i = 0; i < 5; i++) {
-                mDevice.pressBack();
-            }
         }
     }
 

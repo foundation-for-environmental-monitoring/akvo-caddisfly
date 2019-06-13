@@ -43,7 +43,6 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -152,12 +151,12 @@ public class CuvetteTestActivity extends BaseActivity implements
     private int dilutionPageNumber = -1;
     private int resultPageNumber;
     private int testPageNumber;
+    private int startTimerPageNumber = -1;
     private int totalPageCount;
     private ArrayList<Instruction> instructions = new ArrayList<>();
     private CustomViewPager viewPager;
     private PageIndicatorView pagerIndicator;
     private RelativeLayout footerLayout;
-    private LinearLayout waitingLayout;
     private int instructionFirstIndex;
 
     @Override
@@ -170,7 +169,6 @@ public class CuvetteTestActivity extends BaseActivity implements
         viewPager = findViewById(R.id.viewPager);
         pagerIndicator = findViewById(R.id.pager_indicator);
         footerLayout = findViewById(R.id.layout_footer);
-        waitingLayout = findViewById(R.id.waitingLayout);
 
         fragmentManager = getSupportFragmentManager();
 
@@ -264,14 +262,9 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         retryCount = 0;
 
-        if (testInfo.getDilutions().size() > 0) {
-            selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
-        }
-
         setTitle(testInfo.getName());
 
         invalidateOptionsMenu();
-
     }
 
     private void runTest() {
@@ -297,6 +290,7 @@ public class CuvetteTestActivity extends BaseActivity implements
     }
 
     private void stopTest() {
+        retryCount = 0;
         if (runTestFragment != null) {
             runTestFragment.stop();
         }
@@ -305,13 +299,12 @@ public class CuvetteTestActivity extends BaseActivity implements
         invalidateOptionsMenu();
     }
 
-    @SuppressWarnings("unused")
-    public void runTestClick(View view) {
-        if (runTestFragment != null) {
-            runTestFragment.setCalibration(null);
-        }
-        start();
-    }
+//    public void runTestClick(View view) {
+//        if (runTestFragment != null) {
+//            runTestFragment.setCalibration(null);
+//        }
+//        start();
+//    }
 
     @Override
     public void onBackPressed() {
@@ -464,7 +457,8 @@ public class CuvetteTestActivity extends BaseActivity implements
                             try {
                                 SwatchHelper.loadCalibrationFromFile(testInfo, fileName);
                                 loadDetails();
-                                PreferencesUtil.setDouble(this, "pivot_" + testInfo.getUuid(), testInfo.getPivotCalibration());
+                                PreferencesUtil.setDouble(this, "pivot_" +
+                                        testInfo.getUuid(), testInfo.getPivotCalibration());
                                 loadDetails();
 
                                 Toast toast = Toast.makeText(this,
@@ -562,7 +556,8 @@ public class CuvetteTestActivity extends BaseActivity implements
                 pageNext();
 
                 if (AppPreferences.getShowDebugInfo()) {
-                    showDiagnosticResultDialog(false, resultDetail, oneStepResultDetail, resultDetails, false);
+                    showDiagnosticResultDialog(false, resultDetail, oneStepResultDetail,
+                            resultDetails, false);
                 }
 
             } else {
@@ -579,7 +574,8 @@ public class CuvetteTestActivity extends BaseActivity implements
 
                     pageBack();
 
-                    showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail, resultDetails, false);
+                    showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail,
+                            resultDetails, false);
 
                 } else {
 
@@ -764,7 +760,7 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         releaseResources();
 
-        if (retryCount < 1) {
+        if (retryCount < 2) {
             alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
                     (dialogInterface, i) -> {
                         retryCount++;
@@ -967,38 +963,75 @@ public class CuvetteTestActivity extends BaseActivity implements
         resultPageNumber = 0;
 
         instructions.clear();
-        for (int i = 0; i < testInfo.getInstructions().size(); i++) {
-            Instruction instruction;
-            try {
-                instruction = testInfo.getInstructions().get(i).clone();
-                if (instruction != null) {
-                    String text = instruction.section.get(0);
-                    if (text.contains("<test>")) {
-                        testPageNumber = instructionIndex;
-                    } else if (text.contains("<result>")) {
-                        resultPageNumber = instructionIndex;
-                    } else if (text.contains("<dilution>")) {
-                        dilutionPageNumber = instructionIndex;
-                        instructionFirstIndex = 0;
-                    } else if (currentDilution == 1 && text.contains("dilution")) {
-                        continue;
-                    } else if (currentDilution != 1 && text.contains("normal")) {
-                        continue;
-                    } else if (resultPageNumber < 1) {
-                        if (instructionIndex == 0) {
-                            instructionFirstIndex = 1;
-                        }
-                        instruction.section.set(0, (instructionIndex + instructionFirstIndex)
-                                + ". " + instruction.section.get(0));
-                    }
-                }
-                instructions.add(instruction);
-
-                instructionIndex++;
-
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
+        if (testInfo.getInstructions().size() == 0) {
+            if (testInfo.getDilutions().size() == 0) {
+                dilutionPageNumber = -1;
+                instructionIndex = 3;
+                instructionFirstIndex = 0;
+            } else {
+                dilutionPageNumber = 0;
+                instructionIndex = 4;
+                instructionFirstIndex = 1;
+                instructions.add(new Instruction("<dilution>", ""));
             }
+            testPageNumber = dilutionPageNumber + 1;
+            resultPageNumber = testPageNumber + 1;
+
+            if (testInfo.getResults().get(0).getTimeDelay() > 0) {
+                instructions.add(new Instruction("c_start_timer,<start_timer>", ""));
+                startTimerPageNumber = dilutionPageNumber + 1;
+                testPageNumber += 1;
+                resultPageNumber += 1;
+                instructionIndex += 1;
+            }
+            instructions.add(new Instruction("<test>", ""));
+            instructions.add(new Instruction("<result>", ""));
+            instructions.add(new Instruction("c_empty", "image:c_empty"));
+
+        } else {
+            for (int i = 0; i < testInfo.getInstructions().size(); i++) {
+                Instruction instruction;
+                String text1 = "";
+                try {
+                    instruction = testInfo.getInstructions().get(i).clone();
+                    if (instruction != null) {
+                        String text = instruction.section.get(0);
+                        if (instruction.section.size() > 1) {
+                            text1 = instruction.section.get(1);
+                        }
+                        if (text1.contains("<start_timer>")) {
+                            startTimerPageNumber = instructionIndex;
+                        } else if (text.contains("<test>")) {
+                            testPageNumber = instructionIndex;
+                        } else if (text.contains("<result>")) {
+                            resultPageNumber = instructionIndex;
+                        } else if (text.contains("<dilution>")) {
+                            dilutionPageNumber = instructionIndex;
+                            instructionFirstIndex = 0;
+                        } else if (currentDilution == 1 && text.contains("dilution")) {
+                            continue;
+                        } else if (currentDilution != 1 && text.contains("normal")) {
+                            continue;
+                        } else if (resultPageNumber < 1) {
+                            if (instructionIndex == 0) {
+                                instructionFirstIndex = 1;
+                            }
+                            instruction.section.set(0, (instructionIndex + instructionFirstIndex)
+                                    + ". " + instruction.section.get(0));
+                        }
+                    }
+                    instructions.add(instruction);
+
+                    instructionIndex++;
+
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (selectDilutionFragment == null && testInfo.getDilutions().size() > 0) {
+            selectDilutionFragment = SelectDilutionFragment.newInstance(testInfo);
         }
 
         totalPageCount = instructionIndex;
@@ -1014,14 +1047,12 @@ public class CuvetteTestActivity extends BaseActivity implements
         imagePageLeft.setVisibility(View.VISIBLE);
         imagePageRight.setVisibility(View.VISIBLE);
         pagerIndicator.setVisibility(View.VISIBLE);
-        waitingLayout.setVisibility(View.GONE);
         if (viewPager.getCurrentItem() == testPageNumber) {
             footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.none);
             pagerIndicator.setVisibility(View.GONE);
             imagePageLeft.setVisibility(View.INVISIBLE);
             imagePageRight.setVisibility(View.INVISIBLE);
-            waitingLayout.setVisibility(View.VISIBLE);
         } else if (viewPager.getCurrentItem() == dilutionPageNumber) {
             footerLayout.setVisibility(View.GONE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.none);
@@ -1037,6 +1068,16 @@ public class CuvetteTestActivity extends BaseActivity implements
             viewPager.setAllowedSwipeDirection(SwipeDirection.left);
             imagePageRight.setVisibility(View.INVISIBLE);
             imagePageLeft.setVisibility(View.VISIBLE);
+        } else if (viewPager.getCurrentItem() == startTimerPageNumber) {
+            footerLayout.setVisibility(View.VISIBLE);
+            imagePageRight.setVisibility(View.GONE);
+            if (startTimerPageNumber > 0) {
+                viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+                imagePageLeft.setVisibility(View.VISIBLE);
+            } else {
+                viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+                imagePageLeft.setVisibility(View.GONE);
+            }
         } else {
             footerLayout.setVisibility(View.VISIBLE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.all);
@@ -1044,11 +1085,25 @@ public class CuvetteTestActivity extends BaseActivity implements
     }
 
     public void onSkipClick(MenuItem item) {
-        viewPager.setCurrentItem(testPageNumber);
+        if (startTimerPageNumber > 0) {
+            viewPager.setCurrentItem(startTimerPageNumber);
+        } else {
+            viewPager.setCurrentItem(testPageNumber);
+        }
     }
 
     public void onRetestClick(View view) {
         viewPager.setCurrentItem(dilutionPageNumber, false);
+    }
+
+    public void onStartTimerClick(View view) {
+        runTestFragment.setSkipTimeDelay(false);
+        pageNext();
+    }
+
+    public void onSkipTimeDelayClick(View view) {
+        runTestFragment.setSkipTimeDelay(true);
+        pageNext();
     }
 
     /**
@@ -1097,25 +1152,34 @@ public class CuvetteTestActivity extends BaseActivity implements
 
             View view = fragmentInstructionBinding.getRoot();
 
-            Button retestButton = view.findViewById(R.id.buttonRetest);
-            retestButton.setVisibility(View.GONE);
+            Button buttonRetest = view.findViewById(R.id.buttonRetest);
+            buttonRetest.setVisibility(View.GONE);
 
             TextView dilutionText = view.findViewById(R.id.textDilutionInfo);
             dilutionText.setVisibility(View.GONE);
 
-            Button acceptButton = view.findViewById(R.id.buttonAcceptResult);
-            acceptButton.setVisibility(View.GONE);
+            Button buttonAcceptResult = view.findViewById(R.id.buttonAcceptResult);
+            buttonAcceptResult.setVisibility(View.GONE);
 
-            view.findViewById(R.id.buttonAcceptResult).setVisibility(View.GONE);
+            Button buttonStartTimer = view.findViewById(R.id.buttonStartTimer);
+            buttonStartTimer.setVisibility(View.GONE);
+
+            Button buttonSkipTimer = view.findViewById(R.id.buttonSkipTimer);
+            buttonSkipTimer.setVisibility(View.GONE);
+
+            if (showOk == ButtonType.START_TIMER) {
+                buttonStartTimer.setVisibility(View.VISIBLE);
+                buttonSkipTimer.setVisibility(View.VISIBLE);
+            }
 
             if (showOk == ButtonType.ACCEPT) {
-                acceptButton.setVisibility(View.VISIBLE);
-                retestButton.setVisibility(View.GONE);
+                buttonAcceptResult.setVisibility(View.VISIBLE);
+                buttonRetest.setVisibility(View.GONE);
             }
 
             if (showOk == ButtonType.RETEST) {
-                acceptButton.setVisibility(View.VISIBLE);
-                retestButton.setVisibility(View.GONE);
+                buttonAcceptResult.setVisibility(View.VISIBLE);
+                buttonRetest.setVisibility(View.VISIBLE);
                 dilutionText.setVisibility(View.VISIBLE);
             }
 
@@ -1140,8 +1204,16 @@ public class CuvetteTestActivity extends BaseActivity implements
                 return (Fragment) runTestFragment;
             } else if (position == resultPageNumber) {
                 return resultFragment;
+            } else if (position == startTimerPageNumber) {
+                return PlaceholderFragment.newInstance(
+                        instructions.get(position), ButtonType.START_TIMER);
             } else if (position == resultPageNumber + 1) {
-                if (testInfo.getResults().get(0).highLevelsFound()) {
+                if (testInfo.getDilution() == testInfo.getMaxDilution()) {
+                    return PlaceholderFragment.newInstance(
+                            instructions.get(position), ButtonType.ACCEPT);
+
+                } else if (testInfo.getResults().get(0).highLevelsFound()
+                        && testInfo.getDilutions().size() > 0) {
                     return PlaceholderFragment.newInstance(
                             instructions.get(position), ButtonType.RETEST);
                 } else {

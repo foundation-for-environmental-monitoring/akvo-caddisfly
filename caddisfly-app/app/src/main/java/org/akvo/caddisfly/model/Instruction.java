@@ -54,6 +54,16 @@ public class Instruction implements Parcelable, Cloneable {
     @Expose
     public int testStage;
 
+    public Instruction(String value, String image) {
+        section = new ArrayList<>();
+        String[] values = value.split(",");
+        section.add(values[0]);
+        if (values.length > 1) {
+            section.add(values[1]);
+        }
+        section.add(image);
+    }
+
     public Instruction(Instruction instruction) {
         section = new ArrayList<>(instruction.section);
         image = instruction.image;

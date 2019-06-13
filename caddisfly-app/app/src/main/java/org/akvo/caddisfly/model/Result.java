@@ -91,7 +91,7 @@ public class Result implements Parcelable {
     @Expose
     private String code;
     private String result;
-    private Double resultValue;
+    private Double resultValue = -1d;
     private boolean highLevelsFound;
     private int pivotIndex;
     private List<ColorItem> referenceColors = new ArrayList<>();

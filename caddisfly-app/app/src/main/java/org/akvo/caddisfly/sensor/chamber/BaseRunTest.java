@@ -73,6 +73,7 @@ import static org.akvo.caddisfly.common.AppConfig.STOP_ANIMATIONS;
 public class BaseRunTest extends Fragment implements RunTest {
     private static final double SHORT_DELAY = 1;
     private final int[] countdown = {0};
+    private boolean timeDelayEnabled = true;
     private final ArrayList<ResultDetail> results = new ArrayList<>();
     private final ArrayList<ResultDetail> oneStepResults = new ArrayList<>();
     private final Handler delayHandler = new Handler();
@@ -136,7 +137,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     }
 
     private void setCountDown() {
-        if (countdown[0] < timeDelay) {
+        if (timeDelayEnabled && countdown[0] < timeDelay) {
             binding.timeLayout.setVisibility(View.VISIBLE);
 
             countdown[0]++;
@@ -152,6 +153,7 @@ public class BaseRunTest extends Fragment implements RunTest {
 //            binding.countdownTimer.setProgress(timeDelay - countdown[0], timeDelay);
             binding.textTimeRemaining.setText(timeConversion(timeDelay - countdown[0]));
 
+            delayHandler.removeCallbacksAndMessages(null);
             delayHandler.postDelayed(mCountdown, 1000);
         } else {
             binding.timeLayout.setVisibility(View.GONE);
@@ -261,7 +263,9 @@ public class BaseRunTest extends Fragment implements RunTest {
 
         countdown[0] = 0;
 
-        start();
+        if (mCalibration != null && getActivity() != null) {
+            start();
+        }
 
         return binding.getRoot();
     }
@@ -389,10 +393,14 @@ public class BaseRunTest extends Fragment implements RunTest {
         countdown[0] = 0;
     }
 
-
     @Override
     public void setRetryCount(int retryCount) {
         this.retryCount = retryCount;
+    }
+
+    @Override
+    public void setSkipTimeDelay(boolean value) {
+        timeDelayEnabled = !value;
     }
 
     protected void startRepeatingTask() {
@@ -423,6 +431,7 @@ public class BaseRunTest extends Fragment implements RunTest {
 
             binding.layoutWait.setVisibility(View.VISIBLE);
 
+            delayHandler.removeCallbacksAndMessages(null);
             delayHandler.postDelayed(mRunnableCode, initialDelay * 1000);
         }
     }

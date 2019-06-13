@@ -58,24 +58,24 @@ android {
         }
     }
 
-    signingConfigs {
-        appRelease {
-            storeFile file(FFEM_RELEASE_STORE_FILE)
-            storePassword FFEM_RELEASE_STORE_PASSWORD
-            keyAlias FFEM_RELEASE_KEY_ALIAS
-            keyPassword FFEM_RELEASE_KEY_PASSWORD
-        }
-    }
-
-    buildTypes {
-        release {
-            signingConfig signingConfigs.appRelease
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlignEnabled true
-        }
-    }
+//    signingConfigs {
+//        appRelease {
+//            storeFile file(FFEM_RELEASE_STORE_FILE)
+//            storePassword FFEM_RELEASE_STORE_PASSWORD
+//            keyAlias FFEM_RELEASE_KEY_ALIAS
+//            keyPassword FFEM_RELEASE_KEY_PASSWORD
+//        }
+//    }
+//
+//    buildTypes {
+//        release {
+//            signingConfig signingConfigs.appRelease
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            zipAlignEnabled true
+//        }
+//    }
 
     lintOptions {
         checkReleaseBuilds true
@@ -174,4 +174,4 @@ dependencies {
     tryoutImplementation 'com.google.firebase:firebase-storage:17.0.0'
     tryoutImplementation 'com.google.firebase:firebase-auth:17.0.0'
 }
-//apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.gms.google-services'

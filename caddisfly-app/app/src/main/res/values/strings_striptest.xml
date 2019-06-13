@@ -62,7 +62,7 @@
     <string name="as_ins_5">Wait 20 minutes. Swirl twice during the reaction period.</string>
     <string name="as_ins_6">Remove the test strip and immediately from the cap and place the test strip facing <b>left</b> on the Colour Reference Card and press <b>Start</b>.</string>
     <string name="as_ins_7">Fill the square measuring vial to the top with sample (9.6 mL). Pour the sample into the reaction bottle.</string>
-    <string name="as_safety">DANGER: Hydrogen and arsine gases are generated during the test. Work in a well-ventilated area away from open flames and other sources of ignition. Review Material Safety Data Sheets for safe handling, storage and disposal information.</string>
+    <string name="as_safety"><b>DANGER</b>: Hydrogen and arsine gases are generated during the test. Work in a well-ventilated area away from open flames and other sources of ignition. Review Material Safety Data Sheets for safe handling, storage and disposal information.</string>
 
     <string name="as_remove_sulfide">Complete the following steps to remove the sulfide before beginning the test procedure:</string>
     <string name="as_remove_sulfide_1">Tear off a small piece of cotton and form a ball the size of a pea.</string>

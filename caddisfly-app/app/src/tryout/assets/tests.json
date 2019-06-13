@@ -172,6 +172,12 @@
         },
         {
           "section": [
+            "c_start_timer",
+            "<start_timer>"
+          ]
+        },
+        {
+          "section": [
             "<test>"
           ]
         },
@@ -277,6 +283,12 @@
           "section": [
             "c_close",
             "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
           ]
         },
         {
@@ -390,6 +402,12 @@
         },
         {
           "section": [
+            "c_start_timer",
+            "<start_timer>"
+          ]
+        },
+        {
+          "section": [
             "<test>"
           ]
         },
@@ -495,6 +513,12 @@
           "section": [
             "c_close",
             "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
           ]
         },
         {
@@ -608,6 +632,12 @@
         },
         {
           "section": [
+            "c_start_timer",
+            "<start_timer>"
+          ]
+        },
+        {
+          "section": [
             "<test>"
           ]
         },
@@ -703,6 +733,12 @@
           "section": [
             "c_close",
             "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
           ]
         },
         {
@@ -953,6 +989,12 @@
         },
         {
           "section": [
+            "c_start_timer",
+            "<start_timer>"
+          ]
+        },
+        {
+          "section": [
             "<test>"
           ]
         },
@@ -1056,6 +1098,12 @@
           "section": [
             "c_close",
             "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
           ]
         },
         {
@@ -1686,6 +1734,12 @@
         },
         {
           "section": [
+            "c_start_timer",
+            "<start_timer>"
+          ]
+        },
+        {
+          "section": [
             "<test>"
           ]
         },
@@ -1779,6 +1833,12 @@
           "section": [
             "c_close",
             "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
           ]
         },
         {
@@ -1885,6 +1945,12 @@
           "section": [
             "c_close",
             "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
           ]
         },
         {
@@ -2098,6 +2164,12 @@
           "section": [
             "c_close",
             "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
           ]
         },
         {

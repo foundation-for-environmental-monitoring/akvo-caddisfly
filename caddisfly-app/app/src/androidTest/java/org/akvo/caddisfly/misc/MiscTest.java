@@ -25,6 +25,15 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.widget.DatePicker;
 
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.PickerActions;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.RequiresDevice;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.TestConstants;
@@ -43,14 +52,6 @@ import org.junit.runner.RunWith;
 import java.lang.reflect.Method;
 import java.text.DecimalFormatSymbols;
 
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.contrib.PickerActions;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
-import androidx.test.filters.RequiresDevice;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.UiDevice;
 import timber.log.Timber;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -93,10 +94,6 @@ public class MiscTest {
     public static void initialize() {
         if (mDevice == null) {
             mDevice = UiDevice.getInstance(getInstrumentation());
-
-            for (int i = 0; i < 5; i++) {
-                mDevice.pressBack();
-            }
         }
     }
 

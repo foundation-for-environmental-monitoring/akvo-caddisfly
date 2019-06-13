@@ -88,10 +88,6 @@ public class StriptestInstruction {
     public static void initialize() {
         if (mDevice == null) {
             mDevice = UiDevice.getInstance(getInstrumentation());
-
-            for (int i = 0; i < 5; i++) {
-                mDevice.pressBack();
-            }
         }
     }
 

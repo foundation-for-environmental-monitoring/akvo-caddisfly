@@ -244,7 +244,7 @@ public class ChamberTestActivity extends BaseActivity implements
             runTestFragment.setCalibration(null);
         }
         Intent intent = new Intent(this, CuvetteTestActivity.class);
-        intent.putExtra(ConstantKey.RUN_TEST, true);
+        intent.putExtra(ConstantKey.RUN_TEST, false);
         intent.putExtra(ConstantKey.TEST_INFO, testInfo);
         startActivityForResult(intent, REQUEST_TEST);
     }

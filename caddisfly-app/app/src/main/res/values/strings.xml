@@ -46,7 +46,7 @@
     <string name="skip">Skip</string>
     <string name="finish">Finish</string>
     <string name="retest">Retest</string>
-    <string name="navigate_up">Navigate Up</string>
+    <string name="navigate_up">Navigate up</string>
     <string name="print">Print</string>
 
     <!--External-->
@@ -194,4 +194,6 @@
     <string name="select_reagent_expiry_date">Select reagent expiry date</string>
 
     <string name="incorrect_range">Incorrect range calibration points</string>
+    <string name="startTimer">Start Timer</string>
+    <string name="skip_time_delay">Skip time delay</string>
 </resources>

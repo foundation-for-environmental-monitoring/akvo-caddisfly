@@ -20,15 +20,15 @@
 package org.akvo.caddisfly.navigation;
 
 
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.ui.MainActivity;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
@@ -45,10 +45,6 @@ public class MainActivityTest {
     public static void initialize() {
         if (mDevice == null) {
             mDevice = UiDevice.getInstance(getInstrumentation());
-
-            for (int i = 0; i < 5; i++) {
-                mDevice.pressBack();
-            }
         }
     }
 

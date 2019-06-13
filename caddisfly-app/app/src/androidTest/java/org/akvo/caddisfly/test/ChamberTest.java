@@ -99,10 +99,6 @@ public class ChamberTest {
     public static void initialize() {
         if (mDevice == null) {
             mDevice = UiDevice.getInstance(getInstrumentation());
-
-            for (int i = 0; i < 5; i++) {
-                mDevice.pressBack();
-            }
         }
     }
 
@@ -330,10 +326,6 @@ public class ChamberTest {
         mDevice.waitForIdle();
 
         assertNotNull(mDevice.findObject(By.text(resultString)));
-
-        mDevice.pressBack();
-
-        mDevice.pressBack();
 
         mDevice.pressBack();
 
