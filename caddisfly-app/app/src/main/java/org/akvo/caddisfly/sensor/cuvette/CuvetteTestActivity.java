@@ -115,6 +115,7 @@ import io.ffem.tryout.DiagnosticSendDialogFragment;
 import timber.log.Timber;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+import static org.akvo.caddisfly.common.ChamberTestConfig.MAX_RETRY_COUNT;
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.helper.CameraHelper.getMaxSupportedMegaPixelsByCamera;
 
@@ -572,14 +573,10 @@ public class CuvetteTestActivity extends BaseActivity implements
 
                     stopScreenPinning();
 
-                    pageBack();
-
                     showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail,
                             resultDetails, false);
 
                 } else {
-
-                    pageBack();
 
                     showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.errorTestFailed),
                             getString(R.string.checkChamberPlacement)),
@@ -760,21 +757,19 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         releaseResources();
 
-        if (retryCount < 2) {
+        if (retryCount < MAX_RETRY_COUNT) {
             alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
                     (dialogInterface, i) -> {
                         retryCount++;
                         runTestFragment.reset();
-                        pageNext();
+                        runTest();
                     },
                     (dialogInterface, i) -> {
                         stopScreenPinning();
                         dialogInterface.dismiss();
                         releaseResources();
                         setResult(Activity.RESULT_CANCELED);
-                        if (!isInternal) {
-                            finish();
-                        }
+                        finish();
                     }, null
             );
         } else {
@@ -785,9 +780,7 @@ public class CuvetteTestActivity extends BaseActivity implements
                         dialogInterface.dismiss();
                         releaseResources();
                         setResult(Activity.RESULT_CANCELED);
-                        if (!isInternal) {
-                            finish();
-                        }
+                        finish();
                     }, null
             );
         }
@@ -933,10 +926,10 @@ public class CuvetteTestActivity extends BaseActivity implements
         testStarted = false;
         invalidateOptionsMenu();
         if (retry) {
-            if (retryCount < 1) {
+            if (retryCount < MAX_RETRY_COUNT) {
                 retryCount++;
                 runTestFragment.reset();
-                pageNext();
+                runTest();
             } else {
                 setResult(Activity.RESULT_CANCELED);
                 stopScreenPinning();
@@ -945,8 +938,8 @@ public class CuvetteTestActivity extends BaseActivity implements
         } else {
             if (!isInternal) {
                 submitResult();
-                finish();
             }
+            finish();
         }
     }
 
@@ -1081,6 +1074,10 @@ public class CuvetteTestActivity extends BaseActivity implements
         } else {
             footerLayout.setVisibility(View.VISIBLE);
             viewPager.setAllowedSwipeDirection(SwipeDirection.all);
+        }
+
+        if (viewPager.getCurrentItem() == 0) {
+            imagePageLeft.setVisibility(View.INVISIBLE);
         }
     }
 

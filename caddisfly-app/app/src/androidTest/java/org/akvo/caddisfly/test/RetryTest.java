@@ -240,9 +240,17 @@ public class RetryTest {
 
         sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
                 (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
+
         onView(withText(R.string.retry)).perform(click());
 
         Log.i(TAG, "Test 3");
+
+        sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
+                (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);
+
+        onView(withText(R.string.retry)).perform(click());
+
+        Log.i(TAG, "Test 4");
 
         sleep((DELAY_INITIAL + CUVETTE_TEST_TIME_DELAY + (DELAY_BETWEEN_SAMPLING *
                 (AppPreferences.getSamplingTimes() + SKIP_SAMPLING_COUNT + IS_EXTRA_DELAY))) * 1000);

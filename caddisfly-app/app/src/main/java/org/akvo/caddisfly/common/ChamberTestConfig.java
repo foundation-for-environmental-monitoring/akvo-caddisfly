@@ -42,6 +42,11 @@ public final class ChamberTestConfig {
     public static final int SKIP_SAMPLING_COUNT = 2;
 
     /**
+     * The number times the test can be retried on error
+     */
+    public static final int MAX_RETRY_COUNT = 2;
+
+    /**
      * Width and height of cropped image.
      */
     public static final int SAMPLE_CROP_LENGTH_DEFAULT = 50;

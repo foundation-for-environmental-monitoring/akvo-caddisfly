@@ -23,6 +23,8 @@ import org.akvo.caddisfly.util.ColorUtil;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static org.akvo.caddisfly.common.ChamberTestConfig.MAX_RETRY_COUNT;
+
 public class DiagnosticResultDialog extends DialogFragment {
 
     private ArrayList<ResultDetail> resultDetails;
@@ -124,7 +126,7 @@ public class DiagnosticResultDialog extends DialogFragment {
         Button buttonOk = view.findViewById(R.id.buttonOk);
 
         buttonCancel.setVisibility(View.GONE);
-        if (testFailed && retryCount < 1) {
+        if (retryCount == -1 || (testFailed && retryCount < MAX_RETRY_COUNT)) {
             buttonRetry.setVisibility(View.VISIBLE);
             buttonCancel.setVisibility(View.VISIBLE);
             buttonOk.setVisibility(View.GONE);
