@@ -73,16 +73,16 @@ import static org.akvo.caddisfly.common.AppConfig.STOP_ANIMATIONS;
 public class BaseRunTest extends Fragment implements RunTest {
     private static final double SHORT_DELAY = 1;
     private final int[] countdown = {0};
-    private boolean timeDelayEnabled = true;
     private final ArrayList<ResultDetail> results = new ArrayList<>();
     private final ArrayList<ResultDetail> oneStepResults = new ArrayList<>();
     private final Handler delayHandler = new Handler();
     protected FragmentRunTestBinding binding;
     protected boolean cameraStarted;
     protected int pictureCount = 0;
+    private boolean timeDelayEnabled = true;
     private int timeDelay = 0;
     private final Runnable mCountdown = this::setCountDown;
-    private Handler mHandler;
+    private Handler mHandler = new Handler();
     private AlertDialog alertDialogToBeDestroyed;
     private TestInfo mTestInfo;
     private Calibration mCalibration;
@@ -91,10 +91,11 @@ public class BaseRunTest extends Fragment implements RunTest {
     private Camera mCamera;
     private OnResultListener mListener;
     private ChamberCameraPreview mCameraPreview;
+    private boolean isFlashOn;
     private final Runnable mRunnableCode = () -> {
         if (pictureCount < AppPreferences.getSamplingTimes()) {
+            turnFlashOn();
             pictureCount++;
-            SoundUtil.playShortResource(getActivity(), R.raw.beep);
             takePicture();
         } else {
             releaseResources();
@@ -185,10 +186,10 @@ public class BaseRunTest extends Fragment implements RunTest {
     }
 
     protected void initializeTest() {
+        pictureCount = 0;
         results.clear();
         oneStepResults.clear();
         binding.cameraView.setVisibility(View.GONE);
-        mHandler = new Handler();
     }
 
     protected void setupCamera() {
@@ -224,6 +225,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     protected void stopPreview() {
         if (mCamera != null) {
             mCamera.stopPreview();
+            isFlashOn = false;
         }
     }
 
@@ -292,6 +294,8 @@ public class BaseRunTest extends Fragment implements RunTest {
         if (!cameraStarted) {
             return;
         }
+
+        SoundUtil.playShortResource(getActivity(), R.raw.beep);
 
         mCamera.startPreview();
         turnFlashOn();
@@ -440,6 +444,7 @@ public class BaseRunTest extends Fragment implements RunTest {
      * Turn flash off.
      */
     protected void turnFlashOff() {
+        if (!isFlashOn) return;
         if (mCamera == null) {
             return;
         }
@@ -447,7 +452,7 @@ public class BaseRunTest extends Fragment implements RunTest {
 
         String flashMode = Camera.Parameters.FLASH_MODE_OFF;
         parameters.setFlashMode(flashMode);
-
+        isFlashOn = false;
         mCamera.setParameters(parameters);
     }
 
@@ -455,6 +460,7 @@ public class BaseRunTest extends Fragment implements RunTest {
      * Turn flash on.
      */
     protected void turnFlashOn() {
+        if (isFlashOn) return;
         if (mCamera == null) {
             return;
         }
@@ -465,14 +471,16 @@ public class BaseRunTest extends Fragment implements RunTest {
             flashMode = Camera.Parameters.FLASH_MODE_ON;
         }
         parameters.setFlashMode(flashMode);
-
+        isFlashOn = true;
         mCamera.setParameters(parameters);
     }
 
     protected void releaseResources() {
 
+        stopRepeatingTask();
+
         if (mCamera != null) {
-            mCamera.stopPreview();
+            stopPreview();
             mCamera.setPreviewCallback(null);
             mCameraPreview.getHolder().removeCallback(mCameraPreview);
             mCamera.release();
@@ -487,8 +495,6 @@ public class BaseRunTest extends Fragment implements RunTest {
         if (alertDialogToBeDestroyed != null) {
             alertDialogToBeDestroyed.dismiss();
         }
-
-        stopRepeatingTask();
 
         cameraStarted = false;
     }

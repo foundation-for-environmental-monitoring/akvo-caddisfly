@@ -96,10 +96,9 @@ public class ChamberAboveFragment extends BaseRunTest implements RunTest {
     protected void initializeTest() {
         super.initializeTest();
 
-        pictureCount = 0;
-
         binding.imageIllustration.setVisibility(View.VISIBLE);
-
+        binding.textInfo.setVisibility(View.VISIBLE);
+        binding.layoutFooter.setVisibility(View.VISIBLE);
         mSensorManager.unregisterListener(mShakeDetector);
 
         mIgnoreShake = false;
@@ -118,6 +117,8 @@ public class ChamberAboveFragment extends BaseRunTest implements RunTest {
         binding.cameraView.setVisibility(View.VISIBLE);
         binding.circleView.setVisibility(View.VISIBLE);
         binding.imageIllustration.setVisibility(View.GONE);
+        binding.textInfo.setVisibility(View.GONE);
+        binding.layoutFooter.setVisibility(View.GONE);
         startTest();
     }
 

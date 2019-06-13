@@ -24,10 +24,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.model.TestInfo;
-
-import androidx.annotation.NonNull;
 
 public class ChamberBelowFragment extends BaseRunTest implements RunTest {
 
@@ -49,30 +49,35 @@ public class ChamberBelowFragment extends BaseRunTest implements RunTest {
     protected void initializeTest() {
         super.initializeTest();
         binding.imageIllustration.setVisibility(View.GONE);
-        binding.circleView.setVisibility(View.GONE);
+        binding.circleView.setVisibility(View.VISIBLE);
+        binding.cameraView.setVisibility(View.VISIBLE);
+        binding.layoutFooter.setVisibility(View.GONE);
+        binding.textInfo.setVisibility(View.GONE);
+        binding.startCaptureButton.setVisibility(View.VISIBLE);
 
         if (!cameraStarted) {
-
             setupCamera();
-
             turnFlashOn();
-
             cameraStarted = true;
-
-            binding.startCaptureButton.setVisibility(View.VISIBLE);
-            binding.startCaptureButton.setOnClickListener(view -> {
-                stopPreview();
-                turnFlashOff();
-                binding.startCaptureButton.setVisibility(View.GONE);
-                startRepeatingTask();
-            });
-
         }
+    }
+
+    @Override
+    public void stop() {
+        releaseResources();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+
+        binding.startCaptureButton.setOnClickListener(view -> {
+            stopPreview();
+            turnFlashOff();
+            binding.startCaptureButton.setVisibility(View.GONE);
+            startRepeatingTask();
+        });
+
         return binding.getRoot();
     }
 }
