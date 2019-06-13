@@ -21,6 +21,10 @@
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom
         android:key="preferenceCategoryDiagnostics"
         android:title="@string/diagnostics">
+        <Preference
+            android:key="cameraPreview"
+            android:summary="Test cuvette centering &amp; image quality"
+            android:title="@string/cameraPreview" />
         <CheckBoxPreference
             android:key="@string/ignoreTimeDelaysKey"
             android:title="@string/ignoreTimeDelays" />

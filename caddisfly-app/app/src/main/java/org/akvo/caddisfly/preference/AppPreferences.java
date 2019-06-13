@@ -196,7 +196,6 @@ public final class AppPreferences {
         }
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean useFlashMode() {
 
         for (String model : phoneModels) {

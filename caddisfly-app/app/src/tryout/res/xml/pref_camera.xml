@@ -2,10 +2,6 @@
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom
         android:key="preferenceCategoryDiagnostics"
         android:title="@string/camera">
-        <Preference
-            android:key="cameraPreview"
-            android:summary="Test cuvette centering &amp; image quality"
-            android:title="@string/cameraPreview" />
         <org.akvo.caddisfly.preference.SeekBarPreference
             android:defaultValue="0"
             android:key="cameraCenterOffsetKey"
