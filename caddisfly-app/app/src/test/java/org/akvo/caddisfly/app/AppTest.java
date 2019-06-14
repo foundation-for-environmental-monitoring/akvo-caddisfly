@@ -16,17 +16,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class AppTest {
 
     private static final String[] EXPECTED_PERMISSIONS = {
-            "android.permission.DISABLE_KEYGUARD",
-            "android.permission.ACCESS_COARSE_LOCATION",
-            "android.permission.BLUETOOTH_ADMIN",
-            "android.permission.WAKE_LOCK",
+            "android.permission.ACCESS_NETWORK_STATE",
             "android.permission.CAMERA",
-            "android.permission.BLUETOOTH",
+            "android.permission.DISABLE_KEYGUARD",
+            "android.permission.INTERNET",
+            "android.permission.MODIFY_AUDIO_SETTINGS",
+            "android.permission.WAKE_LOCK",
             "android.permission.WRITE_EXTERNAL_STORAGE"
     };
 
     private static final String MERGED_MANIFEST =
-            "build/intermediates/manifests/full/mainExt/debug/AndroidManifest.xml";
+            "build/intermediates/merged_manifests/tryoutDebug/AndroidManifest.xml";
 
     @Test
     public void shouldMatchPermissions() {

@@ -75,6 +75,7 @@ import static org.hamcrest.Matchers.is;
 public class ChamberInstructions {
 
     private final StringBuilder jsArrayString = new StringBuilder();
+
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 

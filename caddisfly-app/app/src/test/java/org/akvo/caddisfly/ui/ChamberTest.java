@@ -27,12 +27,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.model.TestInfo;
+import org.akvo.caddisfly.model.TestSampleType;
 import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
 import org.akvo.caddisfly.util.FileUtil;
@@ -49,8 +52,6 @@ import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowPackageManager;
 
 import java.io.File;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -89,6 +90,7 @@ public class ChamberTest {
     public void testCount() {
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestSampleType.WATER);
 
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
@@ -117,6 +119,7 @@ public class ChamberTest {
     public void testTitles() {
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestSampleType.WATER);
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
 
         controller.start().visible();
@@ -138,8 +141,11 @@ public class ChamberTest {
 
         Intent intent = new Intent();
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST);
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestSampleType.WATER);
 
         ActivityController controller = Robolectric.buildActivity(TestListActivity.class, intent).create();
+
+//        shadowOf(getMainLooper()).idle();
 
         controller.start().visible();
 

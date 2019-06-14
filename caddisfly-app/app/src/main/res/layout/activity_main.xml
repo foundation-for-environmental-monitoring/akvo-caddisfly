@@ -41,21 +41,6 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/buttonSensors"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onSensorsClick"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:text="@string/sensors"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:visibility="gone" />
-
-                <Button
                     android:id="@+id/buttonStripTest"
                     style="?listButtonStyle"
                     android:layout_width="match_parent"
@@ -69,21 +54,6 @@
                     android:visibility="gone"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText" />
-
-                <Button
-                    android:id="@+id/buttonCbt"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onCbtClick"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:text="@string/cbt"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/buttonCalibrate"

@@ -3,6 +3,7 @@ apply plugin: 'de.mobilej.unmock'
 
 android {
     compileSdkVersion 28
+    testOptions.unitTests.includeAndroidResources = true
 
     defaultConfig {
         applicationId "io.ffem"
@@ -157,8 +158,8 @@ dependencies {
     }
 
     // Robolectric
-    testImplementation 'org.robolectric:robolectric:4.2'
-    testImplementation "org.robolectric:shadows-support-v4:3.4-rc2"
+    testImplementation 'org.robolectric:robolectric:4.3'
+    testImplementation "com.github.nimbl3:robolectric.shadows-supportv4:4.1-SNAPSHOT"
 
     // UIAutomator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'

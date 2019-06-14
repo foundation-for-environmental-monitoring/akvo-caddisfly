@@ -22,33 +22,26 @@ package org.akvo.caddisfly.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.preference.SettingsActivity;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
-import org.robolectric.android.controller.ActivityController;
-import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowApplication;
-import org.robolectric.shadows.ShadowLooper;
-import org.robolectric.shadows.ShadowPackageManager;
 
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.appcompat.widget.Toolbar;
 
+import org.akvo.caddisfly.R;
+import org.akvo.caddisfly.preference.SettingsActivity;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.android.controller.ActivityController;
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowApplication;
+import org.robolectric.shadows.ShadowLooper;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
@@ -90,28 +83,6 @@ public class MainTest {
     }
 
     @Test
-    public void sensors() {
-        Activity activity = Robolectric.setupActivity(MainActivity.class);
-
-        Button button = activity.findViewById(R.id.buttonSensors);
-
-        button.performClick();
-        Intent intent = shadowOf(activity).getNextStartedActivity();
-
-        assertNull(intent);
-
-        ShadowPackageManager pm = shadowOf(RuntimeEnvironment.application.getPackageManager());
-        pm.setSystemFeature(PackageManager.FEATURE_USB_HOST, true);
-
-        button.performClick();
-        intent = shadowOf(activity).getNextStartedActivity();
-        if (intent.getComponent() != null) {
-            assertEquals(TestListActivity.class.getCanonicalName(),
-                    intent.getComponent().getClassName());
-        }
-    }
-
-    @Test
     public void stripTest() {
         Activity activity = Robolectric.setupActivity(MainActivity.class);
 
@@ -126,37 +97,6 @@ public class MainTest {
     }
 
     @Test
-    public void md610() {
-        Activity activity = Robolectric.setupActivity(MainActivity.class);
-
-        Button button = activity.findViewById(R.id.buttonBluetooth);
-
-        button.performClick();
-        Intent intent = shadowOf(activity).getNextStartedActivity();
-        if (intent.getComponent() != null) {
-            assertEquals(TestListActivity.class.getCanonicalName(),
-                    intent.getComponent().getClassName());
-        }
-    }
-
-    @Ignore
-    @Test
-    public void cbt() {
-        Activity activity = Robolectric.setupActivity(MainActivity.class);
-
-        Button button = activity.findViewById(R.id.buttonCbt);
-
-        assertThat(button.getVisibility(), equalTo(View.VISIBLE));
-
-        button.performClick();
-        Intent intent = shadowOf(activity).getNextStartedActivity();
-        if (intent.getComponent() != null) {
-            assertEquals(TestActivity.class.getCanonicalName(),
-                    intent.getComponent().getClassName());
-        }
-    }
-
-    @Test
     public void clickingCalibrate() {
 
         String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -164,7 +104,7 @@ public class MainTest {
         ActivityController controller = Robolectric.buildActivity(MainActivity.class).create().start();
         Activity activity = (Activity) controller.get();
 
-        Button button = activity.findViewById(R.id.buttonCalibrate);
+        Button button = activity.findViewById(R.id.buttonCalibrateWater);
 
         button.performClick();
 

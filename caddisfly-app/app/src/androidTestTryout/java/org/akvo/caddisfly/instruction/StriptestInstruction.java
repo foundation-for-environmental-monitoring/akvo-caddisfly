@@ -44,12 +44,13 @@ import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.List;
+
+import timber.log.Timber;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
@@ -65,21 +66,19 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static junit.framework.Assert.assertEquals;
-import static org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton;
 import static org.akvo.caddisfly.util.TestHelper.getString;
 import static org.akvo.caddisfly.util.TestHelper.goToMainScreen;
-import static org.akvo.caddisfly.util.TestHelper.gotoSurveyForm;
 import static org.akvo.caddisfly.util.TestHelper.loadData;
 import static org.akvo.caddisfly.util.TestHelper.mCurrentLanguage;
 import static org.akvo.caddisfly.util.TestHelper.mDevice;
 import static org.akvo.caddisfly.util.TestHelper.takeScreenshot;
-import static org.akvo.caddisfly.util.TestUtil.nextSurveyPage;
-import static org.akvo.caddisfly.util.TestUtil.sleep;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 public class StriptestInstruction {
+
+    private final StringBuilder jsArrayString = new StringBuilder();
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -123,17 +122,17 @@ public class StriptestInstruction {
     }
 
     @Test
-    @Ignore
     public void instructionsTest() {
+
+        goToMainScreen();
 
         onView(withText("Strip Test")).perform(click());
 
-        ViewInteraction linearLayout1 = onView(
-                allOf(childAtPosition(
-                        withId(R.id.list_types),
-                        3),
-                        isDisplayed()));
-        linearLayout1.perform(click());
+        onView(allOf(withId(R.id.list_types),
+                childAtPosition(
+                        withClassName(is("android.widget.LinearLayout")),
+                        0))).perform(actionOnItemAtPosition(
+                14, click()));
 
         onView(allOf(withId(R.id.button_instructions), withText(R.string.instructions),
                 isDisplayed())).perform(click());
@@ -141,7 +140,7 @@ public class StriptestInstruction {
         onView(withText(R.string.collect_5ml_mehlich_sample))
                 .check(matches(isDisplayed()));
 
-        onView(withText("Soil - Phosphorous"))
+        onView(withText("Phosphorous"))
                 .check(matches(isDisplayed()));
 
         TestUtil.nextPage();
@@ -218,85 +217,7 @@ public class StriptestInstruction {
     }
 
     @Test
-    @Ignore
-    public void ironStripTestInstructions() {
-
-        goToMainScreen();
-
-        gotoSurveyForm();
-
-        nextSurveyPage(3, "Strip Tests");
-
-        clickExternalSourceButton(0);
-
-        sleep(1000);
-
-        mDevice.waitForIdle();
-
-        TestUtil.sleep(1000);
-
-        onView(withText("Water - Total Iron"))
-                .check(matches(isDisplayed()));
-
-        onView(allOf(withId(R.id.button_instructions), withText(R.string.instructions),
-                isDisplayed())).perform(click());
-
-        onView(withText(R.string.fill_half_with_sample))
-                .check(matches(isDisplayed()));
-
-        onView(withText("Water - Total Iron"))
-                .check(matches(isDisplayed()));
-
-        TestUtil.nextPage();
-
-        onView(withText(R.string.open_one_foil_and_add_powder))
-                .check(matches(isDisplayed()));
-
-        onView(withId(R.id.pager_indicator)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.viewPager))
-                .perform(swipeLeft());
-
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withContentDescription(R.string.navigate_up),
-                        withParent(withId(R.id.toolbar)),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
-
-        ViewInteraction button1 = onView(
-                allOf(withId(R.id.button_prepare),
-                        childAtPosition(
-                                childAtPosition(
-                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
-                                        1),
-                                0),
-                        isDisplayed()));
-        button1.check(matches(isDisplayed()));
-
-        onView(allOf(withId(R.id.button_instructions), withText(R.string.instructions),
-                isDisplayed())).perform(click());
-
-        pressBack();
-
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.button_prepare),
-                        childAtPosition(
-                                childAtPosition(
-                                        IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
-                                        1),
-                                0),
-                        isDisplayed()));
-        button2.check(matches(isDisplayed()));
-
-        onView(allOf(withContentDescription(R.string.navigate_up),
-                withParent(withId(R.id.toolbar)),
-                isDisplayed())).perform(click());
-
-    }
-
-    @Test
     @RequiresDevice
-    @Ignore
     public void testInstructionsAll() {
 
         goToMainScreen();
@@ -314,14 +235,13 @@ public class StriptestInstruction {
             id = id.substring(id.lastIndexOf("-") + 1);
 
 //            if (id.equalsIgnoreCase("aa4a4e3100c9")) {
-            navigateToTest(i, id);
+            int pages = navigateToTest(i, id);
 
-//            jsArrayString.append("[").append("\"").append(id).append("\",").append(pages).append("],");
+            jsArrayString.append("[").append("\"").append(id).append("\",").append(pages).append("],");
 //            }
         }
 
-//        Log.e("Caddisfly", jsArrayString.toString());
-
+        Timber.e(jsArrayString.toString());
     }
 
     private int navigateToTest(int index, String id) {
