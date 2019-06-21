@@ -122,8 +122,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.0.0'
-    annotationProcessor 'androidx.room:room-compiler:2.0.0'
+    implementation 'androidx.room:room-runtime:2.1.0'
+    annotationProcessor 'androidx.room:room-compiler:2.1.0'
 
     // Volley
     implementation 'com.android.volley:volley:1.1.1'
@@ -169,10 +169,10 @@ dependencies {
 
     // Firebase (Experiment Flavor)
     tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:16.0.9'
-    tryoutImplementation 'com.google.firebase:firebase-database:17.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:19.0.2'
-    tryoutImplementation 'com.google.firebase:firebase-storage:17.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-auth:17.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-core:17.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-database:18.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:20.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-storage:18.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-auth:18.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

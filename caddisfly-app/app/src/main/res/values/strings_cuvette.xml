@@ -114,6 +114,11 @@
     <string name="c_dilution_1">Rinse the measuring tube and the test cuvette <b>twice</b> with <b>distilled water</b> to remove any traces of previous solutions.</string>
     <string name="c_dilution_2">Measure <b>%dilutedSampleQty ml</b> of the sample</string>
     <string name="c_dilution_3">Add <b>%distilledQty ml of distilled water</b> to the sample to bring the total volume up to <b>10 ml</b></string>
+
+    <string name="c_add_reagents">Add 1 vial of Aluminum <b>reagent A</b>, followed by Aluminum <b>reagent B</b> and then Aluminum <b>reagent C</b> to the measured solution.</string>
+    <string name="c_add_tablets">Add one tablet each of <b>reagent A and B</b> into the measuring tube.</string>
+    <string name="c_add_5_drops">Add 5 drops of pH reagent to the measuring tube.</string>
+
     <!-- About Screen -->
     <string name="copyrightMessage">Copyright © ffem</string>
     <string name="legalInformation">Legal Information</string>
