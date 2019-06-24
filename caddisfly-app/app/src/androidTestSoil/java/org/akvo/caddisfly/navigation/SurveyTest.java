@@ -22,6 +22,14 @@ package org.akvo.caddisfly.navigation;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import androidx.test.espresso.AmbiguousViewMatcherException;
+import androidx.test.espresso.Espresso;
+import androidx.test.filters.LargeTest;
+import androidx.test.filters.RequiresDevice;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
+import androidx.test.uiautomator.UiDevice;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.TestConstants;
 import org.akvo.caddisfly.ui.MainActivity;
@@ -33,14 +41,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.text.DecimalFormatSymbols;
-
-import androidx.test.espresso.AmbiguousViewMatcherException;
-import androidx.test.espresso.Espresso;
-import androidx.test.filters.LargeTest;
-import androidx.test.filters.RequiresDevice;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
-import androidx.test.uiautomator.UiDevice;
 
 import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onData;

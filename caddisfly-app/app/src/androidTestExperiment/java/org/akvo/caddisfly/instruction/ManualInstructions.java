@@ -20,7 +20,6 @@
 package org.akvo.caddisfly.instruction;
 
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
@@ -35,6 +34,8 @@ import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import androidx.lifecycle.ViewModelProviders;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.TestConstantKeys;
