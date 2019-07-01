@@ -28,7 +28,7 @@ android {
         }
         tryout {
             applicationIdSuffix ".experiment"
-            versionCode 249
+            versionCode 250
             versionName "Experiment"
             buildConfigField 'boolean', 'showExperimentalTests', 'true'
         }
@@ -171,7 +171,7 @@ dependencies {
     tryoutImplementation 'androidx.multidex:multidex:2.0.1'
     tryoutImplementation 'com.google.firebase:firebase-core:17.0.0'
     tryoutImplementation 'com.google.firebase:firebase-database:18.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:20.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:20.1.0'
     tryoutImplementation 'com.google.firebase:firebase-storage:18.0.0'
     tryoutImplementation 'com.google.firebase:firebase-auth:18.0.0'
 }

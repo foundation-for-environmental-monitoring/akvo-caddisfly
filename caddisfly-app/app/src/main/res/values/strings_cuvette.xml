@@ -101,7 +101,7 @@
     <string name="bc_dilution_6">Shake the mixing chamber so the deionised water and sample mix thoroughly. Pour the mixture into the Test Chamber. Use this mixture for your measurement.</string>
 
     <string name="c_normal_rinse">Rinse the empty cuvette and measuring tube <b>twice</b> with the sample to remove any traces of previous solutions.</string>
-    <string name="c_normal_measure"><b>Measure 10 ml</b> of the sample with the measuring tube.</string>
+    <string name="c_normal_measure"><b>Measure %sampleQuantity ml</b> of the sample with the measuring tube.</string>
     <string name="c_open_reagent">Open the vial of <b>Reagent A</b>.</string>
     <string name="c_add_reagent">Add <b>Reagent A</b> to the measuring tube.</string>
     <string name="c_shake">Close the lid of the measuring tube and shake it to ensure proper mixing of the reagent and sample.</string>
@@ -113,11 +113,22 @@
     <string name="c_empty">Empty contents of the cuvette and rinse it</string>
     <string name="c_dilution_1">Rinse the measuring tube and the test cuvette <b>twice</b> with <b>distilled water</b> to remove any traces of previous solutions.</string>
     <string name="c_dilution_2">Measure <b>%dilutedSampleQty ml</b> of the sample</string>
-    <string name="c_dilution_3">Add <b>%distilledQty ml of distilled water</b> to the sample to bring the total volume up to <b>10 ml</b></string>
+    <string name="c_dilution_3">Add <b>%distilledQty ml of distilled water</b> to the sample to bring the total volume up to <b>%sampleQuantity ml</b></string>
 
     <string name="c_add_reagents">Add 1 vial of Aluminum <b>reagent A</b>, followed by Aluminum <b>reagent B</b> and then Aluminum <b>reagent C</b> to the measured solution.</string>
     <string name="c_add_tablets">Add one tablet each of <b>reagent A and B</b> into the measuring tube.</string>
     <string name="c_add_5_drops">Add 5 drops of pH reagent to the measuring tube.</string>
+
+    <string name="c_ar_add_reagent_1">Add <b>1 drop of acid</b> from the dropper bottle.</string>
+    <string name="c_ar_add_reagent_2">Add <b>1 drop of ammonia</b> from the dropper bottle.</string>
+    <string name="c_ar_add_reagent_3">Add <b>1 spoon of Calcium Carbonate</b> to the solution.</string>
+    <string name="c_ar_add_reagent_4">Add <b>10 drops of Calcium Chloride</b> to the solution.</string>
+    <string name="c_ar_add_reagents">Add <b>1 vial each</b> of Arsenic reagent A, B and C to the measured solution.</string>
+    <string name="c_ar_shake_to_mix">Close the lid of the measuring tube and shake it to ensure proper mixing.</string>
+    <string name="c_ar_solution_turns_yellow"><b>Note:</b> If there is iron, the solution will turn yellowish.</string>
+    <string name="c_ar_fold_filter">Fold the filter paper as shown.</string>
+    <string name="c_ar_place_filter">Place it in the funnel as shown.</string>
+    <string name="c_ar_filter_solution">Filter the solution through the filter paper, into the 10ml measuring cylinder.</string>
 
     <!-- About Screen -->
     <string name="copyrightMessage">Copyright © ffem</string>

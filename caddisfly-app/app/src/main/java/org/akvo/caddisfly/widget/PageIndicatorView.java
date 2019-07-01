@@ -68,6 +68,7 @@ public class PageIndicatorView extends View {
 
     public void setPageCount(int value) {
         pageCount = value;
+        distanceBetweenBullets = 36;
 
         final float scale = getResources().getDisplayMetrics().density;
         if (scale <= 1.5) {
@@ -80,7 +81,9 @@ public class PageIndicatorView extends View {
 
         setActiveBulletSize(false, scale);
 
-        if (pageCount > 12) {
+        if (pageCount > 14) {
+            distanceBetweenBullets -= 14;
+        } else if (pageCount > 12) {
             distanceBetweenBullets -= 10;
         }
 
