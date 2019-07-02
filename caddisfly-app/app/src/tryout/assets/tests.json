@@ -1511,61 +1511,50 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,0.5,1,1.5,2,2.5,3",
       "monthsValid": 24,
       "instructions": [
         {
           "section": [
-            "bc_rinse",
-            "image:bc_rinse"
+            "c_normal_rinse",
+            "image:c_rinse"
           ]
         },
         {
           "section": [
-            "bc_frc_1",
-            "image:bc_add_powder"
+            "c_normal_measure",
+            "image:c_measure_sample"
           ]
         },
         {
           "section": [
-            "bc_frc_2",
-            "image:bc_fill"
+            "c_open_reagent",
+            "image:c_open_reagent"
           ]
         },
         {
           "section": [
-            "bc_screw",
-            "image:bc_screw_frc"
+            "c_add_reagent",
+            "image:c_add_reagent"
           ]
         },
         {
           "section": [
-            "bc_shake",
-            "image:bc_shake"
+            "c_shake",
+            "image:c_shake"
           ]
         },
         {
           "section": [
-            "bc_wipe_bottom",
-            "image:bc_wipe_bottom"
+            "c_pour",
+            "image:c_pour"
           ]
         },
         {
           "section": [
-            "bc_wipe_camera",
-            "image:bc_wipe_camera"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_chamber",
-            "image:bc_place_chamber"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_phone",
-            "image:bc_place_phone"
+            "c_close",
+            "image:c_close"
           ]
         },
         {
