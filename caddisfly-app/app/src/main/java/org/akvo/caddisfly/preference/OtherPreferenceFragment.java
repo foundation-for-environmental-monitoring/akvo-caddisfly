@@ -37,6 +37,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.entity.Calibration;
@@ -50,11 +55,6 @@ import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProviders;
 
 public class OtherPreferenceFragment extends PreferenceFragment {
 
@@ -83,19 +83,18 @@ public class OtherPreferenceFragment extends PreferenceFragment {
 
         Preference emailSupportPreference = findPreference("emailSupport");
         if (emailSupportPreference != null) {
-            emailSupportPreference.setSummary("Send details to support for assistance");
+            emailSupportPreference.setSummary(R.string.send_details_to_support);
             emailSupportPreference.setOnPreferenceClickListener(preference -> {
 
                 message.setLength(0);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.emailSupport);
-                builder.setMessage("If you need assistance with using the app then choose continue. " +
-                        "An email with information required by support will be generated.\n\n" +
-                        "Please select your email app in the next step and send the generated email.")
+                builder.setMessage(getString(R.string.if_you_need_assistance) + "\n\n" +
+                        getString(R.string.select_email_app))
                         .setCancelable(false)
                         .setNegativeButton(R.string.cancel, (dialog, id) -> dialog.dismiss())
-                        .setPositiveButton(R.string.continue_send, (dialog, id) -> {
+                        .setPositiveButton(R.string.create_support_email, (dialog, id) -> {
 
                             dialog.dismiss();
 

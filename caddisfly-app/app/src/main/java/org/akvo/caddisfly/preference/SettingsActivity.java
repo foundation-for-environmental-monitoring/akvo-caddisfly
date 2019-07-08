@@ -29,15 +29,15 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 public class SettingsActivity extends BaseActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -169,6 +169,7 @@ public class SettingsActivity extends BaseActivity
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (getApplicationContext().getString(R.string.languageKey).equals(s)) {
+            clearTests();
             CaddisflyApp.getApp().setAppLanguage(null, false, null);
             Intent resultIntent = new Intent(getIntent());
             resultIntent.getBooleanExtra("refresh", true);

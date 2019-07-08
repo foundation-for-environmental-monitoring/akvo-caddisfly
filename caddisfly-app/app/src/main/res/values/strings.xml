@@ -196,4 +196,13 @@
     <string name="incorrect_range">Incorrect range calibration points</string>
     <string name="startTimer">Start Timer</string>
     <string name="skip_time_delay">Skip time delay</string>
+
+    <!--Support-->
+    <string name="emailSupport">Email support</string>
+    <string name="send_details_to_support">Send details to support for assistance</string>
+    <string name="if_you_need_assistance">Send information to our support team to help provide you with assistance in using the app.</string>
+    <string name="select_email_app">Please select your email app in the next step and send the generated email.</string>
+    <string name="create_support_email">Create Support Email</string>
+    <string name="creatingMessage">Creating message</string>
+
 </resources>

@@ -132,14 +132,10 @@
     <string name="errorCalibrationIncomplete">Calibration for %1$s is incomplete</string>
     <string name="doYouWantToCalibrate">Do you want to calibrate now?</string>
 
-    <!--Support-->
-    <string name="emailSupport">Email support</string>
-
     <!--Update-->
     <string name="update">Update</string>
     <string name="updateAvailable">New version available. Update to get the most out of your app</string>
     <string name="remindLater">Remind later</string>
     <string name="continue_send">Continue</string>
-    <string name="creatingMessage">Creating message</string>
 
 </resources>

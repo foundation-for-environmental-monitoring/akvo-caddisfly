@@ -142,9 +142,18 @@ public class TestConfigRepository {
                 for (int i = experimentalList.size() - 1; i >= 0; i--) {
                     if (experimentalList.get(i).getSubtype() != testType) {
                         experimentalList.remove(i);
+                        continue;
                     } else if (testSampleType != TestSampleType.ALL
                             && experimentalList.get(i).getSampleType() != testSampleType) {
                         experimentalList.remove(i);
+                        continue;
+                    }
+
+                    for (TestInfo testInfo : testInfoList) {
+                        if (testInfo.getUuid().equals(experimentalList.get(i).getUuid())) {
+                            experimentalList.remove(i);
+                            break;
+                        }
                     }
                 }
 
