@@ -20,7 +20,7 @@ Contributing
     Name example: **c_cr_add_reagent_drops.png**
     (Where c = cuvette,  cr = Chromium, and rest a short description of the sentence)
 
-1. Add instruction text by creating a name for each sentence at [strings.xml](https://github.com/foundation-for-environmental-monitoring/ffem-app/blob/develop/caddisfly-app/app/src/main/res/values/strings_cuvette.xml)
+2. Add instruction text by creating a name for each sentence at [strings.xml](https://github.com/foundation-for-environmental-monitoring/ffem-app/blob/develop/caddisfly-app/app/src/main/res/values/strings_cuvette.xml)
 
     Keep sentences short and highlight important words with bold tags.
 
@@ -28,7 +28,7 @@ Contributing
 <string name="c_cr_add_reagent_drops">Add <b>5 drops</b> of Reagent A to the sample.</string>
 ```
 
-1. Add the above string names and the illustration names (without file extension) to tests json at [tests.json](https://github.com/foundation-for-environmental-monitoring/ffem-app/blob/develop/caddisfly-app/app/src/tryout/assets/tests.json) under the instructions node for each test.
+3. Add the above string names and the illustration names (without file extension) to tests json at [tests.json](https://github.com/foundation-for-environmental-monitoring/ffem-app/blob/develop/caddisfly-app/app/src/tryout/assets/tests.json) under the instructions node for each test.
 
 ```
 "instructions": [
