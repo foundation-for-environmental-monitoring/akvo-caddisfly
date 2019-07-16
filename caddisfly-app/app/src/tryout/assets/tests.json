@@ -96,6 +96,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,0.25,0.5,1.0,1.5,2",
       "monthsValid": 3,
       "dilutions": [
@@ -211,6 +212,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,0.5,1.0,1.5,2",
       "monthsValid": 6,
       "dilutions": [
@@ -326,6 +328,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,1.0,2.5,5,7.5,10,15,20,30,40",
       "monthsValid": 6,
       "dilutions": [
@@ -372,14 +375,8 @@
         },
         {
           "section": [
-            "c_open_reagent",
-            "image:c_open_reagent"
-          ]
-        },
-        {
-          "section": [
-            "c_add_reagent_a",
-            "image:c_add_reagent"
+            "c_add_tablets",
+            "image:c_add_tablets"
           ]
         },
         {
@@ -441,6 +438,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,5,10,15,20,25",
       "monthsValid": 6,
       "dilutions": [
@@ -556,6 +554,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,10,20,30,40",
       "monthsValid": 6,
       "dilutions": [
@@ -672,6 +671,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "4,5,6,7,8,9,10",
       "monthsValid": 6,
       "instructions": [
@@ -707,13 +707,7 @@
         },
         {
           "section": [
-            "c_open_reagent",
-            "image:c_open_reagent"
-          ]
-        },
-        {
-          "section": [
-            "c_add_reagent_a",
+            "c_add_10_drops",
             "image:c_add_reagent"
           ]
         },
@@ -1065,6 +1059,112 @@
       ]
     },
     {
+      "name": "Chlorophyll A",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "45b95150-0bea-42b1-8dd5-9156b7c9e308",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "sampleQuantity": 50,
+      "ranges": "0,0.20,0.50,1,5,10,25",
+      "monthsValid": 6,
+      "instructions": [
+        {
+          "section": [
+            "c_normal_rinse",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_ar_fold_filter",
+            "c_place_filter",
+            "image:c_ar_fold_filter"
+          ]
+        },
+        {
+          "section": [
+            "c_filter_sample",
+            "c_discard_filter_sample",
+            "image:c_filter_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_unfold_filter",
+            "image:c_unfold_filter"
+          ]
+        },
+        {
+          "section": [
+            "c_add_extraction_solution",
+            "image:c_add_extraction_solution"
+          ]
+        },
+        {
+          "section": [
+            "c_crush_sample",
+            "image:c_crush_sample"
+          ]
+        },
+        {
+          "section": [
+            "c_add_extraction_10ml",
+            "image:c_add_extraction_10ml"
+          ]
+        },
+        {
+          "section": [
+            "c_place_another_filter",
+            "image:c_place_filter_cuvette"
+          ]
+        },
+        {
+          "section": [
+            "c_filter_sample_cuvette",
+            "image:c_filter_sample_cuvette"
+          ]
+        },
+        {
+          "section": [
+            "c_close",
+            "image:c_close"
+          ]
+        },
+        {
+          "section": [
+            "c_start_timer",
+            "<start_timer>"
+          ]
+        },
+        {
+          "section": [
+            "<test>"
+          ]
+        },
+        {
+          "section": [
+            "<result>"
+          ]
+        },
+        {
+          "section": [
+            "c_empty",
+            "image:c_empty"
+          ]
+        }
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Chlorophyll A",
+          "unit": "mg/l",
+          "timeDelay": 30
+        }
+      ]
+    },
+    {
       "name": "Chromium",
       "type": "water",
       "subtype": "cuvette",
@@ -1192,6 +1292,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0,0.5,1,1.5,2",
       "monthsValid": 12,
       "dilutions": [
@@ -1237,13 +1338,7 @@
         },
         {
           "section": [
-            "c_open_reagent",
-            "image:c_open_reagent"
-          ]
-        },
-        {
-          "section": [
-            "c_add_reagent_a",
+            "c_add_reagent",
             "image:c_add_reagent"
           ]
         },
@@ -1531,14 +1626,8 @@
         },
         {
           "section": [
-            "c_open_reagent",
-            "image:c_open_reagent"
-          ]
-        },
-        {
-          "section": [
             "c_add_reagent_a",
-            "image:c_add_reagent"
+            "image:c_add_reagent_powder"
           ]
         },
         {
@@ -1599,6 +1688,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "sampleQuantity": 10,
       "ranges": "0, 0.05, 0.1, 0.5, 1.0",
       "monthsValid": 2,
       "instructions": [

@@ -90,6 +90,8 @@
     <string name="c_add_reagent">Add reagent to the measured sample.</string>
     <string name="c_add_reagent_a">Add <b>Reagent A</b> to the measured sample.</string>
     <string name="c_add_reagent_b">Add <b>Reagent B</b> to the solution.</string>
+    <string name="c_add_5_drops">Add <b>5 drops</b> of pH reagent to the measured sample.</string>
+    <string name="c_add_10_drops">Add <b>10 drops</b> of pH reagent to the measured sample.</string>
 
     <string name="c_normal_rinse">Rinse the empty cuvette and measuring tube <b>twice</b> with the sample to remove any traces of previous solutions.</string>
     <string name="c_normal_measure"><b>Measure %sampleQuantity ml</b> of the sample with the measuring tube.</string>
@@ -107,7 +109,6 @@
 
     <string name="c_add_reagents">Add 1 vial of Aluminum <b>reagent A</b>, followed by Aluminum <b>reagent B</b> and then Aluminum <b>reagent C</b> to the measured solution.</string>
     <string name="c_add_tablets">Add one tablet each of <b>reagent A and B</b> into the measuring tube.</string>
-    <string name="c_add_5_drops">Add 5 drops of pH reagent to the measuring tube.</string>
 
     <string name="c_ar_add_reagent_1">Add <b>1 drop of acid</b> from the dropper bottle.</string>
     <string name="c_ar_add_reagent_2">Add <b>1 drop of ammonia</b> from the dropper bottle.</string>
@@ -118,11 +119,21 @@
     <string name="c_ar_solution_turns_yellow"><b>Note:</b> If there is iron, the solution will turn yellowish.</string>
     <string name="c_ar_fold_filter">Fold the filter paper as shown.</string>
     <string name="c_ar_place_filter">Place it in the funnel as shown.</string>
-    <string name="c_ar_filter_solution">Filter the solution through the filter paper, into the 10ml measuring cylinder.</string>
+    <string name="c_place_filter">Place it in the funnel.</string>
+    <string name="c_place_another_filter">Take another filter paper and place it in the funnel.</string>
+    <string name="c_ar_filter_solution">Filter the solution through the filter paper, into the <b>10 ml</b> measuring cylinder.</string>
+    <string name="c_filter_sample">Filter approximately <b>100 ml</b> of sample through the filter paper.</string>
+    <string name="c_discard_filter_sample">The filtered sample can be discarded, but keep the filter paper for the next step.</string>
+    <string name="c_unfold_filter">Remove the filter paper, unfold it and place it in the measuring tube.</string>
+    <string name="c_add_extraction_solution">Add <b>2 ml</b> of extraction solution to the filter paper in the measuring tube.</string>
+    <string name="c_filter_sample_cuvette">Filter the extracted sample through the funnel, directly into the borosil cuvette.</string>
 
     <string name="c_po_add_reagent_drops">Add <b>3 drops</b> of Phosphate reagent B to the solution.</string>
     <string name="c_cr_add_reagent_drops">Add <b>5 drops</b> of Reagent A to the measured sample.</string>
     <string name="c_so_add_reagent">Add <b>half a spoon</b> of <b>Sulphate B</b> to the solution.</string>
+
+    <string name="c_crush_sample">Continue crushing of the sample util the greenish colour disappears from the filter - this could take up to 5 minutes.</string>
+    <string name="c_add_extraction_10ml">Add more extraction solution until it reaches the <b>10 ml</b> mark.</string>
 
     <!-- About Screen -->
     <string name="copyrightMessage">Copyright © ffem</string>
