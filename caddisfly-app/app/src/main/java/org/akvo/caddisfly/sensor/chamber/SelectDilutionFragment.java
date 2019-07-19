@@ -33,6 +33,7 @@ import androidx.fragment.app.FragmentTransaction;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.databinding.FragmentSelectDilutionBinding;
 import org.akvo.caddisfly.model.TestInfo;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
@@ -74,30 +75,30 @@ public class SelectDilutionFragment extends Fragment {
 
         List<Integer> dilutions = testInfo.getDilutions();
 
-        binding.buttonNoDilution.setOnClickListener(view1 -> mListener.onDilutionSelected(1));
-
-        if (dilutions.size() > 1) {
-            int dilution = dilutions.get(1);
-            binding.buttonDilution1.setText(String.format(Locale.getDefault(),
-                    getString(R.string.timesDilution), dilution));
-            binding.buttonDilution1.setOnClickListener(view1 -> mListener.onDilutionSelected(dilution));
+        for (Integer dilution : dilutions) {
+            switch (dilution) {
+                case 1:
+                    binding.buttonNoDilution.setOnClickListener(view1 -> mListener.onDilutionSelected(1));
+                    binding.buttonNoDilution.setVisibility(View.VISIBLE);
+                    break;
+                case 2:
+                    binding.buttonDilution1.setText(String.format(Locale.getDefault(),
+                            getString(R.string.timesDilution), dilution));
+                    binding.buttonDilution1.setOnClickListener(view1 -> mListener.onDilutionSelected(dilution));
+                    binding.buttonDilution1.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+                    binding.buttonDilution2.setText(String.format(Locale.getDefault(),
+                            getString(R.string.timesDilution), dilution));
+                    binding.buttonDilution2.setOnClickListener(view1 -> mListener.onDilutionSelected(dilution));
+                    binding.buttonDilution2.setVisibility(View.VISIBLE);
+                    break;
+                case -1:
+                    binding.buttonCustomDilution.setOnClickListener(view1 -> showCustomDilutionDialog());
+                    binding.buttonCustomDilution.setVisibility(View.VISIBLE);
+                    break;
+            }
         }
-
-        if (dilutions.size() > 2) {
-            int dilution = dilutions.get(2);
-            binding.buttonDilution2.setText(String.format(Locale.getDefault(),
-                    getString(R.string.timesDilution), dilution));
-            binding.buttonDilution2.setOnClickListener(view1 -> mListener.onDilutionSelected(dilution));
-        } else {
-            binding.buttonDilution2.setVisibility(View.GONE);
-        }
-
-        if (dilutions.size() > 3) {
-            binding.buttonCustomDilution.setOnClickListener(view1 -> showCustomDilutionDialog());
-        } else {
-            binding.buttonCustomDilution.setVisibility(View.GONE);
-        }
-
         return binding.getRoot();
     }
 
@@ -110,7 +111,7 @@ public class SelectDilutionFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         if (context instanceof OnDilutionSelectedListener) {
             mListener = (OnDilutionSelectedListener) context;

@@ -17,7 +17,8 @@
   ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/layoutDilutions"
@@ -33,18 +34,20 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="25dp"
             android:text="@string/selectDilution"
             android:textSize="16sp" />
 
         <Button
             android:id="@+id/buttonNoDilution"
             style="@style/Button"
-            android:layout_marginTop="25dp"
             android:layout_marginBottom="10dp"
             android:minWidth="260dp"
             android:minHeight="70dp"
             android:text="@string/noDilution"
-            android:theme="?secondaryButtonStyle" />
+            android:theme="?secondaryButtonStyle"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/buttonDilution1"
@@ -53,7 +56,9 @@
             android:minWidth="260dp"
             android:minHeight="70dp"
             android:text="@string/timesDilution"
-            android:theme="?secondaryButtonStyle" />
+            android:theme="?secondaryButtonStyle"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/buttonDilution2"
@@ -62,7 +67,9 @@
             android:minWidth="260dp"
             android:minHeight="70dp"
             android:text="@string/timesDilution"
-            android:theme="?secondaryButtonStyle" />
+            android:theme="?secondaryButtonStyle"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/buttonCustomDilution"
@@ -70,7 +77,9 @@
             android:minWidth="260dp"
             android:minHeight="70dp"
             android:text="@string/customDilution"
-            android:theme="?secondaryButtonStyle" />
+            android:theme="?secondaryButtonStyle"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </LinearLayout>
 

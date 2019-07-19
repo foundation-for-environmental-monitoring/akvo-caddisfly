@@ -42,6 +42,7 @@ import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.widget.CenteredImageSpan;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,7 +62,6 @@ public final class StringUtil {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public static Spanned fromHtml(String html) {
         Spanned result;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -105,7 +105,7 @@ public final class StringUtil {
         Matcher m3 = Pattern.compile("%dilutedSampleQty").matcher(builder);
         while (m3.find()) {
             builder.replace(m3.start(), m3.end(),
-                    String.valueOf(testInfo.getSampleQuantity() / testInfo.getDilution()));
+                    String.valueOf((float) testInfo.getSampleQuantity() / testInfo.getDilution()));
         }
 
         // Set sample quantity in the string
@@ -113,7 +113,7 @@ public final class StringUtil {
         while (m4.find()) {
             builder.replace(m4.start(), m4.end(),
                     String.valueOf(testInfo.getSampleQuantity()
-                            - (testInfo.getSampleQuantity() / testInfo.getDilution())));
+                            - ((float) testInfo.getSampleQuantity() / testInfo.getDilution())));
         }
 
         // Set reaction time in the string
@@ -232,7 +232,7 @@ public final class StringUtil {
         @SuppressLint("InflateParams")
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
             builder.setView(inflater.inflate(R.layout.dialog_sulfide_instruction, null))
@@ -248,7 +248,7 @@ public final class StringUtil {
         @SuppressLint("InflateParams")
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
             LayoutInflater inflater = getActivity().getLayoutInflater();
 
             builder.setView(inflater.inflate(R.layout.dialog_dilution_instruction, null))
