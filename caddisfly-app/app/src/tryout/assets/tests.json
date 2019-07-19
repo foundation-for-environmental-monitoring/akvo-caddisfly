@@ -485,14 +485,8 @@
         },
         {
           "section": [
-            "c_open_reagent",
-            "image:c_open_reagent"
-          ]
-        },
-        {
-          "section": [
-            "c_add_reagent_a",
-            "image:c_add_reagent"
+            "c_add_5_drops",
+            "image:c_add_5_drops"
           ]
         },
         {
@@ -601,14 +595,20 @@
         },
         {
           "section": [
-            "c_open_reagent",
-            "image:c_open_reagent"
+            "c_add_5_drops_a",
+            "image:c_add_5_drops"
           ]
         },
         {
           "section": [
-            "c_add_reagent_a",
-            "image:c_add_reagent"
+            "c_shake",
+            "image:c_shake"
+          ]
+        },
+        {
+          "section": [
+            "c_add_10_drops_b",
+            "image:c_add_10_drops"
           ]
         },
         {

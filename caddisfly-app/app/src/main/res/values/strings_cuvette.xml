@@ -89,8 +89,10 @@
 
     <string name="c_add_reagent">Add reagent to the measured sample.</string>
     <string name="c_add_reagent_a">Add <b>Reagent A</b> to the measured sample.</string>
+    <string name="c_add_5_drops_a">Add <b>5 drops of Reagent A</b> to the measured sample.</string>
     <string name="c_add_reagent_b">Add <b>Reagent B</b> to the solution.</string>
-    <string name="c_add_5_drops">Add <b>5 drops</b> of pH reagent to the measured sample.</string>
+    <string name="c_add_10_drops_b">Add <b>10 drops of Reagent B</b> to the measured sample.</string>
+    <string name="c_add_5_drops">Add <b>5 drops</b> of the reagent to the measured sample.</string>
     <string name="c_add_10_drops">Add <b>10 drops</b> of pH reagent to the measured sample.</string>
 
     <string name="c_normal_rinse">Rinse the empty cuvette and measuring tube <b>twice</b> with the sample to remove any traces of previous solutions.</string>
