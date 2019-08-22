@@ -612,7 +612,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
-      "ranges": "0,10,20,30,40",
+      "ranges": "0,10,20,30",
       "monthsValid": 6,
       "dilutions": [
         1,
@@ -625,7 +625,7 @@
           "name": "Potassium",
           "unit": "mg/l",
           "timeDelay": 300,
-          "grayScale": true
+          "grayScale": false
         }
       ]
     },
