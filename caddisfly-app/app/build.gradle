@@ -59,24 +59,24 @@ android {
         }
     }
 
-    signingConfigs {
-        appRelease {
-            storeFile file(FFEM_RELEASE_STORE_FILE)
-            storePassword FFEM_RELEASE_STORE_PASSWORD
-            keyAlias FFEM_RELEASE_KEY_ALIAS
-            keyPassword FFEM_RELEASE_KEY_PASSWORD
-        }
-    }
-
-    buildTypes {
-        release {
-            signingConfig signingConfigs.appRelease
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            zipAlignEnabled true
-        }
-    }
+//    signingConfigs {
+//        appRelease {
+//            storeFile file(FFEM_RELEASE_STORE_FILE)
+//            storePassword FFEM_RELEASE_STORE_PASSWORD
+//            keyAlias FFEM_RELEASE_KEY_ALIAS
+//            keyPassword FFEM_RELEASE_KEY_PASSWORD
+//        }
+//    }
+//
+//    buildTypes {
+//        release {
+//            signingConfig signingConfigs.appRelease
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            zipAlignEnabled true
+//        }
+//    }
 
     lintOptions {
         checkReleaseBuilds true
@@ -121,8 +121,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.0.0'
-    annotationProcessor 'androidx.room:room-compiler:2.0.0'
+    implementation 'androidx.room:room-runtime:2.1.0'
+    annotationProcessor 'androidx.room:room-compiler:2.1.0'
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -166,10 +166,10 @@ dependencies {
 
     // Firebase (Experiment Flavor)
 //    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:16.0.9'
-    tryoutImplementation 'com.google.firebase:firebase-database:17.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:19.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-storage:17.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-auth:17.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-core:17.2.0'
+    tryoutImplementation 'com.google.firebase:firebase-database:19.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:21.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-storage:19.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-auth:19.0.0'
 }
 //apply plugin: 'com.google.gms.google-services'
