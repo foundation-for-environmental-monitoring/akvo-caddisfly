@@ -34,6 +34,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -73,15 +81,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
-@SuppressWarnings("deprecation")
 public class TestActivity extends BaseActivity {
 
     private static final int REQUEST_TEST = 1;
@@ -115,9 +116,14 @@ public class TestActivity extends BaseActivity {
             testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
 
             if (testInfo != null) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
-                                TestActivity.class.getSimpleName()).commit();
+                boolean runTest = getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false);
+                if (runTest) {
+                    startTest();
+                } else {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
+                                    TestActivity.class.getSimpleName()).commit();
+                }
             }
         }
 
@@ -233,9 +239,6 @@ public class TestActivity extends BaseActivity {
             case BLUETOOTH:
                 checkPermissions = bluetoothPermissions;
                 break;
-            case TITRATION:
-                startTest();
-                return;
             default:
         }
 
@@ -453,7 +456,7 @@ public class TestActivity extends BaseActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEST && resultCode == Activity.RESULT_OK) {
             //return the test result to the external app

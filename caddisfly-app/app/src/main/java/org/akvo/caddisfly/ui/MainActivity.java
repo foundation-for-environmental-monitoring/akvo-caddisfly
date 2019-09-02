@@ -32,6 +32,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -65,10 +69,6 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
 import static org.akvo.caddisfly.common.AppConfig.GET_STARTED_URL;
 import static org.akvo.caddisfly.model.TestType.BLUETOOTH;
@@ -179,17 +179,17 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onStripTestsClick(View view) {
-        navigationController.navigateToTestType(TestType.STRIP_TEST, TestSampleType.ALL);
+        navigationController.navigateToTestType(TestType.STRIP_TEST, TestSampleType.ALL, true);
     }
 
     public void onBluetoothDeviceClick(View view) {
-        navigationController.navigateToTestType(BLUETOOTH, TestSampleType.ALL);
+        navigationController.navigateToTestType(BLUETOOTH, TestSampleType.ALL, true);
     }
 
     public void onSensorsClick(View view) {
         boolean hasOtg = getBaseContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_HOST);
         if (hasOtg) {
-            navigationController.navigateToTestType(TestType.SENSOR, TestSampleType.ALL);
+            navigationController.navigateToTestType(TestType.SENSOR, TestSampleType.ALL, true);
         } else {
             ErrorMessages.alertFeatureNotSupported(this, false);
         }
@@ -244,11 +244,11 @@ public class MainActivity extends BaseActivity {
 
     private void startCalibrate(TestSampleType testSampleType) {
         FileHelper.migrateFolders();
-        navigationController.navigateToTestType(CHAMBER_TEST, testSampleType);
+        navigationController.navigateToTestType(CHAMBER_TEST, testSampleType, false);
     }
 
     public void onCbtClick(View view) {
-        navigationController.navigateToTestType(TestType.CBT, TestSampleType.ALL);
+        navigationController.navigateToTestType(TestType.CBT, TestSampleType.ALL, true);
     }
 
     public void onSettingsClick(MenuItem item) {
@@ -369,6 +369,7 @@ public class MainActivity extends BaseActivity {
         if (permissionsDelegate.hasPermissions(storagePermission)) {
             startCalibrate(TestSampleType.ALL);
         } else {
+            //noinspection ConstantConditions
             if (BuildConfig.APPLICATION_ID.contains("soil")) {
                 permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL);
             } else {
@@ -380,6 +381,24 @@ public class MainActivity extends BaseActivity {
     public void onGetStartedClicked(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GET_STARTED_URL));
         startActivity(browserIntent);
+    }
+
+    public void onRunTestClick(View view) {
+        if (permissionsDelegate.hasPermissions(storagePermission)) {
+            startTest(TestSampleType.ALL);
+        } else {
+            //noinspection ConstantConditions
+            if (BuildConfig.APPLICATION_ID.contains("soil")) {
+                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL);
+            } else {
+                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
+            }
+        }
+    }
+
+    private void startTest(TestSampleType testSampleType) {
+        FileHelper.migrateFolders();
+        navigationController.navigateToTestType(CHAMBER_TEST, testSampleType, true);
     }
 
     /**
