@@ -113,7 +113,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
-      "ranges": "0,10,20,40",
+      "ranges": "0,10,20,30",
       "monthsValid": 6,
       "dilutions": [
         1,
@@ -128,7 +128,7 @@
           "unit": "mg/kg",
           "timeDelay": 300,
           "formula": "(%1$f * 5)",
-          "grayScale": true
+          "grayScale": false
         }
       ]
     },
