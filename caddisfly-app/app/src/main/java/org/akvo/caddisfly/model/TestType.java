@@ -32,9 +32,6 @@ public enum TestType {
     @SerializedName("cuvette")
     CHAMBER_TEST,
 
-    @SerializedName("cuvette-bluetooth")
-    CUVETTE_BLUETOOTH,
-
     /**
      * Strip paper is dipped into the sample and color is analysed from the resulting
      * color change on the strip paper.
@@ -53,12 +50,6 @@ public enum TestType {
      */
     @SerializedName("manual")
     MANUAL,
-
-    /**
-     * External bluetooth testing device.
-     */
-    @SerializedName("bluetooth")
-    BLUETOOTH,
 
     /**
      * Coliform counting.

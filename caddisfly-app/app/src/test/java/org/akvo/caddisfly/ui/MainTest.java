@@ -26,6 +26,8 @@ import android.content.pm.PackageManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.view.menu.ActionMenuItemView;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.preference.SettingsActivity;
 import org.junit.Test;
@@ -37,8 +39,6 @@ import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowLooper;
 import org.robolectric.shadows.ShadowPackageManager;
-
-import androidx.appcompat.view.menu.ActionMenuItemView;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -111,20 +111,6 @@ public class MainTest {
         Activity activity = Robolectric.setupActivity(MainActivity.class);
 
         Button button = activity.findViewById(R.id.buttonStripTest);
-
-        button.performClick();
-        Intent intent = shadowOf(activity).getNextStartedActivity();
-        if (intent.getComponent() != null) {
-            assertEquals(TestListActivity.class.getCanonicalName(),
-                    intent.getComponent().getClassName());
-        }
-    }
-
-    @Test
-    public void md610() {
-        Activity activity = Robolectric.setupActivity(MainActivity.class);
-
-        Button button = activity.findViewById(R.id.buttonBluetooth);
 
         button.performClick();
         Intent intent = shadowOf(activity).getNextStartedActivity();

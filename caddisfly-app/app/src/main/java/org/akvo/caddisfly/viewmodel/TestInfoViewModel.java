@@ -18,7 +18,6 @@ package org.akvo.caddisfly.viewmodel;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
@@ -26,7 +25,6 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,7 +41,6 @@ import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.model.Instruction;
 import org.akvo.caddisfly.model.TestInfo;
-import org.akvo.caddisfly.sensor.bluetooth.ReagentLabel;
 import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.widget.RowView;
 
@@ -120,9 +117,6 @@ public class TestInfoViewModel extends AndroidViewModel {
                 SpannableStringBuilder builder = new SpannableStringBuilder();
                 Spanned spanned2 = StringUtil.getStringResourceByName(context, text);
                 builder.append(spanned2);
-
-                // Set reagent in the string
-                replaceReagentTags(linearLayout, context, builder);
             }
         }
     }
@@ -141,29 +135,6 @@ public class TestInfoViewModel extends AndroidViewModel {
             }
         }
         view.setText(subTitle);
-    }
-
-    private static void replaceReagentTags(LinearLayout linearLayout, Context context, SpannableStringBuilder builder) {
-        for (int j = 1; j < 5; j++) {
-            Matcher m2 = Pattern.compile("%reagent" + j).matcher(builder);
-            while (m2.find()) {
-                String code = testInfo.getReagent(j - 1).code;
-                if (!code.isEmpty()) {
-                    ReagentLabel reagentLabel = new ReagentLabel(context, null);
-
-                    int height = Resources.getSystem().getDisplayMetrics().heightPixels;
-
-                    reagentLabel.setLayoutParams(new FrameLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            (int) (height * 0.2)));
-
-                    reagentLabel.setReagentName(testInfo.getReagent(j - 1).name);
-                    reagentLabel.setReagentCode(code);
-
-                    linearLayout.addView(reagentLabel);
-                }
-            }
-        }
     }
 
     private static void insertImage(LinearLayout linearLayout, Context context, Point size,

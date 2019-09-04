@@ -4,6 +4,8 @@ package org.akvo.caddisfly.repository;
 import android.content.Context;
 import android.graphics.Color;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -29,7 +31,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 public class TestConfigRepository {
@@ -78,15 +79,8 @@ public class TestConfigRepository {
                 }
             }
 
-            if (testType == TestType.BLUETOOTH) {
-                Collections.sort(testInfoList, (object1, object2) ->
-                        ("000000000".substring(object1.getMd610Id().length()) + object1.getMd610Id())
-                                .compareToIgnoreCase(("000000000".substring(object2.getMd610Id().length())
-                                        + object2.getMd610Id())));
-            } else {
-                Collections.sort(testInfoList, (object1, object2) ->
-                        object1.getName().compareToIgnoreCase(object2.getName()));
-            }
+            Collections.sort(testInfoList, (object1, object2) ->
+                    object1.getName().compareToIgnoreCase(object2.getName()));
 
             if (AppPreferences.isDiagnosticMode()) {
                 addExperimentalTests(testType, testSampleType, testInfoList);
@@ -216,8 +210,7 @@ public class TestConfigRepository {
                 for (TestInfo testInfo : testInfoList) {
                     if (testInfo.getUuid().equalsIgnoreCase(id)) {
 
-                        if (testInfo.getSubtype() == TestType.CHAMBER_TEST ||
-                                testInfo.getSubtype() == TestType.CUVETTE_BLUETOOTH) {
+                        if (testInfo.getSubtype() == TestType.CHAMBER_TEST) {
 
                             CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();
 

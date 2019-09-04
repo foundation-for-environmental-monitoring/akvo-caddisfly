@@ -41,16 +41,8 @@ class RunTestNavigation {
 
     @Test
     fun runTestNavigation() {
-        val appCompatButton = onView(
-                allOf(withId(R.id.buttonRunTest), withText("Run Test"),
-                        childAtPosition(
-                                allOf(withId(R.id.mainLayout),
-                                        childAtPosition(
-                                                withClassName(`is`("android.widget.LinearLayout")),
-                                                1)),
-                                6),
-                        isDisplayed()))
-        appCompatButton.perform(click())
+        onView(allOf(withId(R.id.buttonRunTest), withText("Run Test"), isDisplayed()))
+                .perform(click())
 
         val relativeLayout = onView(
                 allOf(childAtPosition(
@@ -143,16 +135,8 @@ class RunTestNavigation {
                         isDisplayed()))
         appCompatImageButton3.perform(click())
 
-        val appCompatButton7 = onView(
-                allOf(withId(R.id.buttonRunTest), withText("Run Test"),
-                        childAtPosition(
-                                allOf(withId(R.id.mainLayout),
-                                        childAtPosition(
-                                                withClassName(`is`("android.widget.LinearLayout")),
-                                                1)),
-                                6),
-                        isDisplayed()))
-        appCompatButton7.perform(click())
+        onView(allOf(withId(R.id.buttonRunTest), withText("Run Test"), isDisplayed()))
+                .perform(click())
 
         val relativeLayout4 = onView(
                 allOf(childAtPosition(

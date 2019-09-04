@@ -59,8 +59,6 @@ import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.preference.AppPreferences;
-import org.akvo.caddisfly.sensor.bluetooth.DeviceControlActivity;
-import org.akvo.caddisfly.sensor.bluetooth.DeviceScanActivity;
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
 import org.akvo.caddisfly.sensor.manual.ManualTestActivity;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
@@ -70,6 +68,7 @@ import org.akvo.caddisfly.sensor.usb.SensorActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -95,7 +94,6 @@ public class TestActivity extends BaseActivity {
 
     private final String[] storagePermissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private final String[] bluetoothPermissions = {Manifest.permission.ACCESS_COARSE_LOCATION};
 
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
@@ -199,12 +197,7 @@ public class TestActivity extends BaseActivity {
         }
 
         if (testInfo != null) {
-            if (testInfo.getSubtype() == TestType.BLUETOOTH) {
-                setTitle(String.format("%s. %s", testInfo.getMd610Id(), testInfo.getName()));
-
-            } else {
-                setTitle(testInfo.getName());
-            }
+            setTitle(testInfo.getName());
         }
     }
 
@@ -233,9 +226,6 @@ public class TestActivity extends BaseActivity {
                     startTest();
                     return;
                 }
-                break;
-            case BLUETOOTH:
-                checkPermissions = bluetoothPermissions;
                 break;
             default:
         }
@@ -343,9 +333,6 @@ public class TestActivity extends BaseActivity {
             }
 
             switch (testInfo.getSubtype()) {
-                case BLUETOOTH:
-                    startBluetoothTest();
-                    break;
                 case CHAMBER_TEST:
                     startChamberTest();
                     break;
@@ -383,18 +370,6 @@ public class TestActivity extends BaseActivity {
     private void startTitrationTest() {
         Intent intent;
         intent = new Intent(this, TitrationTestActivity.class);
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        startActivityForResult(intent, REQUEST_TEST);
-    }
-
-    private void startBluetoothTest() {
-        Intent intent;
-        // skip scanning for device in testing mode
-        if (AppPreferences.isTestMode()) {
-            intent = new Intent(this, DeviceControlActivity.class);
-        } else {
-            intent = new Intent(this, DeviceScanActivity.class);
-        }
         intent.putExtra(ConstantKey.TEST_INFO, testInfo);
         startActivityForResult(intent, REQUEST_TEST);
     }
@@ -552,15 +527,7 @@ public class TestActivity extends BaseActivity {
             startTest();
         } else {
 
-            String message;
-            switch (testInfo.getSubtype()) {
-                case BLUETOOTH:
-                    message = getString(R.string.location_permission);
-                    break;
-                default:
-                    message = getString(R.string.cameraAndStoragePermissions);
-                    break;
-            }
+            String message = getString(R.string.cameraAndStoragePermissions);
 
             AlertUtil.showSettingsSnackbar(this,
                     getWindow().getDecorView().getRootView(), message);
@@ -609,7 +576,7 @@ public class TestActivity extends BaseActivity {
         }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NotNull Message msg) {
             Activity f = ref.get();
             if (f != null) {
                 f.recreate();
