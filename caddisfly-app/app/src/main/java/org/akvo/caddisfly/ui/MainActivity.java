@@ -91,6 +91,8 @@ public class MainActivity extends BaseActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION};
     private NavigationController navigationController;
 
+    private boolean runTest = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -210,10 +212,18 @@ public class MainActivity extends BaseActivity {
                     startBluetoothReceive();
                     break;
                 case STORAGE_PERMISSION_WATER:
-                    startCalibrate(TestSampleType.WATER);
+                    if (runTest) {
+                        startTest(TestSampleType.WATER);
+                    } else {
+                        startCalibrate(TestSampleType.WATER);
+                    }
                     break;
                 case STORAGE_PERMISSION_SOIL:
-                    startCalibrate(TestSampleType.SOIL);
+                    if (runTest) {
+                        startTest(TestSampleType.SOIL);
+                    } else {
+                        startCalibrate(TestSampleType.SOIL);
+                    }
                     break;
                 case BLUETOOTH_STORAGE_PERMISSION:
                     showCalibrationError();
@@ -350,6 +360,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onCalibrateSoilClick(View view) {
+        runTest = false;
         if (permissionsDelegate.hasPermissions(storagePermission)) {
             startCalibrate(TestSampleType.SOIL);
         } else {
@@ -384,6 +395,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onRunTestClick(View view) {
+        runTest = true;
         if (permissionsDelegate.hasPermissions(storagePermission)) {
             startTest(TestSampleType.ALL);
         } else {
@@ -398,7 +410,7 @@ public class MainActivity extends BaseActivity {
 
     private void startTest(TestSampleType testSampleType) {
         FileHelper.migrateFolders();
-        navigationController.navigateToTestType(CHAMBER_TEST, testSampleType, true);
+        navigationController.navigateToTestType(CHAMBER_TEST, testSampleType, runTest);
     }
 
     /**
