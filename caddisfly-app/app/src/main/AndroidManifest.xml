@@ -80,13 +80,6 @@
             android:parentActivityName=".preference.SettingsActivity"
             android:screenOrientation="nosensor" />
 
-        <!-- CBT -->
-        <activity
-            android:name=".sensor.cbt.CbtActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /CBT -->
-
-
         <!-- Manual Test -->
         <activity
             android:name=".sensor.manual.ManualTestActivity"

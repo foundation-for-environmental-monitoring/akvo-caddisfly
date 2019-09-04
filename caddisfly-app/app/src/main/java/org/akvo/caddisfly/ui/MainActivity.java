@@ -257,10 +257,6 @@ public class MainActivity extends BaseActivity {
         navigationController.navigateToTestType(CHAMBER_TEST, testSampleType, false);
     }
 
-    public void onCbtClick(View view) {
-        navigationController.navigateToTestType(TestType.CBT, TestSampleType.ALL, true);
-    }
-
     public void onSettingsClick(MenuItem item) {
         final Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, 100);

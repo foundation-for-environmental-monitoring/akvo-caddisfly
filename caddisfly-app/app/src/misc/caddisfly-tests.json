@@ -724,29 +724,6 @@
       ]
     },
     {
-      "name": "Water - Microbiology - Aquagenx CBT - E.coli (MPN)",
-      "uuid": "e40d4764-e73f-46dd-a598-ed4db0fd3386",
-      "brand": "Aquagenx",
-      "hasImage": true,
-      "results": [
-        {
-          "id": 1,
-          "name": "Health Risk Category (Based on MPN and Confidence Interval)",
-          "unit": ""
-        },
-        {
-          "id": 2,
-          "name": "MPN",
-          "unit": "MPN/100ml"
-        },
-        {
-          "id": 3,
-          "name": "Upper 95% Confidence Interval",
-          "unit": ""
-        }
-      ]
-    },
-    {
       "name": "Water - Test Strips - Quantofix - Ammonium (0 - 400 mg/l NH4+)",
       "uuid": "99abf0cd-4697-4880-bde0-933d32d3972c",
       "brand": "Quantofix 91315",

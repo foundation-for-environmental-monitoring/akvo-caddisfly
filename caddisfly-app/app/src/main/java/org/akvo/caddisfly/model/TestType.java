@@ -61,12 +61,6 @@ public enum TestType {
     BLUETOOTH,
 
     /**
-     * Aquagenx CBT.
-     */
-    @SerializedName("cbt")
-    CBT,
-
-    /**
      * Coliform counting.
      */
     @SerializedName("coliform")

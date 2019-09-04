@@ -38,7 +38,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -62,7 +61,6 @@ import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.bluetooth.DeviceControlActivity;
 import org.akvo.caddisfly.sensor.bluetooth.DeviceScanActivity;
-import org.akvo.caddisfly.sensor.cbt.CbtActivity;
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
 import org.akvo.caddisfly.sensor.manual.ManualTestActivity;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
@@ -348,9 +346,6 @@ public class TestActivity extends BaseActivity {
                 case BLUETOOTH:
                     startBluetoothTest();
                     break;
-                case CBT:
-                    startCbtTest();
-                    break;
                 case CHAMBER_TEST:
                     startChamberTest();
                     break;
@@ -400,13 +395,6 @@ public class TestActivity extends BaseActivity {
         } else {
             intent = new Intent(this, DeviceScanActivity.class);
         }
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        startActivityForResult(intent, REQUEST_TEST);
-    }
-
-    private void startCbtTest() {
-        Intent intent;
-        intent = new Intent(this, CbtActivity.class);
         intent.putExtra(ConstantKey.TEST_INFO, testInfo);
         startActivityForResult(intent, REQUEST_TEST);
     }
@@ -598,16 +586,6 @@ public class TestActivity extends BaseActivity {
                     finish();
                 }
         );
-    }
-
-    /**
-     * Show CBT incubation times instructions in a dialog.
-     *
-     * @param view the view
-     */
-    public void onClickIncubationTimes(View view) {
-        DialogFragment newFragment = new CbtActivity.IncubationTimesDialogFragment();
-        newFragment.show(getSupportFragmentManager(), "incubationTimes");
     }
 
     @Override
