@@ -327,7 +327,8 @@ public class TestActivity extends BaseActivity {
             } else if (testInfo.getSubtype() == TestType.CHAMBER_TEST) {
 
                 if (!SwatchHelper.isSwatchListValid(testInfo)) {
-                    ErrorMessages.alertCalibrationIncomplete(this, testInfo, false);
+                    ErrorMessages.alertCalibrationIncomplete(this, testInfo,
+                            false, true);
                     return;
                 }
 
@@ -425,7 +426,8 @@ public class TestActivity extends BaseActivity {
                 R.string.cannotStartTest, R.string.ok, null)) {
 
             if (!SwatchHelper.isSwatchListValid(testInfo)) {
-                ErrorMessages.alertCalibrationIncomplete(this, testInfo, false);
+                ErrorMessages.alertCalibrationIncomplete(this, testInfo,
+                        false, true);
                 return;
             }
 

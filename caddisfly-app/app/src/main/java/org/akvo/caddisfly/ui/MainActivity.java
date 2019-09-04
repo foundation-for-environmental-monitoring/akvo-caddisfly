@@ -325,7 +325,7 @@ public class MainActivity extends BaseActivity {
         final TestListViewModel viewModel =
                 ViewModelProviders.of(this).get(TestListViewModel.class);
         ErrorMessages.alertCalibrationIncomplete(this,
-                viewModel.getTestInfo(Constants.FLUORIDE_ID), true);
+                viewModel.getTestInfo(Constants.FLUORIDE_ID), true, true);
     }
 
     public void onReceiveResult(MenuItem item) {

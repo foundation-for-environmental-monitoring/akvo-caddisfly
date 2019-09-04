@@ -34,6 +34,7 @@ import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.ErrorMessages;
 import org.akvo.caddisfly.helper.PermissionsDelegate;
+import org.akvo.caddisfly.helper.SwatchHelper;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestSampleType;
 import org.akvo.caddisfly.model.TestType;
@@ -137,6 +138,12 @@ public class TestListActivity extends BaseActivity
         if (testInfo.getSubtype() == TestType.CHAMBER_TEST && !runTest) {
             startCalibration();
         } else {
+            if (!SwatchHelper.isSwatchListValid(testInfo)) {
+                ErrorMessages.alertCalibrationIncomplete(this, testInfo,
+                        false, false);
+                return;
+            }
+
             Intent intent = new Intent(this, TestActivity.class);
             intent.putExtra(ConstantKey.TEST_INFO, testInfo);
             intent.putExtra(IS_INTERNAL, true);
