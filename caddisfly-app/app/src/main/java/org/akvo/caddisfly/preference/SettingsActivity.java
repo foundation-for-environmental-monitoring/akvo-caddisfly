@@ -29,14 +29,14 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.ViewModelProviders;
 
 public class SettingsActivity extends BaseActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -100,10 +100,6 @@ public class SettingsActivity extends BaseActivity
 
             getFragmentManager().beginTransaction()
                     .add(R.id.layoutDebugging, new DebuggingPreferenceFragment())
-                    .commit();
-
-            getFragmentManager().beginTransaction()
-                    .add(R.id.layoutCamera, new CameraPreferenceFragment())
                     .commit();
 
             getFragmentManager().beginTransaction()

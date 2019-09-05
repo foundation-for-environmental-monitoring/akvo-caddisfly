@@ -28,15 +28,6 @@ import android.view.ViewParent;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.common.TestConstantKeys;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-
-import java.util.Collection;
-
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.action.GeneralClickAction;
@@ -50,6 +41,16 @@ import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
+
+import org.akvo.caddisfly.R;
+import org.akvo.caddisfly.common.TestConstantKeys;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+
+import java.util.Collection;
+
 import timber.log.Timber;
 
 import static androidx.test.InstrumentationRegistry.getInstrumentation;
@@ -91,38 +92,6 @@ public final class TestUtil {
         });
         return stringHolder[0];
     }
-
-//    private static Matcher<View> withBackgroundColor(final int color) {
-//        Checks.checkNotNull(color);
-//        return new BoundedMatcher<View, Button>(Button.class) {
-//            @Override
-//            public boolean matchesSafely(Button button) {
-//                int buttonColor = ((ColorDrawable) button.getBackground()).getColor();
-//                return Color.red(color) == Color.red(buttonColor) &&
-//                        Color.green(color) == Color.green(buttonColor) &&
-//                        Color.blue(color) == Color.blue(buttonColor);
-//            }
-//
-//            @Override
-//            public void describeTo(Description description) {
-//                description.appendText("with background color: " + color);
-//            }
-//        };
-//    }
-//
-//    private static Matcher<String> isEmpty() {
-//        return new TypeSafeMatcher<String>() {
-//            @Override
-//            public boolean matchesSafely(String target) {
-//                return target.length() == 0;
-//            }
-//
-//            @Override
-//            public void describeTo(Description description) {
-//                description.appendText("is empty");
-//            }
-//        };
-//    }
 
     public static void sleep(int time) {
         try {
@@ -342,5 +311,4 @@ public final class TestUtil {
             }
         };
     }
-
 }

@@ -131,9 +131,6 @@ public class TestInfo implements Parcelable {
     @SerializedName("monthsValid")
     @Expose
     private Integer monthsValid;
-    @SerializedName("md610_id")
-    @Expose
-    private String md610Id;
     @SerializedName("sampleQuantity")
     @Expose
     private String sampleQuantity;
@@ -232,7 +229,6 @@ public class TestInfo implements Parcelable {
         } else {
             monthsValid = in.readInt();
         }
-        md610Id = in.readString();
         sampleQuantity = in.readString();
 
         results = new ArrayList<>();
@@ -396,10 +392,6 @@ public class TestInfo implements Parcelable {
         return "";
     }
 
-    public String getMd610Id() {
-        return md610Id;
-    }
-
     public String getBrandUrl() {
         return brandUrl;
     }
@@ -495,7 +487,6 @@ public class TestInfo implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(monthsValid);
         }
-        parcel.writeString(md610Id);
         parcel.writeString(sampleQuantity);
         parcel.writeTypedList(results);
         parcel.writeTypedList(instructions);

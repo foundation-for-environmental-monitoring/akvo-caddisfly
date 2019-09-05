@@ -25,13 +25,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
-import org.akvo.caddisfly.databinding.ActivityTestListBinding;
 import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.ErrorMessages;
 import org.akvo.caddisfly.helper.PermissionsDelegate;
+import org.akvo.caddisfly.helper.SwatchHelper;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestSampleType;
 import org.akvo.caddisfly.model.TestType;
@@ -40,9 +43,6 @@ import org.akvo.caddisfly.repository.TestConfigRepository;
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ConfigDownloader;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 
@@ -86,7 +86,7 @@ public class TestListActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityTestListBinding b = DataBindingUtil.setContentView(this, R.layout.activity_test_list);
+        DataBindingUtil.setContentView(this, R.layout.activity_test_list);
 
         setTitle(R.string.selectTest);
 
@@ -133,12 +133,23 @@ public class TestListActivity extends BaseActivity
             return;
         }
 
-        if (testInfo.getSubtype() == TestType.CHAMBER_TEST) {
+        boolean runTest = getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false);
+
+        if (testInfo.getSubtype() == TestType.CHAMBER_TEST && !runTest) {
             startCalibration();
         } else {
+            if (!SwatchHelper.isSwatchListValid(testInfo)) {
+                ErrorMessages.alertCalibrationIncomplete(this, testInfo,
+                        false, false);
+                return;
+            }
+
             Intent intent = new Intent(this, TestActivity.class);
             intent.putExtra(ConstantKey.TEST_INFO, testInfo);
             intent.putExtra(IS_INTERNAL, true);
+            if (runTest) {
+                intent.putExtra(ConstantKey.RUN_TEST, true);
+            }
             startActivity(intent);
         }
     }

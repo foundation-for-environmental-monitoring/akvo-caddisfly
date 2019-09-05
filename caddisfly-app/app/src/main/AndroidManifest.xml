@@ -29,9 +29,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="false" />
-    <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
     <uses-feature
@@ -80,13 +77,6 @@
             android:parentActivityName=".preference.SettingsActivity"
             android:screenOrientation="nosensor" />
 
-        <!-- CBT -->
-        <activity
-            android:name=".sensor.cbt.CbtActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /CBT -->
-
-
         <!-- Manual Test -->
         <activity
             android:name=".sensor.manual.ManualTestActivity"
@@ -110,19 +100,9 @@
             android:screenOrientation="nosensor" />
         <!-- /StripTest -->
 
-
-        <!-- Bluetooth -->
-        <activity
-            android:name=".sensor.bluetooth.DeviceControlActivity"
-            android:screenOrientation="nosensor" />
-        <activity
-            android:name=".sensor.bluetooth.DeviceScanActivity"
-            android:screenOrientation="nosensor" />
         <activity
             android:name=".sensor.chamber.ChamberTestActivity"
             android:screenOrientation="nosensor" />
-
-        <!-- /Bluetooth -->
 
         <!-- Diagnostic -->
         <activity

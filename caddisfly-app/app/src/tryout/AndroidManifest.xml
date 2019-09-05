@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.akvo.caddisfly">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <application>
         <activity
             android:name=".ui.TestActivity"
@@ -18,11 +14,6 @@
 
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".sensor.bluetooth.BluetoothLeService"
-            android:enabled="true" />
-        <!-- /Bluetooth -->
 
         <!-- USB -->
         <activity

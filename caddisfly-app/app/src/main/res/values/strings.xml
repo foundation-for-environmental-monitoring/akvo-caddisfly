@@ -111,17 +111,6 @@
     <string name="dipEcSensorInSolution">Dip EC Sensor in the fluid and press Go</string>
     <string name="prepareSolutionsForCalibration">Prepare 6 solutions with these EC values</string>
 
-    <!--Bluetooth-->
-    <string name="nearby_devices">Nearby devices</string>
-    <string name="connect_device">Connect to your device</string>
-    <string name="to_turn_bluetooth_on">To turn bluetooth on:</string>
-    <string name="connect">Connect</string>
-    <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
-    <string name="location_permission">Location permission is required for bluetooth connection</string>
-    <string name="unknown_device">Unknown</string>
-    <string name="scanning">Scanning…</string>
-    <string name="searching_for_device">Searching for bluetooth devices</string>
-
     <string name="view_results">View results</string>
 
     <!--Manual-->
@@ -152,16 +141,6 @@
     <string name="updateAvailable">New version available. Update to get the most out of your app</string>
     <string name="remindLater">Remind later</string>
 
-    <!--  Bluetooth -->
-    <string name="title_not_connected">Not Connected</string>
-    <string name="title_connected_to">connected to %1$s</string>
-    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
-    <string name="select_device">select a device to connect</string>
-    <string name="none_paired">No devices have been paired</string>
-    <string name="none_found">No devices found</string>
-    <string name="title_paired_devices">Paired Devices</string>
-    <string name="title_other_devices">Other Available Devices</string>
-    <string name="button_scan">Scan for devices</string>
     <string name="graph">Graph</string>
 
     <string name="versionExpired">Version expired</string>
@@ -172,4 +151,9 @@
     <string name="enterDilutionFactor">Enter Dilution Factor</string>
     <string name="errorLoadingConfiguration">Could not load configuration information</string>
     <string name="cameraAndLocationPermissions">Camera &amp; location permissions are required</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="senderEmailDetails">Email details</string>
+    <string name="invalidEmailAddress">Invalid email address</string>
+    <string name="useDevicesEmailDetails">Use devices email details</string>
 </resources>

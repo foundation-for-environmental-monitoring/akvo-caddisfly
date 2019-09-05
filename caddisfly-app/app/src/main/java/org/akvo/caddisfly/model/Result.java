@@ -49,9 +49,6 @@ public class Result implements Parcelable {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("md610_id")
-    @Expose
-    private String md610Id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -98,7 +95,6 @@ public class Result implements Parcelable {
 
     protected Result(Parcel in) {
         id = in.readByte() == 0x00 ? null : in.readInt();
-        md610Id = in.readString();
         name = in.readString();
         unit = in.readString();
         formula = in.readString();
@@ -131,10 +127,6 @@ public class Result implements Parcelable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getMd610Id() {
-        return md610Id;
     }
 
     public String getName() {
@@ -228,7 +220,6 @@ public class Result implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeInt(id);
         }
-        dest.writeString(md610Id);
         dest.writeString(name);
         dest.writeString(unit);
         dest.writeString(formula);

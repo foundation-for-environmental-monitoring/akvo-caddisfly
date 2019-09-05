@@ -34,6 +34,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -52,9 +59,6 @@ import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.preference.AppPreferences;
-import org.akvo.caddisfly.sensor.bluetooth.DeviceControlActivity;
-import org.akvo.caddisfly.sensor.bluetooth.DeviceScanActivity;
-import org.akvo.caddisfly.sensor.cbt.CbtActivity;
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity;
 import org.akvo.caddisfly.sensor.manual.ManualTestActivity;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
@@ -64,6 +68,7 @@ import org.akvo.caddisfly.sensor.usb.SensorActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -73,15 +78,8 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProviders;
 import timber.log.Timber;
 
-@SuppressWarnings("deprecation")
 public class TestActivity extends BaseActivity {
 
     private static final int REQUEST_TEST = 1;
@@ -96,7 +94,6 @@ public class TestActivity extends BaseActivity {
 
     private final String[] storagePermissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private final String[] bluetoothPermissions = {Manifest.permission.ACCESS_COARSE_LOCATION};
 
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
@@ -115,9 +112,14 @@ public class TestActivity extends BaseActivity {
             testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
 
             if (testInfo != null) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
-                                TestActivity.class.getSimpleName()).commit();
+                boolean runTest = getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false);
+                if (runTest) {
+                    startTest();
+                } else {
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
+                                    TestActivity.class.getSimpleName()).commit();
+                }
             }
         }
 
@@ -195,12 +197,7 @@ public class TestActivity extends BaseActivity {
         }
 
         if (testInfo != null) {
-            if (testInfo.getSubtype() == TestType.BLUETOOTH) {
-                setTitle(String.format("%s. %s", testInfo.getMd610Id(), testInfo.getName()));
-
-            } else {
-                setTitle(testInfo.getName());
-            }
+            setTitle(testInfo.getName());
         }
     }
 
@@ -230,12 +227,6 @@ public class TestActivity extends BaseActivity {
                     return;
                 }
                 break;
-            case BLUETOOTH:
-                checkPermissions = bluetoothPermissions;
-                break;
-            case TITRATION:
-                startTest();
-                return;
             default:
         }
 
@@ -324,7 +315,8 @@ public class TestActivity extends BaseActivity {
             } else if (testInfo.getSubtype() == TestType.CHAMBER_TEST) {
 
                 if (!SwatchHelper.isSwatchListValid(testInfo)) {
-                    ErrorMessages.alertCalibrationIncomplete(this, testInfo, false);
+                    ErrorMessages.alertCalibrationIncomplete(this, testInfo,
+                            false, true);
                     return;
                 }
 
@@ -341,12 +333,6 @@ public class TestActivity extends BaseActivity {
             }
 
             switch (testInfo.getSubtype()) {
-                case BLUETOOTH:
-                    startBluetoothTest();
-                    break;
-                case CBT:
-                    startCbtTest();
-                    break;
                 case CHAMBER_TEST:
                     startChamberTest();
                     break;
@@ -388,25 +374,6 @@ public class TestActivity extends BaseActivity {
         startActivityForResult(intent, REQUEST_TEST);
     }
 
-    private void startBluetoothTest() {
-        Intent intent;
-        // skip scanning for device in testing mode
-        if (AppPreferences.isTestMode()) {
-            intent = new Intent(this, DeviceControlActivity.class);
-        } else {
-            intent = new Intent(this, DeviceScanActivity.class);
-        }
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        startActivityForResult(intent, REQUEST_TEST);
-    }
-
-    private void startCbtTest() {
-        Intent intent;
-        intent = new Intent(this, CbtActivity.class);
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        startActivityForResult(intent, REQUEST_TEST);
-    }
-
     private void startManualTest() {
         Intent intent;
         intent = new Intent(this, ManualTestActivity.class);
@@ -422,7 +389,8 @@ public class TestActivity extends BaseActivity {
                 R.string.cannotStartTest, R.string.ok, null)) {
 
             if (!SwatchHelper.isSwatchListValid(testInfo)) {
-                ErrorMessages.alertCalibrationIncomplete(this, testInfo, false);
+                ErrorMessages.alertCalibrationIncomplete(this, testInfo,
+                        false, true);
                 return;
             }
 
@@ -453,7 +421,7 @@ public class TestActivity extends BaseActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TEST && resultCode == Activity.RESULT_OK) {
             //return the test result to the external app
@@ -559,15 +527,7 @@ public class TestActivity extends BaseActivity {
             startTest();
         } else {
 
-            String message;
-            switch (testInfo.getSubtype()) {
-                case BLUETOOTH:
-                    message = getString(R.string.location_permission);
-                    break;
-                default:
-                    message = getString(R.string.cameraAndStoragePermissions);
-                    break;
-            }
+            String message = getString(R.string.cameraAndStoragePermissions);
 
             AlertUtil.showSettingsSnackbar(this,
                     getWindow().getDecorView().getRootView(), message);
@@ -595,16 +555,6 @@ public class TestActivity extends BaseActivity {
         );
     }
 
-    /**
-     * Show CBT incubation times instructions in a dialog.
-     *
-     * @param view the view
-     */
-    public void onClickIncubationTimes(View view) {
-        DialogFragment newFragment = new CbtActivity.IncubationTimesDialogFragment();
-        newFragment.show(getSupportFragmentManager(), "incubationTimes");
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -626,7 +576,7 @@ public class TestActivity extends BaseActivity {
         }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NotNull Message msg) {
             Activity f = ref.get();
             if (f != null) {
                 f.recreate();

@@ -88,38 +88,6 @@
                     android:theme="?longButtonStyle" />
 
                 <Button
-                    android:id="@+id/buttonBluetooth"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onBluetoothDeviceClick"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/md610_photometer"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:theme="?longButtonStyle"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/buttonCbt"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onCbtClick"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/cbt"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:theme="?longButtonStyle"
-                    android:visibility="gone" />
-
-                <Button
                     android:id="@+id/buttonCalibrateSoil"
                     style="@style/ListButton"
                     android:layout_width="match_parent"
