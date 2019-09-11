@@ -35,7 +35,7 @@ public final class AppConfig {
      */
     public static final boolean APP_EXPIRY = true;
     public static final int APP_EXPIRY_DAY = 1;
-    public static final int APP_EXPIRY_MONTH = 2;
+    public static final int APP_EXPIRY_MONTH = 10;
     public static final int APP_EXPIRY_YEAR = 2019;
 
     public static final String GET_STARTED_URL = "http://ffem.io/start";

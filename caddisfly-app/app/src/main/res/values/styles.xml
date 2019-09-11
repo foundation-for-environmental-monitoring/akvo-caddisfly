@@ -72,6 +72,12 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="AppTheme.Button.Main">
+        <item name="colorButtonNormal">@color/button_app</item>
+        <item name="colorAccent">@color/button_app</item>
+        <item name="colorControlHighlight">@color/button_app_selected</item>
+    </style>
+
     <style name="AppTheme.Button.Cyan">
         <item name="colorButtonNormal">@color/button_green</item>
         <item name="colorAccent">@color/button_green</item>

@@ -31,6 +31,9 @@
     <color name="button_green">#CDCDCD</color>
     <color name="button_green_selected">#848484</color>
 
+    <color name="button_app">#5CA781</color>
+    <color name="button_app_selected">#4D9E75</color>
+
     <color name="fab_button_background">#282828</color>
 
     <!-- Diagnostic -->

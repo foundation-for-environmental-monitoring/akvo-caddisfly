@@ -20,164 +20,146 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <include
+            layout="@layout/toolbar"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <include layout="@layout/toolbar" />
 
-            <LinearLayout
-                android:id="@+id/mainLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="-1dp"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/buttonSensors"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onSensorsClick"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/sensors"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/buttonStripTest"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onStripTestsClick"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/stripTest"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/buttonCalibrate"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onCalibrateClick"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/calibrate"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText" />
-
-                <Button
-                    android:id="@+id/buttonRunTest"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onRunTestClick"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/runTest"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@id/link"
-                        android:layout_marginBottom="7dp"
-                        android:gravity="center_horizontal"
-                        android:text="@string/to_get_started"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/link"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@id/textVersionExpiry"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="150dp"
-                        android:gravity="center_horizontal"
-                        android:onClick="onGetStartedClicked"
-                        android:text="http://ffem.io/start"
-                        android:textColor="@color/text_links"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/textVersionExpiry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
-                        android:ellipsize="none"
-                        android:gravity="center_horizontal"
-                        android:singleLine="true"
-                        android:textAllCaps="true"
-                        android:textColor="#d8001c29"
-                        android:textSize="14dp"
-                        android:visibility="visible"
-                        tools:ignore="SpUsage"
-                        tools:text="Version expires: 15 Jan 2018" />
-                </RelativeLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/layoutDiagnostics"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layoutMainButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:visibility="visible">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <Button
+                android:id="@+id/buttonStripTest"
+                style="@style/ListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:onClick="onStripTestsClick"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/stripTest"
+                android:textColor="?longButtonText"
+                android:theme="?longButtonStyle"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonRunTest"
+                style="@style/ListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:onClick="onRunTestClick"
+                android:layout_marginTop="0dp"
+                android:text="@string/runTest"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:theme="?longButtonStyle" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@+id/layoutSettings">
 
             <TextView
-                android:id="@+id/textDiagnostics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/link"
+                android:layout_marginBottom="7dp"
+                android:gravity="center_horizontal"
+                android:text="@string/to_get_started"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/textVersionExpiry"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="150dp"
+                android:gravity="center_horizontal"
+                android:onClick="onGetStartedClicked"
+                android:text="http://ffem.io/start"
+                android:textColor="@color/text_links"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textVersionExpiry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="@dimen/text_margin_bottom"
+                android:layout_marginBottom="10dp"
                 android:ellipsize="none"
-                android:gravity="start"
+                android:gravity="center_horizontal"
                 android:singleLine="true"
-                android:text="@string/diagnostics"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#2a01a2bc"
-                android:textSize="46dp"
-                tools:ignore="SpUsage" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabDisableDiagnostics"
-                style="@style/floating_action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textDiagnostics"
-                android:layout_alignParentEnd="true"
-                android:onClick="onDisableDiagnosticsClick"
-                android:src="@drawable/ic_revert_24dp"
-                app:backgroundTint="@color/diagnostic"
-                tools:ignore="RelativeOverlap" />
+                android:textAllCaps="true"
+                android:textColor="#d8001c29"
+                android:textSize="14dp"
+                android:visibility="visible"
+                tools:ignore="SpUsage"
+                tools:text="Version expires: 15 Jan 2018" />
         </RelativeLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+        <TextView
+            android:id="@+id/textDiagnostics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:ellipsize="none"
+            android:singleLine="true"
+            android:text="@string/diagnostics"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#2a01a2bc"
+            android:textSize="46dp"
+            app:layout_constraintBottom_toTopOf="@id/layoutSettings"
+            tools:ignore="SpUsage" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layoutSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonCalibrate"
+                style="@style/ListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:onClick="onCalibrateClick"
+                android:text="@string/calibrate"
+                android:textAlignment="center"
+                android:textColor="?longButtonText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonSettings"
+                style="@style/ListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:layout_marginBottom="2dp"
+                android:minHeight="80dp"
+                android:onClick="onSettingsClick"
+                android:text="@string/settings"
+                android:textAlignment="center"
+                android:textColor="?longButtonText" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

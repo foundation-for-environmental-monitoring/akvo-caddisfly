@@ -27,8 +27,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -53,7 +51,6 @@ import org.akvo.caddisfly.model.TestSampleType;
 import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.preference.SettingsActivity;
-import org.akvo.caddisfly.sensor.titration.ui.TitrationMeasureActivity;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
@@ -79,6 +76,7 @@ public class MainActivity extends BaseActivity {
     private NavigationController navigationController;
 
     private boolean runTest = false;
+    private ActivityMainBinding b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +86,7 @@ public class MainActivity extends BaseActivity {
 
         navigationController = new NavigationController(this);
 
-        ActivityMainBinding b = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        b = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         setTitle(R.string.appName);
 
@@ -120,11 +118,9 @@ public class MainActivity extends BaseActivity {
      */
     private void switchLayoutForDiagnosticOrUserMode() {
         if (AppPreferences.isDiagnosticMode()) {
-            findViewById(R.id.layoutDiagnostics).setVisibility(View.VISIBLE);
+            b.textDiagnostics.setVisibility(View.VISIBLE);
         } else {
-            if (findViewById(R.id.layoutDiagnostics).getVisibility() == View.VISIBLE) {
-                findViewById(R.id.layoutDiagnostics).setVisibility(View.GONE);
-            }
+            b.textDiagnostics.setVisibility(View.GONE);
         }
     }
 
@@ -219,7 +215,7 @@ public class MainActivity extends BaseActivity {
         navigationController.navigateToTestType(CHAMBER_TEST, testSampleType, false);
     }
 
-    public void onSettingsClick(MenuItem item) {
+    public void onSettingsClick(View view) {
         final Intent intent = new Intent(this, SettingsActivity.class);
         startActivityForResult(intent, 100);
     }
@@ -233,20 +229,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    private void showCalibrationError() {
-        final TestListViewModel viewModel =
-                ViewModelProviders.of(this).get(TestListViewModel.class);
-        ErrorMessages.alertCalibrationIncomplete(this,
-                viewModel.getTestInfo(Constants.FLUORIDE_ID), true, true);
-    }
-
     public void onColiformsClick(View view) {
         final TestListViewModel viewModel =
                 ViewModelProviders.of(this).get(TestListViewModel.class);
@@ -254,17 +236,6 @@ public class MainActivity extends BaseActivity {
         TestInfo testInfo = viewModel.getTestInfo(Constants.COLIFORM_ID);
 
         final Intent intent = new Intent(this, TestActivity.class);
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        startActivity(intent);
-    }
-
-    public void onTitrationClick(View view) {
-        final TestListViewModel viewModel =
-                ViewModelProviders.of(this).get(TestListViewModel.class);
-
-        TestInfo testInfo = viewModel.getTestInfo(Constants.TITRATION2_ID);
-
-        final Intent intent = new Intent(this, TitrationMeasureActivity.class);
         intent.putExtra(ConstantKey.TEST_INFO, testInfo);
         startActivity(intent);
     }
