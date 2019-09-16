@@ -169,7 +169,7 @@ dependencies {
 
     // Firebase (Experiment Flavor)
     tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:17.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-core:17.2.0'
     tryoutImplementation 'com.google.firebase:firebase-database:19.0.0'
     tryoutImplementation 'com.google.firebase:firebase-firestore:21.0.0'
     tryoutImplementation 'com.google.firebase:firebase-storage:19.0.0'
