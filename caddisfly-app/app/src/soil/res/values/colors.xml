@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="accentColor">#e38926</color>
+
+    <color name="button_app">#E17E25</color>
+    <color name="button_app_selected">#C76F20</color>
+
 </resources>
