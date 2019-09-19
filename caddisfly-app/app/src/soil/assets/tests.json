@@ -213,7 +213,8 @@
           "id": 1,
           "name": "Zinc",
           "unit": "mg/kg",
-          "formula": "(%1$f * 5)"
+          "formula": "(%1$f * 5)",
+          "timeDelay": 300
         }
       ]
     },
