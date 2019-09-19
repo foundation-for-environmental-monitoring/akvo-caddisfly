@@ -189,7 +189,7 @@
           "id": 1,
           "name": "Copper",
           "unit": "mg/kg",
-          "formula": "(%1$f * 5)"
+          "formula": "(%1$f * 5)",
           "timeDelay": 300
         }
       ]
