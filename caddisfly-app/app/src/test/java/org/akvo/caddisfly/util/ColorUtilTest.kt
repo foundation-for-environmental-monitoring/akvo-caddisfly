@@ -17,34 +17,30 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.util;
+package org.akvo.caddisfly.util
 
-import android.graphics.Color;
+import android.graphics.Color
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
 
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-
-@SuppressWarnings("unused")
-public class ColorUtilTest {
-
+class ColorUtilTest {
     @Before
-    public void setUp() throws Exception {
-        ClassUtil.assertUtilityClassWellDefined(ClassUtil.class);
-        ClassUtil.assertUtilityClassWellDefined(ColorUtil.class);
+    @Throws(Exception::class)
+    fun setUp() {
+        ClassUtil.assertUtilityClassWellDefined(ColorUtil::class.java)
     }
 
     @Test
-    public void testGetDistance() {
-        double distance = ColorUtil.getColorDistance(Color.rgb(200, 200, 200), Color.rgb(100, 100, 100));
-        assertEquals(173.20508075688772, distance, 0);
+    fun testGetDistance() {
+        val distance = ColorUtil.getColorDistance(Color.rgb(200, 200, 200), Color.rgb(100, 100, 100))
+        assertEquals(173.20508075688772, distance, 0.0)
     }
 
     @Test
-    public void testGetColorRgbString() {
-        String rgb = ColorUtil.getColorRgbString(-13850285);
-        assertEquals("44  169  83", rgb);
+    fun testGetColorRgbString() {
+        val rgb: String? = ColorUtil.getColorRgbString(-13850285)
+        assertEquals("44  169  83", rgb)
     }
 
 //    @Test
@@ -66,16 +62,16 @@ public class ColorUtilTest {
 //        }
 //    }
 
-    @Test
-    public void testGetColorFromRgb() {
-        int color = ColorUtil.getColorFromRgb("44  169  83");
-        assertEquals(-13850285, color);
 
+    @Test
+    fun testGetColorFromRgb() {
+        val color: Int = ColorUtil.getColorFromRgb("44  169  83")
+        assertEquals(-13850285, color.toLong())
     }
 
     @Test
-    public void testGetBrightness() {
-        int brightness = ColorUtil.getBrightness(Color.rgb(200, 255, 30));
-        assertEquals(233, brightness);
+    fun testGetBrightness() {
+        val brightness = ColorUtil.getBrightness(Color.rgb(200, 255, 30))
+        assertEquals(233, brightness.toLong())
     }
 }

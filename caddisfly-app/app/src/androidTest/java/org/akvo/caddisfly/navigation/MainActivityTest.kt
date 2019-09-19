@@ -49,11 +49,10 @@ class MainActivityTest {
 //        onView(withText("Strip Test")).perform(click());
 //
 //        pressBack();
-
-
     }
 
     companion object {
+        @JvmStatic
         @BeforeClass
         fun initialize() {
             if (!TestHelper.isDeviceInitialized()) {

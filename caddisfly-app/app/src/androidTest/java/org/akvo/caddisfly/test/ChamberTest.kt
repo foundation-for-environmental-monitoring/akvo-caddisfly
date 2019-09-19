@@ -333,6 +333,7 @@ class ChamberTest {
 
     companion object {
         private const val TEST_START_DELAY = 24
+        @JvmStatic
         @BeforeClass
         fun initialize() {
             if (!TestHelper.isDeviceInitialized()) {

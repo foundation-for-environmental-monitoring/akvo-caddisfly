@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'de.mobilej.unmock'
 
@@ -120,11 +121,12 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Architecture Components
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     // Room
     implementation 'androidx.room:room-runtime:2.1.0'
     annotationProcessor 'androidx.room:room-compiler:2.1.0'
+    kapt 'android.arch.persistence.room:compiler:1.1.1'
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -142,6 +144,7 @@ dependencies {
     // Testing
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.assertj:assertj-core:3.8.0'
+    testImplementation 'androidx.test:core:1.2.0'
 
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:rules:1.2.0'
@@ -169,9 +172,9 @@ dependencies {
     // Firebase (Experiment Flavor)
 //    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
     tryoutImplementation 'com.google.firebase:firebase-core:17.2.0'
-    tryoutImplementation 'com.google.firebase:firebase-database:19.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:21.0.0'
-    tryoutImplementation 'com.google.firebase:firebase-storage:19.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-database:19.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:21.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-storage:19.0.1'
     tryoutImplementation 'com.google.firebase:firebase-auth:19.0.0'
 
     implementation "androidx.core:core-ktx:1.1.0"

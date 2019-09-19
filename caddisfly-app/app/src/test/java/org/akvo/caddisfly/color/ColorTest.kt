@@ -17,123 +17,105 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.color;
+package org.akvo.caddisfly.color
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.Bitmap
+import android.graphics.Color
+import junit.framework.TestCase.assertEquals
+import org.akvo.caddisfly.common.ChamberTestConfig
+import org.akvo.caddisfly.entity.Calibration
+import org.akvo.caddisfly.helper.SwatchHelper
+import org.akvo.caddisfly.model.ColorItem
+import org.akvo.caddisfly.model.Result
+import org.akvo.caddisfly.model.ResultDetail
+import org.akvo.caddisfly.model.TestInfo
+import org.akvo.caddisfly.util.ColorUtil
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import java.util.*
 
-import org.akvo.caddisfly.common.ChamberTestConfig;
-import org.akvo.caddisfly.entity.Calibration;
-import org.akvo.caddisfly.helper.SwatchHelper;
-import org.akvo.caddisfly.model.ColorInfo;
-import org.akvo.caddisfly.model.ColorItem;
-import org.akvo.caddisfly.model.Result;
-import org.akvo.caddisfly.model.ResultDetail;
-import org.akvo.caddisfly.model.TestInfo;
-import org.akvo.caddisfly.util.ColorUtil;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.Assert.assertEquals;
-
-@RunWith(RobolectricTestRunner.class)
-public class ColorTest {
-
+@RunWith(RobolectricTestRunner::class)
+class ColorTest {
     @Test
-    public void testGetResultValue() {
-        int[] colors = new int[2500];
-        for (int i = 0; i < 2500; i++) {
-            colors[i] = -1;
+    fun testGetResultValue() {
+        val colors = IntArray(2500)
+        for (i in 0..2499) {
+            colors[i] = -1
         }
-
-        Bitmap bitmap = Bitmap.createBitmap(colors, 50, 50, Bitmap.Config.ARGB_8888);
-        TestInfo testInfo = new TestInfo();
-        Result result = new Result();
-        result.getColors().add(new ColorItem(0));
-        result.getColors().add(new ColorItem(0.5));
-        result.getColors().add(new ColorItem(1));
-        result.getColors().add(new ColorItem(1.5));
-        result.getColors().add(new ColorItem(2));
-        testInfo.getResults().add(result);
-        List<Calibration> calibrations = new ArrayList<>();
-        calibrations.add(new Calibration(0, Color.rgb(255, 87, 181)));
-        calibrations.add(new Calibration(0.5, Color.rgb(255, 124, 157)));
-        calibrations.add(new Calibration(1, Color.rgb(255, 146, 139)));
-        calibrations.add(new Calibration(1.5, Color.rgb(250, 171, 130)));
-        calibrations.add(new Calibration(2, Color.rgb(245, 185, 122)));
-        testInfo.setCalibrations(calibrations);
-
-        ColorInfo photoColor = ColorUtil.getColorFromBitmap(bitmap, ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT);
-
-        ResultDetail resultDetail = SwatchHelper.analyzeColor(5, photoColor, testInfo.getSwatches());
-
-        assertEquals(-1.0, resultDetail.getResult());
+        val bitmap: Bitmap? = Bitmap.createBitmap(colors, 50, 50, Bitmap.Config.ARGB_8888)
+        val testInfo = TestInfo()
+        val result = Result()
+        result.colors.add(ColorItem(0.0))
+        result.colors.add(ColorItem(0.5))
+        result.colors.add(ColorItem(1.0))
+        result.colors.add(ColorItem(1.5))
+        result.colors.add(ColorItem(2.0))
+        testInfo.results.add(result)
+        val calibrations: MutableList<Calibration> = ArrayList()
+        calibrations.add(Calibration(0.0, Color.rgb(255, 87, 181)))
+        calibrations.add(Calibration(0.5, Color.rgb(255, 124, 157)))
+        calibrations.add(Calibration(1.0, Color.rgb(255, 146, 139)))
+        calibrations.add(Calibration(1.5, Color.rgb(250, 171, 130)))
+        calibrations.add(Calibration(2.0, Color.rgb(245, 185, 122)))
+        testInfo.calibrations = calibrations
+        val photoColor = ColorUtil.getColorFromBitmap(bitmap!!, ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
+        val resultDetail: ResultDetail = SwatchHelper.analyzeColor(5, photoColor, testInfo.swatches)
+        assertEquals(-1.0, resultDetail.result)
     }
 
     @Test
-    public void testGetRedResultValue() {
-        int[] colors = new int[2500];
-        for (int i = 0; i < 2500; i++) {
-            colors[i] = Color.rgb(254, 1, 19);
+    fun testGetRedResultValue() {
+        val colors = IntArray(2500)
+        for (i in 0..2499) {
+            colors[i] = Color.rgb(254, 1, 19)
         }
-
-        Bitmap bitmap = Bitmap.createBitmap(colors, 50, 50, Bitmap.Config.ARGB_8888);
-        TestInfo testInfo = new TestInfo();
-        Result result = new Result();
-        result.getColors().add(new ColorItem(0));
-        result.getColors().add(new ColorItem(0.5));
-        result.getColors().add(new ColorItem(1));
-        result.getColors().add(new ColorItem(1.5));
-        result.getColors().add(new ColorItem(2));
-        testInfo.getResults().add(result);
-        List<Calibration> calibrations = new ArrayList<>();
-        calibrations.add(new Calibration(0, Color.rgb(253, 0, 18)));
-        calibrations.add(new Calibration(0.5, Color.rgb(254, 1, 21)));
-        calibrations.add(new Calibration(1, Color.rgb(254, 1, 19)));
-        calibrations.add(new Calibration(1.5, Color.rgb(253, 0, 18)));
-        calibrations.add(new Calibration(2, Color.rgb(253, 0, 18)));
-        testInfo.setCalibrations(calibrations);
-
-        ColorInfo photoColor = ColorUtil.getColorFromBitmap(bitmap, ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT);
-
-        ResultDetail resultDetail = SwatchHelper.analyzeColor(5, photoColor, testInfo.getSwatches());
-
-        assertEquals(0.752, resultDetail.getResult());
+        val bitmap: Bitmap? = Bitmap.createBitmap(colors, 50, 50, Bitmap.Config.ARGB_8888)
+        val testInfo = TestInfo()
+        val result = Result()
+        result.colors.add(ColorItem(0.0))
+        result.colors.add(ColorItem(0.5))
+        result.colors.add(ColorItem(1.0))
+        result.colors.add(ColorItem(1.5))
+        result.colors.add(ColorItem(2.0))
+        testInfo.results.add(result)
+        val calibrations: MutableList<Calibration> = ArrayList()
+        calibrations.add(Calibration(0.0, Color.rgb(253, 0, 18)))
+        calibrations.add(Calibration(0.5, Color.rgb(254, 1, 21)))
+        calibrations.add(Calibration(1.0, Color.rgb(254, 1, 19)))
+        calibrations.add(Calibration(1.5, Color.rgb(253, 0, 18)))
+        calibrations.add(Calibration(2.0, Color.rgb(253, 0, 18)))
+        testInfo.calibrations = calibrations
+        val photoColor = ColorUtil.getColorFromBitmap(bitmap!!, ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
+        val resultDetail: ResultDetail = SwatchHelper.analyzeColor(5, photoColor, testInfo.swatches)
+        assertEquals(0.752, resultDetail.result)
     }
 
     @Test
-    public void testGetPinkResultValue() {
-        int[] colors = new int[2500];
-        for (int i = 0; i < 2500; i++) {
-            colors[i] = Color.rgb(254, 115, 190);
+    fun testGetPinkResultValue() {
+        val colors = IntArray(2500)
+        for (i in 0..2499) {
+            colors[i] = Color.rgb(254, 115, 190)
         }
-
-        Bitmap bitmap = Bitmap.createBitmap(colors, 50, 50, Bitmap.Config.ARGB_8888);
-        TestInfo testInfo = new TestInfo();
-        Result result = new Result();
-        result.getColors().add(new ColorItem(0));
-        result.getColors().add(new ColorItem(0.5));
-        result.getColors().add(new ColorItem(1));
-        result.getColors().add(new ColorItem(1.5));
-        result.getColors().add(new ColorItem(2));
-        testInfo.getResults().add(result);
-        List<Calibration> calibrations = new ArrayList<>();
-        calibrations.add(new Calibration(0, Color.rgb(255, 117, 195)));
-        calibrations.add(new Calibration(0.5, Color.rgb(255, 117, 195)));
-        calibrations.add(new Calibration(1, Color.rgb(255, 117, 195)));
-        calibrations.add(new Calibration(1.5, Color.rgb(255, 118, 196)));
-        calibrations.add(new Calibration(2, Color.rgb(255, 118, 196)));
-        testInfo.setCalibrations(calibrations);
-
-        ColorInfo photoColor = ColorUtil.getColorFromBitmap(bitmap, ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT);
-
-        ResultDetail resultDetail = SwatchHelper.analyzeColor(5, photoColor, testInfo.getSwatches());
-
-        assertEquals(0.0, resultDetail.getResult());
+        val bitmap: Bitmap? = Bitmap.createBitmap(colors, 50, 50, Bitmap.Config.ARGB_8888)
+        val testInfo = TestInfo()
+        val result = Result()
+        result.colors.add(ColorItem(0.0))
+        result.colors.add(ColorItem(0.5))
+        result.colors.add(ColorItem(1.0))
+        result.colors.add(ColorItem(1.5))
+        result.colors.add(ColorItem(2.0))
+        testInfo.results.add(result)
+        val calibrations: MutableList<Calibration> = ArrayList()
+        calibrations.add(Calibration(0.0, Color.rgb(255, 117, 195)))
+        calibrations.add(Calibration(0.5, Color.rgb(255, 117, 195)))
+        calibrations.add(Calibration(1.0, Color.rgb(255, 117, 195)))
+        calibrations.add(Calibration(1.5, Color.rgb(255, 118, 196)))
+        calibrations.add(Calibration(2.0, Color.rgb(255, 118, 196)))
+        testInfo.calibrations = calibrations
+        val photoColor = ColorUtil.getColorFromBitmap(bitmap!!, ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
+        val resultDetail: ResultDetail = SwatchHelper.analyzeColor(5, photoColor, testInfo.swatches)
+        assertEquals(0.0, resultDetail.result)
     }
 
 
@@ -444,4 +426,5 @@ public class ColorTest {
 //        assertEquals(true, SwatchHelper.isSwatchListValid(testInfo));
 //
 //    }
+
 }

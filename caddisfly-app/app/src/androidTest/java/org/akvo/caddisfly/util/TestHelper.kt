@@ -66,7 +66,7 @@ object TestHelper {
     private const val TAKE_SCREENSHOTS = false
     private val STRING_HASH_MAP_EN = HashMap<String, String>()
     private val STRING_HASH_MAP_FR = HashMap<String, String>()
-    private val STRING_HASH_MAP_IN = HashMap<String, String>()
+    private val STRING_HASH_MAP_HI = HashMap<String, String>()
     private val CALIBRATION_HASH_MAP: MutableMap<String, String> = HashMap()
     lateinit var currentHashMap: Map<String, String>
 
@@ -75,12 +75,13 @@ object TestHelper {
     private fun addString(key: String, vararg values: String) {
         STRING_HASH_MAP_EN[key] = values[0]
         if (values.size > 1) {
-            STRING_HASH_MAP_FR[key] = values[2]
-            STRING_HASH_MAP_IN[key] = values[3]
-        } else {
-            STRING_HASH_MAP_FR[key] = values[0]
-            STRING_HASH_MAP_IN[key] = values[0]
+            STRING_HASH_MAP_FR[key] = values[1]
         }
+        if (values.size > 2) {
+            STRING_HASH_MAP_HI[key] = values[2]
+        }
+        STRING_HASH_MAP_FR[key] = values[0]
+        STRING_HASH_MAP_HI[key] = values[0]
     }
 
     private fun addCalibration(key: String, colors: String) {
@@ -88,7 +89,7 @@ object TestHelper {
     }
 
     @Suppress("SameParameterValue")
-    private fun getString(activity: Activity?, @StringRes resourceId: Int): String {
+    fun getString(activity: Activity?, @StringRes resourceId: Int): String {
         val currentResources: Resources? = activity!!.resources
         val assets: AssetManager? = currentResources!!.assets
         val metrics: DisplayMetrics? = currentResources.displayMetrics
@@ -102,7 +103,7 @@ object TestHelper {
         mCurrentLanguage = languageCode
         STRING_HASH_MAP_EN.clear()
         STRING_HASH_MAP_FR.clear()
-        STRING_HASH_MAP_IN.clear()
+        STRING_HASH_MAP_HI.clear()
         CALIBRATION_HASH_MAP.clear()
         val currentResources: Resources? = activity.resources
         val assets: AssetManager? = currentResources!!.assets
@@ -110,8 +111,8 @@ object TestHelper {
         val config = Configuration(currentResources.configuration)
         config.locale = Locale(languageCode)
         val res = Resources(assets, metrics, config)
-        addString(TestConstant.LANGUAGE, "English", "Français", "Bahasa Indonesia")
-        addString("otherLanguage", "Français", "English")
+        addString(TestConstant.LANGUAGE, "English", "Français", "Hindi")
+//        addString("otherLanguage", "Français", "English")
         addString(TestConstant.FLUORIDE, "Water - Fluoride", res.getString(string.testName))
         addString("chlorine", "Water - Free Chlorine", res.getString(string.freeChlorine))
         addString("survey", "Survey", res.getString(string.survey))
@@ -166,7 +167,7 @@ object TestHelper {
                 + "3.0=255  121  14\n")
         currentHashMap = when (languageCode) {
             "en" -> STRING_HASH_MAP_EN
-            "in" -> STRING_HASH_MAP_IN
+            "hi" -> STRING_HASH_MAP_HI
             else -> STRING_HASH_MAP_FR
         }
     }

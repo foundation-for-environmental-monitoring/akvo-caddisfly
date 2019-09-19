@@ -243,6 +243,7 @@ class CalibrationTest {
     }
 
     companion object {
+        @JvmStatic
         @BeforeClass
         fun initialize() {
             if (!TestHelper.isDeviceInitialized()) {

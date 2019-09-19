@@ -19,7 +19,6 @@
 
 package org.akvo.caddisfly.misc
 
-import android.R
 import android.app.Activity
 import android.os.RemoteException
 import android.widget.DatePicker
@@ -39,9 +38,11 @@ import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
+import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
+
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.ui.TestActivity
 import org.akvo.caddisfly.ui.TestListActivity
@@ -68,6 +69,7 @@ import java.text.DecimalFormatSymbols
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MiscTest {
+    @JvmField
     @Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
 
@@ -89,24 +91,22 @@ class MiscTest {
 //        onView(withText(R.string.language)).perform(click());
 
 //        onView(withText(R.string.cancel)).perform(click());
-
-
     }
 
     @Test
     @RequiresDevice
     fun testSwatches() {
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(R.string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
-        val recyclerView: ViewInteraction = onView(allOf(withId(id.list_types), childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
-                0)))
+        val recyclerView: ViewInteraction = onView(allOf(withId(id.list_types),
+                childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
+                        0)))
         recyclerView.perform(actionOnItemAtPosition<ViewHolder?>(3, click()))
 
 //        onView(withText(currentHashMap.get("fluoride"))).perform(click());
-
 
         if (isEmulator) {
             onView(withText(string.errorCameraFlashRequired))
@@ -160,7 +160,7 @@ class MiscTest {
                 assertEquals(e.message, 0, 1)
             }
         }
-        onView(withId(R.id.button2)).perform(click())
+        onView(withId(android.R.id.button2)).perform(click())
         onView(withText(currentHashMap["fluoride"])).perform(click())
         if (isEmulator) {
             onView(withText(string.errorCameraFlashRequired))
@@ -175,7 +175,7 @@ class MiscTest {
         onView(withId(id.editExpiryDate)).perform(click())
         onView(withClassName(equalTo(DatePicker::class.java.name)))
                 .perform(PickerActions.setDate(2025, 8, 25))
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(android.R.id.button1)).perform(click())
         onView(withText(string.save)).perform(click())
         onView(withText("2" + dfs.decimalSeparator.toString() + "00 mg/l")).perform(click())
 
@@ -192,7 +192,7 @@ class MiscTest {
                 assertEquals(e.message, 0, 1)
             }
         }
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(android.R.id.button1)).perform(click())
         goToMainScreen()
     }
 
@@ -222,7 +222,7 @@ class MiscTest {
         onView(withId(id.editExpiryDate)).perform(click())
         onView(withClassName(equalTo(DatePicker::class.java.name)))
                 .perform(PickerActions.setDate(2025, 8, 25))
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(android.R.id.button1)).perform(click())
         onView(withText(string.save)).perform(click())
         onView(allOf(withId(id.calibrationList), childAtPosition(withClassName(`is`("android.widget.RelativeLayout")),
                 0))).perform(actionOnItemAtPosition<ViewHolder?>(4, click()))
@@ -297,6 +297,7 @@ class MiscTest {
     }
 
     companion object {
+        @JvmStatic
         @BeforeClass
         fun initialize() {
             if (!TestHelper.isDeviceInitialized()) {

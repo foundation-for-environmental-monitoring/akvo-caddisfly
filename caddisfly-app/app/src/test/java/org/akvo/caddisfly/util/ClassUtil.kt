@@ -17,23 +17,15 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.util;
+package org.akvo.caddisfly.util
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import junit.framework.Assert.*
+import java.lang.reflect.Constructor
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Modifier
 
 //http://stackoverflow.com/questions/4520216/how-to-add-test-coverage-to-a-private-constructor
-public final class ClassUtil {
-
-    private ClassUtil() {
-    }
-
+object ClassUtil {
     /**
      * Verifies that a utility class is well defined.
      * https://github.com/trajano/maven-jee6/tree/master/maven-jee6-test
@@ -44,27 +36,25 @@ public final class ClassUtil {
      * @throws InstantiationException    if unable to instantiate
      * @throws IllegalAccessException    if unable to access
      */
-    public static void assertUtilityClassWellDefined(final Class<?> clazz)
-            throws NoSuchMethodException, InvocationTargetException,
-            InstantiationException, IllegalAccessException {
+    @Throws(NoSuchMethodException::class, InvocationTargetException::class, InstantiationException::class, IllegalAccessException::class)
+    fun assertUtilityClassWellDefined(clazz: Class<*>) {
         assertTrue("class must be final",
-                Modifier.isFinal(clazz.getModifiers()));
+                Modifier.isFinal(clazz.modifiers))
         assertEquals("There must be only one constructor", 1,
-                clazz.getDeclaredConstructors().length);
-        final Constructor<?> constructor = clazz.getDeclaredConstructor();
-        if (constructor.isAccessible()
-                || !Modifier.isPrivate(constructor.getModifiers())) {
-            fail("constructor is not private");
+                clazz.declaredConstructors.size)
+        val constructor: Constructor<*> = clazz.getDeclaredConstructor()
+        if (constructor.isAccessible
+                || !Modifier.isPrivate(constructor.modifiers)) {
+            fail("constructor is not private")
         }
-        constructor.setAccessible(true);
-        constructor.newInstance();
-        constructor.setAccessible(false);
-        for (final Method method : clazz.getMethods()) {
-            if (!Modifier.isStatic(method.getModifiers())
-                    && method.getDeclaringClass().equals(clazz)) {
-                fail("there exists a non-static method:" + method);
+        constructor.isAccessible = true
+        constructor.newInstance()
+        constructor.isAccessible = false
+        for (method in clazz.methods) {
+            if (!Modifier.isStatic(method.modifiers)
+                    && method.declaringClass == clazz) {
+                fail("there exists a non-static method:$method")
             }
         }
     }
-
 }
