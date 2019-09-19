@@ -189,7 +189,32 @@
           "id": 1,
           "name": "Copper",
           "unit": "mg/kg",
-          "formula": "(%1$f * 5)"
+          "formula": "(%1$f * 5)",
+          "timeDelay": 300
+        }
+      ]
+    },
+    {
+      "name": "Zinc",
+      "type": "soil",
+      "subtype": "cuvette",
+      "uuid": "5eb9929f-54d1-41fe-b9f0-6c216ca0e693",
+      "image": "ffem",
+      "calibrate": true,
+      "ranges": " 0.1,0.5,1,2,3,5",
+      "monthsValid": 12,
+      "dilutions": [
+        1,
+        2,
+        5
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Zinc",
+          "unit": "mg/kg",
+          "formula": "(%1$f * 5)",
+          "timeDelay": 300
         }
       ]
     },
