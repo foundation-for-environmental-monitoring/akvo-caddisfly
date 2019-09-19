@@ -45,6 +45,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.*
 import org.akvo.caddisfly.BuildConfig
+import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.app.CaddisflyApp
@@ -201,7 +202,7 @@ object TestHelper {
         var found = false
         while (!found) {
             try {
-                onView(withId(id.actionSettings)).check(matches(isDisplayed()))
+                onView(withId(R.id.buttonSettings)).check(matches(isDisplayed()))
                 found = true
             } catch (e: NoMatchingViewException) {
                 Espresso.pressBack()
@@ -210,13 +211,13 @@ object TestHelper {
     }
 
     fun activateTestMode(activity: Activity?) {
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         val version: String? = CaddisflyApp.getAppVersion(false)
         onView(withText(version)).check(matches(isDisplayed()))
         enterDiagnosticMode()
         goToMainScreen()
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         clickListViewItem(getString(activity, string.testModeOn))
     }
 
@@ -317,17 +318,19 @@ object TestHelper {
 
     fun leaveDiagnosticMode() {
         goToMainScreen()
-        onView(withId(id.fabDisableDiagnostics)).perform(click())
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.disableDiagnostics)).perform(click())
+//        onView(withId(id.fabDisableDiagnostics)).perform(click())
     }
 
     fun resetLanguage() {
         goToMainScreen()
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.language)).perform(click())
         onData(Matchers.hasToString(Matchers.startsWith(currentHashMap["language"]))).perform(click())
         mDevice.waitForIdle()
         goToMainScreen()
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.language)).perform(click())
         onData(Matchers.hasToString(Matchers.startsWith(currentHashMap["language"]))).perform(click())
         mDevice.waitForIdle()

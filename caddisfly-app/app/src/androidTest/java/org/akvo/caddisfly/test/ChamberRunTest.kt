@@ -35,7 +35,6 @@ import androidx.test.filters.LargeTest
 import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
-import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
@@ -49,10 +48,8 @@ import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY
 import org.akvo.caddisfly.common.TestConstants.DELAY_EXTRA
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
-import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.mCurrentLanguage
@@ -65,7 +62,6 @@ import org.akvo.caddisfly.util.TestUtil.isEmulator
 import org.akvo.caddisfly.util.TestUtil.sleep
 import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.Matchers.*
-import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.BeforeClass
@@ -76,7 +72,7 @@ import java.util.*
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ChamberTest {
+class ChamberRunTest {
     @JvmField
     @Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
@@ -140,9 +136,6 @@ class ChamberTest {
                 TestConstants.TEST_INDEX, click()))
         onView(withId(id.fabEditCalibration)).perform(click())
 
-//        onView(withText(R.string.save)).perform(click());
-
-
         onView(withId(id.editExpiryDate)).perform(click())
         val date: Calendar = Calendar.getInstance()
         date.add(Calendar.MONTH, 2)
@@ -162,11 +155,14 @@ class ChamberTest {
                 * 1000)
         onView(withId(id.buttonOk)).perform(click())
         goToMainScreen()
-        gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+
+        onView(withText(string.runTest)).perform(click())
+        onView(allOf(withId(id.list_types),
+                childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
+                        0))).perform(actionOnItemAtPosition<ViewHolder?>(
+                TestConstants.TEST_INDEX, click()))
+
         sleep(1000)
-        onView(withId(id.button_prepare)).check(matches(isDisplayed()))
-        onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
         onView(withId(id.buttonNoDilution)).perform(click())
         onView(allOf(withId(id.textDilution), withText(string.noDilution)))
@@ -178,17 +174,19 @@ class ChamberTest {
                 + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000)
         onView(withId(id.buttonAccept)).perform(click())
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
-        onView(withId(id.button_prepare)).check(matches(isDisplayed()))
-        onView(withId(id.button_prepare)).perform(click())
+
+        goToMainScreen()
+        onView(withText(string.runTest)).perform(click())
+        onView(allOf(withId(id.list_types),
+                childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
+                        0))).perform(actionOnItemAtPosition<ViewHolder?>(
+                TestConstants.TEST_INDEX, click()))
+
         onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
         onView(withId(id.buttonDilution1)).perform(click())
         onView(allOf(withId(id.textDilution), withText(String.format(mActivityRule.activity
                 .getString(string.timesDilution), 2))))
                 .check(matches(isCompletelyDisplayed()))
-
-        //Test Start Screen
-
 
         takeScreenshot()
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
@@ -203,16 +201,18 @@ class ChamberTest {
 
         takeScreenshot()
         onView(withId(id.buttonAccept)).perform(click())
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
-        onView(withId(id.button_prepare)).check(matches(isDisplayed()))
-        onView(withId(id.button_prepare)).perform(click())
+
+        goToMainScreen()
+        onView(withText(string.runTest)).perform(click())
+        onView(allOf(withId(id.list_types),
+                childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
+                        0))).perform(actionOnItemAtPosition<ViewHolder?>(
+                TestConstants.TEST_INDEX, click()))
+
         onView(withId(id.buttonDilution2)).check(matches(isDisplayed()))
         onView(withId(id.buttonDilution2)).perform(click())
         onView(allOf(withId(id.textDilution), withText(String.format(mActivityRule.activity
                 .getString(string.timesDilution), 5)))).check(matches(isCompletelyDisplayed()))
-
-        //Test Progress Screen
-
 
         takeScreenshot()
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
@@ -235,11 +235,6 @@ class ChamberTest {
         }
         onView(withId(id.buttonAccept)).perform(click())
         mDevice.waitForIdle()
-        assertNotNull(mDevice.findObject(By.text(resultString)))
-        mDevice.pressBack()
-        mDevice.pressBack()
-        mDevice.pressBack()
-        mDevice.pressBack()
     }
 
     @Test
@@ -285,9 +280,6 @@ class ChamberTest {
                 TestConstants.TEST_INDEX, click()))
         onView(withId(id.fabEditCalibration)).perform(click())
 
-//        onView(withText(R.string.save)).perform(click());
-
-
         onView(withId(id.editExpiryDate)).perform(click())
         val date: Calendar = Calendar.getInstance()
         date.add(Calendar.MONTH, 2)
@@ -306,31 +298,29 @@ class ChamberTest {
                 * 1000)
         onView(withId(id.buttonOk)).perform(click())
         goToMainScreen()
-        gotoSurveyForm()
+
         sleep(1000)
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+
+        goToMainScreen()
+        onView(withText(string.runTest)).perform(click())
+        onView(allOf(withId(id.list_types),
+                childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
+                        0))).perform(actionOnItemAtPosition<ViewHolder?>(
+                TestConstants.TEST_INDEX, click()))
+
         sleep(1000)
-        onView(withId(id.button_prepare)).check(matches(isDisplayed()))
-        onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
         onView(withId(id.buttonNoDilution)).perform(click())
         sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
                 + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000)
 
-        //Result dialog
-
-
         takeScreenshot()
-        val resultString = getText(withId(id.textResult))
+//        val resultString = getText(withId(id.textResult))
         onView(withId(id.buttonAccept)).perform(click())
         mDevice.waitForIdle()
-        assertNotNull(mDevice.findObject(By.text(resultString)))
-
 //        onView(withId(android.R.id.list)).check(matches(withChildCount(is(greaterThan(0)))));
 //        onView(withText(R.string.startTestConfirm)).check(matches(isDisplayed()));
-
-
     }
 
     companion object {

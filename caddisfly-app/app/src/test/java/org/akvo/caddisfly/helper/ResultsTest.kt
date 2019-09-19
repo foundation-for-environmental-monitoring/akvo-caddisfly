@@ -21,7 +21,9 @@ package org.akvo.caddisfly.helper
 
 import android.util.SparseArray
 import org.akvo.caddisfly.BuildConfig
-import org.akvo.caddisfly.common.TestConstants
+import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_ID_1
+import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_1
+import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_UNIT
 import org.akvo.caddisfly.repository.TestConfigRepository
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
@@ -34,7 +36,7 @@ class ResultsTest {
     @Test
     fun testColorimetryResult() {
         val testConfigRepository = TestConfigRepository()
-        val testInfo = testConfigRepository.getTestInfo(TestConstants.CUVETTE_TEST_ID_1)!!
+        val testInfo = testConfigRepository.getTestInfo(CUVETTE_TEST_ID_1)!!
         val results = SparseArray<String>()
         results.put(1, "> 2.0")
         val resultJson: JSONObject = TestConfigHelper.getJsonResult(testInfo, results, null, -1, "")
@@ -45,7 +47,7 @@ class ResultsTest {
         var json = resultJson.toString().replace("(\"testDate\":\").*?\"".toRegex(), "$1today\"")
         json = json.replace("(\"appVersion\":\").*?\"".toRegex(), "$1version\"")
         json = json.replace("(\"country\":\").*?\"".toRegex(), "$1\"")
-        val expectedJson = "{\"type\":\"" + BuildConfig.APPLICATION_ID + "\",\"name\":\"" + TestConstants.CUVETTE_TEST_NAME_1 + "\",\"uuid\":\"" + TestConstants.CUVETTE_TEST_ID_1 + "\",\"result\":[{\"dilution\":0,\"name\":\"" + TestConstants.CUVETTE_TEST_NAME_1 + "\",\"unit\":\"" + TestConstants.CUVETTE_TEST_UNIT + "\",\"id\":1,\"value\":\"> 2.0\"}],\"testDate\":\"today\"}"
+        val expectedJson = "{\"type\":\"" + BuildConfig.APPLICATION_ID + "\",\"name\":\"" + CUVETTE_TEST_NAME_1 + "\",\"uuid\":\"" + CUVETTE_TEST_ID_1 + "\",\"result\":[{\"dilution\":0,\"name\":\"" + CUVETTE_TEST_NAME_1 + "\",\"unit\":\"" + CUVETTE_TEST_UNIT + "\",\"id\":1,\"value\":\"> 2.0\"}],\"testDate\":\"today\"}"
         assertEquals(expectedJson, json)
     }
 }

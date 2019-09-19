@@ -38,11 +38,9 @@ import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
-import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
-
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.ui.TestActivity
 import org.akvo.caddisfly.ui.TestListActivity
@@ -82,7 +80,7 @@ class MiscTest {
 
     @Test
     fun testSoftwareNotices() {
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         onView(withText(string.legalInformation)).check(matches(isDisplayed())).perform(click())
         Espresso.pressBack()
@@ -96,7 +94,7 @@ class MiscTest {
     @Test
     @RequiresDevice
     fun testSwatches() {
-        onView(withText(R.string.settings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
@@ -258,7 +256,7 @@ class MiscTest {
 
 
         takeScreenshot()
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
 
         //Settings Screen
 

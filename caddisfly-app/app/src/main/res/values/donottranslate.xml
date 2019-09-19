@@ -99,6 +99,7 @@
     <string name="testModeOn">Demo / Test Mode</string>
     <string name="maxZoom">Max Zoom</string>
     <string name="cameraPreview">Colorimeter camera preview</string>
+    <string name="disable_diagnostics">Disable diagnostics</string>
 
     <!--Diagnostic Mode: Messages -->
     <string name="diagnosticModeEnabled">Diagnostic mode enabled</string>

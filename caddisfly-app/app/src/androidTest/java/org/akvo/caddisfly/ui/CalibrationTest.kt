@@ -19,7 +19,6 @@
 
 package org.akvo.caddisfly.ui
 
-import android.R
 import android.content.Intent
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -68,6 +67,7 @@ import java.util.*
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class CalibrationTest {
+    @JvmField
     @Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
 
@@ -84,7 +84,7 @@ class CalibrationTest {
     fun testOutOfSequence() {
         saveCalibration("OutOfSequence", TestConstants.CUVETTE_TEST_ID_1)
         goToMainScreen()
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
@@ -120,7 +120,7 @@ class CalibrationTest {
     @Test
     @RequiresDevice
     fun testExpiryDate() {
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         Espresso.pressBack()
@@ -142,6 +142,7 @@ class CalibrationTest {
         onData(hasToString(startsWith("TestValid"))).perform(click())
         sleep(500)
         leaveDiagnosticMode()
+        goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
@@ -164,7 +165,7 @@ class CalibrationTest {
         onView(withClassName(equalTo(DatePicker::class.java.name)))
                 .perform(PickerActions.setDate(date.get(Calendar.YEAR), date.get(Calendar.MONTH),
                         date.get(Calendar.DATE)))
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(android.R.id.button1)).perform(click())
         onView(withText(string.save)).perform(click())
 
 //        onView(withId(R.id.editBatchCode))
@@ -214,7 +215,7 @@ class CalibrationTest {
         onView(withClassName(equalTo(DatePicker::class.java.name)))
                 .perform(PickerActions.setDate(date.get(Calendar.YEAR), date.get(Calendar.MONTH),
                         date.get(Calendar.DATE)))
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(android.R.id.button1)).perform(click())
         onView(withText(string.save)).perform(click())
         onView(withId(id.textCalibrationError)).check(matches(not(isDisplayed())))
         goToMainScreen()
@@ -239,7 +240,7 @@ class CalibrationTest {
         onView(withText(message)).check(matches(isDisplayed()))
         onView(withText(string.cancel)).check(matches(isDisplayed()))
         onView(withText(string.calibrate)).check(matches(isDisplayed()))
-        onView(withId(R.id.button2)).perform(click())
+        onView(withId(android.R.id.button2)).perform(click())
     }
 
     companion object {

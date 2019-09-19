@@ -19,7 +19,6 @@
 
 package org.akvo.caddisfly.navigation
 
-import android.R
 import android.content.Intent
 import android.os.Environment
 import android.widget.DatePicker
@@ -72,6 +71,7 @@ import java.io.File
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class NavigationTest {
+    @JvmField
     @Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
 
@@ -101,7 +101,7 @@ class NavigationTest {
 
 
         takeScreenshot()
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
 
         //Settings Screen
 
@@ -149,6 +149,8 @@ class NavigationTest {
                 mActivityRule.activity.getString(string.tryRecalibrating)))).check(matches(isDisplayed()))
         leaveDiagnosticMode()
         sleep(4000)
+
+        goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
 
         //Test Types Screen
@@ -177,7 +179,7 @@ class NavigationTest {
         onView(withId(id.editExpiryDate)).perform(click())
         onView(withClassName(equalTo(DatePicker::class.java.name)))
                 .perform(PickerActions.setDate(2025, 8, 25))
-        onView(withId(R.id.button1)).perform(click())
+        onView(withId(android.R.id.button1)).perform(click())
         onView(withText(string.save)).perform(click())
         val recyclerView3: ViewInteraction = onView(allOf(withId(id.calibrationList), childAtPosition(withClassName(`is`("android.widget.RelativeLayout")),
                 0)))
@@ -190,7 +192,7 @@ class NavigationTest {
 
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         goToMainScreen()
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         Espresso.pressBack()
@@ -205,6 +207,8 @@ class NavigationTest {
         onData(hasToString(startsWith("TestValid"))).perform(click())
         sleep(2000)
         leaveDiagnosticMode()
+
+        goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
 
 //        onView(withText(currentHashMap.get("electricalConductivity"))).perform(click());

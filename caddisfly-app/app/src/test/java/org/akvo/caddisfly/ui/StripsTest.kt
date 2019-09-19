@@ -29,7 +29,10 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.common.ConstantKey
-import org.akvo.caddisfly.common.TestConstants
+import org.akvo.caddisfly.common.UnitTestConstants
+import org.akvo.caddisfly.common.UnitTestConstants.SAMPLE_TYPE
+import org.akvo.caddisfly.common.UnitTestConstants.STRIP_TESTS_COUNT
+import org.akvo.caddisfly.common.UnitTestConstants.STRIP_TEST_NAME
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestType
 import org.junit.Assert.assertSame
@@ -48,7 +51,7 @@ class StripsTest {
     fun titleIsCorrect() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -68,7 +71,7 @@ class StripsTest {
     fun testCount() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -81,13 +84,13 @@ class StripsTest {
 
         val activity = controller.get() as Activity
         val recyclerView: RecyclerView = activity.findViewById(id.list_types)
-        assertSame(TestConstants.STRIP_TESTS_COUNT, recyclerView.childCount)
-        if (TestConstants.STRIP_TESTS_COUNT > 0) {
+        assertSame(STRIP_TESTS_COUNT, recyclerView.childCount)
+        if (STRIP_TESTS_COUNT > 0) {
             val adapter = recyclerView.adapter as TestInfoAdapter?
             recyclerView.adapter
-            assertEquals(TestConstants.STRIP_TEST_NAME,
+            assertEquals(STRIP_TEST_NAME,
                     adapter!!.getItemAt(1).name)
-            assertEquals(TestConstants.STRIP_TEST_NAME,
+            assertEquals(STRIP_TEST_NAME,
                     (recyclerView.getChildAt(1).findViewById<View>(id.text_title) as TextView).text)
         }
     }
@@ -96,7 +99,7 @@ class StripsTest {
     fun testTitles() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -150,7 +153,7 @@ class StripsTest {
     fun clickHome() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestConstants.SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, UnitTestConstants.SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()

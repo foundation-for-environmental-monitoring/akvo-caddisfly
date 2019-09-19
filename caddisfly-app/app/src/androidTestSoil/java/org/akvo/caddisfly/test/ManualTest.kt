@@ -55,6 +55,7 @@ import org.junit.runner.RunWith
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class ManualTest {
+    @JvmField
     @Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
 

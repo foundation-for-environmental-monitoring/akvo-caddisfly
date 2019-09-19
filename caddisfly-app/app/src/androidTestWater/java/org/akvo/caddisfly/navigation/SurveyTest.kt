@@ -65,6 +65,7 @@ import java.text.DecimalFormatSymbols
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class SurveyTest {
+    @JvmField
     @Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
 
@@ -131,7 +132,7 @@ class SurveyTest {
     @RequiresDevice
     fun testStartASurvey() {
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(R.string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()

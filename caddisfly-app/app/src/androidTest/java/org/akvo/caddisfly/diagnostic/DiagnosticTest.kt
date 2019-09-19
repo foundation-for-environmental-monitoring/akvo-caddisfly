@@ -25,11 +25,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
 import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
+import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
@@ -50,8 +50,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@LargeTest
 class DiagnosticTest {
+    @JvmField
     @Rule
     var mActivityRule = ActivityTestRule(MainActivity::class.java)
 
@@ -65,13 +65,11 @@ class DiagnosticTest {
     @Test
     @RequiresDevice
     fun testDiagnosticMode() {
-        onView(withId(id.actionSettings)).perform(click())
+        onView(withText(R.string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         for (i in 0..9) {
             onView(withId(id.textVersion)).perform(click())
         }
-        goToMainScreen()
-        onView(withId(id.fabDisableDiagnostics)).check(matches(isDisplayed()))
         goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
         onView(RecyclerViewMatcher(id.list_types)
