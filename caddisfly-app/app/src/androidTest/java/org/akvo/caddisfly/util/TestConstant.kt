@@ -17,14 +17,18 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.common;
+package org.akvo.caddisfly.util
 
-public final class TestConstantKeys {
-
-    public static final String FLUORIDE = "fluoride";
-    public static final String LANGUAGE = "language";
-    public static final String USE_EXTERNAL_SOURCE = "useExternalSource";
-    public static final String GO_TO_TEST = "goToTest";
-    public static final String NEXT = "next";
-
+object TestConstant {
+    /**
+     * To launch survey app.
+     */
+    const val EXTERNAL_SURVEY_PACKAGE_NAME = "io.ffem.collect"
+    const val FLUORIDE = "fluoride"
+    const val LANGUAGE = "language"
+    const val USE_EXTERNAL_SOURCE = "useExternalSource"
+    const val GO_TO_TEST = "goToTest"
+    const val NEXT = "next"
+    const val WATER_FLUORIDE_ID = "f0f3c1dd-89af-49f1-83e7-bcc31c3006cf"
+    const val SOIL_IRON_ID = "3353f5cf-1cd2-4bf5-b47f-15d3db917add"
 }

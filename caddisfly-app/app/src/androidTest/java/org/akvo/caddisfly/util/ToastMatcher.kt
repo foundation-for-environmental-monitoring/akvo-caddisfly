@@ -17,34 +17,30 @@
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.akvo.caddisfly.util;
+package org.akvo.caddisfly.util
 
-import android.os.IBinder;
-import android.view.WindowManager;
+import android.os.IBinder
+import android.view.WindowManager.LayoutParams
+import androidx.test.espresso.Root
+import org.hamcrest.Description
+import org.junit.internal.matchers.TypeSafeMatcher
 
-import org.hamcrest.Description;
-import org.junit.internal.matchers.TypeSafeMatcher;
-
-import androidx.test.espresso.Root;
-
-class ToastMatcher extends TypeSafeMatcher<Root> {
-
-    @Override
-    public void describeTo(Description description) {
-        description.appendText("is toast");
+internal class ToastMatcher : TypeSafeMatcher<Root>() {
+    override fun describeTo(description: Description) {
+        description.appendText("is toast")
     }
 
-    @Override
-    public boolean matchesSafely(Root root) {
-        int type = root.getWindowLayoutParams().get().type;
-        if (type == WindowManager.LayoutParams.TYPE_TOAST) {
-            IBinder windowToken = root.getDecorView().getWindowToken();
-            IBinder appToken = root.getDecorView().getApplicationWindowToken();
+    override fun matchesSafely(root: Root): Boolean {
+        val type = root.windowLayoutParams.get().type
+        if (type == LayoutParams.TYPE_TOAST) {
+            val windowToken: IBinder = root.decorView.windowToken
+            val appToken: IBinder = root.decorView.applicationWindowToken
             // windowToken == appToken means this window isn't contained by any other windows.
             // if it was a window for an activity, it would have TYPE_BASE_APPLICATION.
-            return windowToken.equals(appToken);
-        }
-        return false;
-    }
 
+
+            return windowToken == appToken
+        }
+        return false
+    }
 }
