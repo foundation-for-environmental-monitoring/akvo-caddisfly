@@ -185,6 +185,7 @@ public class TestConfigRepository {
             String name = testInfo.getName().toLowerCase()
                     .replace(")", "")
                     .replace("(", "")
+                    .replace("- ", "")
                     .replace(" ", "_");
             int nameId = CaddisflyApp.getApp().getResources()
                     .getIdentifier(name, "string",
