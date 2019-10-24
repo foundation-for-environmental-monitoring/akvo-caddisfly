@@ -119,8 +119,8 @@ public class TitrationInputFragment extends BaseFragment {
                 if (testInfo.getResults().size() > 1) {
 
                     //todo: remove hardcoding of test names
-                    textInput1.setText("Calcium & Magnesium");
-                    textInput2.setText("Calcium Only");
+                    textInput1.setText("Calcium (N1)");
+                    textInput2.setText("Magnesium (N2)");
 
                     editResult2.setOnEditorActionListener((v, actionId, event) -> {
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -134,9 +134,6 @@ public class TitrationInputFragment extends BaseFragment {
                                     editResult1.requestFocus();
                                 } else {
 
-                                    closeKeyboard(getActivity(), editResult2);
-                                    closeKeyboard(getContext(), editResult1);
-
                                     float[] results = new float[testInfo.getResults().size()];
 
                                     float n1 = Float.parseFloat(n1String);
@@ -145,14 +142,16 @@ public class TitrationInputFragment extends BaseFragment {
                                         editResult2.setError("Enter result");
                                         editResult2.requestFocus();
                                     } else {
-
                                         float n2 = Float.parseFloat(n2String);
 
-                                        if (n2 > n1) {
-                                            editResult1.setError("Invalid result");
-                                            editResult2.setError("Invalid result");
+                                        if (n1 > n2) {
+                                            editResult1.setError("N1 has to be equal or less than N2");
                                             editResult1.requestFocus();
                                         } else {
+
+                                            closeKeyboard(getActivity(), editResult2);
+                                            closeKeyboard(getContext(), editResult1);
+
                                             for (int i = 0; i < testInfo.getResults().size(); i++) {
                                                 String formula = testInfo.getResults().get(i).getFormula();
 
@@ -160,12 +159,10 @@ public class TitrationInputFragment extends BaseFragment {
                                                     results[i] = (float) MathUtil.eval(String.format(Locale.US, formula, n1, n2));
                                                 }
                                             }
+                                            mListener.onSubmitResult(results);
                                         }
                                     }
-
-                                    mListener.onSubmitResult(results);
                                 }
-
                             }
                             return true;
                         }
