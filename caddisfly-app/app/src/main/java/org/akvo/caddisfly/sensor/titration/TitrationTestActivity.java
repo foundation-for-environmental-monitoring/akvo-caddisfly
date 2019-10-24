@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.MenuItem;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.SensorConstants;
@@ -14,9 +17,6 @@ import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.json.JSONObject;
-
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 public class TitrationTestActivity extends BaseActivity
         implements TitrationInputFragment.OnSubmitResultListener {
@@ -36,7 +36,9 @@ public class TitrationTestActivity extends BaseActivity
             testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
         }
 
-        setTitle(testInfo.getName());
+        if (testInfo != null) {
+            setTitle(testInfo.getName());
+        }
 
         startManualTest();
     }
@@ -68,10 +70,11 @@ public class TitrationTestActivity extends BaseActivity
     }
 
     @Override
-    public void onSubmitResult(float result1, float result2) {
+    public void onSubmitResult(float[] values) {
 
-        testInfo.getResults().get(0).setResult(result1, 0, 0);
-        testInfo.getResults().get(1).setResult(result2, 0, 0);
+        for (int i = 0; i < values.length; i++) {
+            testInfo.getResults().get(i).setResult(values[i], 0, 0);
+        }
 
         Intent resultIntent = new Intent();
         SparseArray<String> results = new SparseArray<>();

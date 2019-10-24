@@ -718,6 +718,76 @@
           "timeDelay": 30
         }
       ]
+    },
+    {
+      "name": "Calcium and Magnesium",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "670d2d65-bb76-4d72-ae4f-867d031b7712",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Calcium",
+          "unit": "mg/l",
+          "formula": "(%1$f/24) * 20"
+        },
+        {
+          "id": 2,
+          "name": "Magnesium",
+          "unit": "mg/l",
+          "formula": "((%2$f / 24) - ((%1$f / 24) * 20)) * 12"
+        }
+      ]
+    },
+    {
+      "name": "Carbonate",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "783c30ee-57c5-498e-aaaa-ed2904f7972a",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Carbonate",
+          "unit": "mg/l",
+          "formula": "(%1$f * 500) / 2"
+        }
+      ]
+    },
+    {
+      "name": "BiCarbonate",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "848be397-e55c-47ef-a786-f245435bb1c7",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Carbonate",
+          "unit": "mg/l",
+          "formula": "(%1$f * 500) / 2"
+        }
+      ]
+    },
+    {
+      "name": "Hardness",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "2f030fa0-f33b-4474-8de0-0fcdc6d56836",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Hardness",
+          "unit": "mg/l",
+          "formula": "%1$f * 20"
+        }
+      ]
     }
   ]
 }

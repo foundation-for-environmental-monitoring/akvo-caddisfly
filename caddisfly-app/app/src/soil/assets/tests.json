@@ -161,12 +161,14 @@
         {
           "id": 1,
           "name": "Exchangeable Calcium",
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "formula": "(0.4 * (%2$f / 24)) * 100"
         },
         {
           "id": 2,
           "name": "Exchangeable Magnesium",
-          "unit": "mg/kg"
+          "unit": "mg/kg",
+          "formula": "((0.4 * (%1$f / 24)) - (0.4 * (%2$f / 24))) * 60"
         }
       ]
     },

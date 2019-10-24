@@ -30,14 +30,18 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.model.Result;
-import org.akvo.caddisfly.model.TestInfo;
-import org.akvo.caddisfly.ui.BaseFragment;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import org.akvo.caddisfly.R;
+import org.akvo.caddisfly.model.TestInfo;
+import org.akvo.caddisfly.ui.BaseFragment;
+import org.akvo.caddisfly.util.MathUtil;
+
+import java.util.Locale;
+
 import timber.log.Timber;
 
 public class TitrationInputFragment extends BaseFragment {
@@ -63,6 +67,9 @@ public class TitrationInputFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_titration_input, container, false);
+
+        TextView textInput1 = view.findViewById(R.id.textInput1);
+        TextView textInput2 = view.findViewById(R.id.textInput2);
 
         editResult1 = view.findViewById(R.id.editTitration1);
         editResult2 = view.findViewById(R.id.editTitration2);
@@ -106,58 +113,99 @@ public class TitrationInputFragment extends BaseFragment {
         if (getArguments() != null) {
 
             TestInfo testInfo = getArguments().getParcelable(ARG_PARAM1);
-            Result testResult;
+
             if (testInfo != null) {
-                testResult = testInfo.getResults().get(0);
 
-                editResult2.setOnEditorActionListener((v, actionId, event) -> {
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        if (mListener != null) {
+                if (testInfo.getResults().size() > 1) {
 
-                            boolean okToSubmit = true;
+                    //todo: remove hardcoding of test names
+                    textInput1.setText("Calcium & Magnesium");
+                    textInput2.setText("Calcium Only");
 
-                            String n1String = editResult1.getText().toString();
-                            String n2String = editResult2.getText().toString();
+                    editResult2.setOnEditorActionListener((v, actionId, event) -> {
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            if (mListener != null) {
 
+                                String n1String = editResult1.getText().toString();
+                                String n2String = editResult2.getText().toString();
 
-                            if (n1String.isEmpty()) {
-                                editResult1.setError("Enter result");
-                                editResult1.requestFocus();
-                            } else if (n2String.isEmpty()) {
-                                editResult2.setError("Enter result");
-                                editResult2.requestFocus();
-                            } else {
+                                if (n1String.isEmpty()) {
+                                    editResult1.setError("Enter result");
+                                    editResult1.requestFocus();
+                                } else {
 
-                                Float n1 = Float.parseFloat(n1String);
-                                Float n2 = Float.parseFloat(n2String);
+                                    closeKeyboard(getActivity(), editResult2);
+                                    closeKeyboard(getContext(), editResult1);
 
-                                if (okToSubmit) {
-                                    if (n2 > n1) {
-                                        editResult1.setError("Invalid result");
-                                        editResult2.setError("Invalid result");
-                                        editResult1.requestFocus();
+                                    float[] results = new float[testInfo.getResults().size()];
+
+                                    float n1 = Float.parseFloat(n1String);
+
+                                    if (n2String.isEmpty()) {
+                                        editResult2.setError("Enter result");
+                                        editResult2.requestFocus();
                                     } else {
-                                        float v1 = n1 / 24;
-                                        float v2 = n2 / 24;
 
-                                        float c1 = 0.4f * v1;
-                                        float c2 = 0.4f * v2;
+                                        float n2 = Float.parseFloat(n2String);
 
-                                        float c3 = c1 - c2;
+                                        if (n2 > n1) {
+                                            editResult1.setError("Invalid result");
+                                            editResult2.setError("Invalid result");
+                                            editResult1.requestFocus();
+                                        } else {
+                                            for (int i = 0; i < testInfo.getResults().size(); i++) {
+                                                String formula = testInfo.getResults().get(i).getFormula();
 
-                                        float result1 = c2 * 100;
-                                        float result2 = c3 * 60;
-                                        closeKeyboard(getActivity(), editResult2);
-                                        closeKeyboard(getContext(), editResult1);
-                                        mListener.onSubmitResult(result1, result2);
+                                                if (!formula.isEmpty()) {
+                                                    results[i] = (float) MathUtil.eval(String.format(Locale.US, formula, n1, n2));
+                                                }
+                                            }
+                                        }
                                     }
+
+                                    mListener.onSubmitResult(results);
                                 }
+
                             }
+                            return true;
                         }
-                        return true;
-                    }
-                    return false;
-                });
+                        return false;
+                    });
+                } else {
+                    textInput1.setVisibility(View.GONE);
+                    textInput1.setVisibility(View.GONE);
+                    editResult2.setVisibility(View.GONE);
+
+                    editResult1.setOnEditorActionListener((v, actionId, event) -> {
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            if (mListener != null) {
+
+                                String n1String = editResult1.getText().toString();
+
+                                if (n1String.isEmpty()) {
+                                    editResult1.setError("Enter result");
+                                    editResult1.requestFocus();
+                                } else {
+
+                                    closeKeyboard(getActivity(), editResult2);
+                                    closeKeyboard(getContext(), editResult1);
+
+                                    float[] results = new float[testInfo.getResults().size()];
+
+                                    float n1 = Float.parseFloat(n1String);
+
+                                    String formula = testInfo.getResults().get(0).getFormula();
+                                    results[0] = (float) MathUtil.eval(String.format(Locale.US, formula, n1));
+
+                                    mListener.onSubmitResult(results);
+                                }
+
+                            }
+                            return true;
+                        }
+                        return false;
+                    });
+                }
             }
         }
         return view;
@@ -191,15 +239,15 @@ public class TitrationInputFragment extends BaseFragment {
         }
     }
 
-    private void hideSoftKeyboard(View view) {
-        if (getActivity() != null) {
-            InputMethodManager imm = (InputMethodManager)
-                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
-            }
-        }
-    }
+//    private void hideSoftKeyboard(View view) {
+//        if (getActivity() != null) {
+//            InputMethodManager imm = (InputMethodManager)
+//                    getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//            if (imm != null) {
+//                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+//            }
+//        }
+//    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -226,6 +274,6 @@ public class TitrationInputFragment extends BaseFragment {
     }
 
     public interface OnSubmitResultListener {
-        void onSubmitResult(float result1, float result2);
+        void onSubmitResult(float[] results);
     }
 }
