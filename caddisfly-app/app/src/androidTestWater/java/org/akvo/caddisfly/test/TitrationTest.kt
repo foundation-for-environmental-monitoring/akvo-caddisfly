@@ -81,6 +81,8 @@ class TitrationTest {
         onView(allOf(withId(id.editTitration1), withText("12"), isDisplayed()))
                 .perform(pressImeActionButton())
 
+        sleep(1000)
+
         assertNotNull(mDevice.findObject(By.text("Carbonate: ")))
         assertNotNull(mDevice.findObject(By.text("3000.00")))
     }
@@ -102,7 +104,6 @@ class TitrationTest {
 
         sleep(1000)
 
-
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
                 .perform(replaceText("12"), closeSoftKeyboard())
         onView(withId(id.editTitration2)).check(matches(isDisplayed()))
@@ -110,6 +111,8 @@ class TitrationTest {
         onView(allOf(withId(id.editTitration2), withText("20"),
                 childAtPosition(childAtPosition(withId(id.fragment_container), 0),
                         4), isDisplayed())).perform(pressImeActionButton())
+
+        sleep(1000)
 
         assertNotNull(mDevice.findObject(By.text("Calcium: ")))
         assertNotNull(mDevice.findObject(By.text("10.00")))

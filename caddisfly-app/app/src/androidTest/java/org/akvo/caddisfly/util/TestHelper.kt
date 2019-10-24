@@ -45,7 +45,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.*
 import org.akvo.caddisfly.BuildConfig
-import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.app.CaddisflyApp
@@ -202,7 +201,7 @@ object TestHelper {
         var found = false
         while (!found) {
             try {
-                onView(withId(R.id.buttonSettings)).check(matches(isDisplayed()))
+                onView(withId(id.buttonSettings)).check(matches(isDisplayed()))
                 found = true
             } catch (e: NoMatchingViewException) {
                 Espresso.pressBack()
@@ -224,7 +223,7 @@ object TestHelper {
     fun clickExternalSourceButton(id: String?) {
         when (id) {
             TestConstant.WATER_FLUORIDE_ID -> {
-                nextSurveyPage(3, "Water Tests 1")
+                nextSurveyPage(4, "Water Tests 1")
                 clickExternalSourceButton(2)
             }
             TestConstant.SOIL_IRON_ID -> {

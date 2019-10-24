@@ -116,7 +116,7 @@ class ChamberInstructions {
     fun testInstructionsBackcase2() {
         goToMainScreen()
         gotoSurveyForm()
-        nextSurveyPage(4, "Water Tests 2")
+        nextSurveyPage(5, "Water Tests 2")
         clickExternalSourceButton(0)
         sleep(1000)
         mDevice.waitForIdle()

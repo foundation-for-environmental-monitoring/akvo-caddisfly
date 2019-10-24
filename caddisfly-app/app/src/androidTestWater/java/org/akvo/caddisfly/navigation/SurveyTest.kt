@@ -20,7 +20,7 @@
 package org.akvo.caddisfly.navigation
 
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso
@@ -29,15 +29,13 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
-import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
-import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
@@ -64,7 +62,6 @@ import org.junit.runner.RunWith
 import java.text.DecimalFormatSymbols
 
 @RunWith(AndroidJUnit4::class)
-@LargeTest
 class SurveyTest {
     @JvmField
     @Rule
@@ -77,11 +74,9 @@ class SurveyTest {
         prefs.edit().clear().apply()
 
 //        resetLanguage();
-
     }
 
     @Test
-    @RequiresDevice
     fun testChangeTestType() {
         goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
@@ -102,7 +97,6 @@ class SurveyTest {
 
 //        onView(withText("0" + dfs.getDecimalSeparator() + "0 mg/l")).check(matches(isDisplayed()));
 
-
         Espresso.pressBack()
         Espresso.pressBack()
         Espresso.pressBack()
@@ -110,10 +104,14 @@ class SurveyTest {
 
 //        onView(withText(currentHashMap.get("chlorine"))).perform(click());
 
-
         onView(withText("0 - 0.3 mg/l")).perform(click())
         onView(withText("0" + dfs.decimalSeparator.toString() + "3")).check(matches(isDisplayed()))
         Espresso.pressBack()
+
+        mDevice.waitForIdle()
+        onView(withId(id.list_types)).perform(scrollToPosition<ViewHolder>(10))
+        mDevice.waitForIdle()
+
         onView(withText("0 - 6 mg/l (Up to 30 with dilution)")).perform(click())
         onView(withText("6")).check(matches(isDisplayed()))
         try {
@@ -125,15 +123,12 @@ class SurveyTest {
         }
 
         //        onView(withText("0" + dfs.getDecimalSeparator() + "5 mg/l")).check(matches(isDisplayed()));
-
-
     }
 
     @Test
-    @RequiresDevice
     fun testStartASurvey() {
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
-        onView(withText(R.string.settings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
@@ -162,7 +157,6 @@ class SurveyTest {
         onView(withId(id.buttonNoDilution)).perform(click())
 
         //onView(withId(R.id.buttonStart)).perform(click());
-
 
         mDevice.waitForWindowUpdate("", 1000)
     }

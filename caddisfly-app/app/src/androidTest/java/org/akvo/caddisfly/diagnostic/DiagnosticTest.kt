@@ -29,7 +29,6 @@ import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
-import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
@@ -65,7 +64,7 @@ class DiagnosticTest {
     @Test
     @RequiresDevice
     fun testDiagnosticMode() {
-        onView(withText(R.string.settings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         for (i in 0..9) {
             onView(withId(id.textVersion)).perform(click())
@@ -73,7 +72,7 @@ class DiagnosticTest {
         goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
         onView(RecyclerViewMatcher(id.list_types)
-                .atPositionOnView(0, id.text_title))
+                .atPositionOnView(1, id.text_title))
                 .check(matches(withText(TestConstants.CUVETTE_TEST_NAME_1)))
                 .perform(click())
 

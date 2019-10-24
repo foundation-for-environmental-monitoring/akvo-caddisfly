@@ -9,6 +9,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import org.akvo.caddisfly.R
+import org.akvo.caddisfly.common.TestConstants.TEST_INDEX
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
@@ -49,8 +50,7 @@ class RunTestNavigation {
                         allOf(withId(R.id.list_types),
                                 childAtPosition(
                                         withClassName(`is`("android.widget.LinearLayout")),
-                                        0)),
-                        6),
+                                        0)), TEST_INDEX),
                         isDisplayed()))
         relativeLayout.perform(click())
 
@@ -66,8 +66,7 @@ class RunTestNavigation {
                         allOf(withId(R.id.list_types),
                                 childAtPosition(
                                         withClassName(`is`("android.widget.LinearLayout")),
-                                        0)),
-                        6),
+                                        0)), TEST_INDEX),
                         isDisplayed()))
         relativeLayout3.perform(click())
 
@@ -143,8 +142,7 @@ class RunTestNavigation {
                         allOf(withId(R.id.list_types),
                                 childAtPosition(
                                         withClassName(`is`("android.widget.LinearLayout")),
-                                        0)),
-                        6),
+                                        0)), TEST_INDEX),
                         isDisplayed()))
         relativeLayout4.perform(click())
 

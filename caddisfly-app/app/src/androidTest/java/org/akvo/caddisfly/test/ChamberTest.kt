@@ -47,6 +47,7 @@ import org.akvo.caddisfly.common.Constants
 import org.akvo.caddisfly.common.TestConstants
 import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY
 import org.akvo.caddisfly.common.TestConstants.DELAY_EXTRA
+import org.akvo.caddisfly.common.TestConstants.TEST_INDEX
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
@@ -114,7 +115,7 @@ class ChamberTest {
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()))
+                TEST_INDEX, click()))
         if (isEmulator) {
             onView(withText(string.errorCameraFlashRequired))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
@@ -137,7 +138,7 @@ class ChamberTest {
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()))
+                TEST_INDEX, click()))
         onView(withId(id.fabEditCalibration)).perform(click())
 
 //        onView(withText(R.string.save)).perform(click());
@@ -260,7 +261,7 @@ class ChamberTest {
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()))
+                TEST_INDEX, click()))
         if (isEmulator) {
             onView(withText(string.errorCameraFlashRequired))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
@@ -282,7 +283,7 @@ class ChamberTest {
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()))
+                TEST_INDEX, click()))
         onView(withId(id.fabEditCalibration)).perform(click())
 
 //        onView(withText(R.string.save)).perform(click());
