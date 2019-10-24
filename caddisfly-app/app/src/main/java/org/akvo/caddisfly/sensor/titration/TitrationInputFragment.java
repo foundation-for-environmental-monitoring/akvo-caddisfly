@@ -118,9 +118,8 @@ public class TitrationInputFragment extends BaseFragment {
 
                 if (testInfo.getResults().size() > 1) {
 
-                    //todo: remove hardcoding of test names
-                    textInput1.setText("Calcium (N1)");
-                    textInput2.setText("Magnesium (N2)");
+                    textInput1.setText(String.format("%s (N1)", testInfo.getResults().get(0).getName()));
+                    textInput2.setText(String.format("%s (N2)", testInfo.getResults().get(1).getName()));
 
                     editResult2.setOnEditorActionListener((v, actionId, event) -> {
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -145,7 +144,7 @@ public class TitrationInputFragment extends BaseFragment {
                                         float n2 = Float.parseFloat(n2String);
 
                                         if (n1 > n2) {
-                                            editResult1.setError("N1 has to be equal or less than N2");
+                                            editResult1.setError("N1 has to be less than or equal to N2");
                                             editResult1.requestFocus();
                                         } else {
 
