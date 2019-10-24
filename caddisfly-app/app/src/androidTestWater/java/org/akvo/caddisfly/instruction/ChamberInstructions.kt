@@ -67,7 +67,9 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ChamberInstructions {
     private val jsArrayString = StringBuilder()
+
     @Rule
+    @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
@@ -141,13 +143,14 @@ class ChamberInstructions {
     }
 
     @Test
-    @RequiresDevice
     @Ignore
+    @RequiresDevice
     fun testInstructionsAll() {
         goToMainScreen()
         onView(withText(getString(mActivityTestRule.activity, string.stripTest))).perform(click())
         val testConfigRepository = TestConfigRepository()
         val testList: List<TestInfo> = testConfigRepository.getTests(TestType.STRIP_TEST)
+        @Suppress("ConstantConditionIf")
         if (TestConstants.STRIP_TESTS_COUNT == 1) {
             checkInstructions(testList[0].uuid)
         }
@@ -204,6 +207,7 @@ class ChamberInstructions {
             }
         }
 
+        @Suppress("SameParameterValue")
         private fun childAtPosition(
                 parentMatcher: Matcher<View>,
                 position: Int): Matcher<View> {
