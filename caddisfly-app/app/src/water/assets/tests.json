@@ -2,6 +2,32 @@
   "comment": "This file contains the metadata for tests. IMPORTANT: *DO NOT* change the uuid values",
   "tests": [
     {
+      "name": "Alkalinity",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "222ca914-3036-4a2e-a59d-d85948d69461",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,15,30,45,60",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Alkalinity",
+          "unit": "mg/l",
+          "timeDelay": 120,
+          "formula": "(%1$f * 1)"
+        }
+      ]
+    },
+    {
       "name": "Aluminum",
       "type": "water",
       "subtype": "cuvette",
@@ -16,6 +42,32 @@
           "id": 1,
           "name": "Aluminum",
           "unit": "mg/l"
+        }
+      ]
+    },
+    {
+      "name": "Ammonia",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "9cf6106a-8ae5-4044-8967-a34fa87ff140",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,1,2,3,4",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Ammonia",
+          "unit": "mg/l",
+          "timeDelay": 300,
+          "formula": "(%1$f * 1)"
         }
       ]
     },
@@ -583,6 +635,33 @@
           "name": "Nitrate",
           "unit": "mg/l",
           "timeDelay": 360
+        }
+      ]
+    },
+    {
+      "name": "Nitrite",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "7ed862c5-4946-4245-b501-beed0292dca6",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,0.1,0.2,0.3,0.4",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Nitrite",
+          "unit": "mg/l",
+          "timeDelay": 600,
+          "formula": "(%1$f * 1)",
+          "grayScale": false
         }
       ]
     },
