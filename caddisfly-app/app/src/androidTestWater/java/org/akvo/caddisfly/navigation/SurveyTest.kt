@@ -20,7 +20,7 @@
 package org.akvo.caddisfly.navigation
 
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
+import android.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso
@@ -70,7 +70,7 @@ class SurveyTest {
     @Before
     fun setUp() {
         loadData(mActivityRule.activity, mCurrentLanguage)
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivityRule.activity)
+        val prefs: SharedPreferences = getDefaultSharedPreferences(mActivityRule.activity)
         prefs.edit().clear().apply()
 
 //        resetLanguage();

@@ -156,4 +156,5 @@
     <string name="senderEmailDetails">Email details</string>
     <string name="invalidEmailAddress">Invalid email address</string>
     <string name="useDevicesEmailDetails">Use devices email details</string>
+    <string name="value_is_required">Value is required</string>
 </resources>

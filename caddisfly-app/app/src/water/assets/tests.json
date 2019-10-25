@@ -846,7 +846,7 @@
       "results": [
         {
           "id": 1,
-          "name": "Carbonate",
+          "name": "BiCarbonate",
           "unit": "mg/l",
           "formula": "(%1$f * 500) / 2"
         }

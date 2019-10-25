@@ -1,22 +1,3 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package org.akvo.caddisfly.sensor.titration;
 
 import android.content.Context;
@@ -129,7 +110,7 @@ public class TitrationInputFragment extends BaseFragment {
                                 String n2String = editResult2.getText().toString();
 
                                 if (n1String.isEmpty()) {
-                                    editResult1.setError("Enter result");
+                                    editResult1.setError("Value is required");
                                     editResult1.requestFocus();
                                 } else {
 
@@ -138,13 +119,13 @@ public class TitrationInputFragment extends BaseFragment {
                                     float n1 = Float.parseFloat(n1String);
 
                                     if (n2String.isEmpty()) {
-                                        editResult2.setError("Enter result");
+                                        editResult2.setError("Value is required");
                                         editResult2.requestFocus();
                                     } else {
                                         float n2 = Float.parseFloat(n2String);
 
                                         if (n1 > n2) {
-                                            editResult1.setError("N1 has to be less than or equal to N2");
+                                            editResult1.setError(getString(R.string.titration_entry_error));
                                             editResult1.requestFocus();
                                         } else {
 
@@ -179,7 +160,7 @@ public class TitrationInputFragment extends BaseFragment {
                                 String n1String = editResult1.getText().toString();
 
                                 if (n1String.isEmpty()) {
-                                    editResult1.setError("Enter result");
+                                    editResult1.setError(getString(R.string.value_is_required));
                                     editResult1.requestFocus();
                                 } else {
 

@@ -1,25 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) Stichting Akvo (Akvo Foundation)
-  ~
-  ~ This file is part of Akvo Caddisfly.
-  ~
-  ~ Akvo Caddisfly is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ Akvo Caddisfly is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
-  -->
-
 <resources>
-
     <string name="sd_on">Press briefly (*sd_on_off*) to turn device on.</string>
     <string name="sd_50_dip_sample">Remove protective cap, rinse the electrode with distilled water and immerse the instrument into the sample so that the instrument is submersed to the sealing ring level. Stir the sensor gently while it is in the sample. Press briefly (*sd_on_off*) to freeze / unfreeze the measurement.</string>
     <string name="sd_fill_photo_fill_in">Take a photo of the screen with the measurement and fill in the measurement value.</string>
@@ -33,5 +13,5 @@
     <string name="sd_70_dip_sample">Remove protective cap, rinse the sensor with the sample water and immerse the instrument into the sample so that the instrument is submersed to the sealing ring level. Press briefly (*sd_on_off*) to freeze / unfreeze the measurement.</string>
     <string name="sd_70_rinse">Rinse the sensor with distilled water (never touch the electrode with anything) and place the protective cap back.</string>
     <string name="sd_70_maintenance">Regularly check the calibration of the device and recalibrate if necessary. For calibration instructions: see the product manual in the box.</string>
-
+    <string name="titration_entry_error">N1 has to be less than or equal to N2</string>
 </resources>

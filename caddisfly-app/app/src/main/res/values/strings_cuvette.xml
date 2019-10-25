@@ -45,6 +45,10 @@
     <string name="available_nitrogen">.</string>
     <string name="available_phosphorous">.</string>
     <string name="available_potassium">.</string>
+    <string name="alkalinity">.</string>
+    <string name="ammonia">.</string>
+    <string name="nitrite">.</string>
+
     <string name="up_to_with_dilution">Up to %s with dilution</string>
 
     <!-- Calibration Screen -->
