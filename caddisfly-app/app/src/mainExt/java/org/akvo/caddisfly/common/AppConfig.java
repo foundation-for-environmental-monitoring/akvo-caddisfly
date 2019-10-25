@@ -35,10 +35,8 @@ public final class AppConfig {
      */
     public static final boolean APP_EXPIRY = false;
     public static final int APP_EXPIRY_DAY = 1;
-    public static final int APP_EXPIRY_MONTH = 10;
+    public static final int APP_EXPIRY_MONTH = 11;
     public static final int APP_EXPIRY_YEAR = 2019;
-
-    public static final String GET_STARTED_URL = "http://ffem.io/start";
 
     /**
      * Uri for photos from built in camera.

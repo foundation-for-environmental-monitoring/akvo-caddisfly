@@ -1,29 +1,9 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package org.akvo.caddisfly.ui;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -62,7 +42,6 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import static org.akvo.caddisfly.common.AppConfig.GET_STARTED_URL;
 import static org.akvo.caddisfly.model.TestType.CHAMBER_TEST;
 
 public class MainActivity extends BaseActivity {
@@ -111,6 +90,24 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        b.buttonCalibrate.setOnClickListener(view -> {
+            if (permissionsDelegate.hasPermissions(storagePermission)) {
+                startCalibrate(TestSampleType.ALL);
+            } else {
+                //noinspection ConstantConditions
+                if (BuildConfig.APPLICATION_ID.contains("soil")) {
+                    permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL);
+                } else {
+                    permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
+                }
+            }
+        });
+
+        b.buttonSettings.setOnClickListener(view -> {
+            final Intent intent = new Intent(this, SettingsActivity.class);
+            startActivityForResult(intent, 100);
+        });
     }
 
     /**
@@ -255,24 +252,6 @@ public class MainActivity extends BaseActivity {
         } else {
             permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
         }
-    }
-
-    public void onCalibrateClick(View view) {
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startCalibrate(TestSampleType.ALL);
-        } else {
-            //noinspection ConstantConditions
-            if (BuildConfig.APPLICATION_ID.contains("soil")) {
-                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL);
-            } else {
-                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
-            }
-        }
-    }
-
-    public void onGetStartedClicked(View view) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(GET_STARTED_URL));
-        startActivity(browserIntent);
     }
 
     public void onRunTestClick(View view) {

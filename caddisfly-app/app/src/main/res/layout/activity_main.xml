@@ -1,21 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) Stichting Akvo (Akvo Foundation)
-  ~
-  ~ This file is part of Akvo Caddisfly.
-  ~
-  ~ Akvo Caddisfly is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ Akvo Caddisfly is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
-  -->
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -57,9 +40,9 @@
                 style="@style/ListButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
                 android:minHeight="80dp"
                 android:onClick="onRunTestClick"
-                android:layout_marginTop="0dp"
                 android:text="@string/runTest"
                 android:textAlignment="center"
                 android:textAllCaps="true"
@@ -72,30 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toTopOf="@+id/layoutSettings">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/link"
-                android:layout_marginBottom="7dp"
-                android:gravity="center_horizontal"
-                android:text="@string/to_get_started"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/link"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/textVersionExpiry"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="150dp"
-                android:gravity="center_horizontal"
-                android:onClick="onGetStartedClicked"
-                android:text="http://ffem.io/start"
-                android:textColor="@color/text_links"
-                android:textSize="16sp"
-                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textVersionExpiry"
@@ -142,7 +101,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="80dp"
-                android:onClick="onCalibrateClick"
                 android:text="@string/calibrate"
                 android:textAlignment="center"
                 android:textColor="?longButtonText" />
@@ -155,7 +113,6 @@
                 android:layout_marginTop="-4dp"
                 android:layout_marginBottom="2dp"
                 android:minHeight="80dp"
-                android:onClick="onSettingsClick"
                 android:text="@string/settings"
                 android:textAlignment="center"
                 android:textColor="?longButtonText" />
