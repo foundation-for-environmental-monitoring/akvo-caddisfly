@@ -832,12 +832,12 @@
           "id": 1,
           "name": "Carbonate",
           "unit": "mg/l",
-          "formula": "(%1$f * 500) / 2"
+          "formula": "(%1$f * 500) / 20"
         }
       ]
     },
     {
-      "name": "BiCarbonate",
+      "name": "Bicarbonate",
       "type": "water",
       "subtype": "titration",
       "uuid": "848be397-e55c-47ef-a786-f245435bb1c7",
@@ -846,9 +846,9 @@
       "results": [
         {
           "id": 1,
-          "name": "BiCarbonate",
+          "name": "Bicarbonate",
           "unit": "mg/l",
-          "formula": "(%1$f * 500) / 2"
+          "formula": "(%1$f * 500) / 20"
         }
       ]
     },
