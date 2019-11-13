@@ -1,4 +1,4 @@
-package io.ffem.experiment;
+package io.ffem.tryout;
 
 import android.content.Context;
 import android.hardware.Camera;
@@ -11,7 +11,7 @@ import java.util.List;
 import static org.akvo.caddisfly.util.ApiUtil.getCameraInstance;
 
 public class ResolutionListPreference extends ListPreference {
-    public ResolutionListPreference(Context context, AttributeSet attrs) {
+    private ResolutionListPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         Camera camera = getCameraInstance();
@@ -30,8 +30,8 @@ public class ResolutionListPreference extends ListPreference {
                         supportedPictureSizes.get(supportedPictureSizes.size() - 1).height);
 
                 for (Camera.Size size : supportedPictureSizes) {
-                    items.add(String.valueOf(size.width) + " x " + String.valueOf(size.height));
-                    values.add(String.valueOf(size.width) + "-" + String.valueOf(size.height));
+                    items.add(size.width + " x " + size.height);
+                    values.add(size.width + "-" + size.height);
                 }
 
                 setEntries(items.toArray(new String[0]));
@@ -41,10 +41,6 @@ public class ResolutionListPreference extends ListPreference {
                 camera.release();
             }
         }
-    }
-
-    public ResolutionListPreference(Context context) {
-        this(context, null);
     }
 
     private int initializeIndex() {

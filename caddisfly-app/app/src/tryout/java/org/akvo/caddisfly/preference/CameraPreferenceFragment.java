@@ -17,7 +17,7 @@ import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.util.ListViewUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 
-import io.ffem.experiment.ResolutionListPreference;
+import io.ffem.tryout.ResolutionListPreference;
 
 import static org.akvo.caddisfly.util.ApiUtil.getCameraInstance;
 
