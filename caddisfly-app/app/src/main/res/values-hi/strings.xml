@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="back">वापस</string>
-    <string name="next">आगामी</string>
-    <string name="close">बंद</string>
     <string name="skip">छोड़ें</string>
     <string name="waiting">इंतिज़ार</string>
     <string name="finish">परिष्करण</string>
     <string name="retest">पुनर्परीक्षण</string>
     <string name="navigate_up">वापस जाएं</string>
     <string name="to_get_started">आरंभ करने के लिए, लिंक पर जाएं</string>
+    <string name="value_is_required">आवश्यक है</string>
 </resources>

@@ -24,6 +24,7 @@
     <string name="copper">.</string>
     <string name="dissolved_oxygen">.</string>
     <string name="fluoride">.</string>
+    <string name="fluoride_high_range">.</string>
     <string name="free_chlorine">.</string>
     <string name="hydrogen_peroxide">.</string>
     <string name="nitrate">.</string>
@@ -32,6 +33,17 @@
     <string name="sulphate">.</string>
     <string name="total_iron">.</string>
     <string name="chlorophyll_a">.</string>
+    <string name="zinc">.</string>
+    <string name="organic_carbon">.</string>
+    <string name="potassium">.</string>
+    <string name="available_boron">.</string>
+    <string name="available_iron">.</string>
+    <string name="available_nitrogen">.</string>
+    <string name="available_phosphorous">.</string>
+    <string name="available_potassium">.</string>
+    <string name="alkalinity">.</string>
+    <string name="ammonia">.</string>
+    <string name="nitrite">.</string>
     <string name="blood_sugar">.</string>
     <string name="organophosphate">.</string>
     <string name="up_to_with_dilution">Up to %s with dilution</string>

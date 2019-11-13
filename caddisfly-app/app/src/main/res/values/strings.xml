@@ -204,5 +204,5 @@
     <string name="select_email_app">Please select your email app in the next step and send the generated email.</string>
     <string name="create_support_email">Create Support Email</string>
     <string name="creatingMessage">Creating message</string>
-
+    <string name="value_is_required">Value is required</string>
 </resources>

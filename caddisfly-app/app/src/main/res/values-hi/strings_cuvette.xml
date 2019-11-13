@@ -13,6 +13,8 @@
     <string name="language">भाषा</string>
     <string name="notSupported">समर्थित नहीं</string>
     <string name="cameraBusy">कैमरा व्यस्त</string>
+    <string name="next">अगले</string>
+    <string name="close">बंद</string>
     <string name="selectTest">जाँच का चयन करें</string>
     <string name="save">संरक्षित करें</string>
     <string name="pleaseWait">कृपया प्रतीक्षा करें…</string>
@@ -25,6 +27,7 @@
     <string name="copper">कॉपर</string>
     <string name="dissolved_oxygen">विघटित ऑक्सीजन</string>
     <string name="fluoride">फ्लोराइड</string>
+    <string name="fluoride_high_range">फ्लोराइड - High Range</string>
     <string name="free_chlorine">अवशिष्ट क्लोरीन</string>
     <string name="hydrogen_peroxide">हाइड्रोजन पेरोक्साइड</string>
     <string name="nitrate">नाइट्रेट</string>
@@ -33,6 +36,17 @@
     <string name="sulphate">सल्फेट</string>
     <string name="total_iron">कुल लौह</string>
     <string name="chlorophyll_a">क्लोरोफिल-ए</string>
+    <string name="zinc">ज़िंक</string>
+    <string name="organic_carbon">आर्गेनिक कार्बन</string>
+    <string name="potassium">पोटासियम</string>
+    <string name="available_boron">Available बोरान</string>
+    <string name="available_iron">Available लोहा</string>
+    <string name="available_nitrogen">Available नाइट्रोजन</string>
+    <string name="available_phosphorous">Available फ़ास्फ़रोस</string>
+    <string name="available_potassium">Available पोटासियम</string>
+    <string name="alkalinity">आल्कलिनिटी</string>
+    <string name="ammonia">आम्मोनिय</string>
+    <string name="nitrite">नाइट्र्य्ट</string>
     <string name="blood_sugar">ब्लड शुगर</string>
     <string name="organophosphate">ऑर्गेनोफॉस्फेट</string>
 
