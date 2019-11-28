@@ -17,6 +17,9 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.common.ConstantKey;
@@ -35,9 +38,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static org.akvo.caddisfly.util.ImageUtil.createGreyMatrix;
 import static org.akvo.caddisfly.util.ImageUtil.createThresholdMatrix;
@@ -239,6 +239,8 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
             meteringAreas.add(new Camera.Area(areaRect1, 1000));
             parameters.setMeteringAreas(meteringAreas);
         }
+
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
 
         parameters.setExposureCompensation(EXPOSURE_COMPENSATION);
 
