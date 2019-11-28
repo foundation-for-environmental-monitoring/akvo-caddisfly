@@ -18,9 +18,15 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.model.TestInfo;
+import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.chamber.ChamberCameraPreview;
 import org.akvo.caddisfly.sensor.cuvette.bluetooth.Constants;
 import org.akvo.caddisfly.sensor.cuvette.camera.CuvetteCameraManager;
@@ -29,13 +35,8 @@ import org.akvo.caddisfly.util.BluetoothChatService;
 
 import java.lang.ref.WeakReference;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import timber.log.Timber;
 
-@SuppressWarnings("deprecation")
 public class CuvetteMeasureActivity extends BaseActivity
         implements DeviceListDialog.OnDeviceSelectedListener,
         DeviceListDialog.OnDeviceCancelListener {
@@ -200,6 +201,9 @@ public class CuvetteMeasureActivity extends BaseActivity
         Camera.Parameters parameters = mCamera.getParameters();
 
         String flashMode = Camera.Parameters.FLASH_MODE_TORCH;
+        if (AppPreferences.useFlashMode()) {
+            flashMode = Camera.Parameters.FLASH_MODE_ON;
+        }
         parameters.setFlashMode(flashMode);
 
         mCamera.setParameters(parameters);
@@ -272,7 +276,7 @@ public class CuvetteMeasureActivity extends BaseActivity
         mChatService = new BluetoothChatService(mHandler);
 
         // Initialize the buffer for outgoing messages
-        mOutStringBuffer = new StringBuffer("");
+        mOutStringBuffer = new StringBuffer();
     }
 
 //    /**
