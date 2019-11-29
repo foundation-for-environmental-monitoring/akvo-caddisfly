@@ -1,56 +1,44 @@
-<!--
-  ~ Copyright (C) Stichting Akvo (Akvo Foundation)
-  ~
-  ~ This file is part of Akvo Caddisfly.
-  ~
-  ~ Akvo Caddisfly is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ Akvo Caddisfly is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
-  -->
-
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom
         android:key="preferenceCategoryDiagnostics"
-        android:title="@string/diagnostics">
+        android:title="@string/diagnostics"
+        app:iconSpaceReserved="false">
         <Preference
             android:key="cameraPreview"
             android:summary="Test cuvette centering &amp; image quality"
-            android:title="@string/cameraPreview" />
+            android:title="@string/cameraPreview"
+            app:iconSpaceReserved="false" />
         <CheckBoxPreference
             android:key="@string/ignoreTimeDelaysKey"
-            android:title="@string/ignoreTimeDelays" />
+            android:title="@string/ignoreTimeDelays"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="5"
             android:dialogMessage="A number from 1 to 5"
+            android:inputType="number"
             android:key="@string/samplingsTimeKey"
             android:maxLength="2"
             android:selectAllOnFocus="true"
-            android:numeric="integer"
-            android:title="Sampling times" />
+            android:title="Sampling times"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="50"
             android:dialogMessage="Enter a value below 400"
+            android:inputType="number"
             android:key="@string/colorDistanceToleranceKey"
             android:maxLength="3"
             android:selectAllOnFocus="true"
-            android:numeric="integer"
-            android:title="Max swatch color distance" />
+            android:title="Max swatch color distance"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="20"
             android:dialogMessage="Enter a value below 400"
+            android:inputType="number"
             android:key="@string/colorAverageDistanceToleranceKey"
             android:maxLength="3"
-            android:numeric="integer"
             android:selectAllOnFocus="true"
-            android:title="Max averaging color distance" />
+            android:title="Max averaging color distance"
+            app:iconSpaceReserved="false" />
     </org.akvo.caddisfly.preference.PreferenceCategoryCustom>
 </PreferenceScreen>

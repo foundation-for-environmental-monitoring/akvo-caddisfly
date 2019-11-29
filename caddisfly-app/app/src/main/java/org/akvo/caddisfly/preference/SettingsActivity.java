@@ -22,15 +22,14 @@ package org.akvo.caddisfly.preference;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceManager;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
@@ -42,7 +41,7 @@ import org.akvo.caddisfly.viewmodel.TestListViewModel;
 public class SettingsActivity extends BaseActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private ScrollView mScrollView;
+//    private ScrollView mScrollView;
 
     private void removeAllFragments() {
         findViewById(R.id.layoutGeneral).setVisibility(View.GONE);
@@ -79,33 +78,33 @@ public class SettingsActivity extends BaseActivity
 
         setContentView(R.layout.activity_settings);
 
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.layoutOther, new OtherPreferenceFragment())
                 .commit();
 
         if (AppPreferences.isDiagnosticMode()) {
 
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.layoutGeneral, new GeneralPreferenceFragment())
                     .commit();
 
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.layoutDiagnostics, new DiagnosticPreferenceFragment())
                     .commit();
 
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.layoutDiagnosticsOptions, new DiagnosticOptionsPreferenceFragment())
                     .commit();
 
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.layoutDebugging, new DebuggingPreferenceFragment())
                     .commit();
 
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.layoutCamera, new CameraPreferenceFragment())
                     .commit();
 
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.layoutTesting, new TestingPreferenceFragment())
                     .commit();
 
@@ -114,8 +113,6 @@ public class SettingsActivity extends BaseActivity
             findViewById(R.id.layoutDebugging).setVisibility(View.VISIBLE);
             findViewById(R.id.layoutTesting).setVisibility(View.VISIBLE);
         }
-
-        mScrollView = findViewById(R.id.scrollViewSettings);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         try {
@@ -181,10 +178,6 @@ public class SettingsActivity extends BaseActivity
 
     @Override
     public void onPause() {
-        int scrollbarPosition = mScrollView.getScrollY();
-
-        PreferencesUtil.setInt(this, "settingsScrollPosition", scrollbarPosition);
-
         super.onPause();
 
         PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext())

@@ -157,20 +157,26 @@ public final class AppPreferences {
     }
 
     public static int getCameraZoom() {
-        if (isDiagnosticMode()) {
-            return PreferencesUtil.getInt(CaddisflyApp.getApp(),
-                    R.string.cameraZoomPercentKey, 0);
-        } else {
-            return 0;
-        }
+
+        return 0;
+
+//        if (isDiagnosticMode()) {
+//            return PreferencesUtil.getInt(CaddisflyApp.getApp(),
+//                    R.string.cameraZoomPercentKey, 0);
+//        } else {
+//            return 0;
+//        }
     }
 
     public static Pair<Integer, Integer> getCameraResolution() {
         Pair<Integer, Integer> res = new Pair<>(640, 480);
         try {
             if (isDiagnosticMode()) {
-                String resolution = PreferencesUtil.getString(CaddisflyApp.getApp(),
-                        R.string.cameraResolutionKey, "640-480");
+                // todo: fix this...
+//                String resolution = PreferencesUtil.getString(CaddisflyApp.getApp(),
+//                        R.string.cameraResolutionKey, "640-480");
+
+                String resolution = "640-480";
 
                 String[] resolutions = resolution.split("-");
                 int widthTemp = Integer.parseInt(resolutions[0]);
@@ -188,12 +194,13 @@ public final class AppPreferences {
     }
 
     public static int getCameraCenterOffset() {
-        if (isDiagnosticMode()) {
-            return PreferencesUtil.getInt(CaddisflyApp.getApp(),
-                    R.string.cameraCenterOffsetKey, 0);
-        } else {
-            return 0;
-        }
+        return 0;
+//        if (isDiagnosticMode()) {
+//            return PreferencesUtil.getInt(CaddisflyApp.getApp(),
+//                    R.string.cameraCenterOffsetKey, 0);
+//        } else {
+//            return 0;
+//        }
     }
 
     public static boolean useFlashMode() {

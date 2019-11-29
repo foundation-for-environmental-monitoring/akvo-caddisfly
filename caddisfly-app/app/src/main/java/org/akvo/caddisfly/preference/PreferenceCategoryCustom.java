@@ -20,8 +20,9 @@
 package org.akvo.caddisfly.preference;
 
 import android.content.Context;
-import android.preference.PreferenceCategory;
 import android.util.AttributeSet;
+
+import androidx.preference.PreferenceCategory;
 
 import org.akvo.caddisfly.R;
 

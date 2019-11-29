@@ -22,45 +22,31 @@ package org.akvo.caddisfly.preference;
 import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-
-import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.util.ListViewUtil;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.preference.PreferenceFragmentCompat;
+
+import org.akvo.caddisfly.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DiagnosticOptionsPreferenceFragment extends PreferenceFragment {
-
-    private ListView list;
+public class DiagnosticOptionsPreferenceFragment extends PreferenceFragmentCompat {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.pref_diagnostic_options);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.card_row, container, false);
-
-        rootView.setBackgroundColor(Color.rgb(255, 240, 220));
-
-        return rootView;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setBackgroundColor(view);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        list = view.findViewById(android.R.id.list);
-        (new Handler()).postDelayed(() -> ListViewUtil
-                .setListViewHeightBasedOnChildren(list, 0), 200);
+    private void setBackgroundColor(View view) {
+        view.setBackgroundColor(Color.rgb(255, 240, 220));
     }
 }

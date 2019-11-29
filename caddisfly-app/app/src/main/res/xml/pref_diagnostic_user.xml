@@ -17,12 +17,15 @@
   ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom
         android:key="preferenceCategoryDiagnostics"
-        android:title="@string/diagnosticsUser">
+        android:title="@string/diagnosticsUser"
+        app:iconSpaceReserved="false">
         <CheckBoxPreference
             android:key="@string/saveImagesDataKey"
-            android:title="@string/saveImages" />
+            android:title="@string/saveImages"
+            app:iconSpaceReserved="false" />
     </org.akvo.caddisfly.preference.PreferenceCategoryCustom>
 </PreferenceScreen>

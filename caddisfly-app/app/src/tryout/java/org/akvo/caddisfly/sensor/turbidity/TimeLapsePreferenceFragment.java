@@ -3,28 +3,26 @@ package org.akvo.caddisfly.sensor.turbidity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.view.View;
-import android.widget.ListView;
+
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.util.ListViewUtil;
 
 import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimeLapsePreferenceFragment extends PreferenceFragment
+public class TimeLapsePreferenceFragment extends PreferenceFragmentCompat
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final int MAX_SAMPLE_NUMBER = 100;
-    private ListView list;
 
-    public TimeLapsePreferenceFragment() {
-        // Required empty public constructor
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -51,7 +49,7 @@ public class TimeLapsePreferenceFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.pref_turbidity);
 
         final EditTextPreference sampleIntervalPreference =
-                (EditTextPreference) findPreference(getString(R.string.colif_intervalMinutesKey));
+                findPreference(getString(R.string.colif_intervalMinutesKey));
         if (sampleIntervalPreference != null) {
 
             sampleIntervalPreference.setSummary(String.format("Every %s minutes", sampleIntervalPreference.getText()));
@@ -76,7 +74,7 @@ public class TimeLapsePreferenceFragment extends PreferenceFragment
         }
 
         final EditTextPreference samplesPreference =
-                (EditTextPreference) findPreference(getString(R.string.colif_numberOfSamplesKey));
+                findPreference(getString(R.string.colif_numberOfSamplesKey));
         if (samplesPreference != null) {
             samplesPreference.setSummary(samplesPreference.getText());
 
@@ -99,32 +97,32 @@ public class TimeLapsePreferenceFragment extends PreferenceFragment
         }
 
         final EditTextPreference testIdPreference =
-                (EditTextPreference) findPreference(getString(R.string.colif_testIdKey));
+                findPreference(getString(R.string.colif_testIdKey));
         if (testIdPreference != null) {
             testIdPreference.setSummary(testIdPreference.getText());
         }
 
         final EditTextPreference testDescription =
-                (EditTextPreference) findPreference(getString(R.string.colif_descriptionKey));
+                findPreference(getString(R.string.colif_descriptionKey));
         if (testDescription != null) {
             testDescription.setSummary(testDescription.getText());
         }
 
         final EditTextPreference brothPreference =
-                (EditTextPreference) findPreference(getString(R.string.colif_brothMediaKey));
+                findPreference(getString(R.string.colif_brothMediaKey));
         if (brothPreference != null) {
             brothPreference.setSummary(brothPreference.getText());
         }
 
         final EditTextPreference volumePreference =
-                (EditTextPreference) findPreference(getString(R.string.colif_volumeKey));
+                findPreference(getString(R.string.colif_volumeKey));
 
         if (volumePreference != null && volumePreference.getText() != null) {
             volumePreference.setSummary(String.format("%s ml", volumePreference.getText()));
         }
 
         final EditTextPreference notificationEmails =
-                (EditTextPreference) findPreference(getString(R.string.colif_emails));
+                findPreference(getString(R.string.colif_emails));
         if (notificationEmails != null) {
             notificationEmails.setSummary(notificationEmails.getText());
             notificationEmails.setOnPreferenceChangeListener((preference, newValue) -> {
@@ -133,18 +131,6 @@ public class TimeLapsePreferenceFragment extends PreferenceFragment
                 return false;
             });
         }
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        list = view.findViewById(android.R.id.list);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ListViewUtil.setListViewHeightBasedOnChildren(list, 0);
     }
 
     @Override

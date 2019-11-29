@@ -1,7 +1,6 @@
 package org.akvo.caddisfly.sensor.turbidity;
 
 import android.Manifest;
-import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +17,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -46,10 +51,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import timber.log.Timber;
 
 import static org.akvo.caddisfly.sensor.turbidity.TimeLapseResultActivity.imageFilter;
@@ -139,7 +140,7 @@ public class TimeLapseActivity extends BaseActivity {
 
                 for (File file : files) {
 
-                    String details[] = file.getName().split("_");
+                    String[] details = file.getName().split("_");
 
                     if (details.length < 3) {
                         return;
@@ -302,7 +303,7 @@ public class TimeLapseActivity extends BaseActivity {
         layoutDetails = findViewById(R.id.layoutDetails);
         textInterval = findViewById(R.id.textInterval);
 
-        Fragment fragment;
+        PreferenceFragmentCompat fragment;
         Bundle bundle = new Bundle();
 
         final TextView textTitle = findViewById(R.id.textTitle);
@@ -317,7 +318,7 @@ public class TimeLapseActivity extends BaseActivity {
         textTitle.setText(testInfo.getName());
         setTitle(testInfo.getName());
 
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .add(R.id.layoutContent4, fragment)
                 .commit();
 
@@ -499,10 +500,9 @@ public class TimeLapseActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

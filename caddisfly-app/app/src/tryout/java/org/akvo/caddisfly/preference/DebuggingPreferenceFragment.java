@@ -6,36 +6,30 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.helper.FileHelper;
-import org.akvo.caddisfly.util.ListViewUtil;
-
-import androidx.annotation.NonNull;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DebuggingPreferenceFragment extends PreferenceFragment {
-
-    private ListView list;
+public class DebuggingPreferenceFragment extends PreferenceFragmentCompat {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.pref_debugging);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.card_row, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         view.setBackgroundColor(Color.rgb(255, 240, 220));
         Preference aboutPreference = findPreference("showFolderKey");
         if (aboutPreference != null) {
@@ -59,14 +53,5 @@ public class DebuggingPreferenceFragment extends PreferenceFragment {
                 return true;
             });
         }
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        list = view.findViewById(android.R.id.list);
-        (new Handler()).postDelayed(() -> ListViewUtil
-                .setListViewHeightBasedOnChildren(list, 0), 200);
     }
 }

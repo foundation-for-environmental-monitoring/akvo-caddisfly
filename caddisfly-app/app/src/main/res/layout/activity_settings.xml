@@ -30,7 +30,6 @@
         android:id="@+id/scrollViewSettings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:isScrollContainer="true"
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
@@ -54,7 +53,7 @@
             <FrameLayout
                 android:id="@+id/layoutDiagnostics"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="400dp"
                 android:orientation="vertical" />
 
             <FrameLayout

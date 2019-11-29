@@ -2,8 +2,9 @@ package io.ffem.tryout;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.preference.ListPreference;
 import android.util.AttributeSet;
+
+import androidx.preference.ListPreference;
 
 import java.util.ArrayList;
 import java.util.List;

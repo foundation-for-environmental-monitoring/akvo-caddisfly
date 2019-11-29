@@ -29,18 +29,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -50,26 +47,23 @@ import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.model.TestSampleType;
 import org.akvo.caddisfly.model.TestType;
 import org.akvo.caddisfly.ui.AboutActivity;
-import org.akvo.caddisfly.util.ListViewUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class OtherPreferenceFragment extends PreferenceFragment {
+public class OtherPreferenceFragment extends PreferenceFragmentCompat {
 
-    static StringBuilder message = new StringBuilder();
-    private ListView list;
+    private static StringBuilder message = new StringBuilder();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.pref_other);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.card_row, container, false);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Preference aboutPreference = findPreference("about");
         if (aboutPreference != null) {
@@ -130,23 +124,9 @@ public class OtherPreferenceFragment extends PreferenceFragment {
                 return true;
             });
         }
-
-        return rootView;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        list = view.findViewById(android.R.id.list);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ListViewUtil.setListViewHeightBasedOnChildren(list, 0);
-    }
-
-    public void sendEmail(Context context, String message) {
+    private void sendEmail(Context context, String message) {
         try {
             String email = "devices@ternup.com";
             String subject = "Support request";
@@ -174,7 +154,7 @@ public class OtherPreferenceFragment extends PreferenceFragment {
         @Override
         protected Integer doInBackground(Void... voids) {
             final TestListViewModel viewModel =
-                    ViewModelProviders.of((FragmentActivity) activityReference.get()
+                    ViewModelProviders.of(activityReference.get()
                             .getActivity()).get(TestListViewModel.class);
 
             List<TestInfo> testList = viewModel.getTests(TestType.CHAMBER_TEST, TestSampleType.ALL);

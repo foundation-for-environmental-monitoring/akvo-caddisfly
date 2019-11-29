@@ -23,50 +23,28 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.text.format.DateFormat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.helper.ApkHelper;
-import org.akvo.caddisfly.util.ListViewUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
-
-import androidx.annotation.NonNull;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TestingPreferenceFragment extends PreferenceFragment {
-
-    private ListView list;
+public class TestingPreferenceFragment extends PreferenceFragmentCompat {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.pref_testing);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.card_row, container, false);
-        setBackgroundColor(view);
-
-        Preference testModeOnPreference = findPreference(getString(R.string.testModeOnKey));
-        if (testModeOnPreference != null) {
-            testModeOnPreference.setOnPreferenceClickListener(preference -> {
-                setBackgroundColor(view);
-                return true;
-            });
-        }
-        return view;
     }
 
     private void setBackgroundColor(View view) {
@@ -77,11 +55,20 @@ public class TestingPreferenceFragment extends PreferenceFragment {
         }
     }
 
-
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        list = view.findViewById(android.R.id.list);
+
+        setBackgroundColor(view);
+
+        Preference testModeOnPreference = findPreference(getString(R.string.testModeOnKey));
+        if (testModeOnPreference != null) {
+            testModeOnPreference.setOnPreferenceClickListener(preference -> {
+                setBackgroundColor(view);
+                return true;
+            });
+        }
+
         (new Handler()).postDelayed(() -> {
             Preference nextUpdateCheckPreference = findPreference(getString(R.string.nextUpdateCheckKey));
             if (nextUpdateCheckPreference != null) {
@@ -93,7 +80,6 @@ public class TestingPreferenceFragment extends PreferenceFragment {
                     nextUpdateCheckPreference.setSummary("Not installed from Play store");
                 }
             }
-            ListViewUtil.setListViewHeightBasedOnChildren(list, 40);
         }, 200);
     }
 }

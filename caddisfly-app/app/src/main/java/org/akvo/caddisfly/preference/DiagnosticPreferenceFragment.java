@@ -25,17 +25,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.EditTextPreference;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ChamberTestConfig;
@@ -46,31 +46,26 @@ import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.PermissionsDelegate;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.util.AlertUtil;
-import org.akvo.caddisfly.util.ListViewUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DiagnosticPreferenceFragment extends PreferenceFragment {
+public class DiagnosticPreferenceFragment extends PreferenceFragmentCompat {
 
     private static final int MAX_TOLERANCE = 399;
     private ListView list;
     private PermissionsDelegate permissionsDelegate;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.pref_diagnostic);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.card_row, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         permissionsDelegate = new PermissionsDelegate(getActivity());
-
-        rootView.setBackgroundColor(Color.rgb(255, 240, 220));
 
         setupSampleTimesPreference();
 
@@ -78,7 +73,19 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
 
         setupAverageDistancePreference();
 
-        return rootView;
+        setupCameraPreviewPreference();
+
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setBackgroundColor(view);
+    }
+
+    private void setBackgroundColor(View view) {
+        view.setBackgroundColor(Color.rgb(255, 240, 220));
     }
 
     private void setupCameraPreviewPreference() {
@@ -107,7 +114,7 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
         if (isCameraAvailable()) {
 
             final TestListViewModel viewModel =
-                    ViewModelProviders.of((FragmentActivity) getActivity()).get(TestListViewModel.class);
+                    ViewModelProviders.of(getActivity()).get(TestListViewModel.class);
             TestInfo testInfo;
             try {
                 testInfo = viewModel.getTestInfo(Constants.FLUORIDE_ID);
@@ -121,7 +128,6 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
         }
     }
 
-    @SuppressWarnings("deprecation")
     private boolean isCameraAvailable() {
         Camera camera = null;
         try {
@@ -141,7 +147,7 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
 
     private void setupSampleTimesPreference() {
         final EditTextPreference sampleTimesPreference =
-                (EditTextPreference) findPreference(getString(R.string.samplingsTimeKey));
+                findPreference(getString(R.string.samplingsTimeKey));
         if (sampleTimesPreference != null) {
 
             sampleTimesPreference.setSummary(sampleTimesPreference.getText());
@@ -171,7 +177,7 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
 
     private void setupDistancePreference() {
         final EditTextPreference distancePreference =
-                (EditTextPreference) findPreference(getString(R.string.colorDistanceToleranceKey));
+                findPreference(getString(R.string.colorDistanceToleranceKey));
         if (distancePreference != null) {
             distancePreference.setSummary(distancePreference.getText());
 
@@ -199,7 +205,7 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
 
     private void setupAverageDistancePreference() {
         final EditTextPreference distancePreference =
-                (EditTextPreference) findPreference(getString(R.string.colorAverageDistanceToleranceKey));
+                findPreference(getString(R.string.colorAverageDistanceToleranceKey));
         if (distancePreference != null) {
             distancePreference.setSummary(distancePreference.getText());
 
@@ -223,21 +229,6 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
                 return false;
             });
         }
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        setupCameraPreviewPreference();
-
-        list = view.findViewById(android.R.id.list);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ListViewUtil.setListViewHeightBasedOnChildren(list, 0);
     }
 
     @Override
