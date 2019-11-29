@@ -450,6 +450,18 @@
       "instructions": [
         {
           "section": [
+            "c_normal_rinse_2ml",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_measure_2ml",
+            "image:c_measure_sample"
+          ]
+        },
+        {
+          "section": [
             "<dilution>"
           ]
         },
@@ -558,6 +570,18 @@
         -1
       ],
       "instructions": [
+        {
+          "section": [
+            "c_normal_rinse_2ml",
+            "image:c_rinse"
+          ]
+        },
+        {
+          "section": [
+            "c_measure_2ml",
+            "image:c_measure_sample"
+          ]
+        },
         {
           "section": [
             "<dilution>"

@@ -107,6 +107,8 @@
     <string name="c_add_5_drops">Add <b>5 drops</b> of the reagent to the measured sample.</string>
     <string name="c_add_10_drops">Add <b>10 drops</b> of pH reagent to the measured sample.</string>
 
+    <string name="c_measure_2ml">Measure <b>2 ml</b> of the sample with the measuring tube. Add <b>8 ml of distilled water</b> to bring the total volume up to 10 ml.</string>
+    <string name="c_normal_rinse_2ml">Rinse the measuring tube and the test cuvette <b>twice</b> with <b>distilled water</b> to remove any traces of previous solutions.</string>
     <string name="c_normal_rinse">Rinse the empty cuvette and measuring tube <b>twice</b> with the sample to remove any traces of previous solutions.</string>
     <string name="c_normal_measure"><b>Measure %sampleQuantity ml</b> of the sample with the measuring tube.</string>
     <string name="c_open_reagent">Open the vial of <b>Reagent A</b>.</string>

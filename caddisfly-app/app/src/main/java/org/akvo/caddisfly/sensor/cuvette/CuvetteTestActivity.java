@@ -32,6 +32,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import org.akvo.caddisfly.BuildConfig;
@@ -109,6 +111,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import io.ffem.tryout.DiagnosticSendDialogFragment;
@@ -819,8 +822,11 @@ public class CuvetteTestActivity extends BaseActivity implements
 
     private void setDilution(int dilution) {
         currentDilution = dilution;
+        int currentPage = viewPager.getCurrentItem();
         setupInstructions();
-        pageNext();
+        Objects.requireNonNull(viewPager.getAdapter()).notifyDataSetChanged();
+        viewPager.setCurrentItem(currentPage);
+        (new Handler()).postDelayed(this::pageNext, 300);
         testInfo.setDilution(dilution);
         final TestInfoViewModel model =
                 ViewModelProviders.of(this).get(TestInfoViewModel.class);
@@ -1047,8 +1053,14 @@ public class CuvetteTestActivity extends BaseActivity implements
             imagePageLeft.setVisibility(View.INVISIBLE);
             imagePageRight.setVisibility(View.INVISIBLE);
         } else if (viewPager.getCurrentItem() == dilutionPageNumber) {
-            footerLayout.setVisibility(View.GONE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+            if (viewPager.getCurrentItem() > 0) {
+                footerLayout.setVisibility(View.VISIBLE);
+                imagePageRight.setVisibility(View.GONE);
+                viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+            } else {
+                footerLayout.setVisibility(View.GONE);
+                viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+            }
         } else if (viewPager.getCurrentItem() == resultPageNumber) {
             pagerIndicator.setVisibility(View.GONE);
             footerLayout.setVisibility(View.VISIBLE);
@@ -1208,7 +1220,6 @@ public class CuvetteTestActivity extends BaseActivity implements
                 if (testInfo.getDilution() == testInfo.getMaxDilution()) {
                     return PlaceholderFragment.newInstance(
                             instructions.get(position), ButtonType.ACCEPT);
-
                 } else if (testInfo.getResults().get(0).highLevelsFound()
                         && testInfo.getDilutions().size() > 0) {
                     return PlaceholderFragment.newInstance(
@@ -1228,6 +1239,11 @@ public class CuvetteTestActivity extends BaseActivity implements
         @Override
         public int getCount() {
             return totalPageCount;
+        }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return PagerAdapter.POSITION_NONE;
         }
     }
 }
