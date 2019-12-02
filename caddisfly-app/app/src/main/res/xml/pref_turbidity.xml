@@ -1,51 +1,82 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <EditTextPreference
+        android:defaultValue="1"
+        android:dialogMessage="Number of tests"
+        android:inputType="number"
+        android:key="@string/colif_numberOfTests"
+        android:maxLength="1"
+        android:selectAllOnFocus="true"
+        android:title="Number of tests"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false" />
     <EditTextPreference
         android:dialogMessage="Test Id"
         android:inputType="number"
         android:key="@string/colif_testIdKey"
         android:maxLength="10"
         android:selectAllOnFocus="true"
-        android:title="Test Id" />
+        android:title="Test Id"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false" />
     <EditTextPreference
         android:dialogMessage="Description"
         android:inputType="textCapSentences"
         android:key="@string/colif_descriptionKey"
         android:maxLength="100"
         android:selectAllOnFocus="true"
-        android:title="Description" />
+        android:title="Description"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false" />
     <EditTextPreference
         android:dialogMessage="Volume (ml)"
         android:inputType="number"
         android:key="@string/colif_volumeKey"
         android:maxLength="10"
         android:selectAllOnFocus="true"
-        android:title="Volume (ml)" />
+        android:title="Volume (ml)"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false" />
     <EditTextPreference
         android:inputType="textCapSentences"
         android:key="@string/colif_brothMediaKey"
         android:maxLength="25"
         android:selectAllOnFocus="true"
-        android:title="Broth media" />
+        android:title="Broth media"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false" />
     <EditTextPreference
         android:defaultValue="5"
         android:dialogMessage="Interval in minutes (max 360)"
+        android:inputType="number"
         android:key="@string/colif_intervalMinutesKey"
         android:maxLength="3"
-        android:numeric="integer"
         android:selectAllOnFocus="true"
-        android:title="Sampling interval" />
+        android:title="Sampling interval"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false" />
     <EditTextPreference
         android:defaultValue="12"
         android:dialogMessage="Number of samples (max 100)"
+        android:inputType="number"
         android:key="@string/colif_numberOfSamplesKey"
         android:maxLength="3"
-        android:numeric="integer"
         android:selectAllOnFocus="true"
-        android:title="Number of samples" />
+        android:title="Number of samples"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"
+        app:iconSpaceReserved="false" />
     <EditTextPreference
         android:dialogMessage="Email addresses to which result notification will be sent"
         android:key="@string/colif_emails"
         android:maxLines="5"
         android:singleLine="false"
-        android:title="Notification recipient email" />
+        android:title="Notification recipient email"
+        app:allowDividerAbove="true"
+        app:iconSpaceReserved="false" />
 </PreferenceScreen>

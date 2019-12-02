@@ -28,7 +28,7 @@ android {
         }
         tryout {
             applicationIdSuffix ".experiment"
-            versionCode 250
+            versionCode 252
             versionName "Experiment"
             buildConfigField 'boolean', 'showExperimentalTests', 'true'
         }
@@ -59,24 +59,24 @@ android {
         }
     }
 
-//    signingConfigs {
-//        appRelease {
-//            storeFile file(FFEM_RELEASE_STORE_FILE)
-//            storePassword FFEM_RELEASE_STORE_PASSWORD
-//            keyAlias FFEM_RELEASE_KEY_ALIAS
-//            keyPassword FFEM_RELEASE_KEY_PASSWORD
-//        }
-//    }
-//
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.appRelease
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            zipAlignEnabled true
-//        }
-//    }
+    signingConfigs {
+        appRelease {
+            storeFile file(FFEM_RELEASE_STORE_FILE)
+            storePassword FFEM_RELEASE_STORE_PASSWORD
+            keyAlias FFEM_RELEASE_KEY_ALIAS
+            keyPassword FFEM_RELEASE_KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.appRelease
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+    }
 
     lintOptions {
         checkReleaseBuilds true
@@ -103,10 +103,10 @@ dependencies {
     // Support
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.exifinterface:exifinterface:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.preference:preference:1.1.0'
 
@@ -122,8 +122,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.2.1'
-    annotationProcessor 'androidx.room:room-compiler:2.2.1'
+    implementation 'androidx.room:room-runtime:2.2.2'
+    annotationProcessor 'androidx.room:room-compiler:2.2.2'
 
     // Volley
     implementation 'com.android.volley:volley:1.1.1'
@@ -171,8 +171,8 @@ dependencies {
     tryoutImplementation 'androidx.multidex:multidex:2.0.1'
     tryoutImplementation 'com.google.firebase:firebase-core:17.2.1'
     tryoutImplementation 'com.google.firebase:firebase-database:19.2.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:21.2.1'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:21.3.0'
     tryoutImplementation 'com.google.firebase:firebase-storage:19.1.0'
-    tryoutImplementation 'com.google.firebase:firebase-auth:19.1.0'
+    tryoutImplementation 'com.google.firebase:firebase-auth:19.2.0'
 }
 apply plugin: 'com.google.gms.google-services'

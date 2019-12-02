@@ -88,6 +88,7 @@
     <string name="colif_brothMediaKey">colif_brothMedia</string>
     <string name="colif_intervalMinutesKey">colif_IntervalMinutes</string>
     <string name="colif_numberOfSamplesKey">colif_NumberOfSamples</string>
+    <string name="colif_numberOfTests">colif_NumberOfTests</string>
     <string name="colif_emails">colif_emails</string>
     <string name="turbiditySavePathKey">turbiditySavePath</string>
     <string name="coliformResultSafeKey">coliformResultSafe</string>
