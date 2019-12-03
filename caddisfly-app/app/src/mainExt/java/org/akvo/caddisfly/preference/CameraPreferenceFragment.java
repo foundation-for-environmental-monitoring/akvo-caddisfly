@@ -1,6 +1,12 @@
 package org.akvo.caddisfly.preference;
 
-import android.app.Fragment;
+import android.os.Bundle;
 
-public class CameraPreferenceFragment extends Fragment {
+import androidx.preference.PreferenceFragmentCompat;
+
+public class CameraPreferenceFragment extends PreferenceFragmentCompat {
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+
+    }
 }
