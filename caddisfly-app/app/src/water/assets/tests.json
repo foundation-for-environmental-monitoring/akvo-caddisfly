@@ -72,7 +72,7 @@
       ]
     },
     {
-      "name": "Arsenic (III)",
+      "name": "Total Arsenic",
       "type": "water",
       "subtype": "cuvette",
       "uuid": "93c259c5-f8b5-4317-828b-adfa324a2918",
@@ -89,7 +89,7 @@
       "results": [
         {
           "id": 1,
-          "name": "Arsenic (III)",
+          "name": "Total Arsenic",
           "unit": "mg/l",
           "timeDelay": 600
         }

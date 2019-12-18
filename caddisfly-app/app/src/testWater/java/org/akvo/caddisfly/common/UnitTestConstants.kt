@@ -12,7 +12,7 @@ object UnitTestConstants {
     val SAMPLE_TYPE: TestSampleType? = TestSampleType.WATER
     const val STRIP_TEST_NAME = "Arsenic (0 - 500)"
     const val CUVETTE_TEST_NAME_1 = "Aluminum"
-    const val CUVETTE_TEST_NAME_2 = "Arsenic (III)"
+    const val CUVETTE_TEST_NAME_2 = "Total Arsenic"
     const val CUVETTE_TEST_NAME_3 = "Chlorophyll A"
     const val CUVETTE_TEST_NAME_4 = "Chromium"
     const val CUVETTE_TEST_UNIT = "mg\\/l"

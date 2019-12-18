@@ -22,7 +22,7 @@
     <string name="analyze">विश्लेषण</string>
     <!-- Tests -->
     <string name="aluminum">अल्युमीनियम</string>
-    <string name="arsenic_iii">आर्सेनिक (III)</string>
+    <string name="total_arsenic">कुल आर्सेनिक</string>
     <string name="chromium">क्रोमियम</string>
     <string name="copper">कॉपर</string>
     <string name="dissolved_oxygen">विघटित ऑक्सीजन</string>
