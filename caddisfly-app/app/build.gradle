@@ -4,6 +4,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'de.mobilej.unmock'
 
+def secretsFile = file(System.properties['user.home'] + '/.gradle/gradle.properties')
+def secrets = new Properties()
+if (secretsFile.exists()) {
+    secrets.load(new FileInputStream(secretsFile))
+}
+
 android {
     compileSdkVersion 29
     testOptions.unitTests.includeAndroidResources = true
@@ -62,24 +68,28 @@ android {
         }
     }
 
-//    signingConfigs {
-//        appRelease {
-//            storeFile file(FFEM_RELEASE_STORE_FILE)
-//            storePassword FFEM_RELEASE_STORE_PASSWORD
-//            keyAlias FFEM_RELEASE_KEY_ALIAS
-//            keyPassword FFEM_RELEASE_KEY_PASSWORD
-//        }
-//    }
-//
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.appRelease
-//            minifyEnabled true
-//            shrinkResources true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            zipAlignEnabled true
-//        }
-//    }
+    signingConfigs {
+        appRelease {
+            if (secrets.getProperty('FFEM_RELEASE_STORE_FILE')) {
+                storeFile file(FFEM_RELEASE_STORE_FILE)
+                storePassword FFEM_RELEASE_STORE_PASSWORD
+                keyAlias FFEM_RELEASE_KEY_ALIAS
+                keyPassword FFEM_RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            if (secrets.getProperty('FFEM_RELEASE_STORE_FILE')) {
+                signingConfig signingConfigs.appRelease
+            }
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+    }
 
     lintOptions {
         checkReleaseBuilds true
@@ -124,8 +134,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.2.2'
-    annotationProcessor 'androidx.room:room-compiler:2.2.2'
+    implementation 'androidx.room:room-runtime:2.2.3'
+    annotationProcessor 'androidx.room:room-compiler:2.2.3'
     kapt 'android.arch.persistence.room:compiler:1.1.1'
 
     // Gson
@@ -173,7 +183,7 @@ dependencies {
 //    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
     tryoutImplementation 'com.google.firebase:firebase-core:17.2.1'
     tryoutImplementation 'com.google.firebase:firebase-database:19.2.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:21.3.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:21.3.1'
     tryoutImplementation 'com.google.firebase:firebase-storage:19.1.0'
     tryoutImplementation 'com.google.firebase:firebase-auth:19.2.0'
 
