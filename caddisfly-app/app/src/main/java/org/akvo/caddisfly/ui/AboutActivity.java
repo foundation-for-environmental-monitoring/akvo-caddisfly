@@ -23,14 +23,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.databinding.ActivityAboutBinding;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProviders;
 
 /**
  * Activity to display info about the app.
@@ -95,7 +95,7 @@ public class AboutActivity extends BaseActivity {
 
             if (clickCount >= CHANGE_MODE_MIN_CLICKS) {
                 clickCount = 0;
-                Toast.makeText(getBaseContext(), getString(
+                Toast.makeText(this, getString(
                         R.string.diagnosticModeEnabled), Toast.LENGTH_SHORT).show();
                 AppPreferences.enableDiagnosticMode();
 

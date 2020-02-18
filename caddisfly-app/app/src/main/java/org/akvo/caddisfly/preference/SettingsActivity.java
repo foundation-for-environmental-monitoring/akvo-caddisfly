@@ -142,7 +142,7 @@ public class SettingsActivity extends BaseActivity
     }
 
     public void onDisableDiagnostics(MenuItem item) {
-        Toast.makeText(getBaseContext(), getString(R.string.diagnosticModeDisabled),
+        Toast.makeText(this, getString(R.string.diagnosticModeDisabled),
                 Toast.LENGTH_SHORT).show();
 
         AppPreferences.disableDiagnosticMode();

@@ -39,7 +39,7 @@
     </declare-styleable>
 
     <declare-styleable name="RowView">
-        <attr name="number" format="string" localization="suggested" />
+        <attr name="textNumber" format="string" localization="suggested" />
         <attr name="paragraph" format="string" localization="suggested" />
     </declare-styleable>
 
