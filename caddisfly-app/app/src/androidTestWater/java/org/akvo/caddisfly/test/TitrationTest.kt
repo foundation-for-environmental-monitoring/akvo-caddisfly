@@ -1,7 +1,7 @@
 package org.akvo.caddisfly.test
 
 import android.content.SharedPreferences
-import android.preference.PreferenceManager.getDefaultSharedPreferences
+import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -65,7 +65,7 @@ class TitrationTest {
         sleep(1000)
 
         assertNotNull(mDevice.findObject(By.text("Carbonate: ")))
-        assertNotNull(mDevice.findObject(By.text("3000.00")))
+        assertNotNull(mDevice.findObject(By.text("300.00")))
     }
 
     @Test

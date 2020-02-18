@@ -20,7 +20,7 @@
 package org.akvo.caddisfly.navigation
 
 import android.content.SharedPreferences
-import android.preference.PreferenceManager.getDefaultSharedPreferences
+import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso
