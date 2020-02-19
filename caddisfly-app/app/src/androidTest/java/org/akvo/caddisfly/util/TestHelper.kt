@@ -1,22 +1,3 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
-
 @file:Suppress("DEPRECATION")
 
 package org.akvo.caddisfly.util
@@ -111,8 +92,7 @@ object TestHelper {
         val config = Configuration(currentResources.configuration)
         config.locale = Locale(languageCode)
         val res = Resources(assets, metrics, config)
-        addString(TestConstant.LANGUAGE, "English", "Français", "Hindi")
-//        addString("otherLanguage", "Français", "English")
+        addString(TestConstant.LANGUAGE, "English", "Hindi")
         addString(TestConstant.FLUORIDE, "Water - Fluoride", res.getString(string.testName))
         addString("chlorine", "Water - Free Chlorine", res.getString(string.freeChlorine))
         addString("survey", "Survey", res.getString(string.survey))
@@ -239,11 +219,12 @@ object TestHelper {
 
     fun clickExternalSourceButton(index: Int, text: String?) {
         var buttonText = currentHashMap[text]
-        if (VERSION.SDK_INT >= VERSION_CODES.N) {
+        findButtonInScrollable(buttonText)
+        var buttons: List<UiObject2?>? = mDevice.findObjects(By.text(buttonText))
+        if (buttons?.size == 0) {
             buttonText = buttonText!!.toUpperCase()
         }
-        findButtonInScrollable(buttonText)
-        val buttons: List<UiObject2?>? = mDevice.findObjects(By.text(buttonText))
+        buttons = mDevice.findObjects(By.text(buttonText))
         buttons!![index]!!.click()
         mDevice.waitForWindowUpdate("", 2000)
         sleep(4000)

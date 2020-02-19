@@ -1,26 +1,6 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package org.akvo.caddisfly.navigation
 
 import android.content.Intent
-import android.os.Environment
 import android.widget.DatePicker
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso
@@ -80,39 +60,31 @@ class NavigationTest {
         loadData(mActivityRule.activity, mCurrentLanguage)
         clearPreferences(mActivityRule)
 //        resetLanguage();
-
     }
 
     @Test
     @RequiresDevice
     fun testNavigateAll() {
         saveCalibration("TestInvalid", TestConstants.CUVETTE_TEST_ID_1)
-        val path = (Environment.getExternalStorageDirectory().path
+        val path = (mActivityRule.activity.getExternalFilesDir(null)?.path
                 + "/" + BuildConfig.APPLICATION_ID + "/screenshots")
         val folder = File(path)
         if (!folder.exists()) {
-
             folder.mkdirs()
         }
         mDevice.waitForWindowUpdate("", 2000)
         goToMainScreen()
 
         //Main Screen
-
-
         takeScreenshot()
         onView(withText(string.settings)).perform(click())
 
         //Settings Screen
-
-
         takeScreenshot()
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         mDevice.waitForWindowUpdate("", 1000)
 
         //About Screen
-
-
         takeScreenshot()
         Espresso.pressBack()
 
@@ -124,7 +96,6 @@ class NavigationTest {
 //        takeScreenshot();
 
 //        onView(withId(android.R.id.button2)).perform(click());
-
 
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
@@ -154,8 +125,6 @@ class NavigationTest {
         onView(withText(string.calibrate)).perform(click())
 
         //Test Types Screen
-
-
         takeScreenshot()
         onView(allOf(withId(id.list_types), childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
                 0))).perform(actionOnItemAtPosition<ViewHolder?>(
@@ -163,18 +132,15 @@ class NavigationTest {
 
         //Calibrate Swatches Screen
 
-
         takeScreenshot()
 
 //        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-
 
         onView(withId(id.fabEditCalibration)).perform(click())
 
 //        onView(withId(R.id.editBatchCode))
 //                .perform(typeText("TEST 123#*@!"), closeSoftKeyboard());
 //
-
 
         onView(withId(id.editExpiryDate)).perform(click())
         onView(withClassName(equalTo(DatePicker::class.java.name)))
@@ -188,7 +154,6 @@ class NavigationTest {
         // onView(withText("2" + dfs.getDecimalSeparator() + "0 mg/l")).perform(click());
 
         //onView(withId(R.id.buttonStart)).perform(click());
-
 
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         goToMainScreen()
@@ -211,44 +176,6 @@ class NavigationTest {
         goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
 
-//        onView(withText(currentHashMap.get("electricalConductivity"))).perform(click());
-//
-//        try {
-//            onView(withText(R.string.incorrectCalibrationCanAffect)).check(matches(isDisplayed()));
-//            //Calibrate EC Warning
-//            takeScreenshot();
-//
-//            onView(withText(R.string.cancel)).perform(click());
-//
-//            onView(withText(currentHashMap.get("electricalConductivity"))).perform(click());
-//
-//            onView(withText(R.string.warning)).check(matches(isDisplayed()));
-//
-//            onView(withText(R.string.calibrate)).perform(click());
-//
-//            //Calibrate EC
-//            takeScreenshot();
-//
-//            onView(withId(R.id.buttonStartCalibrate)).perform(click());
-//
-//            //EC not found dialog
-//            takeScreenshot();
-//
-//            onView(withId(android.R.id.button1)).perform(click());
-//
-//        } catch (Exception ex) {
-//            String message = String.format("%s\r\n\r\n%s", mActivityRule.getActivity().getString(R.string.phoneDoesNotSupport),
-//                    mActivityRule.getActivity().getString(R.string.pleaseContactSupport));
-//
-//            onView(withText(message)).check(matches(isDisplayed()));
-//
-//            //Feature not supported
-//            takeScreenshot();
-//
-//            onView(withText(R.string.ok)).perform(click());
-//        }
-
-
         goToMainScreen()
         gotoSurveyForm()
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
@@ -257,8 +184,6 @@ class NavigationTest {
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
 
         //Dilution dialog
-
-
         takeScreenshot()
         TestUtil.goBack(5)
         mActivityRule.launchActivity(Intent())
@@ -267,15 +192,12 @@ class NavigationTest {
         onView(withText(string.testName)).check(matches(isDisplayed()))
 
 //        //Calibration incomplete
-
-
         takeScreenshot()
 
         // Chlorine not calibrated
         //onView(withText(R.string.cannotStartTest)).check(matches(isDisplayed()));
 
         //onView(withId(android.R.id.button2)).perform(click());
-
 
         mDevice.pressBack()
         mDevice.waitForWindowUpdate("", 2000)
@@ -309,13 +231,10 @@ class NavigationTest {
 
         //onView(withText(R.string.ok)).perform(click());
 
-
         mDevice.pressBack()
 
         //mDevice.pressBack();
         //onView(withId(android.R.id.button1)).perform(click());
-
-
     }
 
     companion object {

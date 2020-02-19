@@ -1,22 +1,3 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package org.akvo.caddisfly.diagnostic
 
 import androidx.test.espresso.Espresso.onView
@@ -72,25 +53,11 @@ class DiagnosticTest {
         goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
         onView(RecyclerViewMatcher(id.list_types)
-                .atPositionOnView(1, id.text_title))
+                .atPositionOnView(0, id.text_title))
                 .check(matches(withText(TestConstants.CUVETTE_TEST_NAME_1)))
                 .perform(click())
 
-//        ViewInteraction recyclerView = onView(
-//                allOf(withId(R.id.list_types),
-//                        childAtPosition(
-//                                withClassName(is("android.widget.LinearLayout")),
-//                                0)));
-//        recyclerView.perform(actionOnItemAtPosition(3, click()));
-
-
         mDevice.waitForIdle()
-
-//        onView(withText(currentHashMap.get("fluoride"))).perform(scrollTo()).perform(click());
-
-//        onView(withId(R.id.list_types)).perform(RecyclerViewActions
-//                .actionOnItem(first(hasDescendant(withText(currentHashMap.get("fluoride")))), click()));
-
 
         if (TestUtil.isEmulator) {
             onView(withText(string.errorCameraFlashRequired))

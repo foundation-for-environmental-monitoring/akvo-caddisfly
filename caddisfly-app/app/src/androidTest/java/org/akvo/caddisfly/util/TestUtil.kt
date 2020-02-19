@@ -1,47 +1,24 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
-
 @file:Suppress("DEPRECATION")
 
 package org.akvo.caddisfly.util
 
 import android.app.Activity
-import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.test.InstrumentationRegistry.getContext
 import androidx.test.InstrumentationRegistry.getInstrumentation
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.CoordinatesProvider
-import androidx.test.espresso.action.GeneralClickAction
-import androidx.test.espresso.action.Press
-import androidx.test.espresso.action.Tap
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
 import androidx.test.runner.lifecycle.Stage
 import androidx.test.uiautomator.*
-import org.akvo.caddisfly.R.id
+import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.TestConstantKeys
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.hamcrest.Description
@@ -57,12 +34,10 @@ object TestUtil {
 
     val isEmulator: Boolean
         get() = (Build.FINGERPRINT.startsWith("generic")
-                || Build.HOST.startsWith("SWDG2909")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")
                 || Build.MODEL.contains("Emulator")
                 || Build.MODEL.contains("Android SDK built for x86")
-                || Build.MANUFACTURER.contains("Genymotion")
                 || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
                 || "google_sdk" == Build.PRODUCT)
 
@@ -137,33 +112,14 @@ object TestUtil {
         return true
     }
 
-    fun clickPercent(pctX: Float, pctY: Float): ViewAction {
-        return GeneralClickAction(
-                Tap.SINGLE,
-                CoordinatesProvider { view: View ->
-                    val screenPos = IntArray(2)
-                    view.getLocationOnScreen(screenPos)
-                    val w = view.width
-                    val h = view.height
-                    val x = w * pctX
-                    val y = h * pctY
-                    val screenX = screenPos[0] + x
-                    val screenY = screenPos[1] + y
-                    floatArrayOf(screenX, screenY)
-                },
-                Press.FINGER)
-    }
-
     private fun swipeLeft() {
-        mDevice.waitForIdle()
-        mDevice.swipe(500, 400, 50, 400, 4)
-        mDevice.waitForIdle()
-    }
-
-    private fun swipeRight() {
-        mDevice.waitForIdle()
-        mDevice.swipe(50, 400, 500, 400, 4)
-        mDevice.waitForIdle()
+        if (isEmulator) {
+            clickExternalSourceButton(getContext(), TestConstantKeys.NEXT)
+        } else {
+            mDevice.waitForIdle()
+            mDevice.swipe(500, 400, 50, 400, 4)
+            mDevice.waitForIdle()
+        }
     }
 
     private fun swipeDown() {
@@ -173,34 +129,9 @@ object TestUtil {
         }
     }
 
-    fun swipeRight(times: Int) {
-        for (i in 0 until times) {
-            swipeRight()
-        }
-    }
-
-    fun swipeLeft(times: Int) {
-        for (i in 0 until times) {
-            mDevice.waitForIdle()
-            swipeLeft()
-            sleep(300)
-        }
-    }
-
     fun goBack(times: Int) {
         for (i in 0 until times) {
             mDevice.pressBack()
-        }
-    }
-
-    fun goBack() {
-        mDevice.waitForIdle()
-        goBack(1)
-    }
-
-    fun nextPage(times: Int) {
-        for (i in 0 until times) {
-            nextPage()
         }
     }
 
@@ -221,17 +152,10 @@ object TestUtil {
         }
     }
 
+    @Suppress("unused")
     fun nextPage() {
-        onView(allOf(withId(id.image_pageRight), isDisplayed())).perform(click())
+        onView(allOf(withId(R.id.image_pageRight), isDisplayed())).perform(click())
         mDevice.waitForIdle()
-    }
-
-    fun nextSurveyPage(context: Context?) {
-        clickExternalSourceButton(context, TestConstantKeys.NEXT)
-    }
-
-    fun nextSurveyPage(times: Int) {
-        nextSurveyPage(times, "")
     }
 
     fun nextSurveyPage(times: Int, tabName: String) {
@@ -262,21 +186,4 @@ object TestUtil {
         swipeDown()
         mDevice.waitForIdle()
     }
-
-//    fun <T> first(matcher: Matcher<T>): Matcher<T> {
-//        return object : BaseMatcher<T?>() {
-//            var isFirst = true
-//            override fun matches(item: Any?): Boolean {
-//                if (isFirst && matcher.matches(item)) {
-//                    isFirst = false
-//                    return true
-//                }
-//                return false
-//            }
-//
-//            override fun describeTo(description: Description) {
-//                description.appendText("should return first matching item")
-//            }
-//        }
-//    }
 }

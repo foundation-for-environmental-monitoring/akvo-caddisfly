@@ -3,6 +3,8 @@ package org.akvo.caddisfly.navigation
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -12,7 +14,9 @@ import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.TestConstants.TEST_INDEX
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
+import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
+import org.hamcrest.Matchers
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
@@ -42,21 +46,21 @@ class RunTestNavigation {
 
     @Test
     fun runTestNavigation() {
-        onView(allOf(withId(R.id.buttonRunTest), withText("Run Test"), isDisplayed()))
-                .perform(click())
-
-        val relativeLayout = onView(
-                allOf(childAtPosition(
-                        allOf(withId(R.id.list_types),
-                                childAtPosition(
-                                        withClassName(`is`("android.widget.LinearLayout")),
-                                        0)), TEST_INDEX),
-                        isDisplayed()))
-        relativeLayout.perform(click())
-
-        onView(allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click())
-
-        onView(allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click())
+//        onView(allOf(withId(R.id.buttonRunTest), withText("Run Test"), isDisplayed()))
+//                .perform(click())
+//
+//        val relativeLayout = onView(
+//                allOf(childAtPosition(
+//                        allOf(withId(R.id.list_types),
+//                                childAtPosition(
+//                                        withClassName(`is`("android.widget.LinearLayout")),
+//                                        0)), TEST_INDEX),
+//                        isDisplayed()))
+//        relativeLayout.perform(click())
+//
+//        onView(allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click())
+//
+//        onView(allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click())
 
         onView(allOf(withId(R.id.buttonCalibrate), withText("Calibrate"), isDisplayed()))
                 .perform(click())
@@ -69,6 +73,13 @@ class RunTestNavigation {
                                         0)), TEST_INDEX),
                         isDisplayed()))
         relativeLayout3.perform(click())
+
+        if (TestUtil.isEmulator) {
+            onView(withText(R.string.errorCameraFlashRequired))
+                    .inRoot(RootMatchers.withDecorView(Matchers.not(`is`(mActivityTestRule.activity.window
+                            .decorView)))).check(ViewAssertions.matches(isDisplayed()))
+            return
+        }
 
         val floatingActionButton = onView(
                 allOf(withId(R.id.fabEditCalibration),
