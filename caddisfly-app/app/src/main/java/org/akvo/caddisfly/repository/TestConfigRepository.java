@@ -213,7 +213,7 @@ public class TestConfigRepository {
 
                         if (testInfo.getSubtype() == TestType.CHAMBER_TEST) {
 
-                            CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();
+                            CalibrationDao dao = CaddisflyApp.getDb().calibrationDao();
 
                             // if range values are defined as comma delimited text then convert to array
                             convertRangePropertyToArray(testInfo);
@@ -295,7 +295,7 @@ public class TestConfigRepository {
             calibrationDetail.expiry = expiry;
         }
 
-        CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();
+        CalibrationDao dao = CaddisflyApp.getDb().calibrationDao();
         dao.insert(calibrationDetail);
 
         if (calibrations.size() < 1) {

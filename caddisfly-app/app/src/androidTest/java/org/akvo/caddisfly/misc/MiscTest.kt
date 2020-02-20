@@ -19,14 +19,13 @@
 
 package org.akvo.caddisfly.misc
 
-import android.app.Activity
 import android.os.RemoteException
 import android.widget.DatePicker
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -42,27 +41,24 @@ import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
 import org.akvo.caddisfly.ui.MainActivity
-import org.akvo.caddisfly.ui.TestActivity
-import org.akvo.caddisfly.ui.TestListActivity
 import org.akvo.caddisfly.util.TestHelper
-import org.akvo.caddisfly.util.TestHelper.currentHashMap
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.mCurrentLanguage
 import org.akvo.caddisfly.util.TestHelper.takeScreenshot
-import org.akvo.caddisfly.util.TestUtil.activityInstance
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
 import org.akvo.caddisfly.util.TestUtil.clickListViewItem
 import org.akvo.caddisfly.util.TestUtil.isEmulator
 import org.akvo.caddisfly.util.TestUtil.sleep
 import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.Matchers.*
-import org.junit.*
-import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.BeforeClass
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import java.text.DecimalFormatSymbols
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
@@ -85,10 +81,6 @@ class MiscTest {
         onView(withText(string.legalInformation)).check(matches(isDisplayed())).perform(click())
         Espresso.pressBack()
         Espresso.pressBack()
-
-//        onView(withText(R.string.language)).perform(click());
-
-//        onView(withText(R.string.cancel)).perform(click());
     }
 
     @Test
@@ -116,82 +108,6 @@ class MiscTest {
         Espresso.pressBack()
         onView(withId(id.actionSwatches)).check(matches(isDisplayed()))
         Espresso.pressBack()
-    }
-
-    @Test
-    @Ignore
-    @RequiresDevice
-    fun testZErrors() {
-
-//        getActivity().runOnUiThread(new Runnable() {
-//            public void run() {
-//                try {
-//                    Method method = MainActivity.class.getDeclaredMethod("alertCameraFlashNotAvailable");
-//                    method.setAccessible(true);
-//                    method.invoke(getActivity());
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    assertEquals(e.getMessage(), 0, 1);
-//                }
-//            }
-//        });
-//
-//        //No flash
-//        takeScreenshot();
-//
-//        onView(withId(android.R.id.button1)).perform(click());
-
-
-        goToMainScreen()
-
-//        leaveDiagnosticMode();
-
-
-        onView(withText(string.calibrate)).perform(click())
-        val typeListActivity: Activity = activityInstance
-        typeListActivity.runOnUiThread {
-            try {
-                val method = TestListActivity::class.java.getDeclaredMethod("alertFeatureNotSupported")
-                method.isAccessible = true
-                method.invoke(typeListActivity)
-            } catch (e: Exception) {
-                assertEquals(e.message, 0, 1)
-            }
-        }
-        onView(withId(android.R.id.button2)).perform(click())
-        onView(withText(currentHashMap["fluoride"])).perform(click())
-        if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
-                    .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
-                            .decorView)))).check(matches(isDisplayed()))
-            return
-        }
-        val dfs = DecimalFormatSymbols()
-        onView(withId(id.fabEditCalibration)).perform(click())
-        onView(withId(id.editBatchCode))
-                .perform(typeText("TEST 123#*@!"), closeSoftKeyboard())
-        onView(withId(id.editExpiryDate)).perform(click())
-        onView(withClassName(equalTo(DatePicker::class.java.name)))
-                .perform(PickerActions.setDate(2025, 8, 25))
-        onView(withId(android.R.id.button1)).perform(click())
-        onView(withText(string.save)).perform(click())
-        onView(withText("2" + dfs.decimalSeparator.toString() + "00 mg/l")).perform(click())
-
-        //onView(withId(R.id.buttonStart)).perform(click());
-
-
-        val activity: Activity = activityInstance
-        activity.runOnUiThread {
-            try {
-                val method = TestActivity::class.java.getDeclaredMethod("alertCouldNotLoadConfig")
-                method.isAccessible = true
-                method.invoke(activity)
-            } catch (e: Exception) {
-                assertEquals(e.message, 0, 1)
-            }
-        }
-        onView(withId(android.R.id.button1)).perform(click())
-        goToMainScreen()
     }
 
     @Test

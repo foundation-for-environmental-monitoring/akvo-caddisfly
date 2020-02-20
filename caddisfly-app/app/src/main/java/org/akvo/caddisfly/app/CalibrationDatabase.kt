@@ -16,19 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.app
 
-package org.akvo.caddisfly.app;
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import org.akvo.caddisfly.dao.CalibrationDao
+import org.akvo.caddisfly.entity.Calibration
+import org.akvo.caddisfly.entity.CalibrationDetail
 
-
-import org.akvo.caddisfly.dao.CalibrationDao;
-import org.akvo.caddisfly.entity.Calibration;
-import org.akvo.caddisfly.entity.CalibrationDetail;
-
-import androidx.room.Database;
-import androidx.room.RoomDatabase;
-
-@Database(entities = {Calibration.class, CalibrationDetail.class}, version = 5, exportSchema = false)
-public abstract class CalibrationDatabase extends RoomDatabase {
-    public abstract CalibrationDao calibrationDao();
+@Database(entities = [Calibration::class, CalibrationDetail::class], version = 5, exportSchema = false)
+abstract class CalibrationDatabase : RoomDatabase() {
+    abstract fun calibrationDao(): CalibrationDao?
 }
-

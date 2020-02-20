@@ -45,7 +45,7 @@ class MainActivity : BaseActivity() {
     private var runTest = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CaddisflyApp.getApp().setAppLanguage(null, false, null)
+        CaddisflyApp.app?.setAppLanguage(null, false, null)
         navigationController = NavigationController(this)
         setContentView(R.layout.activity_main)
         setTitle(R.string.appName)
@@ -106,7 +106,7 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         switchLayoutForDiagnosticOrUserMode()
-        CaddisflyApp.getApp().setAppLanguage(null, false, refreshHandler)
+        CaddisflyApp.app?.setAppLanguage(null, false, refreshHandler)
         if (PreferencesUtil.getBoolean(this, R.string.themeChangedKey, false)) {
             PreferencesUtil.setBoolean(this, R.string.themeChangedKey, false)
             refreshHandler.sendEmptyMessage(0)

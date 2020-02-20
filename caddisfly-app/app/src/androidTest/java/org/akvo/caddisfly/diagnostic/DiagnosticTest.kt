@@ -13,6 +13,7 @@ import androidx.test.uiautomator.UiDevice
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
+import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_INDEX
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.RecyclerViewMatcher
 import org.akvo.caddisfly.util.TestHelper
@@ -53,7 +54,7 @@ class DiagnosticTest {
         goToMainScreen()
         onView(withText(string.calibrate)).perform(click())
         onView(RecyclerViewMatcher(id.list_types)
-                .atPositionOnView(0, id.text_title))
+                .atPositionOnView(CUVETTE_TEST_INDEX, id.text_title))
                 .check(matches(withText(TestConstants.CUVETTE_TEST_NAME_1)))
                 .perform(click())
 

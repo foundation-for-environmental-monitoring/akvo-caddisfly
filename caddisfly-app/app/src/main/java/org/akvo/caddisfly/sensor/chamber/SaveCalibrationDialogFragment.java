@@ -35,6 +35,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.dao.CalibrationDao;
@@ -53,8 +56,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import timber.log.Timber;
 
 /**
@@ -111,7 +112,7 @@ public class SaveCalibrationDialogFragment extends DialogFragment {
 
         editExpiryDate = view.findViewById(R.id.editExpiryDate);
 
-        CalibrationDetail calibrationDetail = CaddisflyApp.getApp().getDb()
+        CalibrationDetail calibrationDetail = CaddisflyApp.getDb()
                 .calibrationDao().getCalibrationDetails(testInfo.getUuid());
 
         if (calibrationDetail.expiry > new Date().getTime()) {
@@ -252,7 +253,7 @@ public class SaveCalibrationDialogFragment extends DialogFragment {
 
                 void saveDetails(String uuid, String fileName) {
 
-                    CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();
+                    CalibrationDao dao = CaddisflyApp.getDb().calibrationDao();
 
                     CalibrationDetail calibrationDetail = dao.getCalibrationDetails(uuid);
                     calibrationDetail.uid = uuid;

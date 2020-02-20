@@ -320,7 +320,7 @@ public class TestActivity extends BaseActivity {
                     return;
                 }
 
-                CalibrationDetail calibrationDetail = CaddisflyApp.getApp().getDb()
+                CalibrationDetail calibrationDetail = CaddisflyApp.getDb()
                         .calibrationDao().getCalibrationDetails(testInfo.getUuid());
 
                 if (calibrationDetail != null) {
