@@ -8,13 +8,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp
-import org.akvo.caddisfly.common.AppConfig
 import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.common.Constants
 import org.akvo.caddisfly.common.NavigationController
@@ -50,9 +48,11 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         setTitle(R.string.appName)
         try {
-            if (AppConfig.APP_EXPIRY && ApkHelper.isNonStoreVersion(this)) {
-                val appExpiryDate = GregorianCalendar(AppConfig.APP_EXPIRY_YEAR,
-                        AppConfig.APP_EXPIRY_MONTH - 1, AppConfig.APP_EXPIRY_DAY)
+            if (BuildConfig.BUILD_TYPE.equals("release", ignoreCase = true) &&
+                    ApkHelper.isNonStoreVersion(this)) {
+                val appExpiryDate = GregorianCalendar.getInstance()
+                appExpiryDate.time = BuildConfig.BUILD_TIME
+                appExpiryDate.add(Calendar.DAY_OF_YEAR, 15)
                 val df: DateFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.US)
                 textVersionExpiry?.text = String.format("Version expiry: %s", df.format(appExpiryDate.time))
                 textVersionExpiry?.visibility = View.VISIBLE
@@ -111,16 +111,6 @@ class MainActivity : BaseActivity() {
             PreferencesUtil.setBoolean(this, R.string.themeChangedKey, false)
             refreshHandler.sendEmptyMessage(0)
         }
-    }
-
-    fun onDisableDiagnosticsClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        Toast.makeText(this, getString(R.string.diagnosticModeDisabled),
-                Toast.LENGTH_SHORT).show()
-        AppPreferences.disableDiagnosticMode()
-        switchLayoutForDiagnosticOrUserMode()
-        changeActionBarStyleBasedOnCurrentMode()
-        val viewModel = ViewModelProvider(this).get(TestListViewModel::class.java)
-        viewModel.clearTests()
     }
 
     fun onStripTestsClick(@Suppress("UNUSED_PARAMETER") view: View?) {

@@ -11,7 +11,6 @@ object UnitTestConstants {
     const val CUVETTE_TEST_TIME_DELAY = 180
     val SAMPLE_TYPE: TestSampleType? = TestSampleType.SOIL
     const val STRIP_TEST_NAME = ""
-    const val CUVETTE_TEST_INDEX = 0
     const val CUVETTE_TEST_NAME_1 = "Available Boron"
     const val CUVETTE_TEST_NAME_2 = "Available Iron"
     const val CUVETTE_TEST_NAME_3 = "Available Nitrogen"

@@ -40,6 +40,7 @@ android {
             versionCode 243
             versionName "Experiment"
             buildConfigField 'boolean', 'showExperimentalTests', 'true'
+            multiDexEnabled true
         }
     }
 
@@ -61,13 +62,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    buildTypes {
-        debug {
-            debuggable true
-            multiDexEnabled false
-        }
-    }
-
     signingConfigs {
         appRelease {
             if (secrets.getProperty('FFEM_RELEASE_STORE_FILE')) {
@@ -80,15 +74,33 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+        }
         release {
             if (secrets.getProperty('FFEM_RELEASE_STORE_FILE')) {
                 signingConfig signingConfigs.appRelease
             }
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" +
+                    (System.currentTimeMillis()) + "L)"
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "ffem-${variant.flavorName}-${variant.versionCode}.apk"
+                }
+            }
         }
+    }
+
+    defaultConfig {
+        // do not change these defaults
+        buildConfigField "Boolean", "TEST_RUNNING", "false"
+        buildConfigField "Boolean", "TAKE_SCREENSHOTS", "false"
+        buildConfigField "String", "TEST_LANGUAGE", "\"en\""
+        buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + 0L + ")"
     }
 
     lintOptions {
@@ -181,7 +193,7 @@ dependencies {
     unmock 'org.robolectric:android-all:4.3_r2-robolectric-0'
 
     // Firebase (Experiment Flavor)
-//    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
+    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
     tryoutImplementation 'com.google.firebase:firebase-core:17.2.2'
     tryoutImplementation 'com.google.firebase:firebase-database:19.2.1'
     tryoutImplementation 'com.google.firebase:firebase-firestore:21.4.0'

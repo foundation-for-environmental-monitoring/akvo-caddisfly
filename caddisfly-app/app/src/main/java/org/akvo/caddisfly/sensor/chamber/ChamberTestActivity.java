@@ -50,9 +50,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
-import org.akvo.caddisfly.common.AppConfig;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.common.SensorConstants;
@@ -193,7 +193,7 @@ public class ChamberTestActivity extends BaseActivity implements
         if (cameraIsOk) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                    && AppConfig.USE_SCREEN_PINNING) {
+                    && !BuildConfig.TEST_RUNNING) {
                 startLockTask();
             }
 

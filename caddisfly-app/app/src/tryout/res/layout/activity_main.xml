@@ -1,23 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) Stichting Akvo (Akvo Foundation)
-  ~
-  ~ This file is part of Akvo Caddisfly.
-  ~
-  ~ Akvo Caddisfly is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ Akvo Caddisfly is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
-  -->
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -57,21 +39,6 @@
                     android:theme="?longButtonStyle"
                     android:visibility="gone" />
 
-                <!--<Button-->
-                <!--android:id="@+id/buttonMeters"-->
-                <!--style="@style/ListButton"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center_vertical|start"-->
-                <!--android:minHeight="80dp"-->
-                <!--android:onClick="onMetersClick"-->
-                <!--android:paddingEnd="16dp"-->
-                <!--android:paddingStart="16dp"-->
-                <!--android:text="@string/meters"-->
-                <!--android:textAlignment="viewStart"-->
-                <!--android:textColor="?longButtonText"-->
-                <!--android:theme="?longButtonStyle" />-->
-
                 <Button
                     android:id="@+id/buttonStripTest"
                     style="@style/ListButton"
@@ -97,7 +64,7 @@
                     android:onClick="onCalibrateSoilClick"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Soil - Calibrate"
+                    android:text="@string/soil_calibrate"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
                     android:theme="?longButtonStyle" />
@@ -118,19 +85,10 @@
                     android:theme="?longButtonStyle" />
 
                 <Button
-                    android:id="@+id/buttonTitration"
-                    style="@style/ListButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical|start"
-                    android:minHeight="80dp"
-                    android:onClick="onTitrationClick"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Titration"
-                    android:textAlignment="viewStart"
-                    android:textColor="?longButtonText"
-                    android:theme="?longButtonStyle" />
+                    android:id="@+id/buttonCalibrate"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/buttonColiforms"
@@ -142,7 +100,21 @@
                     android:onClick="onColiformsClick"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Coliforms"
+                    android:text="@string/coliforms"
+                    android:textAlignment="viewStart"
+                    android:textColor="?longButtonText"
+                    android:theme="?longButtonStyle" />
+
+                <Button
+                    android:id="@+id/buttonSettings"
+                    style="@style/ListButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
+                    android:minHeight="80dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/settings"
                     android:textAlignment="viewStart"
                     android:textColor="?longButtonText"
                     android:theme="?longButtonStyle" />
@@ -194,17 +166,6 @@
                 android:textSize="46dp"
                 tools:ignore="SpUsage" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabDisableDiagnostics"
-                style="@style/floating_action_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/textDiagnostics"
-                android:layout_alignParentEnd="true"
-                android:onClick="onDisableDiagnosticsClick"
-                android:src="@drawable/ic_revert_24dp"
-                app:backgroundTint="@color/diagnostic"
-                tools:ignore="RelativeOverlap" />
         </RelativeLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

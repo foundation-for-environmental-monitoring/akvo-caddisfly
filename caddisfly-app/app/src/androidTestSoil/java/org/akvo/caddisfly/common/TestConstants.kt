@@ -6,5 +6,6 @@ object TestConstants {
     const val TEST_INDEX = 1
     const val CUVETTE_TEST_TIME_DELAY = 180
     const val DELAY_EXTRA = 4
+    const val CUVETTE_TEST_INDEX = 0
     const val CUVETTE_TEST_NAME_1 = "Available Boron"
 }

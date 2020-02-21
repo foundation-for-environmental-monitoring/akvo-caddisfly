@@ -1,22 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) Stichting Akvo (Akvo Foundation)
-  ~
-  ~ This file is part of Akvo Caddisfly.
-  ~
-  ~ Akvo Caddisfly is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ Akvo Caddisfly is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string-array name="languages">
@@ -128,7 +110,8 @@
     <string name="eclipse_software"><a href="https://github.com/junit-team/junit4">Junit 4</a></string>
     <string name="testing">Testing</string>
     <string name="camera">Camera</string>
-    <string name="waterCalibrate">Water - Calibrate</string>
-    <string name="cameraFocusMode">Camera Focus Mode</string>
 
+    <string name="waterCalibrate">Water - Calibrate</string>
+    <string name="soil_calibrate">Soil - Calibrate</string>
+    <string name="cameraFocusMode">Camera Focus Mode</string>
 </resources>
