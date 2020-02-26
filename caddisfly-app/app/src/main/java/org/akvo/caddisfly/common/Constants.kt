@@ -16,26 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.common
 
-package org.akvo.caddisfly.common;
-
-/**
- * Class to hold all public constants used by sensors.
- */
-public final class SensorConstants {
-
-    /**
-     * Serialization constants.
-     */
-    public static final String IMAGE = "image";
-    public static final String DILUTION = "Dilution";
-    public static final String TEST_ID = "testId";
-    public static final String VALUE = "value";
-    public static final String LANGUAGE = "language";
-    public static final String UNIT = "Unit";
-    public static final String DEBUG_MODE = "debugMode";
-    public static final String RESULT_JSON = "resultJson";
-
-    private SensorConstants() {
-    }
+object Constants {
+    const val BRAND_IMAGE_PATH = "images/brand/"
+    const val ILLUSTRATION_PATH = "images/instructions/"
+    const val TESTS_META_FILENAME = "tests.json"
+    const val FREE_CHLORINE_ID = "c3535e72-ff77-4225-9f4a-41d3288780c6"
+    const val FREE_CHLORINE_ID_2 = "a2413119-38eb-4959-92ee-cc169fdbb0fc"
+    const val FLUORIDE_ID = "f0f3c1dd-89af-49f1-83e7-bcc31c3006cf"
+    const val COLIFORM_ID = "df3d1009-2112-4d95-a6f9-fdc4b5633ec9"
+    const val MIN_CAMERA_MEGA_PIXELS = 5
+    const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"
+    const val DEGREES_90 = 90
+    const val DEGREES_270 = 270
+    const val DEGREES_180 = 180
 }

@@ -16,22 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.common
 
-package org.akvo.caddisfly.common;
-
-public class ConstantJsonKey {
-    public static final String APP = "app";
-    public static final String BRACKET = "bracket";
-    public static final String DEVICE = "device";
-    public static final String ID = "id";
-    public static final String IMAGE = "image";
-    public static final String NAME = "name";
-    public static final String RESULT = "result";
-    public static final String TEST_DATE = "testDate";
-    public static final String TYPE = "type";
-    public static final String UNIT = "unit";
-    public static final String USER = "user";
-    public static final String UUID = "uuid";
-    public static final String VALUE = "value";
-    public static final String DILUTION = "dilution";
+object ConstantJsonKey {
+    const val APP = "app"
+    const val BRACKET = "bracket"
+    const val ID = "id"
+    const val IMAGE = "image"
+    const val NAME = "name"
+    const val RESULT = "result"
+    const val TEST_DATE = "testDate"
+    const val TYPE = "type"
+    const val UNIT = "unit"
+    const val UUID = "uuid"
+    const val VALUE = "value"
+    const val DILUTION = "dilution"
 }

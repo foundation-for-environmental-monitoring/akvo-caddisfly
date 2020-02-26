@@ -16,44 +16,31 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.ui
 
-package org.akvo.caddisfly.ui;
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import org.akvo.caddisfly.R
+import org.akvo.caddisfly.util.PreferencesUtil
+import java.util.*
 
-import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.util.PreferencesUtil;
-
-import java.util.ArrayList;
-import java.util.Locale;
-
-public class DiagnosticInfoActivity extends BaseActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diagnostic_info);
-
-        setTitle("Diagnostic Information");
-
-        ListView mListView = findViewById(R.id.listInformation);
-
-        ArrayList<String> infoList = new ArrayList<>();
-
+class DiagnosticInfoActivity : BaseActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_diagnostic_info)
+        title = "Diagnostic Information"
+        val mListView = findViewById<ListView>(R.id.listInformation)
+        val infoList = ArrayList<String>()
         infoList.add(String.format(Locale.getDefault(), "Number of calibrations%ns:%d  e:%d",
                 PreferencesUtil.getInt(this, R.string.totalSuccessfulCalibrationsKey, 0),
-                PreferencesUtil.getInt(this, R.string.totalFailedCalibrationsKey, 0)));
-
+                PreferencesUtil.getInt(this, R.string.totalFailedCalibrationsKey, 0)))
         infoList.add(String.format(Locale.getDefault(), "Number of tests%ns:%d  e:%d",
                 PreferencesUtil.getInt(this, R.string.totalSuccessfulTestsKey, 0),
-                PreferencesUtil.getInt(this, R.string.totalFailedTestsKey, 0)));
-
-        ArrayAdapter<String> infoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, infoList);
-
+                PreferencesUtil.getInt(this, R.string.totalFailedTestsKey, 0)))
+        val infoAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, infoList)
         if (mListView != null) {
-            mListView.setAdapter(infoAdapter);
+            mListView.adapter = infoAdapter
         }
     }
 }
