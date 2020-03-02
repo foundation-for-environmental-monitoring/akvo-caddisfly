@@ -134,7 +134,7 @@ object SwatchHelper {
         val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo.uuid)
         calibrationDetails.append("Name: ")
         calibrationDetails.append(testInfo.name)
-        if (calibrationDetail.cuvetteType != null) {
+        if (calibrationDetail?.cuvetteType != null) {
             calibrationDetails.append("\n")
             calibrationDetails.append("Cuvette: ")
             calibrationDetails.append(calibrationDetail.cuvetteType)
@@ -152,7 +152,7 @@ object SwatchHelper {
             calibrationDetails.append("Calibrated: ")
             calibrationDetails.append(SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(calibrationDate))
         }
-        if (calibrationDetail.expiry > 0) {
+        if (calibrationDetail!!.expiry > 0) {
             calibrationDetails.append("\n")
             calibrationDetails.append("ReagentExpiry: ")
             calibrationDetails.append(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(calibrationDetail.expiry))
@@ -193,7 +193,7 @@ object SwatchHelper {
         val calibrationDetails = FileUtil.loadFromFile(path, fileName)
         if (calibrationDetails != null) {
             val calibrationDetail = dao!!.getCalibrationDetails(testInfo.uuid)
-            calibrationDetail.uid = testInfo.uuid
+            calibrationDetail!!.uid = testInfo.uuid
             for (i in calibrationDetails.indices.reversed()) {
                 val line = calibrationDetails[i]
                 if (!line.contains("=")) {

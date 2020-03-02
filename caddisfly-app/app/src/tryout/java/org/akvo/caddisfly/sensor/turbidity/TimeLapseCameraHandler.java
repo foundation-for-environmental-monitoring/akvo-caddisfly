@@ -20,8 +20,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
-import org.akvo.caddisfly.common.ConstantKey;
-import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.util.ImageUtil;
@@ -42,7 +40,7 @@ import static org.akvo.caddisfly.util.ImageUtil.createThresholdMatrix;
 
 @SuppressWarnings("deprecation")
 class TimeLapseCameraHandler implements Camera.PictureCallback {
-
+    private static final String TEST_IMAGE_PATH = "images/test/";
     private static final int MIN_PICTURE_WIDTH = 640;
     private static final int MIN_PICTURE_HEIGHT = 480;
     private static final int MIN_SUPPORTED_WIDTH = 400;
@@ -142,7 +140,7 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
                 }
             }
 
-            String image = Constants.TEST_IMAGE_PATH + demoFileName;
+            String image = TEST_IMAGE_PATH + demoFileName;
             Bitmap bitmap;
             try {
                 bitmap = BitmapFactory.decodeStream(mContext.getAssets().open(image));
@@ -285,7 +283,7 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
         }
 
         Intent intent = new Intent("custom-event-name");
-        intent.putExtra(ConstantKey.SAVE_FOLDER, mSavePath);
+        intent.putExtra(TimeLapseConstantKey.SAVE_FOLDER, mSavePath);
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 }

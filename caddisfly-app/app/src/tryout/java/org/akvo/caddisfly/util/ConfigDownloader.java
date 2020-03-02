@@ -44,7 +44,6 @@ import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.common.AppConfig;
 import org.akvo.caddisfly.common.AppConstants;
-import org.akvo.caddisfly.diagnostic.ConfigTask;
 import org.akvo.caddisfly.entity.Calibration;
 import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.model.ResultDetail;

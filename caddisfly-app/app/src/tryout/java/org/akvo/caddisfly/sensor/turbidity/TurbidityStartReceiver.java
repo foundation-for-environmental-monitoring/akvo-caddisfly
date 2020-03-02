@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.util.PreferencesUtil;
 
@@ -29,7 +28,7 @@ public class TurbidityStartReceiver extends BroadcastReceiver {
                 PreferencesUtil.setInt(context, "imageCount", ++imageCount);
             }
 
-            String folderName = intent.getStringExtra(ConstantKey.SAVE_FOLDER);
+            String folderName = intent.getStringExtra(TimeLapseConstantKey.SAVE_FOLDER);
             TimeLapseCameraHandler cameraHandler = new TimeLapseCameraHandler(context);
             cameraHandler.takePicture(folderName);
         }

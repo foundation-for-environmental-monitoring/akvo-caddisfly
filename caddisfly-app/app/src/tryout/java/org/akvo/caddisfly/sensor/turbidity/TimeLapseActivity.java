@@ -80,7 +80,7 @@ public class TimeLapseActivity extends BaseActivity {
 
             int delayMinute;
 
-            folderName = intent.getStringExtra(ConstantKey.SAVE_FOLDER);
+            folderName = intent.getStringExtra(TimeLapseConstantKey.SAVE_FOLDER);
             File folder = FileHelper.getFilesDir(FileHelper.FileType.TEMP_IMAGE, folderName);
 
             delayMinute = Integer.parseInt(PreferencesUtil.getString(CaddisflyApp.getApp(),
@@ -102,12 +102,12 @@ public class TimeLapseActivity extends BaseActivity {
                     futureDate.add(Calendar.MINUTE, delayMinute);
                     if (files.length > 1) {
                         if (!PreferencesUtil.getBoolean(getBaseContext(),
-                                ConstantKey.TURBID_EMAIL_SENT, false)) {
+                                TimeLapseConstantKey.TURBID_EMAIL_SENT, false)) {
                             analyseLatestFile(folder);
                         }
                     } else {
                         PreferencesUtil.setBoolean(getBaseContext(),
-                                ConstantKey.TURBID_EMAIL_SENT, false);
+                                TimeLapseConstantKey.TURBID_EMAIL_SENT, false);
                     }
                 }
             }
@@ -196,7 +196,7 @@ public class TimeLapseActivity extends BaseActivity {
                 emailTemplate = AssetsManager.getInstance().loadJsonFromAsset("templates/email_template_unsafe.html");
 
                 if (emailTemplate != null) {
-                    long startTime = PreferencesUtil.getLong(this, ConstantKey.TEST_START_TIME);
+                    long startTime = PreferencesUtil.getLong(this, TimeLapseConstantKey.TEST_START_TIME);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, dd MMM yyyy", Locale.US);
                     String date = simpleDateFormat.format(new Date(startTime));
                     emailTemplate = emailTemplate.replace("{startTime}", date);
@@ -230,7 +230,7 @@ public class TimeLapseActivity extends BaseActivity {
                 GMailSender sender = new GMailSender(from, password);
                 sender.sendMail("Coliform test: " + Calendar.getInstance().getTimeInMillis(),
                         body, firstImage, turbidImage, lastImage, from, to);
-                PreferencesUtil.setBoolean(this, ConstantKey.TURBID_EMAIL_SENT, true);
+                PreferencesUtil.setBoolean(this, TimeLapseConstantKey.TURBID_EMAIL_SENT, true);
             } catch (Exception e) {
                 Timber.e(e);
             }
@@ -357,7 +357,7 @@ public class TimeLapseActivity extends BaseActivity {
             }
         }
 
-        PreferencesUtil.setLong(this, ConstantKey.TEST_START_TIME, Calendar.getInstance().getTimeInMillis());
+        PreferencesUtil.setLong(this, TimeLapseConstantKey.TEST_START_TIME, Calendar.getInstance().getTimeInMillis());
 
         if (AppPreferences.isTestMode()) {
             PreferencesUtil.setInt(this, "imageCount", 0);
@@ -418,7 +418,7 @@ public class TimeLapseActivity extends BaseActivity {
         Intent resultIntent = new Intent(getIntent());
         resultIntent.setClass(this, TimeLapseResultActivity.class);
         resultIntent.putExtra(ConstantKey.TEST_INFO, testInfo);
-        resultIntent.putExtra(ConstantKey.SAVE_FOLDER, folderName);
+        resultIntent.putExtra(TimeLapseConstantKey.SAVE_FOLDER, folderName);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
         startActivity(resultIntent);
         finish();

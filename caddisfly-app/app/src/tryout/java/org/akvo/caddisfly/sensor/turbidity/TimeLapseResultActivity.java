@@ -62,7 +62,7 @@ public class TimeLapseResultActivity extends BaseActivity {
         setTitle(R.string.result);
 
         folder = FileHelper.getFilesDir(FileHelper.FileType.TEMP_IMAGE,
-                getIntent().getStringExtra(ConstantKey.SAVE_FOLDER));
+                getIntent().getStringExtra(TimeLapseConstantKey.SAVE_FOLDER));
 
         testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
 
@@ -246,7 +246,7 @@ public class TimeLapseResultActivity extends BaseActivity {
             }
 
             if (emailTemplate != null) {
-                long startTime = PreferencesUtil.getLong(this, ConstantKey.TEST_START_TIME);
+                long startTime = PreferencesUtil.getLong(this, TimeLapseConstantKey.TEST_START_TIME);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, dd MMM yyyy", Locale.US);
                 String date = simpleDateFormat.format(new Date(startTime));
                 emailTemplate = emailTemplate.replace("{startTime}", date);

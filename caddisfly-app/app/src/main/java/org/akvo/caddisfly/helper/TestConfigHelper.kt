@@ -79,7 +79,7 @@ object TestConfigHelper {
                     // Add calibration details to result
                     subTestJson.put("calibratedDate",
                             SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.US)
-                                    .format(calibrationDetail.date))
+                                    .format(calibrationDetail!!.date))
                     subTestJson.put("reagentExpiry", calibrationDetail.expiry)
                     subTestJson.put("cuvetteType", calibrationDetail.cuvetteType)
                     val calibrationSwatches = JSONArray()
