@@ -41,7 +41,7 @@ public class UpdateCheckTask extends AsyncTask<String, String, String> {
 
     private final WeakReference<Context> contextRef;
 
-    public UpdateCheckTask(Context context) {
+    UpdateCheckTask(Context context) {
         contextRef = new WeakReference<>(context);
     }
 
@@ -104,7 +104,7 @@ public class UpdateCheckTask extends AsyncTask<String, String, String> {
         super.onPostExecute(result);
 
         Context context = contextRef.get();
-        int versionCode = ApiUtil.getAppVersionCode(context);
+        long versionCode = ApiUtil.getAppVersionCode(context);
         int serverVersion;
 
         try {

@@ -60,7 +60,6 @@ import org.akvo.caddisfly.sensor.manual.ManualTestActivity
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity
 import org.akvo.caddisfly.sensor.titration.TitrationTestActivity
 import org.akvo.caddisfly.sensor.turbidity.TimeLapseActivity
-import org.akvo.caddisfly.sensor.usb.SensorActivity
 import org.akvo.caddisfly.util.AlertUtil
 import org.akvo.caddisfly.util.PreferencesUtil
 import org.akvo.caddisfly.viewmodel.TestListViewModel
@@ -278,7 +277,6 @@ class TestActivity : BaseActivity() {
                 TestType.CHAMBER_TEST -> startChamberTest()
                 TestType.COLIFORM -> startColiformTest()
                 TestType.MANUAL -> startManualTest()
-                TestType.SENSOR -> startSensorTest()
                 TestType.STRIP_TEST -> if (cameraIsOk) {
                     startStripTest()
                 } else {
@@ -323,17 +321,6 @@ class TestActivity : BaseActivity() {
             intent.putExtra(ConstantKey.RUN_TEST, true)
             intent.putExtra(ConstantKey.TEST_INFO, testInfo)
             startActivityForResult(intent, REQUEST_TEST)
-        }
-    }
-
-    private fun startSensorTest() { //Only start the sensor activity if the device supports 'On The Go'(OTG) feature
-        val hasOtg = packageManager.hasSystemFeature(PackageManager.FEATURE_USB_HOST)
-        if (hasOtg) {
-            val sensorIntent = Intent(this, SensorActivity::class.java)
-            sensorIntent.putExtra(ConstantKey.TEST_INFO, testInfo)
-            startActivityForResult(sensorIntent, REQUEST_TEST)
-        } else {
-            ErrorMessages.alertFeatureNotSupported(this, true)
         }
     }
 

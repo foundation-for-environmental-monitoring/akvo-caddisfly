@@ -19,6 +19,7 @@
 
 package org.akvo.caddisfly.helper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -48,8 +49,8 @@ public final class CameraHelper {
      * @param onClickListener positive button listener
      * @return true if camera flash exists otherwise false
      */
-    public static Camera getCamera(Context context,
-                                   DialogInterface.OnClickListener onClickListener) {
+    private static Camera getCamera(Context context,
+                                    DialogInterface.OnClickListener onClickListener) {
 
         Camera camera = ApiUtil.getCameraInstance();
         if (hasFeatureBackCamera(context, onClickListener) && camera == null) {
@@ -65,6 +66,7 @@ public final class CameraHelper {
         return camera;
     }
 
+    @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
     private static boolean hasFeatureBackCamera(Context context,
                                                 DialogInterface.OnClickListener onClickListener) {
         PackageManager packageManager = context.getPackageManager();
@@ -93,7 +95,6 @@ public final class CameraHelper {
             hasCameraFlash = PreferencesUtil.getBoolean(context, R.string.hasCameraFlashKey, false);
         } else {
 
-            @SuppressWarnings("deprecation")
             Camera camera = getCamera(context, onClickListener);
             try {
                 if (camera != null) {

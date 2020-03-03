@@ -2,14 +2,25 @@
   <dictionary name="common">
     <words>
       <w>akvo</w>
+      <w>autofocus</w>
       <w>caddisfly</w>
+      <w>calibrationdetail</w>
+      <w>colif</w>
+      <w>coliform</w>
+      <w>coliforms</w>
+      <w>colorimetry</w>
       <w>cuvette</w>
+      <w>ffem</w>
       <w>fileprovider</w>
       <w>firebase</w>
       <w>gson</w>
       <w>multidex</w>
+      <w>nomedia</w>
+      <w>nosensor</w>
       <w>robolectric</w>
+      <w>samsung</w>
       <w>stichting</w>
+      <w>striptest</w>
       <w>unmock</w>
     </words>
   </dictionary>

@@ -20,7 +20,7 @@
 package org.akvo.caddisfly.navigation
 
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso
@@ -37,8 +37,7 @@ import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
-import junit.framework.Assert.fail
-import org.akvo.caddisfly.R
+import junit.framework.TestCase.fail
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
@@ -78,9 +77,7 @@ class SurveyTest {
         loadData(mActivityRule.activity, mCurrentLanguage)
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(mActivityRule.activity)
         prefs.edit().clear().apply()
-
 //        resetLanguage();
-
     }
 
     @Test
@@ -98,13 +95,14 @@ class SurveyTest {
                             .decorView)))).check(matches(isDisplayed()))
             return
         }
-        val dfs = DecimalFormatSymbols()
+//        val dfs =
+
+        DecimalFormatSymbols()
         onView(allOf(withId(id.calibrationList),
                 childAtPosition(withClassName(`is`("android.widget.RelativeLayout")),
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(4, click()))
 
 //        onView(withText("0" + dfs.getDecimalSeparator() + "0 mg/l")).check(matches(isDisplayed()));
-
 
         Espresso.pressBack()
         Espresso.pressBack()
@@ -112,7 +110,6 @@ class SurveyTest {
         onView(withText(string.calibrate)).perform(click())
 
 //        onView(withText(currentHashMap.get("chlorine"))).perform(click());
-
 
         onView(withText(currentHashMap["soilRange"])).perform(click())
         onView(withText("15")).check(matches(isDisplayed()))
@@ -136,7 +133,7 @@ class SurveyTest {
     @RequiresDevice
     fun testStartASurvey() {
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
-        onView(withText(R.string.settings)).perform(click())
+        onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()

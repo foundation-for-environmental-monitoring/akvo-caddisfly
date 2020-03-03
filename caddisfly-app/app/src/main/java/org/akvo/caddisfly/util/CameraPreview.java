@@ -37,7 +37,6 @@ import timber.log.Timber;
 
 import static android.hardware.Camera.Parameters.FLASH_MODE_OFF;
 
-@SuppressWarnings("deprecation")
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final int MIN_CAMERA_WIDTH = 1300;
@@ -51,7 +50,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         this(context, FLASH_MODE_OFF);
     }
 
-    public CameraPreview(Context context, String flashModeTorch) {
+    private CameraPreview(Context context,
+                          @SuppressWarnings("SameParameterValue") String flashModeTorch) {
         // create surfaceView
         super(context);
 
@@ -230,7 +230,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         return mCamera;
     }
 
-    public interface OnSurfaceChangedListener {
+    interface OnSurfaceChangedListener {
         void onSurfaceChanged(int w, int h, int previewWidth, int previewHeight);
     }
 }

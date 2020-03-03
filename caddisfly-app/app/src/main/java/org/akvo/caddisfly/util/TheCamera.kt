@@ -16,30 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("DEPRECATION")
 
-package org.akvo.caddisfly.util;
+package org.akvo.caddisfly.util
 
-import android.hardware.Camera;
+import android.hardware.Camera
 
-/**
- * Created by linda on 7/7/15
- */
-@SuppressWarnings("deprecation")
-public final class TheCamera {
-
-    private TheCamera() {
-    }
-
+object TheCamera {
     /**
      * A safe way to get an instance of the Camera object.
      */
-    public static Camera getCameraInstance() {
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
-        } catch (Exception e) {
-            // Camera is not available (in use or does not exist)
+    @JvmStatic
+    val cameraInstance: Camera?
+        get() {
+            var c: Camera? = null
+            try {
+                c = Camera.open() // attempt to get a Camera instance
+            } catch (e: Exception) { // Camera is not available (in use or does not exist)
+            }
+            return c // returns null if camera is unavailable
         }
-        return c; // returns null if camera is unavailable
-    }
 }

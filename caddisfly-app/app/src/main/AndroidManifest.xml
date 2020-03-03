@@ -83,14 +83,6 @@
             android:screenOrientation="nosensor" />
         <!-- /Manual Tests -->
 
-
-        <!-- USB Sensor -->
-        <activity
-            android:name=".sensor.usb.SensorActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /USB Sensor -->
-
-
         <!-- StripTest -->
         <activity
             android:name=".sensor.striptest.ui.StripMeasureActivity"

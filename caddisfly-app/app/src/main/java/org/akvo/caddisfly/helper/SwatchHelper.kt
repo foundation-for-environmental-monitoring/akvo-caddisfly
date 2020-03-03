@@ -186,7 +186,7 @@ object SwatchHelper {
      */
     @JvmStatic
     @Throws(IOException::class)
-    fun loadCalibrationFromFile(testInfo: TestInfo, fileName: String?): List<Calibration> {
+    fun loadCalibrationFromFile(testInfo: TestInfo, fileName: String): List<Calibration> {
         val calibrations: MutableList<Calibration> = ArrayList()
         val path = FileHelper.getFilesDir(FileHelper.FileType.CALIBRATION, testInfo.uuid)
         val dao = db!!.calibrationDao()

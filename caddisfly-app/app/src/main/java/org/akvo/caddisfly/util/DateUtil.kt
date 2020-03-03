@@ -16,25 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.util
 
-package org.akvo.caddisfly.util;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-import timber.log.Timber;
+import timber.log.Timber
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Utility functions for date and time.
  */
-public final class DateUtil {
-
-    private DateUtil() {
-    }
-
+object DateUtil {
     /**
      * Gets the number of days in between two given dates.
      *
@@ -42,13 +34,11 @@ public final class DateUtil {
      * @param calendar2 the second date
      * @return the number days
      */
-    public static int getDaysDifference(Calendar calendar1, Calendar calendar2) {
-        if (calendar1 == null || calendar2 == null) {
-            return 0;
-        }
-
-        return (int) ((calendar2.getTimeInMillis()
-                - calendar1.getTimeInMillis()) / (1000 * 60 * 60 * 24));
+    fun getDaysDifference(calendar1: Calendar?, calendar2: Calendar?): Int {
+        return if (calendar1 == null || calendar2 == null) {
+            0
+        } else ((calendar2.timeInMillis
+                - calendar1.timeInMillis) / (1000 * 60 * 60 * 24)).toInt()
     }
 
     /**
@@ -58,22 +48,20 @@ public final class DateUtil {
      * @param calendar2 the second date
      * @return the number hours
      */
-    public static int getHoursDifference(Calendar calendar1, Calendar calendar2) {
-        if (calendar1 == null || calendar2 == null) {
-            return 0;
-        }
-
-        return (int) ((calendar2.getTimeInMillis()
-                - calendar1.getTimeInMillis()) / (1000 * 60 * 60));
+    fun getHoursDifference(calendar1: Calendar?, calendar2: Calendar?): Int {
+        return if (calendar1 == null || calendar2 == null) {
+            0
+        } else ((calendar2.timeInMillis
+                - calendar1.timeInMillis) / (1000 * 60 * 60)).toInt()
     }
 
-    public static Date convertStringToDate(String dateString, String format) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.US);
+    fun convertStringToDate(dateString: String, format: String): Date? {
+        val simpleDateFormat = SimpleDateFormat(format, Locale.US)
         try {
-            return simpleDateFormat.parse(dateString.trim());
-        } catch (ParseException e) {
-            Timber.e(e);
+            return simpleDateFormat.parse(dateString.trim { it <= ' ' })
+        } catch (e: ParseException) {
+            Timber.e(e)
         }
-        return null;
+        return null
     }
 }
