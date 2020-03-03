@@ -77,7 +77,7 @@ object SwatchHelper {
     private fun getNearestColorFromSwatches(
             colorToFind: Int, swatches: List<Swatch>): ColorCompareInfo {
         var distance: Double
-        distance = ColorUtil.getMaxDistance(AppPreferences.getColorDistanceTolerance().toDouble())
+        distance = ColorUtil.getMaxDistance(AppPreferences.colorDistanceTolerance.toDouble())
         var resultValue = -1.0
         var matchedColor = -1
         var tempDistance: Double
@@ -367,7 +367,7 @@ object SwatchHelper {
             val color1 = resultDetails[i].color
             for (j in resultDetails.indices) {
                 val color2 = resultDetails[j].color
-                if (ColorUtil.getColorDistance(color1, color2) > AppPreferences.getAveragingColorDistanceTolerance()) {
+                if (ColorUtil.getColorDistance(color1, color2) > AppPreferences.averagingColorDistanceTolerance) {
                     return (-1).toDouble()
                 }
             }
@@ -409,7 +409,7 @@ object SwatchHelper {
             //check all the colors are mostly similar otherwise return -1
             for (j in resultDetails.indices) {
                 val color2 = resultDetails[j].color
-                if (ColorUtil.getColorDistance(color1, color2) > AppPreferences.getAveragingColorDistanceTolerance()) {
+                if (ColorUtil.getColorDistance(color1, color2) > AppPreferences.averagingColorDistanceTolerance) {
                     return Color.TRANSPARENT
                 }
             }

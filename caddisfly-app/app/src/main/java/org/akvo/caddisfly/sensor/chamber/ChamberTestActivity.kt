@@ -393,11 +393,11 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                         .replace(R.id.fragment_container,
                                 ResultFragment.newInstance(testInfo, isInternal), null).commit()
                 testInfo!!.resultDetail = resultDetail
-                if (AppPreferences.getShowDebugInfo()) {
+                if (AppPreferences.showDebugInfo) {
                     showDiagnosticResultDialog(false, resultDetail, resultDetails, false)
                 }
             } else {
-                if (AppPreferences.getShowDebugInfo()) {
+                if (AppPreferences.showDebugInfo) {
                     playShortResource(this, R.raw.err)
                     releaseResources()
                     setResult(Activity.RESULT_CANCELED)
@@ -417,7 +417,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         } else {
             val color = getAverageColor(resultDetails)
             if (color == Color.TRANSPARENT) {
-                if (AppPreferences.getShowDebugInfo()) {
+                if (AppPreferences.showDebugInfo) {
                     showDiagnosticResultDialog(true, resultDetail, resultDetails, true)
                 }
                 showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.couldNotCalibrate),
@@ -441,7 +441,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                 CalibrationFile.saveCalibratedData(this, testInfo, calibration, color)
                 loadDetails()
                 playShortResource(this, R.raw.done)
-                if (AppPreferences.getShowDebugInfo()) {
+                if (AppPreferences.showDebugInfo) {
                     showDiagnosticResultDialog(false, resultDetail, resultDetails, true)
                 }
                 showCalibrationDialog(calibration)

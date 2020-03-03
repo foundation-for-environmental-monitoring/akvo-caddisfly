@@ -20,6 +20,7 @@
 package org.akvo.caddisfly.ui
 
 import androidx.annotation.StringRes
+import androidx.test.core.app.ApplicationProvider
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.util.PreferencesUtil
@@ -27,7 +28,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
@@ -73,7 +73,7 @@ class AppPreferencesTest {
 
     @Test
     fun checkSamplingTimes() {
-        assertEquals(7, AppPreferences.getSamplingTimes())
+        assertEquals(7, AppPreferences.samplingTimes)
     }
 
     private fun checkDiagnosticPreference(@StringRes key: Int, defaultValue: Any,
@@ -85,10 +85,10 @@ class AppPreferencesTest {
             AppPreferences.enableDiagnosticMode()
             assertEquals(defaultValue, method.invoke(null))
             if (defaultValue is Boolean) {
-                PreferencesUtil.setBoolean(RuntimeEnvironment.application, key, !defaultValue)
+                PreferencesUtil.setBoolean(ApplicationProvider.getApplicationContext(), key, !defaultValue)
                 assertEquals(!defaultValue, method.invoke(null))
             } else if (defaultValue is Int) {
-                PreferencesUtil.setString(RuntimeEnvironment.application, key, newValue.toString())
+                PreferencesUtil.setString(ApplicationProvider.getApplicationContext(), key, newValue.toString())
                 assertEquals(newValue, method.invoke(null))
             }
             AppPreferences.disableDiagnosticMode()

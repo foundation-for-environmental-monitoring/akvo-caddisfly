@@ -1,9 +1,11 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom
         android:key="preferenceCategoryDiagnostics"
         android:title="@string/debugging">
         <CheckBoxPreference
             android:key="@string/showDebugMessagesKey"
-            android:title="@string/debuggingOn" />
+            android:title="@string/debuggingOn"
+            app:iconSpaceReserved="false" />
     </org.akvo.caddisfly.preference.PreferenceCategoryCustom>
 </PreferenceScreen>

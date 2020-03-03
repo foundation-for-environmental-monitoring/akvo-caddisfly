@@ -81,7 +81,7 @@ open class BaseRunTest : Fragment(), RunTest {
     private var mListener: OnResultListener? = null
     private var mCameraPreview: ChamberCameraPreview? = null
     private val mRunnableCode = Runnable {
-        if (pictureCount < AppPreferences.getSamplingTimes()) {
+        if (pictureCount < AppPreferences.samplingTimes) {
             pictureCount++
             playShortResource(activity!!, R.raw.beep)
             takePicture()
@@ -148,7 +148,7 @@ open class BaseRunTest : Fragment(), RunTest {
                     override fun onGlobalLayout() {
                         binding!!.cameraView.viewTreeObserver.removeOnGlobalLayoutListener(this)
                         val parentHeight = (binding!!.cameraView.parent as FrameLayout).measuredHeight
-                        val offset = (parentHeight * AppPreferences.getCameraCenterOffset()
+                        val offset = (parentHeight * AppPreferences.cameraCenterOffset
                                 / mCamera?.parameters?.pictureSize!!.width)
                         val layoutParams = binding!!.circleView.layoutParams as FrameLayout.LayoutParams
                         val r = context?.resources
@@ -256,7 +256,7 @@ open class BaseRunTest : Fragment(), RunTest {
             resultDetail.quality = photoColor.quality
             //            Timber.d("Result is: " + String.valueOf(resultDetail.getResult()));
             results.add(resultDetail)
-            if (mListener != null && pictureCount >= AppPreferences.getSamplingTimes()) { // ignore the first two results
+            if (mListener != null && pictureCount >= AppPreferences.samplingTimes) { // ignore the first two results
                 for (i in 0 until ChamberTestConfig.SKIP_SAMPLING_COUNT) {
                     if (results.size > 1) {
                         results.removeAt(0)

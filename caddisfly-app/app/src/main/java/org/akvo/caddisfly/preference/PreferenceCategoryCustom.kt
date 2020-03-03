@@ -16,27 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.preference
 
-package org.akvo.caddisfly.preference;
-
-import android.content.Context;
-import android.preference.PreferenceCategory;
-import android.util.AttributeSet;
-
-import org.akvo.caddisfly.R;
+import android.content.Context
+import android.util.AttributeSet
+import androidx.preference.PreferenceCategory
+import org.akvo.caddisfly.R
 
 /**
  * A custom category style for the preferences screen.
  */
-public class PreferenceCategoryCustom extends PreferenceCategory {
-
-    public PreferenceCategoryCustom(Context context) {
-        super(context);
-        setLayoutResource(R.layout.preference_category);
+class PreferenceCategoryCustom : PreferenceCategory {
+    @Suppress("unused")
+    constructor(context: Context?) : super(context) {
+        layoutResource = R.layout.preference_category
     }
 
-    public PreferenceCategoryCustom(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setLayoutResource(R.layout.preference_category);
+    @Suppress("unused")
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        layoutResource = R.layout.preference_category
     }
 }

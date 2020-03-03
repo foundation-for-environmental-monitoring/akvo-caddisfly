@@ -17,29 +17,33 @@
   ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom
         android:key="preferenceCategoryDiagnostics"
         android:title="@string/diagnostics">
         <CheckBoxPreference
             android:key="@string/ignoreTimeDelaysKey"
-            android:title="@string/ignoreTimeDelays" />
+            android:title="@string/ignoreTimeDelays"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="5"
             android:dialogMessage="A number from 1 to 5"
             android:key="@string/samplingsTimeKey"
             android:maxLength="2"
-            android:selectAllOnFocus="true"
             android:numeric="integer"
-            android:title="Sampling times" />
+            android:selectAllOnFocus="true"
+            android:title="Sampling times"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="50"
             android:dialogMessage="Enter a value below 400"
             android:key="@string/colorDistanceToleranceKey"
             android:maxLength="3"
-            android:selectAllOnFocus="true"
             android:numeric="integer"
-            android:title="Max swatch color distance" />
+            android:selectAllOnFocus="true"
+            android:title="Max swatch color distance"
+            app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="20"
             android:dialogMessage="Enter a value below 400"
@@ -47,6 +51,7 @@
             android:maxLength="3"
             android:numeric="integer"
             android:selectAllOnFocus="true"
-            android:title="Max averaging color distance" />
+            android:title="Max averaging color distance"
+            app:iconSpaceReserved="false" />
     </org.akvo.caddisfly.preference.PreferenceCategoryCustom>
 </PreferenceScreen>

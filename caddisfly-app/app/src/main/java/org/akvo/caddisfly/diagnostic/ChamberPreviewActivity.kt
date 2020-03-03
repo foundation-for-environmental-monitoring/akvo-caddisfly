@@ -128,7 +128,7 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
                 showDiagnosticResultDialog(false, resultDetail, resultDetails, false)
                 testInfo!!.resultDetail = resultDetail
             } else {
-                if (AppPreferences.getShowDebugInfo()) {
+                if (AppPreferences.showDebugInfo) {
                     playShortResource(this, R.raw.err)
                     releaseResources()
                     setResult(Activity.RESULT_CANCELED)

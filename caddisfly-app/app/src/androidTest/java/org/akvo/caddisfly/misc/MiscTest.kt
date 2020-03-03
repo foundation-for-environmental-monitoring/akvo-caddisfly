@@ -126,12 +126,10 @@ class MiscTest {
 
 //        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 
-
         onView(withId(id.fabEditCalibration)).perform(click())
 
 //        onView(withId(R.id.editBatchCode))
 //                .perform(typeText("TEST 123#*@!"), closeSoftKeyboard());
-
 
         onView(withId(id.editExpiryDate)).perform(click())
         onView(withClassName(equalTo(DatePicker::class.java.name)))
@@ -144,7 +142,6 @@ class MiscTest {
 //        onView(withText("2" + dfs.getDecimalSeparator() + "0 mg/l")).perform(click());
 
         //onView(withId(R.id.buttonStart)).perform(click());
-
 
         mDevice.pressHome()
         try {
@@ -160,7 +157,6 @@ class MiscTest {
 
         //clickListViewItem("Automated Tests");
 
-
         clickListViewItem("test caddisfly")
     }
 
@@ -169,21 +165,15 @@ class MiscTest {
         goToMainScreen()
 
         //Main Screen
-
-
         takeScreenshot()
         onView(withText(string.settings)).perform(click())
 
         //Settings Screen
-
-
         takeScreenshot()
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         mDevice.waitForWindowUpdate("", 1000)
 
         //About Screen
-
-
         takeScreenshot()
         Espresso.pressBack()
 
@@ -195,7 +185,6 @@ class MiscTest {
 //        takeScreenshot();
 
 //        onView(withId(android.R.id.button2)).perform(click());
-
 
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()

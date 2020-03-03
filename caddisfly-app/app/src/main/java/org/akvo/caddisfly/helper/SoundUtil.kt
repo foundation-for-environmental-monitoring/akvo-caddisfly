@@ -40,7 +40,7 @@ object SoundUtil {
     @JvmStatic
     fun playShortResource(context: Context, @RawRes resourceId: Int) {
         //play sound if the sound is not turned off in the preference
-        if (AppPreferences.isSoundOn()) {
+        if (AppPreferences.isSoundOn) {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val originalVolume: Int
             originalVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)

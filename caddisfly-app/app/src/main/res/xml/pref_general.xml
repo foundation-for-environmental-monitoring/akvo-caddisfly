@@ -17,9 +17,9 @@
   ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <org.akvo.caddisfly.preference.PreferenceCategoryCustom android:title="@string/general">
-        <!--suppress AndroidDomInspection -->
         <ListPreference
             android:defaultValue="en"
             android:dialogTitle="@string/language"
@@ -27,7 +27,8 @@
             android:entryValues="@array/language_codes"
             android:key="@string/languageKey"
             android:summary="%s"
-            android:title="@string/language" />
+            android:title="@string/language"
+            app:iconSpaceReserved="false" />
     </org.akvo.caddisfly.preference.PreferenceCategoryCustom>
 
 </PreferenceScreen>

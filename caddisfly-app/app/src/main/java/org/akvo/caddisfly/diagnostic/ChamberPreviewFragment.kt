@@ -42,7 +42,7 @@ class ChamberPreviewFragment : BaseRunTest(), RunTest {
                 stopPreview()
                 turnFlashOff()
                 binding?.startCaptureButton?.visibility = View.GONE
-                pictureCount = AppPreferences.getSamplingTimes() - 1
+                pictureCount = AppPreferences.samplingTimes - 1
                 startRepeatingTask()
             }
         }
