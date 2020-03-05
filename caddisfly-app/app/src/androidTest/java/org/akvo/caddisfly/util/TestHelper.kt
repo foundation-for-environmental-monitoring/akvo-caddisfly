@@ -254,7 +254,7 @@ object TestHelper {
         }
     }
 
-    fun saveCalibration(name: String, id: String?) {
+    fun saveCalibration(name: String, id: String) {
         val path: File? = FileHelper.getFilesDir(FileType.CALIBRATION, id)
         FileUtil.saveToFile(path, name, CALIBRATION_HASH_MAP[name])
     }

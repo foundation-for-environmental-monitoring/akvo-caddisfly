@@ -23,7 +23,6 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -56,7 +55,6 @@ import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity
-import org.akvo.caddisfly.sensor.manual.ManualTestActivity
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity
 import org.akvo.caddisfly.sensor.titration.TitrationTestActivity
 import org.akvo.caddisfly.sensor.turbidity.TimeLapseActivity
@@ -180,18 +178,6 @@ class TestActivity : BaseActivity() {
             return
         }
         val checkPermissions = permissions
-        when (testInfo!!.subtype) {
-            TestType.SENSOR -> {
-                startTest()
-                return
-            }
-            TestType.MANUAL -> if (!testInfo!!.hasImage) {
-                startTest()
-                return
-            }
-            else -> {
-            }
-        }
         if (permissionsDelegate.hasPermissions(checkPermissions)) {
             startTest()
         } else {
@@ -255,13 +241,10 @@ class TestActivity : BaseActivity() {
             FileHelper.migrateFolders()
         }
         if (testInfo != null) {
-            if (testInfo!!.subtype == TestType.SENSOR
-                    && !this.packageManager.hasSystemFeature(PackageManager.FEATURE_USB_HOST)) {
-                ErrorMessages.alertFeatureNotSupported(this, true)
-            } else if (testInfo!!.subtype == TestType.CHAMBER_TEST) {
+            if (testInfo!!.subtype == TestType.CHAMBER_TEST) {
                 if (!isSwatchListValid(testInfo)) {
-                    ErrorMessages.alertCalibrationIncomplete(this, testInfo,
-                            false, true)
+                    ErrorMessages.alertCalibrationIncomplete(this, testInfo!!,
+                            isInternal = false, finishActivity = true)
                     return
                 }
                 val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo!!.uuid)
@@ -276,7 +259,6 @@ class TestActivity : BaseActivity() {
             when (testInfo!!.subtype) {
                 TestType.CHAMBER_TEST -> startChamberTest()
                 TestType.COLIFORM -> startColiformTest()
-                TestType.MANUAL -> startManualTest()
                 TestType.STRIP_TEST -> if (cameraIsOk) {
                     startStripTest()
                 } else {
@@ -302,19 +284,13 @@ class TestActivity : BaseActivity() {
         startActivityForResult(intent, REQUEST_TEST)
     }
 
-    private fun startManualTest() {
-        val intent = Intent(this, ManualTestActivity::class.java)
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo)
-        startActivityForResult(intent, REQUEST_TEST)
-    }
-
     private fun startChamberTest() { //Only start the colorimetry calibration if the device has a camera flash
         if (AppPreferences.useExternalCamera()
                 || CameraHelper.hasFeatureCameraFlash(this,
                         R.string.cannotStartTest, R.string.ok, null)) {
             if (!isSwatchListValid(testInfo)) {
-                ErrorMessages.alertCalibrationIncomplete(this, testInfo,
-                        false, true)
+                ErrorMessages.alertCalibrationIncomplete(this, testInfo!!,
+                        isInternal = false, finishActivity = true)
                 return
             }
             val intent = Intent(this, ChamberTestActivity::class.java)

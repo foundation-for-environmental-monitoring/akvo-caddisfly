@@ -3,6 +3,8 @@ package org.akvo.caddisfly.sensor.striptest.utils;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.akvo.caddisfly.sensor.striptest.models.CalibrationCardData;
 import org.akvo.caddisfly.sensor.striptest.models.CalibrationCardException;
 import org.akvo.caddisfly.sensor.striptest.models.DecodeData;
@@ -20,14 +22,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
-
 import static org.akvo.caddisfly.sensor.striptest.qrdetector.MathUtils.distance;
 import static org.akvo.caddisfly.sensor.striptest.utils.MathUtils.meanMedianMax;
 
-/**
- * Created by markwestra on 07/06/2017
- */
 public class CalibrationCardUtils {
     private static final String TAG = "Caddisfly-utils";
 

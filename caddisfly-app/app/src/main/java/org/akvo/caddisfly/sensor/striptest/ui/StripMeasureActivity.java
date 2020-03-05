@@ -28,6 +28,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.helper.SoundUtil;
@@ -48,12 +50,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
-/**
- * Created by markwestra on 19/07/2017
- */
 @SuppressWarnings("deprecation")
 public class StripMeasureActivity extends BaseActivity implements
         StripMeasureListener {

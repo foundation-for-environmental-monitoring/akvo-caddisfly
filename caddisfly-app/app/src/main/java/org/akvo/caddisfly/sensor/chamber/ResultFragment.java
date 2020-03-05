@@ -25,15 +25,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.akvo.caddisfly.BuildConfig;
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.databinding.FragmentResultBinding;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 import static org.akvo.caddisfly.common.ConstantKey.TEST_INFO;
@@ -59,10 +58,6 @@ public class ResultFragment extends Fragment {
         FragmentResultBinding b = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_result, container, false);
         View view = b.getRoot();
-
-        if (!BuildConfig.showExperimentalTests) {
-            b.buttonSendToServer.setVisibility(View.GONE);
-        }
 
         if (getActivity() != null) {
             getActivity().setTitle(R.string.result);

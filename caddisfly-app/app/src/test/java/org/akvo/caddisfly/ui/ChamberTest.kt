@@ -334,7 +334,7 @@ class ChamberTest {
         private const val CADDISFLY_QUESTION_ID = "questionId"
         private const val CADDISFLY_QUESTION_TITLE = "questionTitle"
         private const val CADDISFLY_LANGUAGE = "language"
-        fun saveCalibration(name: String?) {
+        fun saveCalibration(name: String) {
             val file = ("0.0=255  38  186\n"
                     + "0.5=255  51  129\n"
                     + "1.0=255  59  89\n"

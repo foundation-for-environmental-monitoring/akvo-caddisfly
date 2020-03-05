@@ -97,16 +97,6 @@
                 android:gravity="center_horizontal">
 
                 <Button
-                    android:id="@+id/buttonSendToServer"
-                    style="@style/Button"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="sendTestResultClick"
-                    android:text="@string/sendData"
-                    android:visibility="visible" />
-
-                <Button
                     android:id="@+id/buttonAccept"
                     style="@style/Button"
                     android:layout_gravity="center_horizontal"
@@ -129,8 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:lineSpacingExtra="4dp"
                 android:text="@string/highLevelRecommendation"
                 android:textColor="#444"

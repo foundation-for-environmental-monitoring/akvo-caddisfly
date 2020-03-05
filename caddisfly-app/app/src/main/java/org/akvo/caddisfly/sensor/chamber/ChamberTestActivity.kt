@@ -39,8 +39,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import io.ffem.tryout.DiagnosticSendDialogFragment
-import io.ffem.tryout.DiagnosticSendDialogFragment.OnDetailsSavedListener
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.db
@@ -70,7 +68,10 @@ import org.akvo.caddisfly.sensor.chamber.EditCustomDilution.OnCustomDilutionList
 import org.akvo.caddisfly.sensor.chamber.SaveCalibrationDialogFragment.OnCalibrationDetailsSavedListener
 import org.akvo.caddisfly.sensor.chamber.SelectDilutionFragment.OnDilutionSelectedListener
 import org.akvo.caddisfly.ui.BaseActivity
-import org.akvo.caddisfly.util.*
+import org.akvo.caddisfly.util.AlertUtil
+import org.akvo.caddisfly.util.ConfigDownloader
+import org.akvo.caddisfly.util.FileUtil
+import org.akvo.caddisfly.util.PreferencesUtil
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel
 import timber.log.Timber
 import java.io.File
@@ -78,7 +79,7 @@ import java.util.*
 
 class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelectedListener,
         OnCalibrationDetailsSavedListener, OnDilutionSelectedListener,
-        OnCustomDilutionListener, OnDetailsSavedListener, OnDismissed {
+        OnCustomDilutionListener, OnDismissed {
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             finish()
@@ -540,7 +541,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
      * @param message the message to be displayed
      * @param bitmap  any bitmap image to displayed along with error message
      */
-    private fun showError(message: String, bitmap: Bitmap) {
+    private fun showError(message: String, bitmap: Bitmap?) {
         stopScreenPinning()
         playShortResource(this, R.raw.err)
         releaseResources()
@@ -585,8 +586,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         runTest()
     }
 
-    override fun onCustomDilution(dilution: Int) {
-        currentDilution = dilution
+    override fun onCustomDilution(value: Int) {
+        currentDilution = value
         runTest()
     }
 
@@ -631,22 +632,6 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
-
-    fun sendTestResultClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        if (!NetUtil.isNetworkAvailable(this)) {
-            Toast.makeText(this,
-                    "No data connection. Please connect to the internet and try again.", Toast.LENGTH_LONG).show()
-        } else {
-            val ft = supportFragmentManager.beginTransaction()
-            val diagnosticSendDialogFragment = DiagnosticSendDialogFragment.newInstance()
-            diagnosticSendDialogFragment.show(ft, "sendDialog")
-        }
-        stopScreenPinning()
-    }
-
-    override fun onDetailsSaved(comment: String) {
-        ConfigDownloader.sendDataToCloudDatabase(this, testInfo, comment)
     }
 
     private val isAppInLockTaskMode: Boolean

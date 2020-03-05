@@ -3,7 +3,6 @@ package org.akvo.caddisfly.ui
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -17,7 +16,6 @@ import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.common.Constants
 import org.akvo.caddisfly.common.NavigationController
 import org.akvo.caddisfly.helper.ApkHelper
-import org.akvo.caddisfly.helper.ErrorMessages
 import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.PermissionsDelegate
 import org.akvo.caddisfly.model.TestSampleType
@@ -115,15 +113,6 @@ class MainActivity : BaseActivity() {
 
     fun onStripTestsClick(@Suppress("UNUSED_PARAMETER") view: View?) {
         navigationController!!.navigateToTestType(TestType.STRIP_TEST, TestSampleType.ALL, true)
-    }
-
-    fun onSensorsClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        val hasOtg = packageManager.hasSystemFeature(PackageManager.FEATURE_USB_HOST)
-        if (hasOtg) {
-            navigationController!!.navigateToTestType(TestType.SENSOR, TestSampleType.ALL, true)
-        } else {
-            ErrorMessages.alertFeatureNotSupported(this, false)
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,

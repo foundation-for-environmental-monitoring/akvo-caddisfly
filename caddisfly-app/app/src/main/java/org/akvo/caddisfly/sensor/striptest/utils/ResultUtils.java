@@ -1,5 +1,8 @@
 package org.akvo.caddisfly.sensor.striptest.utils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.model.ColorItem;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.sensor.striptest.models.PatchResult;
@@ -9,12 +12,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-/**
- * Created by markwestra on 03/08/2017
- */
 public class ResultUtils {
     public static final int INTERPOLATION_NUMBER = 10;
 

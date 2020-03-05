@@ -30,18 +30,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.striptest.utils.Constants;
 import org.akvo.caddisfly.sensor.striptest.utils.MessageUtils;
 import org.akvo.caddisfly.sensor.striptest.widget.PercentageMeterView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-/**
- * Created by markwestra on 19/07/2017
- */
 public class StripMeasureFragment extends Fragment {
     private static final long INITIAL_DELAY_MILLIS = 200;
     private static StriptestHandler mStriptestHandler;

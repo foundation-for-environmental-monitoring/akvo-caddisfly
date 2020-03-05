@@ -35,13 +35,6 @@ android {
             applicationIdSuffix ".water"
             buildConfigField 'boolean', 'showExperimentalTests', 'false'
         }
-        tryout {
-            applicationIdSuffix ".experiment"
-            versionCode 243
-            versionName "Experiment"
-            buildConfigField 'boolean', 'showExperimentalTests', 'true'
-            multiDexEnabled true
-        }
     }
 
     sourceSets {
@@ -188,14 +181,6 @@ dependencies {
 
     // Unmock
     unmock 'org.robolectric:android-all:4.3_r2-robolectric-0'
-
-    // Firebase (Experiment Flavor)
-    tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:17.2.3'
-    tryoutImplementation 'com.google.firebase:firebase-database:19.2.1'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:21.4.1'
-    tryoutImplementation 'com.google.firebase:firebase-storage:19.1.1'
-    tryoutImplementation 'com.google.firebase:firebase-auth:19.2.0'
 
     implementation "androidx.core:core-ktx:1.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"

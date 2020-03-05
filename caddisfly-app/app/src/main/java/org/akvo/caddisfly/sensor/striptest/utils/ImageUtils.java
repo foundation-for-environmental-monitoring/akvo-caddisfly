@@ -8,9 +8,6 @@ import org.apache.commons.math3.fitting.WeightedObservedPoints;
 
 import java.util.List;
 
-/**
- * Created by markwestra on 06/06/2017
- */
 public class ImageUtils {
 
     private static final double LOWER_PERCENTAGE_BOUND = 0.9;
@@ -72,7 +69,7 @@ public class ImageUtils {
                 }
             }
             if (tot > 0) {
-                points.add((double) i, yTot / tot);
+                points.add(i, yTot / tot);
                 totalWhite += tot;
             }
         }

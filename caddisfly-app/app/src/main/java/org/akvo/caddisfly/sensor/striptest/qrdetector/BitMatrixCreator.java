@@ -1,8 +1,8 @@
 package org.akvo.caddisfly.sensor.striptest.qrdetector;
 
 /**
- * Created by markwestra on 18/05/2017.
- * Uses a very naive treshold: a single fixed blackpoint. As we have good control over the lighting conditions, this should be sufficient.
+ * Uses a very naive treshold: a single fixed blackpoint.
+ * As we have good control over the lighting conditions, this should be sufficient.
  */
 
 public class BitMatrixCreator {

@@ -61,7 +61,7 @@ object StringUtil {
     }
 
     @JvmStatic
-    fun toInstruction(context: AppCompatActivity, testInfo: TestInfo, text: String): SpannableStringBuilder {
+    fun toInstruction(context: AppCompatActivity, testInfo: TestInfo?, text: String): SpannableStringBuilder {
         val builder = SpannableStringBuilder()
         val spanned = getStringResourceByName(context, text)
         builder.append(spanned)
@@ -74,18 +74,20 @@ object StringUtil {
                         m.start(0), m.end(0), Spannable.SPAN_EXCLUSIVE_INCLUSIVE)
             }
         }
-        // Set reagent in the string
-        replaceReagentTags(testInfo, builder)
-        // Set sample quantity in the string
-        val m1 = Pattern.compile("%sampleQuantity").matcher(builder)
-        while (m1.find()) {
-            builder.replace(m1.start(), m1.end(), testInfo.sampleQuantity)
-        }
-        // Set reaction time in the string
-        for (i in 1..4) {
-            val m2 = Pattern.compile("%reactionTime$i").matcher(builder)
-            while (m2.find()) {
-                builder.replace(m2.start(), m2.end(), testInfo.getReagent(i - 1).reactionTime.toString())
+        if (testInfo != null) {
+            // Set reagent in the string
+            replaceReagentTags(testInfo, builder)
+            // Set sample quantity in the string
+            val m1 = Pattern.compile("%sampleQuantity").matcher(builder)
+            while (m1.find()) {
+                builder.replace(m1.start(), m1.end(), testInfo.sampleQuantity)
+            }
+            // Set reaction time in the string
+            for (i in 1..4) {
+                val m2 = Pattern.compile("%reactionTime$i").matcher(builder)
+                while (m2.find()) {
+                    builder.replace(m2.start(), m2.end(), testInfo.getReagent(i - 1).reactionTime.toString())
+                }
             }
         }
         insertDialogLinks(context, builder)

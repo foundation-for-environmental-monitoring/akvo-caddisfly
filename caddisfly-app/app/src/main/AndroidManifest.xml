@@ -77,12 +77,6 @@
             android:parentActivityName=".preference.SettingsActivity"
             android:screenOrientation="nosensor" />
 
-        <!-- Manual Test -->
-        <activity
-            android:name=".sensor.manual.ManualTestActivity"
-            android:screenOrientation="nosensor" />
-        <!-- /Manual Tests -->
-
         <!-- StripTest -->
         <activity
             android:name=".sensor.striptest.ui.StripMeasureActivity"

@@ -177,7 +177,7 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
      * @param message the message to be displayed
      * @param bitmap  any bitmap image to displayed along with error message
      */
-    private fun showError(message: String, bitmap: Bitmap) {
+    private fun showError(message: String, bitmap: Bitmap?) {
         playShortResource(this, R.raw.err)
         releaseResources()
         alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,

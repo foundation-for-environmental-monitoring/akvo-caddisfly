@@ -105,7 +105,7 @@ public class TestInfoViewModel extends AndroidViewModel {
                             testInfo, sentences[j].trim()));
 
                     if (StringUtil.getStringResourceByName(context, sentences[j]).toString().contains("[/a]")) {
-                        rowView.enableLinks(true);
+                        rowView.enableLinks();
                     }
                 }
 

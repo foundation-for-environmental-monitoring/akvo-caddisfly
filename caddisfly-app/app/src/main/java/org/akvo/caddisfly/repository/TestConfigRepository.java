@@ -68,7 +68,7 @@ public class TestConfigRepository {
         }
 
         try {
-            testInfoList = new Gson().fromJson(assetsManager.getJson(), TestConfig.class).getTests();
+            testInfoList = new Gson().fromJson(assetsManager.json, TestConfig.class).getTests();
 
             for (int i = testInfoList.size() - 1; i >= 0; i--) {
                 if (testInfoList.get(i).getSubtype() != testType) {
@@ -86,7 +86,7 @@ public class TestConfigRepository {
                 addExperimentalTests(testType, testSampleType, testInfoList);
             }
 
-            TestConfig testConfig = new Gson().fromJson(assetsManager.getCustomJson(), TestConfig.class);
+            TestConfig testConfig = new Gson().fromJson(assetsManager.customJson, TestConfig.class);
             if (testConfig != null) {
                 List<TestInfo> customList = testConfig.getTests();
 
@@ -162,7 +162,7 @@ public class TestConfigRepository {
     public TestInfo getTestInfo(final String id) {
 
         TestInfo testInfo;
-        testInfo = getTestInfoItem(assetsManager.getJson(), id);
+        testInfo = getTestInfoItem(assetsManager.json, id);
 
         if (testInfo == null) {
             if (AppPreferences.isDiagnosticMode()) {
@@ -170,7 +170,7 @@ public class TestConfigRepository {
             }
 
             if (testInfo == null) {
-                testInfo = getTestInfoItem(assetsManager.getCustomJson(), id);
+                testInfo = getTestInfoItem(assetsManager.customJson, id);
             }
         }
         if (testInfo != null) {
@@ -309,6 +309,7 @@ public class TestConfigRepository {
             for (Calibration calibration : calibrations) {
                 if (calibration.color != 0) {
                     colorFound = true;
+                    break;
                 }
             }
             if (!colorFound) {

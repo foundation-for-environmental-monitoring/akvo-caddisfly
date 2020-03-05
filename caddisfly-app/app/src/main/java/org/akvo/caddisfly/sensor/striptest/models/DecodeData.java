@@ -16,13 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by markwestra on 19/05/2017.
- */
-
 public class DecodeData {
-
-//    private static final String TAG = "Caddisfly-DecodeData";
 
     private Image decodeImage;
     private byte[] decodeImageByteArray;
