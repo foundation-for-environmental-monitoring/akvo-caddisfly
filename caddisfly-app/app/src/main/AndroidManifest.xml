@@ -103,29 +103,9 @@
             android:screenOrientation="nosensor" />
         <!-- /Diagnostic -->
 
-        <!-- Turbidity -->
-        <activity
-            android:name=".sensor.turbidity.TimeLapseActivity"
-            android:screenOrientation="nosensor" />
-        <activity
-            android:name=".sensor.turbidity.TimeLapseResultActivity"
-            android:screenOrientation="nosensor" />
-
-        <receiver
-            android:name=".sensor.turbidity.TurbidityStartReceiver"
-            android:enabled="true"
-            android:exported="false" />
-        <!-- /Turbidity -->
-
         <!-- Titration -->
         <activity
             android:name=".sensor.titration.TitrationTestActivity"
-            android:screenOrientation="nosensor" />
-        <activity
-            android:name=".sensor.titration.ui.TitrationMeasureActivity"
-            android:screenOrientation="nosensor" />
-        <activity
-            android:name=".sensor.titration.ui.ResultActivity"
             android:screenOrientation="nosensor" />
         <!-- /Titration -->
 

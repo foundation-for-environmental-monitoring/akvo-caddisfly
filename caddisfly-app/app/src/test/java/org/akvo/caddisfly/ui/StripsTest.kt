@@ -29,7 +29,6 @@ import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.common.ConstantKey
-import org.akvo.caddisfly.common.UnitTestConstants
 import org.akvo.caddisfly.common.UnitTestConstants.SAMPLE_TYPE
 import org.akvo.caddisfly.common.UnitTestConstants.STRIP_TESTS_COUNT
 import org.akvo.caddisfly.common.UnitTestConstants.STRIP_TEST_NAME
@@ -85,6 +84,7 @@ class StripsTest {
         val activity = controller.get() as Activity
         val recyclerView: RecyclerView = activity.findViewById(id.list_types)
         assertSame(STRIP_TESTS_COUNT, recyclerView.childCount)
+        @Suppress("ConstantConditionIf")
         if (STRIP_TESTS_COUNT > 0) {
             val adapter = recyclerView.adapter as TestInfoAdapter?
             recyclerView.adapter
@@ -153,7 +153,7 @@ class StripsTest {
     fun clickHome() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, UnitTestConstants.SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()

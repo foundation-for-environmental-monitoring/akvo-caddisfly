@@ -39,9 +39,7 @@ class StriptestTest {
     fun setUp() {
         loadData(mActivityRule.activity, mCurrentLanguage)
         clearPreferences(mActivityRule)
-
 //        resetLanguage();
-
     }
 
     @Test
@@ -76,7 +74,6 @@ class StriptestTest {
 
 //        assertNotNull(mDevice.findObject(By.text("Result: ")));
 //        assertNotNull(mDevice.findObject(By.text("20")));
-
     }
 
     private fun testArsenic2() {

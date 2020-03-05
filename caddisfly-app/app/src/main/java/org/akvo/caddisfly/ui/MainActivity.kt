@@ -7,13 +7,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Message
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp
-import org.akvo.caddisfly.common.ConstantKey
-import org.akvo.caddisfly.common.Constants
 import org.akvo.caddisfly.common.NavigationController
 import org.akvo.caddisfly.helper.ApkHelper
 import org.akvo.caddisfly.helper.FileHelper
@@ -24,7 +21,6 @@ import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.preference.SettingsActivity
 import org.akvo.caddisfly.util.AlertUtil
 import org.akvo.caddisfly.util.PreferencesUtil
-import org.akvo.caddisfly.viewmodel.TestListViewModel
 import java.lang.ref.WeakReference
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -55,8 +51,7 @@ class MainActivity : BaseActivity() {
                 textVersionExpiry?.text = String.format("Version expiry: %s", df.format(appExpiryDate.time))
                 textVersionExpiry?.visibility = View.VISIBLE
             } else {
-                @Suppress("ConstantConditionIf")
-                if (BuildConfig.showExperimentalTests) {
+                if (ApkHelper.isNonStoreVersion(this)) {
                     textVersionExpiry?.text = CaddisflyApp.getAppVersion(true)
                     textVersionExpiry?.visibility = View.VISIBLE
                 }
@@ -111,10 +106,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    fun onStripTestsClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        navigationController!!.navigateToTestType(TestType.STRIP_TEST, TestSampleType.ALL, true)
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>,
                                             grantResults: IntArray) {
@@ -148,41 +139,11 @@ class MainActivity : BaseActivity() {
         navigationController!!.navigateToTestType(TestType.CHAMBER_TEST, testSampleType, false)
     }
 
-    fun onSettingsClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        val intent = Intent(this, SettingsActivity::class.java)
-        startActivityForResult(intent, 100)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100 && PreferencesUtil.getBoolean(this, R.string.refreshKey, false)) {
             PreferencesUtil.setBoolean(this, R.string.refreshKey, false)
             recreate()
-        }
-    }
-
-    fun onColiformsClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        val viewModel = ViewModelProvider(this).get(TestListViewModel::class.java)
-        val testInfo = viewModel.getTestInfo(Constants.COLIFORM_ID)
-        val intent = Intent(this, TestActivity::class.java)
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo)
-        startActivity(intent)
-    }
-
-    fun onCalibrateSoilClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        runTest = false
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startCalibrate(TestSampleType.SOIL)
-        } else {
-            permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL)
-        }
-    }
-
-    fun onCalibrateWaterClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startCalibrate(TestSampleType.WATER)
-        } else {
-            permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER)
         }
     }
 

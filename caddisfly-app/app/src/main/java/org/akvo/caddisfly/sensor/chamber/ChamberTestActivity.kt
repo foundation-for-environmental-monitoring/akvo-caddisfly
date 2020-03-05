@@ -69,7 +69,6 @@ import org.akvo.caddisfly.sensor.chamber.SaveCalibrationDialogFragment.OnCalibra
 import org.akvo.caddisfly.sensor.chamber.SelectDilutionFragment.OnDilutionSelectedListener
 import org.akvo.caddisfly.ui.BaseActivity
 import org.akvo.caddisfly.util.AlertUtil
-import org.akvo.caddisfly.util.ConfigDownloader
 import org.akvo.caddisfly.util.FileUtil
 import org.akvo.caddisfly.util.PreferencesUtil
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel
@@ -172,7 +171,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         start()
     }
 
-    override fun onCalibrationSelected(item: Calibration) {
+    override fun onCalibrationSelected(item: Calibration?) {
         val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo!!.uuid)
         if (calibrationDetail == null) {
             showEditCalibrationDetailsDialog(true)
@@ -439,7 +438,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                             FileHelper.FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage)
                 }
                 dao!!.insert(calibration)
-                CalibrationFile.saveCalibratedData(this, testInfo, calibration, color)
+                CalibrationFile.saveCalibratedData(this, testInfo!!, calibration, color)
                 loadDetails()
                 playShortResource(this, R.raw.done)
                 if (AppPreferences.showDebugInfo) {
@@ -622,15 +621,6 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
             }
         } else {
             runTest()
-        }
-    }
-
-    fun sendToServerClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        stopScreenPinning()
-        try {
-            ConfigDownloader.sendDataToCloudDatabase(this, testInfo, "")
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 

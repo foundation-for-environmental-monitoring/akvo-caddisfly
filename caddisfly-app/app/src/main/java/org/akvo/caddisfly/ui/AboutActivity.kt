@@ -103,7 +103,7 @@ class AboutActivity : BaseActivity() {
         }
     }
 
-    fun onHomeClick(@Suppress("UNUSED_PARAMETER") view: View?) {
+    fun onHomeClick(@Suppress("UNUSED_PARAMETER") view: View) {
         dialog?.dismiss()
     }
 

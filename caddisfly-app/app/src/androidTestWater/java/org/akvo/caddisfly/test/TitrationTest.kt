@@ -66,10 +66,26 @@ class TitrationTest {
 
         assertNotNull(mDevice.findObject(By.text("Carbonate: ")))
         assertNotNull(mDevice.findObject(By.text("300.00")))
+
+        mActivityRule.finishActivity()
+
+        mDevice.waitForIdle()
+
+        mDevice.pressBack()
+
+        mDevice.pressBack()
     }
 
     @Test
     fun runCalciumTitrationTest() {
+
+        mDevice.waitForIdle()
+
+        mDevice.pressBack()
+
+        mDevice.pressBack()
+
+        sleep(2000)
         gotoSurveyForm()
         nextSurveyPage(3, "Water Tests")
         clickExternalSourceButton(1, TestConstant.GO_TO_TEST)
@@ -99,6 +115,14 @@ class TitrationTest {
         assertNotNull(mDevice.findObject(By.text("10.00")))
         assertNotNull(mDevice.findObject(By.text("Magnesium: ")))
         assertNotNull(mDevice.findObject(By.text("4.00")))
+
+        mActivityRule.finishActivity()
+
+        mDevice.waitForIdle()
+
+        mDevice.pressBack()
+
+        mDevice.pressBack()
     }
 
     companion object {

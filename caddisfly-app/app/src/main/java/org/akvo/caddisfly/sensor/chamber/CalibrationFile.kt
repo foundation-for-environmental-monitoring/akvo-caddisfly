@@ -16,45 +16,35 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.sensor.chamber
 
-package org.akvo.caddisfly.sensor.chamber;
+import android.content.Context
+import android.widget.Toast
+import org.akvo.caddisfly.R
+import org.akvo.caddisfly.entity.Calibration
+import org.akvo.caddisfly.helper.FileHelper
+import org.akvo.caddisfly.helper.FileHelper.getFilesDir
+import org.akvo.caddisfly.helper.SwatchHelper.generateCalibrationFile
+import org.akvo.caddisfly.model.TestInfo
+import org.akvo.caddisfly.util.FileUtil.saveToFile
 
-
-import android.content.Context;
-import android.widget.Toast;
-
-import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.entity.Calibration;
-import org.akvo.caddisfly.helper.FileHelper;
-import org.akvo.caddisfly.helper.SwatchHelper;
-import org.akvo.caddisfly.model.TestInfo;
-import org.akvo.caddisfly.util.FileUtil;
-
-import java.io.File;
-
-public class CalibrationFile {
-
+object CalibrationFile {
     /**
      * Save a single calibrated color.
      *
      * @param calibration The calibration object
      * @param resultColor The color value
      */
-    public static void saveCalibratedData(Context context, TestInfo testInfo,
-                                          Calibration calibration, final int resultColor) {
-
+    fun saveCalibratedData(context: Context?, testInfo: TestInfo,
+                           calibration: Calibration, resultColor: Int) {
         if (resultColor != 0) {
-            calibration.color = resultColor;
+            calibration.color = resultColor
         }
 
         //Save a backup of the calibration details
-        final String calibrationDetails = SwatchHelper.generateCalibrationFile(context, testInfo, true);
-
-        final File path = FileHelper.getFilesDir(FileHelper.FileType.CALIBRATION, testInfo.getUuid());
-
-        FileUtil.saveToFile(path, "_AutoBackup", calibrationDetails);
-
-        Toast.makeText(context, R.string.calibrated, Toast.LENGTH_LONG).show();
+        val calibrationDetails = generateCalibrationFile(context, testInfo, true)
+        val path = getFilesDir(FileHelper.FileType.CALIBRATION, testInfo.uuid)
+        saveToFile(path, "_AutoBackup", calibrationDetails)
+        Toast.makeText(context, R.string.calibrated, Toast.LENGTH_LONG).show()
     }
-
 }

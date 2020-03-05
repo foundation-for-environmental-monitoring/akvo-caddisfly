@@ -149,7 +149,7 @@ public class DecodeProcessor {
         final int decodeWidth = decodeData.getDecodeWidth();
 
         if (mBitMatrixCreator == null) {
-            mBitMatrixCreator = new BitMatrixCreator(decodeWidth, decodeHeight);
+            mBitMatrixCreator = new BitMatrixCreator();
         }
 
         // create a black and white bit matrix from our data. Cut out the part that interests us

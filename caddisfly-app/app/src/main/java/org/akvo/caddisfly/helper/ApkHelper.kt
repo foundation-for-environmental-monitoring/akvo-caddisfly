@@ -55,10 +55,7 @@ object ApkHelper {
                         .setCancelable(false)
                 builder.setPositiveButton(R.string.ok) { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.dismiss()
-                    @Suppress("ConstantConditionIf")
-                    if (!BuildConfig.showExperimentalTests) {
-                        activity.startActivity(Intent(Intent.ACTION_VIEW, marketUrl))
-                    }
+                    activity.startActivity(Intent(Intent.ACTION_VIEW, marketUrl))
                     activity.finish()
                 }
                 val alertDialog = builder.create()

@@ -199,7 +199,7 @@ public final class BitMatrix implements Cloneable {
      */
     public void setRegion(int left, int top, int width, int height) {
         if (top < 0 || left < 0) {
-            throw new IllegalArgumentException("Left and top must be nonnegative");
+            throw new IllegalArgumentException("Left and top must be non-negative");
         }
         if (height < 1 || width < 1) {
             throw new IllegalArgumentException("Height and width must be at least 1");
@@ -225,7 +225,7 @@ public final class BitMatrix implements Cloneable {
      * @return The resulting BitArray - this reference should always be used even when passing
      * your own row
      */
-    public BitArray getRow(int y, BitArray row) {
+    private BitArray getRow(int y, BitArray row) {
         if (row == null || row.getSize() < width) {
             row = new BitArray(width);
         } else {
@@ -242,7 +242,7 @@ public final class BitMatrix implements Cloneable {
      * @param y   row to set
      * @param row {@link BitArray} to copy from
      */
-    public void setRow(int y, BitArray row) {
+    private void setRow(int y, BitArray row) {
         System.arraycopy(row.getBitArray(), 0, bits, y * rowSize, rowSize);
     }
 
@@ -381,7 +381,7 @@ public final class BitMatrix implements Cloneable {
     /**
      * @return The row size of the matrix
      */
-    public int getRowSize() {
+    private int getRowSize() {
         return rowSize;
     }
 
@@ -418,7 +418,9 @@ public final class BitMatrix implements Cloneable {
      * @param unsetString representation of an unset bit
      * @return string representation of entire matrix utilizing given strings
      */
-    public String toString(String setString, String unsetString) {
+    @SuppressWarnings("SameParameterValue")
+    private String toString(String setString, String unsetString) {
+        //noinspection deprecation
         return toString(setString, unsetString, "\n");
     }
 

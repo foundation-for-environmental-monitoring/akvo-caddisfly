@@ -7,10 +7,6 @@ import org.akvo.caddisfly.BuildConfig
  */
 object AppConfig {
     /**
-     * Uri for photos from built in camera.
-     */
-    const val FILE_PROVIDER_AUTHORITY_URI = BuildConfig.APPLICATION_ID + ".fileprovider"
-    /**
      * The url to check for version updates.
      */
     @JvmField

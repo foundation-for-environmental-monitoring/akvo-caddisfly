@@ -54,12 +54,12 @@ object PreferencesUtil {
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue)
     }
 
-    @JvmStatic
-    fun getBoolean(context: Context?, keyId: String?, defaultValue: Boolean): Boolean {
-        val sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context)
-        return sharedPreferences.getBoolean(keyId, defaultValue)
-    }
+//    @JvmStatic
+//    fun getBoolean(context: Context?, keyId: String?, defaultValue: Boolean): Boolean {
+//        val sharedPreferences = PreferenceManager
+//                .getDefaultSharedPreferences(context)
+//        return sharedPreferences.getBoolean(keyId, defaultValue)
+//    }
 
     /**
      * Sets a boolean value to preferences.
@@ -77,15 +77,14 @@ object PreferencesUtil {
         editor.apply()
     }
 
-    @Suppress("unused")
-    @JvmStatic
-    fun setBoolean(context: Context?, keyId: String?, value: Boolean) {
-        val sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean(keyId, value)
-        editor.apply()
-    }
+//    @JvmStatic
+//    fun setBoolean(context: Context?, keyId: String?, value: Boolean) {
+//        val sharedPreferences = PreferenceManager
+//                .getDefaultSharedPreferences(context)
+//        val editor = sharedPreferences.edit()
+//        editor.putBoolean(keyId, value)
+//        editor.apply()
+//    }
 
     /**
      * Gets an integer value from preferences.
@@ -249,21 +248,20 @@ object PreferencesUtil {
 //        setString(context, key, value)
 //    }
 
-    /**
-     * Sets a string value to preferences.
-     *
-     * @param context the context
-     * @param keyId   the key id
-     */
-    @Suppress("unused")
-    @JvmStatic
-    fun setString(context: Context?, keyId: String?, value: String?) {
-        val sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context)
-        val editor = sharedPreferences.edit()
-        editor.putString(keyId, value)
-        editor.apply()
-    }
+//    /**
+//     * Sets a string value to preferences.
+//     *
+//     * @param context the context
+//     * @param keyId   the key id
+//     */
+//    @JvmStatic
+//    fun setString(context: Context?, keyId: String?, value: String?) {
+//        val sharedPreferences = PreferenceManager
+//                .getDefaultSharedPreferences(context)
+//        val editor = sharedPreferences.edit()
+//        editor.putString(keyId, value)
+//        editor.apply()
+//    }
 
 //    fun removeKey(context: Context, @StringRes keyId: Int) {
 //        removeKey(context, getKey(context, keyId))

@@ -35,7 +35,6 @@ import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.common.ConstantKey.SAMPLE_TYPE
-import org.akvo.caddisfly.common.Constants
 import org.akvo.caddisfly.common.SensorConstants
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TESTS_COUNT
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_ID_1
@@ -43,21 +42,16 @@ import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_1
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_2
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_3
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_4
-import org.akvo.caddisfly.helper.FileHelper
-import org.akvo.caddisfly.helper.FileHelper.FileType
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity
-import org.akvo.caddisfly.util.FileUtil
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.RuntimeEnvironment
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.*
-import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
 class ChamberTest {
@@ -65,7 +59,7 @@ class ChamberTest {
     fun titleIsCorrect() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -85,7 +79,7 @@ class ChamberTest {
     fun testCount() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -116,7 +110,7 @@ class ChamberTest {
     fun testTitles() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -140,7 +134,7 @@ class ChamberTest {
         val permissions = arrayOf(permission.CAMERA, permission.WRITE_EXTERNAL_STORAGE)
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -160,7 +154,7 @@ class ChamberTest {
         val application: ShadowApplication = shadowOf(activity.application)
         application.grantPermissions(*permissions)
         controller.resume()
-        val pm: ShadowPackageManager = shadowOf(RuntimeEnvironment.application.packageManager)
+        val pm: ShadowPackageManager = shadowOf(activity.application.packageManager)
         pm.setSystemFeature(PackageManager.FEATURE_CAMERA, true)
         pm.setSystemFeature(PackageManager.FEATURE_CAMERA_FLASH, true)
         recyclerView.getChildAt(1).performClick()
@@ -176,7 +170,7 @@ class ChamberTest {
     fun clickHome() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -228,7 +222,7 @@ class ChamberTest {
         val activity = controller.get() as Activity
         val application: ShadowApplication = shadowOf(activity.application)
         application.grantPermissions(*permissions)
-        val pm: ShadowPackageManager = shadowOf(RuntimeEnvironment.application.packageManager)
+        val pm: ShadowPackageManager = shadowOf(activity.application.packageManager)
         pm.setSystemFeature(PackageManager.FEATURE_CAMERA, true)
         pm.setSystemFeature(PackageManager.FEATURE_CAMERA_FLASH, true)
         controller.start()
@@ -334,14 +328,14 @@ class ChamberTest {
         private const val CADDISFLY_QUESTION_ID = "questionId"
         private const val CADDISFLY_QUESTION_TITLE = "questionTitle"
         private const val CADDISFLY_LANGUAGE = "language"
-        fun saveCalibration(name: String) {
-            val file = ("0.0=255  38  186\n"
-                    + "0.5=255  51  129\n"
-                    + "1.0=255  59  89\n"
-                    + "1.5=255  62  55\n"
-                    + "2.0=255  81  34\n")
-            val path: File? = FileHelper.getFilesDir(FileType.CALIBRATION, Constants.FLUORIDE_ID)
-            FileUtil.saveToFile(path, name, file)
-        }
+//        fun saveCalibration(name: String) {
+//            val file = ("0.0=255  38  186\n"
+//                    + "0.5=255  51  129\n"
+//                    + "1.0=255  59  89\n"
+//                    + "1.5=255  62  55\n"
+//                    + "2.0=255  81  34\n")
+//            val path: File? = FileHelper.getFilesDir(FileType.CALIBRATION, Constants.FLUORIDE_ID)
+//            FileUtil.saveToFile(path, name, file)
+//        }
     }
 }

@@ -48,6 +48,7 @@ import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.FileUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -322,7 +323,7 @@ public class SaveCalibrationDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialog) {
+    public void onDismiss(@NotNull DialogInterface dialog) {
         super.onDismiss(dialog);
         closeKeyboard(getActivity(), editName);
     }
@@ -334,7 +335,7 @@ public class SaveCalibrationDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         if (context instanceof OnCalibrationDetailsSavedListener) {
             mListener = (OnCalibrationDetailsSavedListener) context;

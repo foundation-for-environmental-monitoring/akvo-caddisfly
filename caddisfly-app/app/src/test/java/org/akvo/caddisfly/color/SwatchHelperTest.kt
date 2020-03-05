@@ -115,6 +115,7 @@ class SwatchHelperTest {
         assertEquals(1.62, result, 0.0)
     }
 
+    @Test
     fun testAverage6() {
         val results = ArrayList<ResultDetail>()
         results.add(createNewResult(1.6))

@@ -40,12 +40,6 @@ enum class TestType {
     STRIP_TEST,
 
     /**
-     * Coliform counting.
-     */
-    @SerializedName("coliform")
-    COLIFORM,
-
-    /**
      * Titration counting.
      */
     @SerializedName("titration")

@@ -1,7 +1,7 @@
 package org.akvo.caddisfly.sensor.striptest.qrdetector;
 
 /**
- * Uses a very naive treshold: a single fixed blackpoint.
+ * Uses a very naive threshold: a single fixed black point.
  * As we have good control over the lighting conditions, this should be sufficient.
  */
 
@@ -9,19 +9,20 @@ public class BitMatrixCreator {
 
     private static BitMatrix matrix;
 
-    public BitMatrixCreator(int width, int height){
+    public BitMatrixCreator() {
     }
 
     // the data has the long dimension as width, and the short dimension as height
-    public static BitMatrix createBitMatrix(byte[] yDataArray, int rowStride, int dataWidth, int dataHeight, int hstart,
-                                            int vstart, int width, int height){
+    public static BitMatrix createBitMatrix(byte[] yDataArray, int rowStride, int dataWidth,
+                                            int dataHeight, int horizontalStart,
+                                            int verticalStart, int width, int height) {
 
-        if (hstart + width > dataWidth || vstart + height > dataHeight ) {
+        if (horizontalStart + width > dataWidth || verticalStart + height > dataHeight) {
             throw new IllegalArgumentException("Crop rectangle does not fit within image data.");
         }
 
         if (rowStride != dataWidth) {
-            throw new IllegalArgumentException("Rowstride not equal to data width");
+            throw new IllegalArgumentException("Row stride not equal to data width");
         }
 
         if (matrix == null) {
@@ -32,7 +33,7 @@ public class BitMatrixCreator {
 
         if (yDataArray == null) return null;
 
-        // lets use the approximate location of the four corners to estimate the blackpoint
+        // lets use the approximate location of the four corners to estimate the black point
         int size =  (int) Math.round(0.25 * width);
         int blackTopLeft = estimateBlackPoint(yDataArray,rowStride,1,1, size, size);
         int blackTopRight = estimateBlackPoint(yDataArray,rowStride, width - size, 1, width, size);

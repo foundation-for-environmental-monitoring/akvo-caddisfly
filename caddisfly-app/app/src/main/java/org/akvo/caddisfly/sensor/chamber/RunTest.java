@@ -20,10 +20,12 @@
 package org.akvo.caddisfly.sensor.chamber;
 
 
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.entity.Calibration;
 
 public interface RunTest {
-    void setCalibration(Calibration item);
+    void setCalibration(@Nullable Calibration item);
 
     void setDilution(int dilution);
 }

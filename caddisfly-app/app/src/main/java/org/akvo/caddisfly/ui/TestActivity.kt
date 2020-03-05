@@ -57,7 +57,6 @@ import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity
 import org.akvo.caddisfly.sensor.titration.TitrationTestActivity
-import org.akvo.caddisfly.sensor.turbidity.TimeLapseActivity
 import org.akvo.caddisfly.util.AlertUtil
 import org.akvo.caddisfly.util.PreferencesUtil
 import org.akvo.caddisfly.viewmodel.TestListViewModel
@@ -258,7 +257,6 @@ class TestActivity : BaseActivity() {
             }
             when (testInfo!!.subtype) {
                 TestType.CHAMBER_TEST -> startChamberTest()
-                TestType.COLIFORM -> startColiformTest()
                 TestType.STRIP_TEST -> if (cameraIsOk) {
                     startStripTest()
                 } else {
@@ -269,13 +267,6 @@ class TestActivity : BaseActivity() {
                 }
             }
         }
-    }
-
-    private fun startColiformTest() {
-        val intent = Intent(this, TimeLapseActivity::class.java)
-        intent.putExtra(ConstantKey.RUN_TEST, true)
-        intent.putExtra(ConstantKey.TEST_INFO, testInfo)
-        startActivityForResult(intent, REQUEST_TEST)
     }
 
     private fun startTitrationTest() {

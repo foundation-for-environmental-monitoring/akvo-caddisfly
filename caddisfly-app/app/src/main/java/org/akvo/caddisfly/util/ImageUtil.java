@@ -35,6 +35,9 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.Surface;
 
+import androidx.annotation.NonNull;
+import androidx.exifinterface.media.ExifInterface;
+
 import org.akvo.caddisfly.helper.FileHelper;
 
 import java.io.BufferedInputStream;
@@ -48,8 +51,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import androidx.annotation.NonNull;
-import androidx.exifinterface.media.ExifInterface;
 import timber.log.Timber;
 
 import static org.akvo.caddisfly.common.Constants.DEGREES_180;
@@ -123,14 +124,14 @@ public final class ImageUtil {
         paint.setStrokeWidth(1);
         paint.setStyle(Paint.Style.STROKE);
         canvas.drawBitmap(bitmap, new Matrix(), null);
-        canvas.drawCircle(point.x, point.y, length / 2, paint);
+        canvas.drawCircle(point.x, point.y, length / 2f, paint);
 
         paint.setColor(Color.YELLOW);
         paint.setStrokeWidth(1);
-        canvas.drawLine(0, bitmap.getHeight() / 2,
-                bitmap.getWidth() / 3, bitmap.getHeight() / 2, paint);
-        canvas.drawLine(bitmap.getWidth()  - (bitmap.getWidth() / 3), bitmap.getHeight() / 2,
-                bitmap.getWidth(), bitmap.getHeight() / 2, paint);
+        canvas.drawLine(0, bitmap.getHeight() / 2f,
+                bitmap.getWidth() / 3f, bitmap.getHeight() / 2f, paint);
+        canvas.drawLine(bitmap.getWidth() - (bitmap.getWidth() / 3f), bitmap.getHeight() / 2f,
+                bitmap.getWidth(), bitmap.getHeight() / 2f, paint);
 
         return croppedBitmap;
     }
@@ -469,8 +470,8 @@ public final class ImageUtil {
         int[] pixels = new int[offset];
         int u, v, y1, y2, y3, y4;
 
-        // i percorre os Y and the final pixels
-        // k percorre os pixles U e V
+        // i iterates through Y and the final pixels
+        // k iterates through pixels U and V
         for (int i = 0, k = 0; i < offset; i += 2, k += 2) {
             y1 = data[i] & 0xff;
             y2 = data[i + 1] & 0xff;

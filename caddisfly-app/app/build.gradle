@@ -29,11 +29,9 @@ android {
     productFlavors {
         soil {
             applicationIdSuffix ".soil"
-            buildConfigField 'boolean', 'showExperimentalTests', 'false'
         }
         water {
             applicationIdSuffix ".water"
-            buildConfigField 'boolean', 'showExperimentalTests', 'false'
         }
     }
 

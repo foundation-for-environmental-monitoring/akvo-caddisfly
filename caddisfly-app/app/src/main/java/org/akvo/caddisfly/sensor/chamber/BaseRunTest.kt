@@ -267,7 +267,7 @@ open class BaseRunTest : Fragment(), RunTest {
         }
     }
 
-    override fun setCalibration(item: Calibration) {
+    override fun setCalibration(item: Calibration?) {
         mCalibration = item
     }
 

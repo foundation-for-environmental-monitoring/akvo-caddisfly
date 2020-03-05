@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.entity.Calibration;
 import org.akvo.caddisfly.model.ColorItem;
@@ -34,11 +36,10 @@ import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.util.ColorUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationViewAdapter.ViewHolder> {
 
@@ -50,6 +51,7 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
         mListener = listener;
     }
 
+    @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -62,8 +64,8 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
         holder.mItem = testInfo.getCalibrations().get(position);
 
         String format = "%." + testInfo.getDecimalPlaces() + "f";
-        holder.textValue.setText(String.valueOf(String.format(Locale.getDefault(), format,
-                holder.mItem.value)));
+        holder.textValue.setText(String.format(Locale.getDefault(), format,
+                holder.mItem.value));
 
         Result result = testInfo.getResults().get(0);
         List<ColorItem> colors = result.getColors();
@@ -113,7 +115,7 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
         return testInfo.getCalibrations().size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         final View mView;
         final Button mIdView;
         final TextView textValue;
@@ -134,6 +136,7 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
             textBrightness = view.findViewById(R.id.textBrightness);
         }
 
+        @NotNull
         @Override
         public String toString() {
             return super.toString() + " '" + textValue.getText() + "'";
