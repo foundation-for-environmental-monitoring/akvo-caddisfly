@@ -16,16 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+package org.akvo.caddisfly.sensor.chamber
 
-package org.akvo.caddisfly.sensor.chamber;
+import org.akvo.caddisfly.entity.Calibration
 
-
-import androidx.annotation.Nullable;
-
-import org.akvo.caddisfly.entity.Calibration;
-
-public interface RunTest {
-    void setCalibration(@Nullable Calibration item);
-
-    void setDilution(int dilution);
+interface RunTest {
+    fun setCalibration(item: Calibration?)
+    fun setDilution(dilution: Int)
 }

@@ -211,11 +211,11 @@ public class TestInfo implements Parcelable {
         }
         unit = in.readString();
         byte tmpHasImage = in.readByte();
-        hasImage = tmpHasImage != 0 && tmpHasImage == 1;
+        hasImage = tmpHasImage == 1;
         byte tmpCameraAbove = in.readByte();
-        cameraAbove = tmpCameraAbove != 0 && tmpCameraAbove == 1;
+        cameraAbove = tmpCameraAbove == 1;
         byte tmpCalibrate = in.readByte();
-        calibrate = tmpCalibrate != 0 && tmpCalibrate == 1;
+        calibrate = tmpCalibrate == 1;
         ranges = in.readString();
         defaultColors = in.readString();
         if (in.readByte() == 0) {
@@ -306,7 +306,7 @@ public class TestInfo implements Parcelable {
         if (ranges != null) {
             try {
                 String[] array = ranges.split(",");
-                return Double.valueOf(array[0]);
+                return Double.parseDouble(array[0]);
             } catch (NumberFormatException e) {
                 return -1;
             }
@@ -315,11 +315,11 @@ public class TestInfo implements Parcelable {
         }
     }
 
-    public double getMaxRangeValue() {
+    private double getMaxRangeValue() {
         if (ranges != null) {
             try {
                 String[] array = ranges.split(",");
-                return Double.valueOf(array[array.length - 1]);
+                return Double.parseDouble(array[array.length - 1]);
             } catch (NumberFormatException e) {
                 return -1;
             }

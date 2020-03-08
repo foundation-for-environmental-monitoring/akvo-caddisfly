@@ -16,20 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.akvo.caddisfly.common
+package org.akvo.caddisfly.model
 
-/**
- * Class to hold all public constants used by sensors.
- */
-object SensorConstants {
-    /**
-     * Serialization constants.
-     */
-    const val DILUTION = "Dilution"
-    const val TEST_ID = "testId"
-    const val VALUE = "value"
-    const val LANGUAGE = "language"
-    const val UNIT = "Unit"
-    const val DEBUG_MODE = "debugMode"
-    const val RESULT_JSON = "resultJson"
-}
+class ColorCompareInfo(val result: Double, val resultColor: Int, val matchedColor: Int, val distance: Double)

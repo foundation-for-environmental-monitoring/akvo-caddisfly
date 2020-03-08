@@ -116,7 +116,7 @@ public class Result implements Parcelable {
             presetColors = null;
         }
         byte tmpGrayScale = in.readByte();
-        grayScale = tmpGrayScale != 0 && tmpGrayScale == 1;
+        grayScale = tmpGrayScale == 1;
         code = in.readString();
         dilution = in.readByte() == 0x00 ? null : in.readInt();
     }
@@ -199,7 +199,7 @@ public class Result implements Parcelable {
         this.colorItems = colorItems;
     }
 
-    public List<ColorItem> getPresetColors() {
+    List<ColorItem> getPresetColors() {
         return presetColors;
     }
 
@@ -324,7 +324,6 @@ public class Result implements Parcelable {
     }
 
     public boolean highLevelsFound() {
-
         return highLevelsFound;
     }
 
@@ -344,7 +343,7 @@ public class Result implements Parcelable {
         return dilution;
     }
 
-    public double calculateResult(double value) {
+    double calculateResult(double value) {
         return applyFormula(value, formula);
     }
 }

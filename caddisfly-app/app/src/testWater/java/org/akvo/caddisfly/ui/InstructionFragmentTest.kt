@@ -25,7 +25,7 @@ import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import org.akvo.caddisfly.R.drawable
 import org.akvo.caddisfly.R.id
-import org.akvo.caddisfly.common.TestConstants
+import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_INSTRUCTION_ID
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.repository.TestConfigRepository
 import org.akvo.caddisfly.widget.RowView
@@ -41,7 +41,7 @@ class InstructionFragmentTest {
     @Test
     fun testFragment() {
         val testConfigRepository = TestConfigRepository()
-        val testInfo: TestInfo? = testConfigRepository.getTestInfo(TestConstants.CUVETTE_TEST_INSTRUCTION_ID)
+        val testInfo: TestInfo? = testConfigRepository.getTestInfo(CUVETTE_TEST_INSTRUCTION_ID)
         val fragment: Fragment? = InstructionFragment.getInstance(testInfo)
         startFragment(fragment)
         assertNotNull(fragment)
@@ -50,7 +50,7 @@ class InstructionFragmentTest {
     @Test
     fun testInstruction() {
         val testConfigRepository = TestConfigRepository()
-        val testInfo: TestInfo? = testConfigRepository.getTestInfo(TestConstants.CUVETTE_TEST_INSTRUCTION_ID)
+        val testInfo: TestInfo? = testConfigRepository.getTestInfo(CUVETTE_TEST_INSTRUCTION_ID)
         val fragment: Fragment = InstructionFragment.getInstance(testInfo)
         startVisibleFragment(fragment, TestActivity::class.java, id.fragment_container)
         assertNotNull(fragment)

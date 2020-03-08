@@ -49,7 +49,7 @@ object TestConfigHelper {
      * @return the result in json format
      */
     @JvmStatic
-    fun getJsonResult(testInfo: TestInfo, results: SparseArray<String?>,
+    fun getJsonResult(testInfo: TestInfo, results: SparseArray<String>,
                       brackets: SparseArray<String?>?, color: Int,
                       resultImageUrl: String?): JSONObject {
         val resultJson = JSONObject()

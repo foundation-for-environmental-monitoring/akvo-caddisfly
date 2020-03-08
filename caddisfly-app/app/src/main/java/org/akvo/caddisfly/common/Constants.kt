@@ -24,8 +24,6 @@ object Constants {
     const val TESTS_META_FILENAME = "tests.json"
     const val FREE_CHLORINE_ID = "c3535e72-ff77-4225-9f4a-41d3288780c6"
     const val FREE_CHLORINE_ID_2 = "a2413119-38eb-4959-92ee-cc169fdbb0fc"
-    const val FLUORIDE_ID = "f0f3c1dd-89af-49f1-83e7-bcc31c3006cf"
-    const val COLIFORM_ID = "df3d1009-2112-4d95-a6f9-fdc4b5633ec9"
     const val MIN_CAMERA_MEGA_PIXELS = 5
     const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"
     const val DEGREES_90 = 90

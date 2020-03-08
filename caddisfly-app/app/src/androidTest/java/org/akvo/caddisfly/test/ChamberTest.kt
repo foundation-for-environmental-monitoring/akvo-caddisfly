@@ -236,6 +236,7 @@ class ChamberTest {
         }
         onView(withId(id.buttonAccept)).perform(click())
         mDevice.waitForIdle()
+        sleep(2000)
         assertNotNull(mDevice.findObject(By.text(resultString)))
         mDevice.pressBack()
         mDevice.pressBack()

@@ -189,7 +189,7 @@ class TestActivity : BaseActivity() {
      */
     private fun sendDummyResultForDebugging() {
         val resultIntent = Intent()
-        val results = SparseArray<String?>()
+        val results = SparseArray<String>()
         var maxDilution = testInfo!!.maxDilution
         if (maxDilution == -1) {
             maxDilution = 15
@@ -387,7 +387,7 @@ class TestActivity : BaseActivity() {
                                             permissions: Array<String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (permissionsDelegate.resultGranted(requestCode, grantResults)) {
+        if (permissionsDelegate.resultGranted(grantResults)) {
             FileHelper.migrateFolders()
             startTest()
         } else {

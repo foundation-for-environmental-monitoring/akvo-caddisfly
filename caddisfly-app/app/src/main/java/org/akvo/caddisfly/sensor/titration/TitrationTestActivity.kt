@@ -59,7 +59,7 @@ class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitRes
             testInfo!!.results[i].setResult(results[i].toDouble(), 0, 0)
         }
         val resultIntent = Intent()
-        val resultsValues = SparseArray<String?>()
+        val resultsValues = SparseArray<String>()
         for (i in testInfo!!.results.indices) {
             val result = testInfo!!.results[i]
             resultIntent.putExtra(result.name.replace(" ", "_")

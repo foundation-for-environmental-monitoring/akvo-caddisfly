@@ -105,11 +105,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                 finish()
                 return
             }
-            runTestFragment = if (testInfo!!.cameraAbove) {
-                ChamberBelowFragment.newInstance(testInfo)
-            } else {
-                ChamberAboveFragment.newInstance(testInfo)
-            }
+            runTestFragment = ChamberAboveFragment.newInstance(testInfo)
+
             if (intent.getBooleanExtra(ConstantKey.RUN_TEST, false)) {
                 start()
             } else {
@@ -506,7 +503,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
      */
     fun onClickAcceptResult(@Suppress("UNUSED_PARAMETER") view: View?) {
         val resultIntent = Intent()
-        val results = SparseArray<String?>()
+        val results = SparseArray<String>()
         for (i in testInfo!!.results.indices) {
             val result = testInfo!!.results[i]
             var testName = result.name.replace(" ", "_")

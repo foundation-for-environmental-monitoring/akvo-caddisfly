@@ -110,7 +110,7 @@ class MainActivity : BaseActivity() {
                                             permissions: Array<String>,
                                             grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (permissionsDelegate.resultGranted(requestCode, grantResults)) {
+        if (permissionsDelegate.resultGranted(grantResults)) {
             when (requestCode) {
                 STORAGE_PERMISSION_WATER -> if (runTest) {
                     startTest(TestSampleType.WATER)
