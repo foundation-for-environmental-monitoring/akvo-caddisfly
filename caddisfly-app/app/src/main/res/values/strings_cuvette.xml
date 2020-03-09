@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation, UnusedResources">
     <string name="app_slogan">Water Quality System</string>
     <string name="ok">OK</string>
     <string name="retry">Retry</string>
@@ -11,14 +11,12 @@
     <string name="version">Version</string>
     <string name="result">Result</string>
     <string name="language">Language</string>
-    <string name="notSupported">Not Supported</string>
     <string name="cameraBusy">Camera Busy</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="close">Close</string>
     <string name="selectTest">Select Test</string>
     <string name="save">Save</string>
-    <string name="pleaseWait">Please wait…</string>
     <string name="instructions">Instructions</string>
     <string name="analyze">Analyse</string>
     <!-- Tests -->
@@ -75,7 +73,6 @@
     <string name="errorTestInterrupted">Test was interrupted.</string>
     <string name="doNotMoveDeviceDuringTest">Do not move the phone during the test</string>
     <string name="errorTestFailed">Colour does not match any calibrated colours.</string>
-    <string name="chamberNotFound">Could not complete test.</string>
     <string name="checkChamberPlacement">Check that the chamber has been placed correctly.</string>
     <!-- Result Screen -->
     <string name="acceptResult">Accept Result</string>
@@ -95,7 +92,6 @@
     <string name="stop_test">Stop test</string>
 
     <!-- Messages -->
-    <string name="phoneDoesNotSupport">This feature is not supported by this device</string>
     <string name="cannotUseCamera">Can\'t use camera. Make sure flashlight is off and close any apps that may be using the camera</string>
     <string name="cameraNotAvailable">Camera not available</string>
     <string name="cameraRequired">A back facing camera is required for colorimetric analysis</string>

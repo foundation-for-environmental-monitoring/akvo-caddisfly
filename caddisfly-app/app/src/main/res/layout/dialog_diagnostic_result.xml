@@ -32,8 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:clickable="false"
             android:columnCount="2"
             android:focusable="false"
@@ -42,6 +42,7 @@
 
             <Button
                 android:id="@+id/buttonColorExtract"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:background="#000"
@@ -50,6 +51,7 @@
 
             <Button
                 android:id="@+id/buttonSwatchColor"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginStart="5dp"

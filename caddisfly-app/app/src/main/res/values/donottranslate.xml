@@ -11,8 +11,6 @@
         <item>hi</item>
     </string-array>
 
-    <string name="saveImages">Save images and data</string>
-
     <string name="number_1">1.</string>
     <string name="number_2">2.</string>
     <string name="number_3">3.</string>
@@ -21,7 +19,6 @@
     <string name="number_6">6.</string>
 
     <!--paths to assets-->
-    <string name="striptest_images">images/brand</string>
     <string name="instruction_images">images/instructions</string>
 
     <!--Keys-->
@@ -36,9 +33,7 @@
     <string name="hasCameraFlashKey">hasCameraFlash</string>
     <string name="calibrationDateKey">calibrationDateTime</string>
     <string name="calibrationExpiryDateKey">calibrationExpiryDate</string>
-    <string name="batchNumberKey">batchNumber</string>
     <string name="themeChangedKey">themeChanged</string>
-    <string name="saveImagesDataKey">saveImagesData</string>
     <string name="totalSuccessfulCalibrationsKey">totalSuccessfulCalibrations</string>
     <string name="totalFailedCalibrationsKey">totalFailedCalibrations</string>
     <string name="totalSuccessfulTestsKey">totalSuccessfulTests</string>
@@ -46,40 +41,25 @@
     <string name="refreshKey">refresh</string>
     <string name="testModeOnKey">testModeOn</string>
     <string name="dummyResultKey">dummyResults</string>
-    <string name="deviceIdKey">deviceId</string>
 
-    <string name="ledRgbKey">ledRgb</string>
     <string name="useExternalCameraKey">useExternalCamera</string>
-    <string name="useFlashModeKey">useFlashMode</string>
 
     <string name="ignoreTimeDelaysKey">ignoreTimeDelays</string>
     <string name="cameraMegaPixelsKey">cameraMegaPixels</string>
     <string name="showMinMegaPixelDialogKey">showMinMegaPixelDialog</string>
-    <string name="maxZoomKey">MaxZoomKey</string>
     <string name="cameraZoomPercentKey">cameraZoomPercentKey</string>
     <string name="cameraCenterOffsetKey">cameraCenterOffsetKey</string>
     <string name="cameraResolutionKey">cameraResolutionKey</string>
     <string name="cameraFocusKey">cameraFocusKey</string>
     <string name="nextUpdateCheckKey">nextUpdateCheck</string>
 
-    <string name="colif_volumeKey">colif_volume</string>
-    <string name="colif_brothMediaKey">colif_brothMedia</string>
-    <string name="colif_IntervalMinutesKey">colif_IntervalMinutes</string>
-    <string name="colif_NumberOfSamplesKey">colif_NumberOfSamples</string>
-    <string name="colif_emails">colif_emails</string>
-    <string name="turbiditySavePathKey">turbiditySavePath</string>
-    <string name="coliformResultSafeKey">coliformResultSafe</string>
-
     <!--Diagnostic-->
     <string name="diagnostics">Diagnostics</string>
     <string name="debuggingOn">Show debug info</string>
     <string name="sound">Sound</string>
-    <string name="diagnosticsUser">Diagnostics in User Mode Also</string>
     <string name="ignoreTimeDelays">Ignore time delays</string>
     <string name="debugging">Debugging</string>
-    <string name="download_experimental_tests">Download experimental tests</string>
     <string name="testModeOn">Demo / Test Mode</string>
-    <string name="maxZoom">Max Zoom</string>
     <string name="cameraPreview">Colorimeter camera preview</string>
     <string name="disable_diagnostics">Disable diagnostics</string>
 
@@ -98,9 +78,6 @@
     <string name="deleteConfirm">Selected items will be deleted</string>
     <string name="errorLoadingFile">Could not load file. Check file for errors.</string>
     <string name="fileSaved">File saved</string>
-    <string name="calibrationLoaded">%1$s loaded</string>
-
-    <string name="delete_error">Error on file delete</string>
 
     <!--Software Notices-->
     <string name="apache_software"><a href="https://source.android.com/setup/licenses">Android Open Source Project</a>&#160;&#160;&#8226;&#160;&#160;<a href="https://github.com/bjoernQ/unmock-plugin">Android Unmock Gradle Plugin</a>&#160;&#160;&#8226;&#160;&#160;<a href="https://github.com/joel-costigliola/assertj-core">AssertJ</a>&#160;&#160;&#8226;&#160;&#160;<a href="http://commons.apache.org/proper/commons-math/">Commons Math</a>&#160;&#160;&#8226;&#160;&#160;<a href="https://github.com/jjoe64/GraphView">GraphView</a>&#160;&#160;&#8226;&#160;&#160;<a href="https://github.com/google/gson">Gson</a>&#160;&#160;&#8226;&#160;&#160;<a href="https://github.com/JakeWharton/timber">Timber</a>&#160;&#160;&#8226;&#160;&#160;<a href="https://github.com/zxing/zxing">ZXing</a></string>
@@ -109,9 +86,5 @@
     <string name="cca_software"><a href="https://design.google.com/icons/">Material Icons</a></string>
     <string name="eclipse_software"><a href="https://github.com/junit-team/junit4">Junit 4</a></string>
     <string name="testing">Testing</string>
-    <string name="camera">Camera</string>
-
     <string name="waterCalibrate">Water - Calibrate</string>
-    <string name="soil_calibrate">Soil - Calibrate</string>
-    <string name="cameraFocusMode">Camera Focus Mode</string>
 </resources>

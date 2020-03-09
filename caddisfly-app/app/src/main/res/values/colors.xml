@@ -23,8 +23,6 @@
     <color name="accent">#2d2d2d</color>
     <color name="primary_background">#ccc</color>
     <color name="background">#fff</color>
-    <color name="button_main">#CDCDCD</color>
-    <color name="button_main_highlight">#848484</color>
     <color name="button_text">#e33b3b3b</color>
     <color name="button_text_soft">#e33b3b3b</color>
 

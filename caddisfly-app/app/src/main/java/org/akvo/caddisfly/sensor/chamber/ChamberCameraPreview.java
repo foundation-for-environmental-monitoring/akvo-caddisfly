@@ -73,7 +73,7 @@ public class ChamberCameraPreview extends SurfaceView implements SurfaceHolder.C
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
         } catch (IOException e) {
-            Timber.d("Error setting camera preview: " + e.getMessage());
+            Timber.d("Error setting camera preview: %s", e.getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ public class ChamberCameraPreview extends SurfaceView implements SurfaceHolder.C
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
         } catch (Exception e) {
-            Timber.d("Error starting camera preview: " + e.getMessage());
+            Timber.d("Error starting camera preview: %s", e.getMessage());
         }
     }
 

@@ -4,7 +4,6 @@
     <string name="delete">Delete</string>
     <string name="load">Load</string>
     <string name="swatches">Swatches</string>
-    <string name="calibrating">Calibrating</string>
     <string name="name">Name</string>
     <string name="deleted">Deleted</string>
     <string name="required">Required</string>
@@ -13,12 +12,8 @@
     <string name="done" tools:ignore="UnusedResources">Done</string>
     <string name="warning">Warning</string>
     <string name="runTest">Run Test</string>
-    <string name="stage_one"><b>Stage 1:</b></string>
-    <string name="stage_two"><b>Stage 2:</b></string>
     <string name="start">Start</string>
     <string name="general">General</string>
-    <string name="other">Other</string>
-    <string name="to_get_started">To get started, go to</string>
 
     <plurals name="dilutions">
         <item quantity="one">@string/noDilution</item>
@@ -26,44 +21,15 @@
         <item quantity="other">@string/timesDilution</item>
     </plurals>
 
-    <!--External-->
-    <string name="sensor">Sensor</string>
-    <string name="sensors">Sensors</string>
-
-    <!--Sensor Details Screen-->
-    <string name="deviceConnecting">Connecting to Device</string>
-
-    <!--EC Sensor Calibration-->
-    <string name="deviceConnectSensor">Connect sensor</string>
-    <string name="calibratePoint">Calibrate %.0f μS/cm</string>
-    <string name="calibrationSuccessful">Calibration Successful</string>
-    <string name="sensorCalibrated">EC Sensor has been calibrated</string>
-    <string name="celsius">°Celsius</string>
-    <string name="dipSensorInSample">Dip sensor in sample</string>
-
-
-    <string name="awaitingResult">Awaiting result</string>
-
     <string name="customTests">Custom tests</string>
-    <string name="deviceConnected">Device connected</string>
-    <string name="go">Go</string>
-    <string name="saving">Saving</string>
-    <string name="sensorDetails">Sensor Details</string>
-    <string name="verifySensorDetails">Verify sensor details</string>
-    <string name="enterAnIdForSensor">Enter an Id for this sensor</string>
-    <string name="ecSensorId">EC Sensor Id</string>
 
     <!--StripTest-->
-    <string name="brightness">Brightness</string>
     <string name="measure_instruction">Put strip on black area with colour patches to the left. Hold camera above colour card until measurement is complete.</string>
     <string name="imageQuality">Image quality</string>
-    <string name="shadows">Shadows</string>
     <string name="prepare_test">Prepare for test</string>
     <string name="taking_photo">Taking photo</string>
     <string name="waiting">Waiting</string>
-    <string name="waiting_for">Waiting for %s</string>
     <string name="success_quality_checks">Success! Quality check passed</string>
-    <string name="prepareForCalibration">Prepare for calibration</string>
     <string name="stripTest">Strip Test</string>
     <string name="no_result">No Result</string>
     <string name="just_a_moment">Just a moment…</string>
@@ -71,57 +37,20 @@
     <string name="seconds">Sec.</string>
     <string name="detecting_color_card">Looking for colour card</string>
     <string name="ready_for_photo">Ready for photo</string>
-    <string name="noData">No data</string>
-    <string name="error_calibrating">Calibration failed</string>
-    <string name="qualityCheckFailed">Quality check failed</string>
-    <string name="shadows_detected">Shadows/reflections detected</string>
-    <string name="better_light_required">Better light required</string>
     <string name="tilt_camera_in_direction">Tilt camera in direction of arrow</string>
     <string name="move_camera_closer">Move camera closer to the card</string>
     <string name="avoid_shadows_on_card">Please avoid shadows on the card</string>
-
-    <!--Sensor-->
-    <string name="incorrectDevice">Incorrect Device</string>
-    <string name="expectedDeviceNotFound">The expected sensor was not found.</string>
-    <string name="connectCorrectSensor"><Data><![CDATA[Connect the <b>%s</b> sensor.]]></Data></string>
-
-    <!--EC Sensor Calibration-->
-    <string name="incorrectCalibrationCanAffect">Incorrect calibration can affect the proper functioning of the sensor</string>
-    <string name="sensorNotFound">Sensor not found</string>
-    <string name="cleanTheEcSensor">Clean the EC Sensor properly</string>
-    <string name="getEcSolutionReady">Get ready the fluid with EC of %.0f μS/cm</string>
-    <string name="dipEcSensorInSolution">Dip EC Sensor in the fluid and press Go</string>
-    <string name="prepareSolutionsForCalibration">Prepare 6 solutions with these EC values</string>
-
-    <string name="view_results">View results</string>
-
-    <!--Manual-->
-    <string name="take_photo_meter_result">Take a photo of the meter screen displaying the measurement result</string>
-    <string name="enter_measured_value">Enter the measured value</string>
-    <string name="us_cm">μS/cm</string>
-    <string name="ms_cm">ms/cm</string>
-    <string name="select_unit">Select unit</string>
-    <string name="submitResult">Submit Result</string>
-    <string name="take_photo_compartments">Take a photo of the compartment bag</string>
 
     <!--Software notices-->
     <string name="apache_license_2">Apache License 2.0</string>
     <string name="mit_license">MIT License</string>
     <string name="gnu_license">GNU GPL v2</string>
-    <string name="cca_share_license">CC BY-NC-SA 4.0 – International</string>
     <string name="cca_license">CC BY 4.0 International</string>
     <string name="eclipse_public_license">Eclipse Public License 1.0</string>
-    <string name="experiment">Experiment</string>
     <string name="diagnostics_options">Diagnostic Options</string>
-    <string name="coliformCount">Coliform Count</string>
-    <string name="sendData">Send Data</string>
-    <string name="diagnostics_info">Device Info</string>
-    <string name="comments">Comments</string>
 
     <!--Update-->
-    <string name="update">Update</string>
     <string name="updateAvailable">New version available. Update to get the most out of your app</string>
-    <string name="remindLater">Remind later</string>
 
     <string name="graph">Graph</string>
 
@@ -132,13 +61,6 @@
     <string name="customDilution">Custom Dilution</string>
     <string name="enterDilutionFactor">Enter Dilution Factor</string>
     <string name="errorLoadingConfiguration">Could not load configuration information</string>
-    <string name="cameraAndLocationPermissions">Camera &amp; location permissions are required</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="senderEmailDetails">Email details</string>
-    <string name="invalidEmailAddress">Invalid email address</string>
-    <string name="useDevicesEmailDetails">Use devices email details</string>
     <string name="value_is_required">Value is required</string>
-    <string name="coliforms">Coliforms</string>
     <string name="enter_titration_results">Enter titration results</string>
 </resources>

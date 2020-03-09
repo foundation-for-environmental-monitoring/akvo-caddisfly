@@ -96,7 +96,6 @@ object TestHelper {
         addString(TestConstant.FLUORIDE, "Water - Fluoride", res.getString(string.testName))
         addString("chlorine", "Water - Free Chlorine", res.getString(string.freeChlorine))
         addString("survey", "Survey", res.getString(string.survey))
-        addString("sensors", "Sensors", res.getString(string.sensors))
         addString("electricalConductivity", "Water - Electrical Conductivity", res.getString(string.electricalConductivity))
         addString("next", "Next", res.getString(string.next))
         addString(TestConstant.GO_TO_TEST, "Launch", res.getString(string.launch))

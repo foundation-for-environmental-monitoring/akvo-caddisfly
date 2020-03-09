@@ -31,11 +31,6 @@
             android:summary="Warning: Do not turn this on for normal usage of the app. For app demo or testing only."
             android:title="@string/testModeOn"
             app:iconSpaceReserved="false" />
-        <CheckBoxPreference
-            android:dependency="@string/testModeOnKey"
-            android:key="@string/coliformResultSafeKey"
-            android:title="Force coliform result as safe"
-            app:iconSpaceReserved="false" />
         <Preference
             android:key="nextUpdateCheck"
             android:title="Next update check"

@@ -22,7 +22,6 @@ package org.akvo.caddisfly.preference
 
 import android.hardware.Camera
 import android.util.Pair
-import android.util.Patterns
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
 import org.akvo.caddisfly.common.ChamberTestConfig
@@ -134,25 +133,6 @@ object AppPreferences {
 //        return (isDiagnosticMode
 //                && PreferencesUtil.getBoolean(app, R.string.maxZoomKey, false))
 //    }
-
-    @Suppress("unused")
-    @JvmStatic
-    val notificationEmails: String
-        get() {
-            val emails = PreferencesUtil.getString(app?.applicationContext!!, R.string.colif_emails, "")
-            val emailArray = emails?.split("\n")!!.toTypedArray()
-            val emailList = StringBuilder()
-            for (email in emailArray) {
-                val email1 = email.trim { it <= ' ' }
-                if (Patterns.EMAIL_ADDRESS.matcher(email1).matches()) {
-                    if (emailList.toString().isNotEmpty()) {
-                        emailList.append(",")
-                    }
-                    emailList.append(email1)
-                }
-            }
-            return emailList.toString()
-        }
 
     @JvmStatic
     val cameraZoom: Int

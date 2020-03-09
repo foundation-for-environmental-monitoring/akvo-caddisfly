@@ -11,13 +11,11 @@
     <string name="version">संस्करण</string>
     <string name="result">परिणाम</string>
     <string name="language">भाषा</string>
-    <string name="notSupported">समर्थित नहीं</string>
     <string name="cameraBusy">कैमरा व्यस्त</string>
     <string name="next">अगले</string>
     <string name="close">बंद</string>
     <string name="selectTest">जाँच का चयन करें</string>
     <string name="save">संरक्षित करें</string>
-    <string name="pleaseWait">कृपया प्रतीक्षा करें…</string>
     <string name="instructions">निर्देश</string>
     <string name="analyze">विश्लेषण</string>
     <!-- Tests -->
@@ -69,7 +67,6 @@
     <string name="errorTestInterrupted">जाँच बाधित हुई ।</string>
     <string name="doNotMoveDeviceDuringTest">जाँच के दौरान फोन को हिलाए मत</string>
     <string name="errorTestFailed">रंग किसी भी कैलिब्रेटेड रंगों से मेल नहीं खाता है।</string>
-    <string name="chamberNotFound">जाँच पूरा नहीं कर सका।</string>
     <string name="checkChamberPlacement">जांचें कि कक्ष सही ढंग से रखा गया है।</string>
     <string name="acceptResult">परिणाम स्वीकार करें</string>
     <!-- Permission -->
@@ -82,7 +79,6 @@
     <string name="camera_not_good">कैमरा न्यूनतम आवश्यकताओं को पूरा नहीं करता है। \n\n सर्वोत्तम परिणामों के लिए, कम से कम 8 मेगापिक्सल का कैमरा आवश्यक है।</string>
     <string name="continue_anyway">फिर भी जारी रखें</string>
     <!-- Messages -->
-    <string name="phoneDoesNotSupport">यह सुविधा इस डिवाइस द्वारा समर्थित नहीं है</string>
     <string name="cannotUseCamera">कैमरा का उपयोग नहीं कर सकते. सुनिश्चित करें कि फ्लैशलाइट बंद है और कैमरे का उपयोग कर रहे किसी भी ऐप को बंद कर दें</string>
     <string name="cameraNotAvailable">कैमरा उपलब्ध नहीं है</string>
     <string name="cameraRequired">कलरिमेट्रिक विश्लेषण के लिए एक बैक फेस कैमरा आवश्यक है</string>
