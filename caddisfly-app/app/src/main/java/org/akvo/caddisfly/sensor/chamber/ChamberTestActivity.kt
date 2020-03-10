@@ -52,6 +52,7 @@ import org.akvo.caddisfly.diagnostic.DiagnosticSwatchActivity
 import org.akvo.caddisfly.entity.Calibration
 import org.akvo.caddisfly.helper.CameraHelper
 import org.akvo.caddisfly.helper.FileHelper
+import org.akvo.caddisfly.helper.FileType
 import org.akvo.caddisfly.helper.SoundUtil.playShortResource
 import org.akvo.caddisfly.helper.SwatchHelper.analyzeColor
 import org.akvo.caddisfly.helper.SwatchHelper.getAverageColor
@@ -310,7 +311,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
             val builder = AlertDialog.Builder(context)
             builder.setTitle(R.string.loadCalibration)
             val arrayAdapter = ArrayAdapter<String>(context, R.layout.row_text)
-            val path = FileHelper.getFilesDir(FileHelper.FileType.CALIBRATION, testInfo!!.uuid)
+            val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo!!.uuid)
             var listFilesTemp: Array<File>? = null
             if (path.exists() && path.isDirectory) {
                 listFilesTemp = path.listFiles()
@@ -428,11 +429,11 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                     calibration.image = UUID.randomUUID().toString() + ".png"
                     // Save photo taken during the test
                     FileUtil.writeBitmapToExternalStorage(resultDetails[resultDetails.size - 1].bitmap,
-                            FileHelper.FileType.DIAGNOSTIC_IMAGE, calibration.image)
+                            FileType.DIAGNOSTIC_IMAGE, calibration.image)
                     calibration.croppedImage = UUID.randomUUID().toString() + ".png"
                     // Save photo taken during the test
                     FileUtil.writeBitmapToExternalStorage(resultDetails[resultDetails.size - 1].croppedBitmap,
-                            FileHelper.FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage)
+                            FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage)
                 }
                 dao!!.insert(calibration)
                 CalibrationFile.saveCalibratedData(this, testInfo!!, calibration, color)

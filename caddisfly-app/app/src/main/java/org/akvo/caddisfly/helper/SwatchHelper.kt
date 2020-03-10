@@ -188,7 +188,7 @@ object SwatchHelper {
     @Throws(IOException::class)
     fun loadCalibrationFromFile(testInfo: TestInfo, fileName: String): ArrayList<Calibration> {
         val calibrations: ArrayList<Calibration> = ArrayList()
-        val path = FileHelper.getFilesDir(FileHelper.FileType.CALIBRATION, testInfo.uuid)
+        val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo.uuid)
         val dao = db!!.calibrationDao()
         val calibrationDetails = FileUtil.loadFromFile(path, fileName)
         if (calibrationDetails != null) {

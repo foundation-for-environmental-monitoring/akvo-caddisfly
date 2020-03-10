@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
@@ -43,9 +42,9 @@ public class StripMeasureFragment extends Fragment {
     private static final long INITIAL_DELAY_MILLIS = 200;
     private static StriptestHandler mStriptestHandler;
     private ProgressBar progressBar;
-    private TextView textBottom;
     private TextSwitcher textSwitcher;
     private PercentageMeterView exposureView;
+    private StriptestHandler.State currentState;
 
     @NonNull
     public static StripMeasureFragment newInstance(StriptestHandler striptestHandler) {
@@ -66,7 +65,7 @@ public class StripMeasureFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         progressBar = view.findViewById(R.id.progressBar);
@@ -75,7 +74,7 @@ public class StripMeasureFragment extends Fragment {
             progressBar.setProgress(0);
         }
 
-        textBottom = view.findViewById(R.id.text_bottom);
+        TextView textBottom = view.findViewById(R.id.text_bottom);
 
         textSwitcher = view.findViewById(R.id.textSwitcher);
 
@@ -106,6 +105,10 @@ public class StripMeasureFragment extends Fragment {
         }
 
         mStriptestHandler.setTextSwitcher(textSwitcher);
+
+        if (currentState == StriptestHandler.State.MEASURE) {
+            textBottom.setText(R.string.measure_instruction);
+        }
     }
 
     @Override
@@ -116,21 +119,6 @@ public class StripMeasureFragment extends Fragment {
         MessageUtils.sendMessage(mStriptestHandler, StriptestHandler.START_PREVIEW_MESSAGE, 0);
     }
 
-    public void showError(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    // TODO figure out messages
-//    void showMessage(@StringRes int id) {
-//        showMessage(getString(id));
-//    }
-
-//    void showMessage(final String message) {
-//        if (!((TextView) textSwitcher.getCurrentView()).getText().equals(message)) {
-//            textSwitcher.setText(message);
-//        }
-//    }
-
     void showQuality(int value) {
 
         if (exposureView != null) {
@@ -138,17 +126,11 @@ public class StripMeasureFragment extends Fragment {
         }
     }
 
-    public void clearProgress() {
-        if (progressBar != null) {
-            progressBar.setProgress(0);
-        }
+    void setState(StriptestHandler.State state) {
+        currentState = state;
     }
 
-    public void setMeasureText() {
-        textBottom.setText(R.string.measure_instruction);
-    }
-
-    public void setProgress(int progress) {
+    void setProgress(int progress) {
         if (progressBar != null) {
             progressBar.setProgress(progress);
         }

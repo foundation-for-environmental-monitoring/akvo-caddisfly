@@ -225,7 +225,7 @@ public final class BitMatrix implements Cloneable {
      * @return The resulting BitArray - this reference should always be used even when passing
      * your own row
      */
-    private BitArray getRow(int y, BitArray row) {
+    public BitArray getRow(int y, BitArray row) {
         if (row == null || row.getSize() < width) {
             row = new BitArray(width);
         } else {
@@ -242,7 +242,7 @@ public final class BitMatrix implements Cloneable {
      * @param y   row to set
      * @param row {@link BitArray} to copy from
      */
-    private void setRow(int y, BitArray row) {
+    public void setRow(int y, BitArray row) {
         System.arraycopy(row.getBitArray(), 0, bits, y * rowSize, rowSize);
     }
 
@@ -381,7 +381,7 @@ public final class BitMatrix implements Cloneable {
     /**
      * @return The row size of the matrix
      */
-    private int getRowSize() {
+    public int getRowSize() {
         return rowSize;
     }
 
@@ -418,9 +418,7 @@ public final class BitMatrix implements Cloneable {
      * @param unsetString representation of an unset bit
      * @return string representation of entire matrix utilizing given strings
      */
-    @SuppressWarnings("SameParameterValue")
-    private String toString(String setString, String unsetString) {
-        //noinspection deprecation
+    public String toString(String setString, String unsetString) {
         return toString(setString, unsetString, "\n");
     }
 

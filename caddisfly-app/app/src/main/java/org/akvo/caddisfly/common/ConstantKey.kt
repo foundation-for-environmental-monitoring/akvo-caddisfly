@@ -9,6 +9,7 @@ object ConstantKey {
     const val TEST_INFO = NAMESPACE_PREFIX + "testInfo"
     const val RUN_TEST = NAMESPACE_PREFIX + "runTest"
     const val IS_INTERNAL = NAMESPACE_PREFIX + "internal"
+    const val START_MEASURE = "start_measure"
     const val TEST_STAGE = NAMESPACE_PREFIX + "testStage"
     const val TYPE = NAMESPACE_PREFIX + "type"
     const val SAMPLE_TYPE = NAMESPACE_PREFIX + "sampleType"

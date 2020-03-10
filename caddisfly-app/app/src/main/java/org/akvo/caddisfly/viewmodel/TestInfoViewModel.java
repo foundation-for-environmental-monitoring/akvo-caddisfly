@@ -21,8 +21,6 @@ import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -83,28 +81,41 @@ public class TestInfoViewModel extends AndroidViewModel {
 
         for (int i = 0; i < instruction.section.size(); i++) {
             String text = instruction.section.get(i);
-            if (text.contains("image:")) {
+            Matcher tag = Pattern.compile("~.*?~").matcher(text);
+            if (tag.find()) {
+                return;
+            } else if (text.contains("image:")) {
                 insertImage(linearLayout, context, size, displayMetrics, i, text);
             } else {
 
                 RowView rowView = new RowView(context);
 
+                Matcher m = Pattern.compile("^(\\d*?[a-zA-Z]{1,3}\\.\\s*)(.*)").matcher(text);
                 Matcher m1 = Pattern.compile("^(\\d+?\\.\\s*)(.*)").matcher(text);
-                if (m1.find()) {
+                Matcher m2 = Pattern.compile("^(\\.\\s*)(.*)").matcher(text);
+
+                if (m.find()) {
+                    rowView.setNumber(m.group(1).trim());
+                    text = m.group(2).trim();
+                } else if (m1.find()) {
                     rowView.setNumber(m1.group(1).trim());
                     text = m1.group(2).trim();
+                } else if (m2.find()) {
+                    rowView.setNumber("   ");
+                    text = m2.group(2).trim();
                 }
 
                 String[] sentences = (text + ". ").split("\\.\\s+");
 
+                LinearLayout labelView = new LinearLayout(context);
                 for (int j = 0; j < sentences.length; j++) {
                     if (j > 0) {
                         rowView.append(new SpannableString(" "));
                     }
                     rowView.append(StringUtil.toInstruction((AppCompatActivity) context,
                             testInfo, sentences[j].trim()));
-
-                    if (StringUtil.getStringResourceByName(context, sentences[j]).toString().contains("[/a]")) {
+                    String sentence = StringUtil.getStringResourceByName(context, sentences[j]).toString();
+                    if (sentence.contains("[/a]")) {
                         rowView.enableLinks();
                     }
                 }
@@ -114,9 +125,7 @@ public class TestInfoViewModel extends AndroidViewModel {
 
                 linearLayout.addView(rowView);
 
-                SpannableStringBuilder builder = new SpannableStringBuilder();
-                Spanned spanned2 = StringUtil.getStringResourceByName(context, text);
-                builder.append(spanned2);
+                linearLayout.addView(labelView);
             }
         }
     }

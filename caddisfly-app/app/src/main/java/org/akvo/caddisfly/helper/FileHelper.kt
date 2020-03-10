@@ -27,7 +27,15 @@ import org.akvo.caddisfly.util.FileUtil.getFilesStorageDir
 import java.io.File
 import java.io.IOException
 
+/**
+ * The different types of files.
+ */
+enum class FileType {
+    CALIBRATION, CUSTOM_CONFIG, EXP_CONFIG, CARD, TEST_IMAGE, DIAGNOSTIC_IMAGE, RESULT_IMAGE, TEMP_IMAGE
+}
+
 object FileHelper {
+
     /**
      * The user created configuration file name.
      */
@@ -117,12 +125,5 @@ object FileHelper {
                 }
             }
         }
-    }
-
-    /**
-     * The different types of files.
-     */
-    enum class FileType {
-        CALIBRATION, CUSTOM_CONFIG, EXP_CONFIG, CARD, TEST_IMAGE, DIAGNOSTIC_IMAGE, RESULT_IMAGE, TEMP_IMAGE
     }
 }

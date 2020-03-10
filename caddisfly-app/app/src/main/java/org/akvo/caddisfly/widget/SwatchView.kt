@@ -97,7 +97,7 @@ class SwatchView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                         lab[0] = patchColorValues[0].toFloat()
                         lab[1] = patchColorValues[1].toFloat()
                         lab[2] = patchColorValues[2].toFloat()
-                        rgbCols[i] = ColorUtils.XYZtoRGBint(ColorUtils.Lab2XYZ(lab))
+                        rgbCols[i] = ColorUtils.xyzToRgbInt(ColorUtils.Lab2XYZ(lab))
                         val color = Color.rgb(rgbCols[i][0], rgbCols[i][1], rgbCols[i][2])
                         colors[i].rgbInt = color
                     }

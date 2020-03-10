@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) Stichting Akvo (Akvo Foundation)
   ~
   ~ This file is part of Akvo Caddisfly.
@@ -24,28 +23,85 @@
     <data>
 
         <variable
-            name="testInfoViewModel"
-            type="org.akvo.caddisfly.viewmodel.TestInfoViewModel" />
-
-        <variable
             name="instruction"
             type="org.akvo.caddisfly.model.Instruction" />
 
     </data>
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            style="?android:attr/textAppearanceLarge"
+            android:id="@+id/layout_results"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:textIsSelectable="true"
-            app:content="@{instruction}">
+            android:visibility="invisible" />
 
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/buttonsLayout"
+            android:layout_below="@id/layout_results">
+
+            <LinearLayout
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:textIsSelectable="true"
+                app:content="@{instruction}" />
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/buttonSubmit"
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:enabled="true"
+                android:onClick="onSubmitClick"
+                android:text="@string/submitResult"
+                android:theme="?primaryButtonStyle"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonClose"
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:enabled="true"
+                android:text="@string/close"
+                android:theme="?primaryButtonStyle"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/buttonStart"
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="15dp"
+                android:enabled="true"
+                android:onClick="onStartTest"
+                android:text="@string/start"
+                android:theme="?primaryButtonStyle"
+                android:visibility="gone" />
         </LinearLayout>
-    </ScrollView>
+    </RelativeLayout>
 </layout>

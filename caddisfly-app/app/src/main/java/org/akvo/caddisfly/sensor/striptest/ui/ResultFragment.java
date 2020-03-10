@@ -20,6 +20,7 @@
 package org.akvo.caddisfly.sensor.striptest.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,36 +28,43 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.R;
-import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.SensorConstants;
+import org.akvo.caddisfly.helper.FileType;
+import org.akvo.caddisfly.helper.TestConfigHelper;
 import org.akvo.caddisfly.model.ColorItem;
 import org.akvo.caddisfly.model.GroupType;
 import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
+import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.striptest.models.DecodeData;
 import org.akvo.caddisfly.sensor.striptest.models.PatchResult;
 import org.akvo.caddisfly.sensor.striptest.utils.ColorUtils;
 import org.akvo.caddisfly.sensor.striptest.utils.Constants;
 import org.akvo.caddisfly.sensor.striptest.utils.ResultUtils;
-import org.akvo.caddisfly.ui.BaseActivity;
+import org.akvo.caddisfly.ui.BaseFragment;
+import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.MathUtil;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static org.akvo.caddisfly.sensor.striptest.utils.BitmapUtils.concatTwoBitmaps;
-import static org.akvo.caddisfly.sensor.striptest.utils.BitmapUtils.createErrorImage;
 import static org.akvo.caddisfly.sensor.striptest.utils.BitmapUtils.createResultImageGroup;
 import static org.akvo.caddisfly.sensor.striptest.utils.BitmapUtils.createResultImageSingle;
 import static org.akvo.caddisfly.sensor.striptest.utils.BitmapUtils.createValueBitmap;
@@ -67,79 +75,95 @@ import static org.akvo.caddisfly.sensor.striptest.utils.ResultUtils.roundSignifi
 /**
  * Activity that displays the results.
  */
-public class ResultActivity extends BaseActivity {
+public class ResultFragment extends BaseFragment {
     private static final int IMG_WIDTH = 500;
+    private static final String ARG_TEST_INFO = "test_info";
+    private static final String ARG_RESULT_ID = "resultId";
     private static DecodeData mDecodeData;
     private final SparseArray<String> resultStringValues = new SparseArray<>();
     private final SparseArray<String> brackets = new SparseArray<>();
-    private TestInfo testInfo;
     private Button buttonSave;
     private Bitmap totalImage;
-    private LinearLayout layout;
+    private String totalImageUrl;
+    private LinearLayout resultLayout;
+    private TestInfo testInfo;
 
-    public static void setDecodeData(DecodeData decodeData) {
-        mDecodeData = decodeData;
+
+    public static ResultFragment newInstance(TestInfo testInfo, int resultId) {
+        ResultFragment fragment = new ResultFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_TEST_INFO, testInfo);
+        args.putInt(ARG_RESULT_ID, resultId);
+        fragment.setArguments(args);
+
+        return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_strip_result);
-        setTitle(R.string.result);
+    void setDecodeData(DecodeData decodeData) {
+        mDecodeData = decodeData;
 
-        buttonSave = findViewById(R.id.button_save);
-        buttonSave.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            for (int i = 0; i < testInfo.getResults().size(); i++) {
-                Result result = testInfo.getResults().get(i);
-                intent.putExtra(result.getName().replace(" ", "_")
-                        + testInfo.getResultSuffix(), result.getResult());
+        if (resultLayout != null) {
+            resultLayout.removeAllViews();
+        }
 
-                intent.putExtra(result.getName().replace(" ", "_")
-                        + "_" + SensorConstants.DILUTION
-                        + testInfo.getResultSuffix(), testInfo.getDilution());
-
-                intent.putExtra(
-                        result.getName().replace(" ", "_")
-                                + "_" + SensorConstants.UNIT + testInfo.getResultSuffix(),
-                        testInfo.getResults().get(0).getUnit());
-
-                if (i == 0) {
-                    intent.putExtra(SensorConstants.VALUE, result.getResult());
+        if (getArguments() != null) {
+            testInfo = getArguments().getParcelable(ARG_TEST_INFO);
+            if (testInfo != null) {
+                List<PatchResult> patchResultList = computeResults(testInfo);
+                if (resultLayout != null) {
+                    showResults(patchResultList, testInfo);
                 }
             }
-
-            setResult(RESULT_OK, intent);
-            finish();
-        });
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
     }
 
+    @Nullable
     @Override
-    public void onResume() {
-        super.onResume();
-        layout = findViewById(R.id.layout_results);
-        layout.removeAllViews();
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
+        View rootView = inflater.inflate(R.layout.fragment_strip_result, container, false);
+        resultLayout = rootView.findViewById(R.id.layout_results);
 
-        List<PatchResult> patchResultList = computeResults(testInfo);
-        showResults(patchResultList, testInfo);
+        buttonSave = rootView.findViewById(R.id.buttonSubmitResult);
+        buttonSave.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            String path;
+
+            if (totalImage != null) {
+
+                // store image on sd card
+                path = FileUtil.writeBitmapToExternalStorage(totalImage,
+                        FileType.RESULT_IMAGE, totalImageUrl);
+
+                intent.putExtra(SensorConstants.IMAGE, path);
+
+                if (path.length() == 0) {
+                    totalImageUrl = "";
+                }
+            } else {
+                totalImageUrl = "";
+            }
+
+            JSONObject resultJsonObj = TestConfigHelper.getJsonResult(testInfo,
+                    resultStringValues, brackets, -1, totalImageUrl);
+
+            intent.putExtra(SensorConstants.RESPONSE, resultJsonObj.toString());
+
+            Objects.requireNonNull(getActivity()).setResult(Activity.RESULT_OK, intent);
+
+            getActivity().finish();
+        });
+
+        return rootView;
     }
 
     private List<PatchResult> computeResults(TestInfo testInfo) {
-//        totalImageUrl = UUID.randomUUID().toString() + ".png";
+        totalImageUrl = UUID.randomUUID().toString() + ".png";
 
+        // TODO: check null mDecodeData here
         // get the images for the patches
-        Map<Integer, float[][][]> patchImageMap = mDecodeData.getStripImageMap();
+        SparseArray<float[][][]> patchImageMap = mDecodeData.getStripImageMap();
 
         // todo check order of patches
         // for display purposes sort the patches by physical position on the strip
@@ -155,25 +179,34 @@ public class ResultActivity extends BaseActivity {
             int delay = patch.getTimeDelay();
 
             // check if we have the corresponding image
-            if (!patchImageMap.containsKey(delay)) {
+            if (patchImageMap.indexOfKey(delay) < 0) {
                 Timber.d("patch not found!");
                 patchResult.setMeasured(false);
-                return null;
+                continue;
+//                return null;
             }
 
             float[][][] img = patchImageMap.get(delay);
             // check if the image is not null
             if (img == null) {
                 patchResult.setMeasured(false);
-                return null;
+                continue;
+//                return null;
             }
 
-            patchResult.setImage(img);
-            float[] xyz = getPatchColour(patchImageMap.get(delay), patch, testInfo);
-            float[] lab = ColorUtils.XYZtoLAB(xyz);
-            patchResult.setXyz(xyz);
-            patchResult.setLab(lab);
-            patchResult.setPatch(patch);
+            try {
+                patchResult.setImage(img);
+                float[] xyz = getPatchColour(patchImageMap.get(delay), patch, testInfo);
+                float[] lab = ColorUtils.XYZtoLAB(xyz);
+                patchResult.setXyz(xyz);
+                patchResult.setLab(lab);
+                patchResult.setPatch(patch);
+            } catch (Exception e) {
+                // failed extracting color from patch. Strip invalid or not place correctly
+                Timber.e(e);
+                patchResult.setMeasured(false);
+                continue;
+            }
 
             // the patches are sorted by position here
             patchResultList.add(patchResult);
@@ -191,17 +224,19 @@ public class ResultActivity extends BaseActivity {
             value = result[1];
             bracket = createBracket(result[2], result[3]);
 
-            // apply formula when present
-            value = applyFormula(value, patchResultList.get(0));
+            if (patchResultList.size() > 0) {
+                // apply formula when present
+                value = applyFormula(value, patchResultList.get(0));
 
-            patchResultList.get(0).setValue(value);
-            patchResultList.get(0).setIndex(index);
-            patchResultList.get(0).setBracket(bracket);
+                patchResultList.get(0).setValue(value);
+                patchResultList.get(0).setIndex(index);
+                patchResultList.get(0).setBracket(bracket);
 
-            resultStringValues.put(patchResultList.get(0).getId(),
-                    Float.isNaN(value) ? ""
-                            : String.valueOf(roundSignificant(value)));
-            brackets.put(patchResultList.get(0).getId(), bracket);
+                resultStringValues.put(patchResultList.get(0).getId(),
+                        Float.isNaN(value) ? ""
+                                : String.valueOf(roundSignificant(value)));
+                brackets.put(patchResultList.get(0).getId(), bracket);
+            }
         } else {
             for (PatchResult patchResult : patchResultList) {
                 // get colours from strip json description for this patch
@@ -245,10 +280,9 @@ public class ResultActivity extends BaseActivity {
 
     private void createView(TestInfo testInfo, List<PatchResult> patchResultList) {
         // create view in case the strip was not found
-        if (patchResultList == null) {
-            String patchDescription = "Strip not detected";
-            Bitmap resultImage = createErrorImage();
-            inflateView(patchDescription, "", resultImage);
+        if (patchResultList == null || patchResultList.size() == 0) {
+            String patchDescription = testInfo.getName();
+            inflateView(patchDescription, "", null);
         }
         // else create view in case the strip is of type GROUP
         else if (testInfo.getGroupingType() == GroupType.GROUP) {
@@ -260,13 +294,19 @@ public class ResultActivity extends BaseActivity {
 
             String patchDescription = patchResult.getPatch().getName();
             String unit = patchResult.getPatch().getUnit();
-            String valueString = createValueUnitString(patchResult.getValue(), unit);
+            String valueString = createValueUnitString(patchResult.getValue(), unit, getString(R.string.no_result));
+
+            if (AppPreferences.isTestMode() && patchResultList.size() == 0) {
+                patchDescription = testInfo.getResults().get(0).getName();
+                unit = testInfo.getResults().get(0).getUnit();
+                valueString = createValueUnitString(0, unit, getString(R.string.no_result));
+            }
 
             // create image to display on screen
             Bitmap resultImage = createResultImageGroup(patchResultList);
             inflateView(patchDescription, valueString, resultImage);
 
-            Bitmap valueImage = createValueBitmap(patchResult);
+            Bitmap valueImage = createValueBitmap(patchResult, getString(R.string.no_result));
             totalImage = concatTwoBitmaps(valueImage, resultImage);
         } else {
             // create view in case the strip is of type INDIVIDUAL
@@ -274,26 +314,34 @@ public class ResultActivity extends BaseActivity {
             // handle any calculated result to be displayed
             displayCalculatedResults(testInfo, patchResultList);
 
+            if (AppPreferences.isTestMode() && patchResultList.size() == 0) {
+                String patchDescription = testInfo.getResults().get(0).getName();
+                String unit = testInfo.getResults().get(0).getUnit();
+                String valueString = createValueUnitString(0, unit, getString(R.string.no_result));
+                inflateView(patchDescription, valueString, null);
+            }
+
             for (PatchResult patchResult : patchResultList) {
                 // create strings for description, unit, and value
                 String patchDescription = patchResult.getPatch().getName();
                 String unit = patchResult.getPatch().getUnit();
-                String valueString = createValueUnitString(patchResult.getValue(), unit);
+                String valueString = createValueUnitString(patchResult.getValue(), unit, getString(R.string.no_result));
 
                 // create image to display on screen
                 Bitmap resultImage = createResultImageSingle(patchResult, testInfo);
                 inflateView(patchDescription, valueString, resultImage);
 
-                Bitmap valueImage = createValueBitmap(patchResult);
+                Bitmap valueImage = createValueBitmap(patchResult, getString(R.string.no_result));
                 resultImage = concatTwoBitmaps(valueImage, resultImage);
                 totalImage = concatTwoBitmaps(totalImage, resultImage);
             }
         }
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint({"InflateParams"})
     private void inflateView(String patchDescription, String valueString, Bitmap resultImage) {
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) Objects.requireNonNull(
+                getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout itemResult;
         if (inflater != null) {
             itemResult = (LinearLayout) inflater.inflate(R.layout.item_result, null, false);
@@ -304,8 +352,14 @@ public class ResultActivity extends BaseActivity {
             imageResult.setImageBitmap(resultImage);
 
             TextView textResult = itemResult.findViewById(R.id.text_result);
-            textResult.setText(valueString);
-            layout.addView(itemResult);
+            if (valueString.isEmpty()) {
+                TextView text_error = itemResult.findViewById(R.id.text_error);
+                text_error.setVisibility(View.VISIBLE);
+                textResult.setVisibility(View.GONE);
+            } else {
+                textResult.setText(valueString);
+            }
+            resultLayout.addView(itemResult);
         }
     }
 
@@ -387,14 +441,14 @@ public class ResultActivity extends BaseActivity {
                                 displayResult.getFormula(), results));
                     } catch (Exception e) {
                         inflateView(patchDescription, createValueUnitString(
-                                -1, unit), null);
+                                -1, unit, getString(R.string.no_result)), null);
                         return;
                     }
 
                     resultStringValues.put(displayResult.getId(), String.valueOf(calculatedResult));
 
                     inflateView(patchDescription, createValueUnitString(
-                            (float) calculatedResult, unit), null);
+                            (float) calculatedResult, unit, getString(R.string.no_result)), null);
                 }
             }
         }

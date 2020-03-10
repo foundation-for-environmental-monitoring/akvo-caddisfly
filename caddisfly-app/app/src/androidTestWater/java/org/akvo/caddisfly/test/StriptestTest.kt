@@ -8,10 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
-import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
-import junit.framework.TestCase.assertNotNull
-
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.ui.MainActivity
@@ -22,9 +19,12 @@ import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.mCurrentLanguage
+import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
 import org.akvo.caddisfly.util.TestUtil.sleep
+import org.akvo.caddisfly.util.clickStartButton
 import org.akvo.caddisfly.util.mDevice
+import org.hamcrest.Matchers
 import org.junit.*
 import org.junit.runner.RunWith
 
@@ -63,17 +63,25 @@ class StriptestTest {
         sleep(1000)
         onView(withText("Prepare for test")).perform(click())
         sleep(9000)
-        onView(withText(string.start)).perform(click())
+
+        for (i in 0..16) {
+            try {
+                TestUtil.nextPage()
+            } catch (e: Exception) {
+                sleep(200)
+                break
+            }
+        }
+
+        clickStartButton()
         sleep(5000)
         onView(withText(string.result)).check(matches(isDisplayed()))
         onView(withText("Arsenic")).check(matches(isDisplayed()))
         onView(withText(string.no_result)).check(matches(isDisplayed()))
         onView(withId(id.image_result)).check(matches(isDisplayed()))
-        onView(withText(string.save)).check(matches(isDisplayed()))
-        onView(withText(string.save)).perform(click())
 
-//        assertNotNull(mDevice.findObject(By.text("Result: ")));
-//        assertNotNull(mDevice.findObject(By.text("20")));
+        onView(Matchers.allOf(withId(id.buttonSubmitResult), withText(string.submitResult),
+                isDisplayed())).perform(click())
     }
 
     private fun testArsenic2() {
@@ -84,16 +92,28 @@ class StriptestTest {
         sleep(1000)
         onView(withText("Prepare for test")).perform(click())
         sleep(9000)
-        onView(withText("Start")).perform(click())
+
+        for (i in 0..16) {
+            try {
+                TestUtil.nextPage()
+            } catch (e: Exception) {
+                sleep(200)
+                break
+            }
+        }
+
+        clickStartButton()
         sleep(5000)
         onView(withText(string.result)).check(matches(isDisplayed()))
         onView(withText("Arsenic")).check(matches(isDisplayed()))
         onView(withText("No Result")).check(matches(isDisplayed()))
         onView(withId(id.image_result)).check(matches(isDisplayed()))
-        onView(withText(string.save)).check(matches(isDisplayed()))
-        onView(withText(string.save)).perform(click())
-        assertNotNull(mDevice.findObject(By.text("Unit: ")))
-        assertNotNull(mDevice.findObject(By.text("ug/l")))
+
+        onView(Matchers.allOf(withId(id.buttonSubmitResult), withText(string.submitResult),
+                isDisplayed())).perform(click())
+
+//        assertNotNull(mDevice.findObject(By.text("Unit: ")))
+//        assertNotNull(mDevice.findObject(By.text("ug/l")))
     }
 
     companion object {

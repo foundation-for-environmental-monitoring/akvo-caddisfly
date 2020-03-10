@@ -16,8 +16,6 @@
 
 package org.akvo.caddisfly.sensor.striptest.qrdetector;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -104,17 +102,17 @@ public class FinderPatternFinder {
     }
 
     /* Find finder patterns
-    * The image we have is higher than it is wide, and contains the calibration card rotated:
-    * ----------
-    *|o        o|
-    *|          |
-    *|          |
-    *|          |
-    *|          |
-    *|          |
-    *|o________o|
-    * It contains 4 finder patterns
-    */
+     * The image we have is higher than it is wide, and contains the calibration card rotated:
+     * ----------
+     *|o        o|
+     *|          |
+     *|          |
+     *|          |
+     *|          |
+     *|          |
+     *|o________o|
+     * It contains 4 finder patterns
+     */
     public final FinderPatternInfo find(Map<DecodeHintType, ?> hints) throws NotFoundException {
         boolean tryHarder = hints != null && hints.containsKey(DecodeHintType.TRY_HARDER);
         boolean pureBarcode = hints != null && hints.containsKey(DecodeHintType.PURE_BARCODE);
@@ -161,7 +159,7 @@ public class FinderPatternFinder {
                                     // Start examining every other line. Checking each line turned out to be too
                                     // expensive and didn't improve performance.
                                     iSkip = 2;
-                                    // haskipped can be set to true if we already have found two finder patterns.
+                                    // hasSkipped can be set to true if we already have found two finder patterns.
                                     // this can happen only in findRowSkip(), and it means that we have applied a skip already
                                     if (hasSkipped) {
                                         // done becomes true if we have found 4 finder patterns. In that case, we will break out of the row loop the next time around.
@@ -169,7 +167,7 @@ public class FinderPatternFinder {
                                     } else {
                                         // see how far we skip. the previous test guarantees we only do it once
                                         int rowSkip = findRowSkip();
-                                        // if the rowskip is larger than the size of the center, apply the rowskip
+                                        // if the rowSkip is larger than the size of the center, apply the rowSkip
                                         if (rowSkip > stateCount[2]) {
                                             // Skip rows between row of lower confirmed center
                                             // and top of presumed third confirmed center

@@ -19,25 +19,20 @@
 
 package org.akvo.caddisfly.sensor.striptest.utils;
 
-import android.content.Context;
 import android.content.res.AssetManager;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 
-import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Locale;
+import java.nio.charset.StandardCharsets;
+
+import timber.log.Timber;
 
 /**
  * Created by linda on 8/19/15
  */
 public final class AssetsManager {
-
-    private static final String TAG = "AssetsManager";
 
     private static AssetsManager assetsManager;
     private final AssetManager manager;
@@ -54,27 +49,7 @@ public final class AssetsManager {
         return assetsManager;
     }
 
-    public static Drawable getImage(Context context, String imageName) {
-
-        String path = context.getResources().getString(R.string.instruction_images);
-        try {
-
-            String localeLanguage = Locale.getDefault().getLanguage();
-            String localePath = path + "-" + localeLanguage + "/" + imageName + ".png";
-            if (Arrays.asList(context.getResources().getAssets().list("")).contains(localePath)) {
-                path += "-" + localeLanguage;
-            }
-
-            InputStream ims = context.getAssets().open(path + "/" + imageName.toLowerCase(Locale.US) + ".png");
-
-            return Drawable.createFromStream(ims, null);
-
-        } catch (IOException ignored) {
-        }
-        return null;
-    }
-
-    public String loadJSONFromAsset(String fileName) {
+    String loadJSONFromAsset(String fileName) {
         String json;
         InputStream is = null;
         try {
@@ -88,16 +63,15 @@ public final class AssetsManager {
             //noinspection ResultOfMethodCallIgnored
             is.read(buffer);
 
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
-            Log.e(TAG, ex.getMessage(), ex);
             return null;
         } finally {
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    Log.e(TAG, e.getMessage(), e);
+                    Timber.e(e);
                 }
             }
         }

@@ -25,22 +25,21 @@ import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import androidx.annotation.Nullable;
+
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
-import org.akvo.caddisfly.util.TheCamera;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 /**
  * Created by linda on 7/7/15
  */
-@SuppressWarnings("deprecation")
-public class StripTestCameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final int MIN_CAMERA_WIDTH = 1300;
     private final Camera mCamera;
@@ -48,7 +47,7 @@ public class StripTestCameraPreview extends SurfaceView implements SurfaceHolder
     private int mPreviewWidth;
     private int mPreviewHeight;
 
-    public StripTestCameraPreview(Context context) {
+    public CameraPreview(Context context) {
         // create surfaceView
         super(context);
 
@@ -112,19 +111,21 @@ public class StripTestCameraPreview extends SurfaceView implements SurfaceHolder
             mCamera.setPreviewDisplay(holder);
             mPreviewWidth = bestSize.width;
             mPreviewHeight = bestSize.height;
-            Timber.e("Preview width in cameraPreview: %s", mPreviewWidth);
 
             activity.setPreviewProperties(w, h, mPreviewWidth, mPreviewHeight);
             activity.initPreviewFragment();
             mCamera.startPreview();
-            // if we are in FOCUS_MODE_AUTO, we have to start the autofocus here.
-            if (mCamera.getParameters().getFocusMode().equals(Camera.Parameters.FOCUS_MODE_AUTO)) {
-                mCamera.autoFocus((success, camera) -> {
-                    // do nothing
-                });
+            try {
+                // if we are in FOCUS_MODE_AUTO, we have to start the autofocus here.
+                if (mCamera.getParameters().getFocusMode().equals(Camera.Parameters.FOCUS_MODE_AUTO)) {
+                    mCamera.autoFocus((success, camera) -> {
+                        // do nothing
+                    });
+                }
+            } catch (Exception ignore) {
             }
         } catch (IOException e) {
-            Timber.e(e);
+            Timber.e(e, mPreviewWidth + "x" + mPreviewHeight);
         }
     }
 
@@ -183,9 +184,7 @@ public class StripTestCameraPreview extends SurfaceView implements SurfaceHolder
             parameters.setFocusAreas(cardAreaList);
         }
 
-        //white balance
         if (parameters.getWhiteBalance() != null) {
-            //Check if this optimise the code
             parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
         }
 
@@ -193,16 +192,14 @@ public class StripTestCameraPreview extends SurfaceView implements SurfaceHolder
             parameters.setMeteringAreas(cardAreaList);
         }
 
-        //white balance
         if (parameters.getFlashMode() != null) {
-            //Check if this optimise the code
             parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
         }
 
         try {
             mCamera.setParameters(parameters);
         } catch (Exception e) {
-            Timber.e(e, "Error setting camera parameters: %s", e.getMessage());
+            Timber.e(e);
         }
         return bestSize;
     }

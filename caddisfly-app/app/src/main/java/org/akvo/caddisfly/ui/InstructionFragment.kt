@@ -33,8 +33,11 @@ import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.databinding.FragmentInstructionBinding
 import org.akvo.caddisfly.databinding.FragmentInstructionsBinding
+import org.akvo.caddisfly.helper.InstructionHelper
 import org.akvo.caddisfly.model.Instruction
+import org.akvo.caddisfly.model.PageIndex
 import org.akvo.caddisfly.model.TestInfo
+import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
@@ -42,6 +45,9 @@ class InstructionFragment : Fragment() {
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
     private var b: FragmentInstructionsBinding? = null
     private var mTestInfo: TestInfo? = null
+    private val pageIndex = PageIndex()
+    private val instructionList = ArrayList<Instruction>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         b = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false)
@@ -58,8 +64,12 @@ class InstructionFragment : Fragment() {
 
         if (arguments != null) {
             mTestInfo = arguments!!.getParcelable(ConstantKey.TEST_INFO)
+
+            InstructionHelper.setupInstructions(mTestInfo!!.instructions,
+                    instructionList, pageIndex, false)
+
             image_pageRight.setOnClickListener {
-                viewPager.currentItem = min(mTestInfo!!.instructions.size - 1,
+                viewPager.currentItem = min(instructionList.size - 1,
                         viewPager.currentItem + 1)
             }
         }
@@ -142,11 +152,11 @@ class InstructionFragment : Fragment() {
      */
     internal inner class SectionsPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentPagerAdapter(fm, behavior) {
         override fun getItem(position: Int): Fragment {
-            return PlaceholderFragment.newInstance(mTestInfo!!.instructions[position])
+            return PlaceholderFragment.newInstance(instructionList[position])
         }
 
         override fun getCount(): Int {
-            return mTestInfo!!.instructions.size
+            return instructionList.size
         }
     }
 

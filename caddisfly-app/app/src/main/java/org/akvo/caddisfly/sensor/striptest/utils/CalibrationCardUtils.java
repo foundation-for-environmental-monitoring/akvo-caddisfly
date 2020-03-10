@@ -1,8 +1,5 @@
 package org.akvo.caddisfly.sensor.striptest.utils;
 
-import android.content.Context;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.sensor.striptest.models.CalibrationCardData;
@@ -20,17 +17,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import timber.log.Timber;
 
 import static org.akvo.caddisfly.sensor.striptest.qrdetector.MathUtils.distance;
 import static org.akvo.caddisfly.sensor.striptest.utils.MathUtils.meanMedianMax;
 
 public class CalibrationCardUtils {
-    private static final String TAG = "Caddisfly-utils";
-
     private static final int VERSION_NUMBER_NOT_FOUND_CODE = 0;
     /*
-    * Samples known "white" points on the color card, and creates an array
+     * Samples known "white" points on the color card, and creates an array
      */
     private static final int NUM_SAMPLES_PER_LINE = 10;
     private final static float PATCH_SAMPLE_FRACTION = 0.5f;
@@ -95,7 +91,7 @@ public class CalibrationCardUtils {
                     index++;
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Error sample line into new row");
+                Timber.d("Error sample line into new row");
                 return VERSION_NUMBER_NOT_FOUND_CODE;
             }
 
@@ -123,7 +119,7 @@ public class CalibrationCardUtils {
                 // We put the minimum size at 20 pixels, which would correspond to a module size of less than 2 pixels,
                 // which is too small.
                 if (lengthPattern < 20) {
-                    Log.e(TAG, "Length of pattern too small");
+                    Timber.d("Length of pattern too small");
                     return VERSION_NUMBER_NOT_FOUND_CODE;
                 }
 
@@ -184,9 +180,9 @@ public class CalibrationCardUtils {
         return oneCount % 2 != 0; // returns true if parity is odd
     }
 
-    public static void readCalibrationFile(Context context, CalibrationCardData calCardData, int version) throws CalibrationCardException {
+    public static void readCalibrationFile(CalibrationCardData calCardData, int version) throws CalibrationCardException {
 //        Log.d(TAG, "reading calibration file");
-        String calFileName = "calibrationv2-" + version + ".json";
+        String calFileName = "calibration-v2-" + version + ".json";
         String json = AssetsManager.getInstance().loadJSONFromAsset(calFileName);
 
 //        boolean success = false;
@@ -250,15 +246,15 @@ public class CalibrationCardUtils {
         int numLines = lines.size() * NUM_SAMPLES_PER_LINE; // on each line, we sample NUM_LINES points
         float[][] points = new float[numLines][3];
         int index = 0;
-        float frac = 1.0f / (NUM_SAMPLES_PER_LINE - 1);
+        float fraction = 1.0f / (NUM_SAMPLES_PER_LINE - 1);
         for (CalibrationCardData.WhiteLine line : lines) {
             // these coordinates are in the card-space
             float xStart = line.getPosition()[0];
             float yStart = line.getPosition()[1];
             float xEnd = line.getPosition()[2];
             float yEnd = line.getPosition()[3];
-            float xStep = (xEnd - xStart) * frac;
-            float yStep = (yEnd - yStart) * frac;
+            float xStep = (xEnd - xStart) * fraction;
+            float yStep = (yEnd - yStart) * fraction;
 
             // sample line
             for (int i = 0; i <= NUM_SAMPLES_PER_LINE - 1; i++) {
@@ -267,8 +263,8 @@ public class CalibrationCardUtils {
 
                 points[index * NUM_SAMPLES_PER_LINE + i][0] = xp;
                 points[index * NUM_SAMPLES_PER_LINE + i][1] = yp;
-                float Yval = getYVal(yDataArray, rowStride, xp, yp, cardToImageTransform);
-                points[index * NUM_SAMPLES_PER_LINE + i][2] = Yval;
+                float yVal = getYVal(yDataArray, rowStride, xp, yp, cardToImageTransform);
+                points[index * NUM_SAMPLES_PER_LINE + i][2] = yVal;
             }
             index++;
         }
@@ -293,7 +289,7 @@ public class CalibrationCardUtils {
     }
 
     /*
-    * measure colour patches on colour card and create an array
+     * measure colour patches on colour card and create an array
      */
     public static Map<String, float[]> measurePatches(CalibrationCardData calCardData, DecodeData decodeData) {
         PerspectiveTransform cardToImageTransform = decodeData.getCardToImageTransform();
@@ -330,7 +326,7 @@ public class CalibrationCardUtils {
                 for (int y = Math.round(points[3]); y <= Math.round(points[1]); y++) {
                     uvPos = frameSize + (y >> 1) * rowStride;
                     Y = (0xff & iDataArray[x + y * rowStride]);
-                    V = (0xff & ((int) iDataArray[uvPos + (x & ~1) + 0])) - 128;
+                    V = (0xff & ((int) iDataArray[uvPos + (x & ~1)])) - 128;
                     U = (0xff & ((int) iDataArray[uvPos + (x & ~1) + 1])) - 128;
 
                     totY += Y;
@@ -357,95 +353,35 @@ public class CalibrationCardUtils {
         return patchRGBMap;
     }
 
-
-    // sRGB to XYZ
-    public static Map<String, float[]> linearRGBtoXYZ(Map<String, float[]> patchRGBMap) {
-        Map<String, float[]> patchXYZMap = new HashMap<>();
-        for (String label : patchRGBMap.keySet()) {
-            float[] col = patchRGBMap.get(label);
-            float[] XYZ = ColorUtils.linearRGBtoXYZ(col);
-            patchXYZMap.put(label, XYZ);
-        }
-        return patchXYZMap;
-    }
-
-    // XYZ to clamped and integer RGB (for testing purposes)
-    public static Map<String, int[]> XYZtoRGBint(Map<String, float[]> patchXYZMap) {
-        Map<String, int[]> patchRGBMap = new HashMap<>();
-        for (String label : patchXYZMap.keySet()) {
-            float[] XYZ = patchXYZMap.get(label);
-            int[] RGB = ColorUtils.XYZtoRGBint(XYZ);
-            patchRGBMap.put(label, RGB);
-        }
-        return patchRGBMap;
-    }
-
     public static Map<String, float[]> calCardXYZ(Map<String, CalibrationCardData.CalValue> calValues) {
         Map<String, float[]> patchXYZMap = new HashMap<>();
         for (String label : calValues.keySet()) {
-            CalibrationCardData.CalValue XYZcol = calValues.get(label);
+            CalibrationCardData.CalValue xyzCol = calValues.get(label);
             float[] XYZ = new float[3];
-            XYZ[0] = XYZcol.getX();
-            XYZ[1] = XYZcol.getY();
-            XYZ[2] = XYZcol.getZ();
+            XYZ[0] = xyzCol.getX();
+            XYZ[1] = xyzCol.getY();
+            XYZ[2] = xyzCol.getZ();
             patchXYZMap.put(label, XYZ);
         }
         return patchXYZMap;
     }
 
-    public static float[] deltaE2000stats(Map<String, float[]> calibXYZMap, Map<String, float[]> patchXYZMap) {
+    public static float[] deltaE2000stats(Map<String, float[]> calibrationXYZMap, Map<String, float[]> patchXYZMap) {
         float[] deltaEArray = new float[patchXYZMap.keySet().size()];
         int i = 0;
         float deltaE2000;
-        float[] calibColXYZ, cardColXYZ, calibColLab, cardColLab;
+        float[] calibrationColXYZ, cardColXYZ, calibrationColLab, cardColLab;
         for (String label : patchXYZMap.keySet()) {
-            calibColXYZ = calibXYZMap.get(label);
+            calibrationColXYZ = calibrationXYZMap.get(label);
             cardColXYZ = patchXYZMap.get(label);
 
-            calibColLab = ColorUtils.XYZtoLAB(calibColXYZ);
+            calibrationColLab = ColorUtils.XYZtoLAB(calibrationColXYZ);
             cardColLab = ColorUtils.XYZtoLAB(cardColXYZ);
 
-            deltaE2000 = ColorUtils.deltaE2000(calibColLab, cardColLab);
+            deltaE2000 = ColorUtils.deltaE2000(calibrationColLab, cardColLab);
             deltaEArray[i] = deltaE2000;
             i++;
         }
         return meanMedianMax(deltaEArray);
-    }
-
-    public static String[] worstPatches(Map<String, float[]> calibXYZMap, Map<String, float[]> patchXYZMap) {
-        float[] deltaEArray = new float[patchXYZMap.keySet().size()];
-        int i = 0;
-        float deltaE2000;
-        float[] calibColXYZ, cardColXYZ, calibColLab, cardColLab;
-        for (String label : patchXYZMap.keySet()) {
-            calibColXYZ = calibXYZMap.get(label);
-            cardColXYZ = patchXYZMap.get(label);
-
-            calibColLab = ColorUtils.XYZtoLAB(calibColXYZ);
-            cardColLab = ColorUtils.XYZtoLAB(cardColXYZ);
-
-            deltaE2000 = ColorUtils.deltaE2000(calibColLab, cardColLab);
-            deltaEArray[i] = deltaE2000;
-            i++;
-        }
-
-        // we now have a delta array, in the order of the key set. Let's get the 3 worst ones
-        String name1 = "", name2 = "", name3 = "", name4 = "", name5 = "";
-        float worst = 0;
-
-        Set<String> keySet = patchXYZMap.keySet();
-        String[] keySetArray = keySet.toArray(new String[keySet.size()]);
-
-        for (i = 0; i < patchXYZMap.keySet().size(); i++) {
-            if (deltaEArray[i] > worst) {
-                worst = deltaEArray[i];
-                name5 = name4;
-                name4 = name3;
-                name3 = name2;
-                name2 = name1;
-                name1 = keySetArray[i];
-            }
-        }
-        return new String[]{name1, name2, name3, name4, name5};
     }
 }

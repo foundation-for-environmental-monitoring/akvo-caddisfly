@@ -36,8 +36,8 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.db
-import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.FileHelper.getFilesDir
+import org.akvo.caddisfly.helper.FileType
 import org.akvo.caddisfly.helper.SwatchHelper.generateCalibrationFile
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.preference.AppPreferences.isDiagnosticMode
@@ -161,7 +161,7 @@ class SaveCalibrationDialogFragment : DialogFragment() {
                 override fun onClick(v: View) {
                     if (formEntryValid()) {
                         if (editName!!.text.toString().trim { it <= ' ' }.isNotEmpty()) {
-                            val path = getFilesDir(FileHelper.FileType.CALIBRATION, testInfo!!.uuid)
+                            val path = getFilesDir(FileType.CALIBRATION, testInfo!!.uuid)
                             val file = File(path, editName!!.text.toString())
                             if (file.exists()) {
                                 AlertUtil.askQuestion(context, R.string.fileAlreadyExists,

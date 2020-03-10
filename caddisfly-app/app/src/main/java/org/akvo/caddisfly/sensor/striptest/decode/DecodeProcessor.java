@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class DecodeProcessor {
 
@@ -149,7 +150,7 @@ public class DecodeProcessor {
         final int decodeWidth = decodeData.getDecodeWidth();
 
         if (mBitMatrixCreator == null) {
-            mBitMatrixCreator = new BitMatrixCreator();
+            mBitMatrixCreator = new BitMatrixCreator(decodeWidth, decodeHeight);
         }
 
         // create a black and white bit matrix from our data. Cut out the part that interests us
@@ -189,7 +190,7 @@ public class DecodeProcessor {
             }
 
             // compute and store tilt and distance check
-            decodeData.setTilt(getDegrees(getTilt(patternInfo)));
+            decodeData.setTilt(getDegrees(Objects.requireNonNull(getTilt(patternInfo))));
             decodeData.setDistanceOk(distanceOk(patternInfo, decodeHeight));
 
             // store finder patterns
@@ -222,8 +223,8 @@ public class DecodeProcessor {
     }
 
     /*
-    * checks exposure of image, by looking at the Y value of the white. It should be as high as
-    * possible, without being overexposed.
+     * checks exposure of image, by looking at the Y value of the white. It should be as high as
+     * possible, without being overexposed.
      */
     private void checkExposureQuality() {
         DecodeData decodeData = StriptestHandler.getDecodeData();
@@ -265,7 +266,7 @@ public class DecodeProcessor {
     }
 
     /*
-    * checks exposure of image, by looking at the homogeneity of the white values.
+     * checks exposure of image, by looking at the homogeneity of the white values.
      */
     private void checkShadowQuality() {
         DecodeData decodeData = StriptestHandler.getDecodeData();
@@ -342,7 +343,7 @@ public class DecodeProcessor {
 
             // compute percentage of good points
             float devPercent = 100f - (100.0f * numDev) / points.length;
-            decodeData.setPercentageShadow(Math.min(Math.max(50f, devPercent), 100f));
+//            decodeData.setPercentageShadow(Math.min(Math.max(50f, devPercent), 100f));
 
             // if the percentage of good point is under the limit (something like 90%), we fail the test
             if (devPercent < Constants.SHADOW_PERCENTAGE_LIMIT) {
@@ -380,7 +381,7 @@ public class DecodeProcessor {
         PerspectiveTransform cardToImageTransform = decodeData.getCardToImageTransform();
         TestInfo testInfo = decodeData.getTestInfo();
 
-        float[] illumination = decodeData.getIllumData();
+        float[] illumination = decodeData.getIlluminationData();
         RealMatrix calMatrix = decodeData.getCalMatrix();
 
         // we cut of an edge of 1mm at the edges, to avoid any white space captured at the edge
@@ -527,6 +528,7 @@ public class DecodeProcessor {
             decodeData.addStripImage(result, mCurrentDelay);
             decodeData.setStripPixelWidth(result[0].length);
         } else {
+            //todo: check null argument
             decodeData.addStripImage(null, mCurrentDelay);
             decodeData.setStripPixelWidth(0);
         }
@@ -559,17 +561,6 @@ public class DecodeProcessor {
         // color transform: Android YUV (YCbCr) to sRGB D65
         Map<String, float[]> patchRGBMap = CalibrationCardUtils.YUVtoLinearRGB(patchYUVMapCorrected);
 
-        // sRGB D65 to linear sRGB to XYZ D65
-        // XYZ is scaled [0..100]
-//        Map<String, float[]> patchXYZMap = CalibrationCardUtils.linearRGBtoXYZ(patchRGBMap);
-
-        // Set calibration goal RGB values so we can display them later
-        Map<String, int[]> patchCalRGBMap = CalibrationCardUtils.XYZtoRGBint(calXYZMap);
-        StriptestHandler.getDecodeData().setCalibrationPatchRGB(patchCalRGBMap);
-
-        // measure the distance in terms of deltaE2000
-//        float[] deltaE2000Stats = CalibrationCardUtils.deltaE2000stats(calXYZMap, patchXYZMap);
-
         Map<String, float[]> resultXYZMap;
 //        float[] deltaE2000Stats2;
 
@@ -578,13 +569,6 @@ public class DecodeProcessor {
 
         // measure the distance in terms of deltaE2000
         float[] deltaE2000Stats = CalibrationCardUtils.deltaE2000stats(calXYZMap, resultXYZMap);
-
-        // what are the worst stats?
-//        String[] worst = CalibrationCardUtils.worstPatches(calXYZMap, resultXYZMap);
-
-        // set calibrated colours so we can display them
-        Map<String, int[]> patchRGBCalMap = CalibrationCardUtils.XYZtoRGBint(resultXYZMap);
-        decodeData.setMeasuredPatchRGB(patchRGBCalMap);
 
         // set deltaE2000 stats
         decodeData.setDeltaEStats(deltaE2000Stats);

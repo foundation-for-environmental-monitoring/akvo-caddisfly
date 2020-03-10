@@ -39,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.exifinterface.media.ExifInterface;
 
 import org.akvo.caddisfly.helper.FileHelper;
+import org.akvo.caddisfly.helper.FileType;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -252,7 +253,7 @@ public final class ImageUtil {
      * @param fileType the folder to save in
      * @param fileName the name of the file
      */
-    public static void saveImage(@NonNull byte[] data, FileHelper.FileType fileType, String fileName) {
+    public static void saveImage(@NonNull byte[] data, FileType fileType, String fileName) {
 
         File path = FileHelper.getFilesDir(fileType);
 
@@ -406,7 +407,7 @@ public final class ImageUtil {
      * @param fileType the file type
      * @return the loaded bytes
      */
-    public static byte[] loadImageBytes(String name, FileHelper.FileType fileType) {
+    public static byte[] loadImageBytes(String name, FileType fileType) {
         File path = FileHelper.getFilesDir(fileType, "");
         File file = new File(path, name + ".yuv");
         if (file.exists()) {
@@ -513,5 +514,35 @@ public final class ImageUtil {
         byte[] byteArray = stream.toByteArray();
         bitmap.recycle();
         return byteArray;
+    }
+
+    /**
+     * Save an image in yuv format
+     *
+     * @param data     the image data
+     * @param fileType the folder to save in
+     * @param fileName the name of the file
+     */
+    public static void saveYuvImage(@NonNull byte[] data, FileType fileType, String fileName) {
+
+        File path = FileHelper.getFilesDir(fileType);
+
+        File file = new File(path, fileName + ".yuv");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file.getPath());
+            fos.write(data);
+        } catch (Exception ignored) {
+            // do nothing
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    Timber.e(e);
+                }
+            }
+        }
     }
 }

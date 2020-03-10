@@ -29,6 +29,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.striptest.decode.DecodeProcessor;
 import org.akvo.caddisfly.sensor.striptest.qrdetector.FinderPattern;
@@ -36,8 +38,6 @@ import org.akvo.caddisfly.sensor.striptest.qrdetector.PerspectiveTransform;
 import org.akvo.caddisfly.sensor.striptest.utils.Constants;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 /**
  * Created by linda on 9/9/15
@@ -54,7 +54,7 @@ public class FinderPatternIndicatorView extends View {
     private final Bitmap closerBitmap;
     private final Matrix matrix = new Matrix();
     private List<FinderPattern> patterns;
-    private boolean shadowGrid[][];
+    private boolean[][] shadowGrid;
     private int previewScreenHeight;
     private int previewScreenWidth;
     private int decodeHeight;
@@ -107,6 +107,7 @@ public class FinderPatternIndicatorView extends View {
         mGridStepImage = Math.round(previewHeight / GRID_H);
         requestLayout();
     }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -122,7 +123,7 @@ public class FinderPatternIndicatorView extends View {
     /*
      * display finder patterns on screen as green dots.
      * height and width are the actual size of the image as it came from the camera
-      */
+     */
     public void showPatterns(List<FinderPattern> patternList, int tilt, boolean showTiltMessage, boolean showDistanceMessage, int width, int height) {
         this.patterns = patternList;
         this.decodeWidth = width;
@@ -143,7 +144,7 @@ public class FinderPatternIndicatorView extends View {
         invalidate();
     }
 
-    public void showShadow(List<float[]> shadowPoints, float percentage, PerspectiveTransform cardToImageTransform) {
+    public void showShadow(List<float[]> shadowPoints, PerspectiveTransform cardToImageTransform) {
         shadowGrid = new boolean[GRID_H + 5][GRID_V + 5];
         int xGrid;
         int yGrid;
@@ -161,10 +162,10 @@ public class FinderPatternIndicatorView extends View {
         invalidate();
     }
 
-    public void setColor(int color) {
-        paint.setColor(color);
-    }
-
+    //    public void setColor(int color) {
+//        paint.setColor(color);
+//    }
+//
     @Override
     public void onDraw(@NonNull Canvas canvas) {
         if (patterns != null) {

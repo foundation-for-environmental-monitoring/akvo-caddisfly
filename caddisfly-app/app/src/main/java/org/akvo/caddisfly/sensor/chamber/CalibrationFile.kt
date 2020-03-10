@@ -22,8 +22,8 @@ import android.content.Context
 import android.widget.Toast
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.entity.Calibration
-import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.FileHelper.getFilesDir
+import org.akvo.caddisfly.helper.FileType
 import org.akvo.caddisfly.helper.SwatchHelper.generateCalibrationFile
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.util.FileUtil.saveToFile
@@ -43,7 +43,7 @@ object CalibrationFile {
 
         //Save a backup of the calibration details
         val calibrationDetails = generateCalibrationFile(context, testInfo, true)
-        val path = getFilesDir(FileHelper.FileType.CALIBRATION, testInfo.uuid)
+        val path = getFilesDir(FileType.CALIBRATION, testInfo.uuid)
         saveToFile(path, "_AutoBackup", calibrationDetails)
         Toast.makeText(context, R.string.calibrated, Toast.LENGTH_LONG).show()
     }

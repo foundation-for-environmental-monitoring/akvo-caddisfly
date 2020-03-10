@@ -25,9 +25,12 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Instruction implements Parcelable {
+public class Instruction implements Parcelable, Cloneable {
 
     public static final Creator<Instruction> CREATOR = new Creator<Instruction>() {
         @Override
@@ -52,12 +55,27 @@ public class Instruction implements Parcelable {
     @SerializedName("testStage")
     @Expose
     public int testStage;
+    private int index;
+
+    private Instruction(Instruction instruction) {
+        index = instruction.index;
+        section = new ArrayList<>(instruction.section);
+        image = instruction.image;
+        layout = instruction.layout;
+        testStage = instruction.testStage;
+    }
 
     private Instruction(Parcel in) {
         section = in.createStringArrayList();
         image = in.readString();
         layout = in.readString();
         testStage = in.readInt();
+    }
+
+    @NotNull
+    public Instruction clone() throws CloneNotSupportedException {
+        Instruction clone = (Instruction) super.clone();
+        return new Instruction(clone);
     }
 
     @Override
@@ -71,6 +89,14 @@ public class Instruction implements Parcelable {
         parcel.writeString(image);
         parcel.writeString(layout);
         parcel.writeInt(testStage);
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int value) {
+        index = value;
     }
 }
 

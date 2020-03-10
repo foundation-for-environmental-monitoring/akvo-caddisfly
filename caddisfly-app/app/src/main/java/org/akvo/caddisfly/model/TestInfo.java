@@ -48,8 +48,11 @@ public class TestInfo implements Parcelable {
             return new TestInfo[size];
         }
     };
-    private transient DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-    private transient DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
+    private final transient DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private final transient DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
+    @SerializedName("reagentType")
+    @Expose
+    private String reagentType = "";
     @SerializedName("reagents")
     @Expose
     private List<Reagent> reagents = null;
@@ -119,12 +122,6 @@ public class TestInfo implements Parcelable {
     @SerializedName("ranges")
     @Expose
     private String ranges;
-    @SerializedName("defaultColors")
-    @Expose
-    private String defaultColors;
-    @SerializedName("hueTrend")
-    @Expose
-    private Integer hueTrend = 0;
     @SerializedName("dilutions")
     @Expose
     private List<Integer> dilutions = new ArrayList<>();
@@ -137,9 +134,18 @@ public class TestInfo implements Parcelable {
     @SerializedName("selectInstruction")
     @Expose
     private String selectInstruction;
+    @SerializedName("endInstruction")
+    @Expose
+    private String endInstruction;
+    @SerializedName("hasEndInstruction")
+    @Expose
+    private Boolean hasEndInstruction;
     @SerializedName("instructions")
     @Expose
     private List<Instruction> instructions = null;
+    @SerializedName("instructions2")
+    @Expose
+    private List<Instruction> instructions2 = null;
     @SerializedName("image")
     @Expose
     private String image;
@@ -195,7 +201,7 @@ public class TestInfo implements Parcelable {
         brand = in.readString();
         brandUrl = in.readString();
         String tmpGroupingType = in.readString();
-        if (!tmpGroupingType.equalsIgnoreCase("null")) {
+        if (tmpGroupingType != null && !tmpGroupingType.equalsIgnoreCase("null")) {
             groupingType = GroupType.valueOf(tmpGroupingType);
         }
         illuminant = in.readString();
@@ -217,12 +223,6 @@ public class TestInfo implements Parcelable {
         byte tmpCalibrate = in.readByte();
         calibrate = tmpCalibrate == 1;
         ranges = in.readString();
-        defaultColors = in.readString();
-        if (in.readByte() == 0) {
-            hueTrend = null;
-        } else {
-            hueTrend = in.readInt();
-        }
         in.readList(this.dilutions, (java.lang.Integer.class.getClassLoader()));
         if (in.readByte() == 0) {
             monthsValid = null;
@@ -236,7 +236,13 @@ public class TestInfo implements Parcelable {
 
         instructions = new ArrayList<>();
         in.readTypedList(instructions, Instruction.CREATOR);
+        instructions2 = new ArrayList<>();
+        in.readTypedList(instructions2, Instruction.CREATOR);
+
         selectInstruction = in.readString();
+        endInstruction = in.readString();
+        byte tmpHasEndInstruction = in.readByte();
+        hasEndInstruction = tmpHasEndInstruction == 1;
         image = in.readString();
         imageScale = in.readString();
         if (in.readByte() == 0) {
@@ -473,13 +479,6 @@ public class TestInfo implements Parcelable {
         parcel.writeByte((byte) (cameraAbove == null ? 0 : cameraAbove ? 1 : 2));
         parcel.writeByte((byte) (calibrate == null ? 0 : calibrate ? 1 : 2));
         parcel.writeString(ranges);
-        parcel.writeString(defaultColors);
-        if (hueTrend == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(hueTrend);
-        }
         parcel.writeList(dilutions);
         if (monthsValid == null) {
             parcel.writeByte((byte) 0);
@@ -490,7 +489,10 @@ public class TestInfo implements Parcelable {
         parcel.writeString(sampleQuantity);
         parcel.writeTypedList(results);
         parcel.writeTypedList(instructions);
+        parcel.writeTypedList(instructions2);
         parcel.writeString(selectInstruction);
+        parcel.writeString(endInstruction);
+        parcel.writeByte((byte) (hasEndInstruction == null ? 0 : hasEndInstruction ? 1 : 2));
         parcel.writeString(image);
         parcel.writeString(imageScale);
         if (numPatch == null) {
@@ -524,6 +526,10 @@ public class TestInfo implements Parcelable {
 
     public String getSelectInstruction() {
         return selectInstruction;
+    }
+
+    public String getEndInstruction() {
+        return endInstruction;
     }
 
     public double getStripLength() {

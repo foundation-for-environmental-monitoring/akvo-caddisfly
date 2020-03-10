@@ -23,13 +23,17 @@
 
     <string name="customTests">Custom tests</string>
 
+    <plurals name="minutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+
     <!--StripTest-->
     <string name="measure_instruction">Put strip on black area with colour patches to the left. Hold camera above colour card until measurement is complete.</string>
     <string name="imageQuality">Image quality</string>
     <string name="prepare_test">Prepare for test</string>
     <string name="taking_photo">Taking photo</string>
     <string name="waiting">Waiting</string>
-    <string name="success_quality_checks">Success! Quality check passed</string>
     <string name="stripTest">Strip Test</string>
     <string name="no_result">No Result</string>
     <string name="just_a_moment">Just a moment…</string>
@@ -63,4 +67,6 @@
     <string name="errorLoadingConfiguration">Could not load configuration information</string>
     <string name="value_is_required">Value is required</string>
     <string name="enter_titration_results">Enter titration results</string>
+    <string name="submitResult">Submit Result</string>
+    <string name="no_strip_found">Strip not found</string>
 </resources>

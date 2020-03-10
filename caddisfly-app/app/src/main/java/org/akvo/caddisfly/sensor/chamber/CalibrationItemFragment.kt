@@ -23,8 +23,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -35,8 +33,6 @@ import org.akvo.caddisfly.app.CaddisflyApp.Companion.db
 import org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL
 import org.akvo.caddisfly.databinding.FragmentCalibrationListBinding
 import org.akvo.caddisfly.entity.Calibration
-import org.akvo.caddisfly.helper.SwatchHelper.isCalibrationComplete
-import org.akvo.caddisfly.helper.SwatchHelper.isSwatchListValid
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.preference.AppPreferences.isDiagnosticMode
 import org.akvo.caddisfly.sensor.chamber.CalibrationItemFragment.OnCalibrationSelectedListener
@@ -51,6 +47,7 @@ import java.util.*
  * Activities containing this fragment MUST implement the [OnCalibrationSelectedListener]
  * interface.
  */
+
 class CalibrationItemFragment : Fragment() {
     private var binding: FragmentCalibrationListBinding? = null
     private var testInfo: TestInfo? = null
@@ -149,38 +146,6 @@ class CalibrationItemFragment : Fragment() {
             args.putBoolean(IS_INTERNAL, isInternal)
             fragment.arguments = args
             return fragment
-        }
-
-        /**
-         * Validate the calibration.
-         *
-         * @param view     the view
-         * @param testInfo the test
-         */
-        @JvmStatic
-        @BindingAdapter("checkValidity")
-        fun validateCalibration(view: TextView, testInfo: TestInfo) {
-            val context = view.context
-            val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo.uuid)
-            if (calibrationDetail != null) {
-                val milliseconds = calibrationDetail.expiry
-                if (milliseconds > 0 && milliseconds <= Date().time) {
-                    view.text = String.format("%s. %s", context.getString(R.string.expired),
-                            context.getString(R.string.calibrateWithNewReagent))
-                    view.visibility = View.VISIBLE
-                    return
-                }
-            }
-            if (isCalibrationComplete(testInfo.swatches)
-                    && !isSwatchListValid(testInfo)) {
-                //Display error if calibration is completed but invalid
-                view.text = String.format("%s. %s",
-                        context.getString(R.string.calibrationIsInvalid),
-                        context.getString(R.string.tryRecalibrating))
-                view.visibility = View.VISIBLE
-            } else {
-                view.visibility = View.GONE
-            }
         }
     }
 }

@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class ResultUtils {
-    public static final int INTERPOLATION_NUMBER = 10;
+    static final int INTERPOLATION_NUMBER = 10;
+
+    private static DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private static DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
 
     public static float[] calculateResultSingle(@Nullable float[] colorValues, @NonNull List<ColorItem> colors) {
         double[][] interpolTable = createInterpolTable(colors);
@@ -56,6 +59,10 @@ public class ResultUtils {
     public static float[] calculateResultGroup(List<PatchResult> patchResultList, @NonNull List<Result> patches) {
         float[][] colorsValueLab = new float[patches.size()][3];
         double[][][] interpolTables = new double[patches.size()][][];
+
+        if (patchResultList.size() == 0) {
+            return new float[]{-1, Float.NaN, -1, -1};
+        }
 
         // create all interpol tables
         for (int p = 0; p < patches.size(); p++) {
@@ -165,14 +172,11 @@ public class ResultUtils {
     }
 
     // creates formatted string including unit from float value
-    public static String createValueUnitString(float value, String unit) {
-        String valueString = "No Result";
+    public static String createValueUnitString(double value, String unit, String defaultString) {
+        String valueString = defaultString;
         if (value > -1) {
-            if (value < 1.0) {
-                valueString = String.format(Locale.US, "%.2f %s", value, unit);
-            } else {
-                valueString = String.format(Locale.US, "%.1f %s", value, unit);
-            }
+            valueString = String.format(Locale.US, "%s %s",
+                    decimalFormat.format(value), unit);
         }
         return valueString.trim();
     }
@@ -181,20 +185,13 @@ public class ResultUtils {
     // here, we use points as decimal separator always, as this is also used
     // to format numbers that are returned by json.
     public static String createValueString(float value) {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-        DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
         return decimalFormat.format(value);
     }
 
-
     /*
-       * Restricts number of significant digits depending on size of number
-        */
+     * Restricts number of significant digits depending on size of number
+     */
     public static double roundSignificant(double value) {
-        if (value < 1.0) {
-            return Math.round(value * 100) / 100.0;
-        } else {
-            return Math.round(value * 10) / 10.0;
-        }
+        return Double.parseDouble(decimalFormat.format(value));
     }
 }

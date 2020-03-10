@@ -133,21 +133,21 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
                     android:src="@drawable/place_device"
-                    android:visibility="@{vm.test.cameraAbove ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{View.VISIBLE}" />
 
                 <FrameLayout
                     android:id="@+id/camera_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/black"
-                    android:visibility="@{vm.test.cameraAbove ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{View.GONE}"
                     tools:visibility="gone" />
 
                 <org.akvo.caddisfly.widget.CircleView
                     android:id="@+id/circleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{vm.test.cameraAbove ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{View.GONE}"
                     tools:visibility="visible" />
 
                 <Button

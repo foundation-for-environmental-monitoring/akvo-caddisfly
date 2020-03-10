@@ -43,8 +43,6 @@ import java.util.List;
 import timber.log.Timber;
 
 public final class StriptestHandler extends Handler {
-    // Message types
-    public static final int START_PREVIEW_MESSAGE = 1;
     public static final int DECODE_IMAGE_CAPTURED_MESSAGE = 2;
     public static final int DECODE_SUCCEEDED_MESSAGE = 4;
     public static final int DECODE_FAILED_MESSAGE = 5;
@@ -54,7 +52,9 @@ public final class StriptestHandler extends Handler {
     public static final int SHADOW_QUALITY_FAILED_MESSAGE = 9;
     public static final int CALIBRATION_DONE_MESSAGE = 10;
     public static final int IMAGE_SAVED_MESSAGE = 11;
-    public static final DecodeData mDecodeData = new DecodeData();
+    // Message types
+    static final int START_PREVIEW_MESSAGE = 1;
+    private static final DecodeData mDecodeData = new DecodeData();
     private static final int DECODE_IMAGE_CAPTURE_FAILED_MESSAGE = 3;
     private static final CalibrationCardData mCalCardData = new CalibrationCardData();
     private static State mState;
@@ -84,16 +84,19 @@ public final class StriptestHandler extends Handler {
     private String defaultMessage;
     private int mQualityScore = 0;
     private long startTimeMillis;
-    private int currentTestStage = 1;
+    private int currentTestStage;
     private int totalTestStages = 1;
 
-    StriptestHandler(Context context1, Context context, CameraOperationsManager cameraOpsManager,
-                     FinderPatternIndicatorView finderPatternIndicatorView, TestInfo testInfo) {
+    StriptestHandler(Context context, CameraOperationsManager cameraOpsManager,
+                     FinderPatternIndicatorView finderPatternIndicatorView,
+                     TestInfo testInfo, int currentStage) {
         if (StripMeasureActivity.DEBUG) {
             Timber.d("in constructor striptestHandler");
         }
 
-        mListener = (StripMeasureListener) context1;
+        currentTestStage = currentStage;
+
+        mListener = (StripMeasureListener) context;
         this.mCameraOpsManager = cameraOpsManager;
         this.mFinderPatternIndicatorView = finderPatternIndicatorView;
 
@@ -102,6 +105,11 @@ public final class StriptestHandler extends Handler {
             mDecodeProcessor = new DecodeProcessor(this);
         }
         mDecodeData.setTestInfo(testInfo);
+
+        if (currentStage == 1) {
+            mDecodeData.clearImageMap();
+        }
+
         this.context = context;
     }
 
@@ -113,19 +121,20 @@ public final class StriptestHandler extends Handler {
         return mCalCardData;
     }
 
-    public void setTextSwitcher(TextSwitcher textSwitcher) {
+    void setTextSwitcher(TextSwitcher textSwitcher) {
         this.mTextSwitcher = textSwitcher;
     }
 
     public void setFragment(StripMeasureFragment fragment) {
         mFragment = fragment;
+        mFragment.setState(mState);
     }
 
-    public void setTestData(List<TimeDelayDetail> timeDelays) {
+    void setTestData(List<TimeDelayDetail> timeDelays) {
         mPatchTimeDelaysUnfiltered = timeDelays;
     }
 
-    public void setStatus(State state) {
+    void setStatus(State state) {
         mState = state;
     }
 
@@ -220,9 +229,6 @@ public final class StriptestHandler extends Handler {
                 if (mDecodeData.getTilt() != DecodeProcessor.NO_TILT) {
                     tiltFailedCount = Math.min(8, tiltFailedCount + 1);
                     if (tiltFailedCount > 4) showTiltMessage = true;
-                    else {
-                        if (tiltFailedCount < 4) showTiltMessage = false;
-                    }
                 } else {
                     tiltFailedCount = Math.max(0, tiltFailedCount - 1);
                 }
@@ -230,9 +236,6 @@ public final class StriptestHandler extends Handler {
                 if (!mDecodeData.getDistanceOk()) {
                     distanceFailedCount = Math.min(8, distanceFailedCount + 1);
                     if (distanceFailedCount > 4) showDistanceMessage = true;
-                    else {
-                        if (distanceFailedCount < 4) showDistanceMessage = false;
-                    }
                 } else {
                     distanceFailedCount = Math.max(0, distanceFailedCount - 1);
                 }
@@ -240,10 +243,8 @@ public final class StriptestHandler extends Handler {
                 if (showTiltMessage) {
                     newMessage = context.getString(R.string.tilt_camera_in_direction);
                     showDistanceMessage = false;
-                } else {
-                    if (showDistanceMessage) {
-                        newMessage = context.getString(R.string.move_camera_closer);
-                    }
+                } else if (showDistanceMessage) {
+                    newMessage = context.getString(R.string.move_camera_closer);
                 }
 
                 if (!showTiltMessage && !showDistanceMessage) {
@@ -309,9 +310,9 @@ public final class StriptestHandler extends Handler {
 
                     // if this is the first time we read the card, or if we use a card with a different
                     // version number
-                    if (mCalCardData != null && mCalCardData.getVersion() != version) {
+                    if (mCalCardData.getVersion() != version) {
                         try {
-                            CalibrationCardUtils.readCalibrationFile(context, mCalCardData, version);
+                            CalibrationCardUtils.readCalibrationFile(mCalCardData, version);
                         } catch (CalibrationCardException e) {
                             // keep going
                             mDecodeData.clearData();
@@ -349,7 +350,7 @@ public final class StriptestHandler extends Handler {
                 }
 
                 mFinderPatternIndicatorView.showShadow(mDecodeData.getShadowPoints(),
-                        mDecodeData.getPercentageShadow(), mDecodeData.getCardToImageTransform());
+                        mDecodeData.getCardToImageTransform());
 
                 // start another decode image capture request
                 mDecodeData.clearData();
@@ -375,7 +376,7 @@ public final class StriptestHandler extends Handler {
                 }
 
                 mFinderPatternIndicatorView.showShadow(mDecodeData.getShadowPoints(),
-                        mDecodeData.getPercentageShadow(), mDecodeData.getCardToImageTransform());
+                        mDecodeData.getCardToImageTransform());
 
                 mDecodeProcessor.startCalibration();
                 break;
@@ -387,7 +388,7 @@ public final class StriptestHandler extends Handler {
                 int quality = qualityPercentage(mDecodeData.getDeltaEStats());
                 if (mFragment != null) {
                     mFragment.showQuality(quality);
-                    if (mState.equals(State.PREPARE) && quality > Constants.CALIB_PERCENTAGE_LIMIT) {
+                    if (mState.equals(State.PREPARE) && quality > Constants.CALIBRATION_PERCENTAGE_LIMIT) {
                         successCount++;
                         mFragment.setProgress(successCount);
                     }
@@ -399,7 +400,7 @@ public final class StriptestHandler extends Handler {
                     break;
                 }
 
-                if (mState.equals(State.MEASURE) && captureNextImage && quality > Constants.CALIB_PERCENTAGE_LIMIT) {
+                if (mState.equals(State.MEASURE) && captureNextImage && quality > Constants.CALIBRATION_PERCENTAGE_LIMIT) {
                     captureNextImage = false;
 
                     mDecodeProcessor.storeImageData(mPatchTimeDelays.get(nextPatch).getTimeDelay());
@@ -424,6 +425,11 @@ public final class StriptestHandler extends Handler {
                         currentTestStage++;
                         mListener.moveToInstructions(currentTestStage);
                     } else {
+
+//                        if (AppPreferences.isSaveTestImage()) {
+//                            mDecodeData.saveCapturedImage();
+//                        }
+
                         // we are done
                         mListener.moveToResults();
                     }
@@ -452,10 +458,11 @@ public final class StriptestHandler extends Handler {
     }
 
     private int timeElapsedSeconds() {
-        return (int) Math.floor((Constants.MEASURE_TIME_COMPENSATION_MILLIS + System.currentTimeMillis() - startTimeMillis) / 1000);
+        return (int) Math.floor((Constants.MEASURE_TIME_COMPENSATION_MILLIS
+                + System.currentTimeMillis() - startTimeMillis) / 1000);
     }
 
-    public void quitSynchronously() {
+    void quitSynchronously() {
         mDecodeProcessor.stopDecodeThread();
     }
 

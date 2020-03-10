@@ -1,21 +1,36 @@
 <component name="ProjectDictionaryState">
   <dictionary name="common">
     <words>
+      <w>adid</w>
+      <w>adjoint</w>
       <w>akvo</w>
+      <w>arsine</w>
       <w>autofocus</w>
+      <w>barcodes</w>
+      <w>bresenham</w>
       <w>caddisfly</w>
       <w>calibrationdetail</w>
+      <w>calibri</w>
+      <w>codabar</w>
+      <w>cofactor</w>
       <w>colif</w>
       <w>coliform</w>
       <w>coliforms</w>
+      <w>colorimeter</w>
       <w>colorimetry</w>
       <w>colorp</w>
       <w>cuvette</w>
+      <w>duplicative</w>
       <w>ffem</w>
       <w>fileprovider</w>
+      <w>finlayson</w>
       <w>firebase</w>
       <w>gson</w>
       <w>hach</w>
+      <w>hurlbert</w>
+      <w>ieee</w>
+      <w>mackiewicz</w>
+      <w>megapixel</w>
       <w>mehlich</w>
       <w>multidex</w>
       <w>nomedia</w>
@@ -23,9 +38,15 @@
       <w>quantofix</w>
       <w>robolectric</w>
       <w>samsung</w>
+      <w>skippable</w>
+      <w>snackbar</w>
+      <w>stackoverflow</w>
       <w>stichting</w>
       <w>striptest</w>
       <w>unmock</w>
+      <w>viewmodel</w>
+      <w>wolberg</w>
+      <w>xing</w>
     </words>
   </dictionary>
 </component>

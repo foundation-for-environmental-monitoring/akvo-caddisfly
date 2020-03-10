@@ -25,6 +25,7 @@ object SensorConstants {
     /**
      * Serialization constants.
      */
+    const val IMAGE: String = "image"
     const val DILUTION = "Dilution"
     const val TEST_ID = "testId"
     const val VALUE = "value"
@@ -32,4 +33,5 @@ object SensorConstants {
     const val UNIT = "Unit"
     const val DEBUG_MODE = "debugMode"
     const val RESULT_JSON = "resultJson"
+    const val RESPONSE = "response"
 }

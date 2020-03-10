@@ -24,7 +24,7 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.os.HandlerThread;
 
-import org.akvo.caddisfly.helper.FileHelper;
+import org.akvo.caddisfly.helper.FileType;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
 import org.akvo.caddisfly.sensor.striptest.ui.StriptestHandler;
@@ -42,34 +42,12 @@ public class CameraOperationsManager {
     private Camera mCamera;
 
     private boolean changingExposure = false;
-    private StriptestHandler mStriptestHandler;
-
-    //debug code
-    private byte[] bytes;
-
-    private final Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
-        public void onPreviewFrame(byte[] imageData, Camera camera) {
-
-            if (bytes != null && bytes.length > 0 && AppPreferences.isTestMode()) {
-                // Use test image if we are in test mode
-                StriptestHandler.mDecodeData.setDecodeImageByteArray(bytes);
-
-//                ImageUtil.saveImageBytes(camera, bytes, FileHelper.FileType.TEST_IMAGE,
-//                        String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            } else {
-                // store image for later use
-                StriptestHandler.mDecodeData.setDecodeImageByteArray(imageData);
-            }
-            MessageUtils.sendMessage(mStriptestHandler, StriptestHandler.DECODE_IMAGE_CAPTURED_MESSAGE, 0);
-        }
-    };
-
     private final Runnable runAutoFocus = new Runnable() {
         public void run() {
             if (mCamera != null) {
                 if (!changingExposure) {
                     // Check the focus. This is mainly needed in order to restart focus that doesn't run anymore,
-                    // which sometimes happens on samsung devices.
+                    // which sometimes happens on Samsung devices.
                     mCamera.autoFocus((success, camera) -> {
                         // if we are in one of the other modes, we need to run 'cancelAutofocus' in order
                         // to start the continuous focus again. *sigh*
@@ -78,22 +56,40 @@ public class CameraOperationsManager {
                         }
                     });
                 }
-                mCameraHandler.postDelayed(runAutoFocus, AUTO_FOCUS_DELAY);
+                if (mCameraHandler != null) {
+                    mCameraHandler.postDelayed(runAutoFocus, AUTO_FOCUS_DELAY);
+                }
             }
+        }
+    };
+    private StriptestHandler mStriptestHandler;
+    private byte[] bytes;
+    private final Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+        public void onPreviewFrame(byte[] imageData, Camera camera) {
+
+            if (bytes != null && bytes.length > 0 && AppPreferences.isTestMode()) {
+                // Use test image if we are in test mode
+                StriptestHandler.getDecodeData().setDecodeImageByteArray(bytes);
+            } else {
+                // store image for later use
+                StriptestHandler.getDecodeData().setDecodeImageByteArray(imageData);
+            }
+            MessageUtils.sendMessage(mStriptestHandler,
+                    StriptestHandler.DECODE_IMAGE_CAPTURED_MESSAGE, 0);
         }
     };
 
     public CameraOperationsManager(String name) {
         if (AppPreferences.isTestMode()) {
-            bytes = ImageUtil.loadImageBytes(name, FileHelper.FileType.TEST_IMAGE);
+            bytes = ImageUtil.loadImageBytes(name, FileType.TEST_IMAGE);
         }
     }
 
-    public StripTestCameraPreview initCamera(Context context) {
+    public CameraPreview initCamera(Context context) {
         startCameraThread();
 
         // open the camera and create a preview surface for it
-        StripTestCameraPreview cameraPreview = new StripTestCameraPreview(context);
+        CameraPreview cameraPreview = new CameraPreview(context);
         mCamera = cameraPreview.getCamera();
         return cameraPreview;
     }

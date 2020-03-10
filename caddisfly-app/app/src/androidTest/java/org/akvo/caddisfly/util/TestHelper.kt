@@ -21,16 +21,18 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.*
 import org.akvo.caddisfly.BuildConfig
+import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.app.CaddisflyApp
 import org.akvo.caddisfly.helper.FileHelper
-import org.akvo.caddisfly.helper.FileHelper.FileType
+import org.akvo.caddisfly.helper.FileType
 import org.akvo.caddisfly.util.TestUtil.clickListViewItem
 import org.akvo.caddisfly.util.TestUtil.findButtonInScrollable
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
@@ -41,6 +43,21 @@ import java.io.File
 import java.util.*
 
 lateinit var mDevice: UiDevice
+
+fun isStripPatchAvailable(name: String = "."): Boolean {
+    val file = File(FileHelper.getFilesDir(FileType.TEST_IMAGE, ""), "$name.yuv")
+    return file.exists()
+}
+
+fun clickStartButton() {
+    onView(Matchers.allOf(withId(R.id.buttonStart), withText(R.string.start),
+            TestUtil.childAtPosition(
+                    TestUtil.childAtPosition(
+                            ViewMatchers.withClassName(Matchers.`is`("android.widget.RelativeLayout")),
+                            2),
+                    2),
+            ViewMatchers.isDisplayed())).perform(click())
+}
 
 object TestHelper {
     var mCurrentLanguage: String = "en"

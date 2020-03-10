@@ -55,7 +55,7 @@ import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity
-import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity
+import org.akvo.caddisfly.sensor.striptest.ui.StripTestActivity
 import org.akvo.caddisfly.sensor.titration.TitrationTestActivity
 import org.akvo.caddisfly.util.AlertUtil
 import org.akvo.caddisfly.util.PreferencesUtil
@@ -292,7 +292,7 @@ class TestActivity : BaseActivity() {
     }
 
     private fun startStripTest() {
-        val intent = Intent(this, StripMeasureActivity::class.java)
+        val intent = Intent(this, StripTestActivity::class.java)
         intent.putExtra(ConstantKey.TEST_INFO, testInfo)
         startActivityForResult(intent, REQUEST_TEST)
     }

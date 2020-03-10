@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -21,6 +22,7 @@ import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.List;
+import java.util.Objects;
 
 import static org.akvo.caddisfly.sensor.striptest.utils.ResultUtils.createValueString;
 import static org.akvo.caddisfly.sensor.striptest.utils.ResultUtils.createValueUnitString;
@@ -33,8 +35,8 @@ public class BitmapUtils {
     private final static int TRIANGLE_HEIGHT = 30;
     private final static int COLOR_DROP_CIRCLE_RADIUS = 20;
     private final static int COLOR_BAR_HEIGHT = 50;
-    private final static int COLOR_BAR_VGAP = 10;
-    private final static int COLOR_BAR_HGAP = 10;
+    private final static int COLOR_BAR_VERTICAL_GAP = 10;
+    private final static int COLOR_BAR_HORIZONTAL_GAP = 10;
     private final static int VAL_BAR_HEIGHT = 25;
     private final static int TEXT_SIZE = 20;
     private final static int SPACING = 10;
@@ -53,22 +55,10 @@ public class BitmapUtils {
         return concatAllBitmaps(triangle, strip, colourDrop, colourBars);
     }
 
-    public static Bitmap createErrorImage() {
-        Bitmap resultImage = Bitmap.createBitmap(500, 40, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(resultImage);
-
-        Paint blackPaint = new Paint();
-        blackPaint.setColor(Color.BLACK);
-
-        // create paint
-        Paint redText = new Paint();
-        redText.setColor(Color.RED);
-        redText.setTextSize(30);
-        redText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        redText.setTextAlign(Paint.Align.CENTER);
-        canvas.drawRect(0, 0, 500, 40, blackPaint);
-        canvas.drawText("No strip found", 250, 35, redText);
-        return resultImage;
+    public static Bitmap RotateBitmap(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
     // creates image for a grouped-style strip
@@ -78,6 +68,26 @@ public class BitmapUtils {
         Bitmap colourDrop = createColourDropBitmapGroup(patchResultList);
         Bitmap colourBars = createColourBarsBitmapGroup(patchResultList);
         return concatAllBitmaps(null, strip, colourDrop, colourBars);
+    }
+
+    // Concatenate two bitmaps
+    public static Bitmap concatTwoBitmapsVertical(Bitmap bmp1, Bitmap bmp2) {
+        int width = bmp1.getWidth() + bmp2.getWidth() + SPACING;
+        Bitmap resultImage = Bitmap.createBitmap(width, bmp1.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(resultImage);
+        canvas.drawBitmap(bmp1, 0f, 0f, null);
+        canvas.drawBitmap(bmp2, bmp1.getWidth(), 0f, null);
+        return resultImage;
+    }
+
+    // Concatenate two bitmaps
+    public static Bitmap concatTwoBitmapsHorizontal(Bitmap bmp1, Bitmap bmp2) {
+        int height = bmp1.getHeight() + bmp2.getHeight() + SPACING;
+        Bitmap resultImage = Bitmap.createBitmap(bmp1.getWidth(), height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(resultImage);
+        canvas.drawBitmap(bmp1, 0f, 0f, null);
+        canvas.drawBitmap(bmp2, 0f, bmp1.getHeight(), null);
+        return resultImage;
     }
 
     // Concatenate two bitmaps
@@ -134,11 +144,11 @@ public class BitmapUtils {
 
     // creates bitmap with description, value and unit.
     // it is only included when we send the image to the server.
-    public static Bitmap createValueBitmap(PatchResult patchResult) {
+    public static Bitmap createValueBitmap(PatchResult patchResult, String defaultString) {
         Bitmap resultImage = Bitmap.createBitmap(IMG_WIDTH, VALUE_HEIGHT, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(resultImage);
         String unit = patchResult.getPatch().getUnit();
-        String valueString = createValueUnitString(patchResult.getValue(), unit);
+        String valueString = createValueUnitString(patchResult.getValue(), unit, defaultString);
         valueString = patchResult.getPatch().getName() + ": " + valueString + "  " + patchResult.getBracket();
 
         // create paint
@@ -165,7 +175,7 @@ public class BitmapUtils {
         int[] RGB;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                RGB = ColorUtils.XYZtoRGBint(xyzImg[i][j]);
+                RGB = ColorUtils.xyzToRgbInt(xyzImg[i][j]);
                 imgRGB[i * cols + j] = Color.rgb(RGB[0], RGB[1], RGB[2]);
             }
         }
@@ -206,7 +216,7 @@ public class BitmapUtils {
         }
 
         // resize
-        return Bitmap.createScaledBitmap(bmpRGB, IMG_WIDTH, height, false);
+        return Bitmap.createScaledBitmap(Objects.requireNonNull(bmpRGB), IMG_WIDTH, height, false);
     }
 
     // ----------------------------------------- individual ----------------------------------------
@@ -246,15 +256,15 @@ public class BitmapUtils {
         Bitmap result = Bitmap.createBitmap(IMG_WIDTH, 3 * COLOR_DROP_CIRCLE_RADIUS, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         float[] xyz = patchResult.getXyz();
-        int[] rgb = ColorUtils.XYZtoRGBint(xyz);
+        int[] rgb = ColorUtils.xyzToRgbInt(xyz);
 
         // compute central location of marker, using the index of the matched colour
         List<ColorItem> colors = patchResult.getPatch().getColors();
         int numColors = colors.size();
-        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HGAP) / numColors);
-        int xrange = IMG_WIDTH - blockWidth;
+        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HORIZONTAL_GAP) / numColors);
+        int xRange = IMG_WIDTH - blockWidth;
         int totIndex = ResultUtils.INTERPOLATION_NUMBER * (numColors - 1) + 1;
-        int xpos = (blockWidth / 2 + xrange * patchResult.getIndex() / totIndex);
+        int xPos = (blockWidth / 2 + xRange * patchResult.getIndex() / totIndex);
 
         Paint paintColor = new Paint();
         paintColor.setStyle(Paint.Style.FILL);
@@ -262,13 +272,13 @@ public class BitmapUtils {
 
         // compute points of triangle:
         Path path = new Path();
-        path.moveTo(xpos - COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS); // top left
-        path.lineTo(xpos + COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS); // top right
-        path.lineTo(xpos, 3 * COLOR_DROP_CIRCLE_RADIUS); // bottom
-        path.lineTo(xpos - COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS); // back to top left
+        path.moveTo(xPos - COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS); // top left
+        path.lineTo(xPos + COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS); // top right
+        path.lineTo(xPos, 3 * COLOR_DROP_CIRCLE_RADIUS); // bottom
+        path.lineTo(xPos - COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS); // back to top left
         path.close();
 
-        canvas.drawCircle(xpos, COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS, paintColor);
+        canvas.drawCircle(xPos, COLOR_DROP_CIRCLE_RADIUS, COLOR_DROP_CIRCLE_RADIUS, paintColor);
         canvas.drawPath(path, paintColor);
 
         return result;
@@ -293,7 +303,7 @@ public class BitmapUtils {
             lab[1] = patchColorValues.get(1).floatValue();
             lab[2] = patchColorValues.get(2).floatValue();
 
-            rgb = ColorUtils.XYZtoRGBint(ColorUtils.Lab2XYZ(lab));
+            rgb = ColorUtils.xyzToRgbInt(ColorUtils.Lab2XYZ(lab));
             rgbCols[i] = rgb;
             values[i] = colors.get(i).getValue().floatValue();
         }
@@ -308,8 +318,8 @@ public class BitmapUtils {
         blackText.setTextAlign(Paint.Align.CENTER);
 
         // cycle over colours and create blocks and value
-        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HGAP) / numColors);
-        int totWidth = COLOR_BAR_HGAP + blockWidth;
+        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HORIZONTAL_GAP) / numColors);
+        int totWidth = COLOR_BAR_HORIZONTAL_GAP + blockWidth;
         for (int i = 0; i < numColors; i++) {
             paintColor.setARGB(255, rgbCols[i][0], rgbCols[i][1], rgbCols[i][2]);
             canvas.drawRect(i * totWidth, 0, i * totWidth + blockWidth, COLOR_BAR_HEIGHT, paintColor);
@@ -333,17 +343,17 @@ public class BitmapUtils {
         // get measured RGB colours for all patches
         for (int j = 0; j < numPatches; j++) {
             xyz = patchResultList.get(j).getXyz();
-            rgbCols[j] = ColorUtils.XYZtoRGBint(xyz);
+            rgbCols[j] = ColorUtils.xyzToRgbInt(xyz);
         }
 
         // compute central location of marker, using the index of the matched colour
         List<ColorItem> colors = patchResultList.get(0).getPatch().getColors();
         int numColors = colors.size();
-        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HGAP) / numColors);
+        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HORIZONTAL_GAP) / numColors);
         int halfBlockWidth = blockWidth / 2;
-        int xrange = IMG_WIDTH - blockWidth;
+        int xRange = IMG_WIDTH - blockWidth;
         int totIndex = ResultUtils.INTERPOLATION_NUMBER * (numColors - 1) + 1;
-        int xpos = (int) (halfBlockWidth + xrange * index / totIndex);
+        int xPos = (int) (halfBlockWidth + xRange * index / totIndex);
 
         // create empty bitmap
         Bitmap result = Bitmap.createBitmap(IMG_WIDTH, (numPatches + 1) * blockWidth, Bitmap.Config.ARGB_8888);
@@ -358,7 +368,7 @@ public class BitmapUtils {
         for (int j = 0; j < numPatches; j++) {
             paintColor.setARGB(255, rgbCols[j][0], rgbCols[j][1], rgbCols[j][2]);
             yStart = j * blockWidth;
-            canvas.drawRect(xpos - halfBlockWidth, yStart, xpos + halfBlockWidth,
+            canvas.drawRect(xPos - halfBlockWidth, yStart, xPos + halfBlockWidth,
                     yStart + blockWidth, paintColor);
         }
 
@@ -366,10 +376,10 @@ public class BitmapUtils {
         yStart = numPatches * blockWidth;
 
         Path path = new Path();
-        path.moveTo(xpos - halfBlockWidth, yStart); // top left
-        path.lineTo(xpos + halfBlockWidth, yStart); // top right
-        path.lineTo(xpos, yStart + blockWidth); // bottom
-        path.lineTo(xpos - halfBlockWidth, yStart); // back to top left
+        path.moveTo(xPos - halfBlockWidth, yStart); // top left
+        path.lineTo(xPos + halfBlockWidth, yStart); // top right
+        path.lineTo(xPos, yStart + blockWidth); // bottom
+        path.lineTo(xPos - halfBlockWidth, yStart); // back to top left
         path.close();
 
         // draw triangle
@@ -398,14 +408,14 @@ public class BitmapUtils {
                 lab[1] = patchColorValues.get(1).floatValue();
                 lab[2] = patchColorValues.get(2).floatValue();
 
-                rgb = ColorUtils.XYZtoRGBint(ColorUtils.Lab2XYZ(lab));
+                rgb = ColorUtils.xyzToRgbInt(ColorUtils.Lab2XYZ(lab));
                 rgbCols[j][i] = rgb;
                 values[i] = colors.get(i).getValue().floatValue();
             }
         }
 
         // create empty bitmap
-        Bitmap result = Bitmap.createBitmap(IMG_WIDTH, numPatches * (COLOR_BAR_HEIGHT + COLOR_BAR_VGAP)
+        Bitmap result = Bitmap.createBitmap(IMG_WIDTH, numPatches * (COLOR_BAR_HEIGHT + COLOR_BAR_VERTICAL_GAP)
                 + VAL_BAR_HEIGHT, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
 
@@ -419,14 +429,14 @@ public class BitmapUtils {
         blackText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         blackText.setTextAlign(Paint.Align.CENTER);
 
-        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HGAP) / numColors);
-        int totWidth = COLOR_BAR_HGAP + blockWidth;
+        int blockWidth = Math.round((IMG_WIDTH - (numColors - 1) * COLOR_BAR_HORIZONTAL_GAP) / numColors);
+        int totWidth = COLOR_BAR_HORIZONTAL_GAP + blockWidth;
         int yStart;
 
         // cycle over patches
         for (int j = 0; j < numPatches; j++) {
             // cycle over colours and create blocks and value
-            yStart = j * (COLOR_BAR_HEIGHT + COLOR_BAR_VGAP);
+            yStart = j * (COLOR_BAR_HEIGHT + COLOR_BAR_VERTICAL_GAP);
             for (int i = 0; i < numColors; i++) {
                 paintColor.setARGB(255, rgbCols[j][i][0], rgbCols[j][i][1], rgbCols[j][i][2]);
                 canvas.drawRect(i * totWidth, yStart, i * totWidth + blockWidth,
@@ -434,7 +444,7 @@ public class BitmapUtils {
 
                 if (i == numColors - 1) {
                     String val = createValueString(values[i]);
-                    yStart = numColors * (COLOR_BAR_HEIGHT + COLOR_BAR_VGAP) + VAL_BAR_HEIGHT;
+                    yStart = numColors * (COLOR_BAR_HEIGHT + COLOR_BAR_VERTICAL_GAP) + VAL_BAR_HEIGHT;
                     canvas.drawText(val, i * totWidth + blockWidth / 2, yStart, blackText);
                 }
             }
@@ -461,11 +471,13 @@ public class BitmapUtils {
             result.copyPixelsFromBuffer(map);
             channel.close();
             randomAccessFile.close();
+            //noinspection ResultOfMethodCallIgnored
             outputFile.delete();
             return result;
         } catch (final Exception ignored) {
         } finally {
             if (outputFile != null)
+                //noinspection ResultOfMethodCallIgnored
                 outputFile.delete();
         }
         return null;

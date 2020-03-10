@@ -26,6 +26,9 @@ import androidx.fragment.app.Fragment
 import org.akvo.caddisfly.R
 
 open class BaseFragment : Fragment() {
+
+    private var fragmentId = 0
+
     protected fun setTitle(view: View, title: String?) {
         if (activity != null) {
             val toolbar: Toolbar = view.findViewById(R.id.toolbar)
@@ -43,5 +46,13 @@ open class BaseFragment : Fragment() {
                 }
             }
         }
+    }
+
+    open fun getFragmentId(): Int {
+        return fragmentId
+    }
+
+    open fun setFragmentId(value: Int) {
+        fragmentId = value
     }
 }

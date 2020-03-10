@@ -23,6 +23,7 @@ import android.graphics.Bitmap
 import android.os.Environment
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
 import org.akvo.caddisfly.helper.FileHelper
+import org.akvo.caddisfly.helper.FileType
 import timber.log.Timber
 import java.io.*
 import java.nio.charset.StandardCharsets
@@ -186,7 +187,8 @@ object FileUtil {
      *
      * @return absolute path name of saved file, or empty string on failure.
      */
-    fun writeBitmapToExternalStorage(bitmap: Bitmap?, fileType: FileHelper.FileType?, fileName: String): String { // Find the root of the external storage
+    @JvmStatic
+    fun writeBitmapToExternalStorage(bitmap: Bitmap?, fileType: FileType?, fileName: String): String { // Find the root of the external storage
 // See http://developer.android.com/guide/topics/data/data-  storage.html#filesExternal
 // See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
         val dir = FileHelper.getFilesDir(fileType)
