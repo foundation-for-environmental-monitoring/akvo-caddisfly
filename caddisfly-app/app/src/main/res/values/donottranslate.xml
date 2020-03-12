@@ -18,9 +18,6 @@
     <string name="number_5">5.</string>
     <string name="number_6">6.</string>
 
-    <!--paths to assets-->
-    <string name="instruction_images">images/instructions</string>
-
     <!--Keys-->
     <string name="languageKey">language</string>
     <string name="systemLanguageKey">systemLanguage</string>

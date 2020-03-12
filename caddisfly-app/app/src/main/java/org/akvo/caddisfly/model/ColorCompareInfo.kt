@@ -18,4 +18,4 @@
  */
 package org.akvo.caddisfly.model
 
-class ColorCompareInfo(val result: Double, val resultColor: Int, val matchedColor: Int, val distance: Double)
+class ColorCompareInfo(val result: Double, val matchedColor: Int, val distance: Double)

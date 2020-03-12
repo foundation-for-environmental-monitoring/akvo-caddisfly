@@ -37,7 +37,7 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class UpdateCheckTask extends AsyncTask<String, String, String> {
+class UpdateCheckTask extends AsyncTask<String, String, String> {
 
     private final WeakReference<Context> contextRef;
 

@@ -21,6 +21,7 @@ package org.akvo.caddisfly.util
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Typeface
@@ -76,13 +77,14 @@ object StringUtil {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
         } else {
+            @Suppress("DEPRECATION")
             Html.fromHtml(html)
         }
     }
 
     @JvmStatic
-    fun toInstruction(context: AppCompatActivity, testInfo: TestInfo?, text: String): SpannableStringBuilder {
-        var text = text
+    fun toInstruction(context: AppCompatActivity, testInfo: TestInfo?, instructionText: String): SpannableStringBuilder {
+        var text = instructionText
         val builder = SpannableStringBuilder()
         var isBold = false
         if (text.startsWith("<b>") && text.endsWith("</b>")) {
@@ -143,7 +145,7 @@ object StringUtil {
             val p = Pattern.compile("\\[a topic=(.*?)]")
             val m3 = p.matcher(builder)
             if (m3.find()) {
-                topic = m3.group(1)
+                topic = m3.group(1)!!
                 builder.replace(m3.start(), m3.end(), "")
                 val endIndex = builder.toString().indexOf("[/a]")
                 builder.replace(endIndex, endIndex + 4, "")
@@ -152,6 +154,9 @@ object StringUtil {
                         if (topic.equals("sulfide", ignoreCase = true)) {
                             val newFragment: DialogFragment = SulfideDialogFragment()
                             newFragment.show(context.supportFragmentManager, "sulfideDialog")
+                        } else {
+                            val newFragment: DialogFragment = DilutionDialogFragment()
+                            newFragment.show(context.supportFragmentManager, "dilutionDialog")
                         }
                     }
 
@@ -186,7 +191,18 @@ object StringUtil {
             val builder = AlertDialog.Builder(requireContext())
             val inflater = activity!!.layoutInflater
             builder.setView(inflater.inflate(R.layout.dialog_sulfide_instruction, null)) // Add action buttons
-                    .setPositiveButton(R.string.ok) { dialog, id -> dialog.dismiss() }
+                    .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+            return builder.create()
+        }
+    }
+
+    class DilutionDialogFragment : DialogFragment() {
+        @SuppressLint("InflateParams")
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+            val builder = AlertDialog.Builder(activity!!)
+            val inflater = activity!!.layoutInflater
+            builder.setView(inflater.inflate(R.layout.dialog_dilution_instruction, null)) // Add action buttons
+                    .setPositiveButton(R.string.ok) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
             return builder.create()
         }
     }

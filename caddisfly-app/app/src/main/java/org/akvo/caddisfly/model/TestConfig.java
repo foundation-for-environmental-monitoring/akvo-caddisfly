@@ -26,20 +26,9 @@ import java.util.List;
 
 public class TestConfig {
 
-    @SerializedName("comment")
-    @Expose
-    private String comment;
     @SerializedName("tests")
     @Expose
     private List<TestInfo> tests = null;
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     public List<TestInfo> getTests() {
         return tests;

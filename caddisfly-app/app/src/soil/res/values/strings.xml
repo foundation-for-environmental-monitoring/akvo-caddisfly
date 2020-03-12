@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="experiment">Experiment</string>
     <string name="app_slogan">Soil Quality System</string>
 </resources>

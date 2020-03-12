@@ -30,7 +30,6 @@ import java.util.List;
 
 public class ColorItem implements Parcelable {
 
-    @SuppressWarnings("unused")
     public static final Creator<ColorItem> CREATOR = new Creator<ColorItem>() {
         @Override
         public ColorItem createFromParcel(Parcel in) {
@@ -84,10 +83,6 @@ public class ColorItem implements Parcelable {
 
     public List<Double> getLab() {
         return lab;
-    }
-
-    public void setLab(List<Double> lab) {
-        this.lab = lab;
     }
 
     public List<Integer> getRgb() {

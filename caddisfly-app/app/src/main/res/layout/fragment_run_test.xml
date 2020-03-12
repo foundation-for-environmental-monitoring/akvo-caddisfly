@@ -42,9 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="20dp"
-            android:paddingEnd="10dp"
             android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="20dp"
             app:background="@{vm.test.name}"
             tools:background="?colorPrimary">
 
@@ -83,39 +83,33 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
+            <LinearLayout
                 android:id="@+id/timeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:background="@color/button_green"
+                android:orientation="vertical"
                 android:visibility="gone">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <org.akvo.caddisfly.widget.TimerView
+                    android:id="@+id/countdownTimer"
+                    android:layout_width="190dp"
+                    android:layout_height="190dp"
+                    android:visibility="gone"
+                    app:circleColor="#016ec6" />
+
+                <TextView
+                    android:id="@+id/textTimeRemaining"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <org.akvo.caddisfly.widget.TimerView
-                        android:id="@+id/countdownTimer"
-                        android:layout_width="190dp"
-                        android:layout_height="190dp"
-                        android:visibility="gone"
-                        app:circleColor="#016ec6" />
-
-                    <TextView
-                        android:id="@+id/textTimeRemaining"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center_horizontal"
-                        android:paddingTop="16dp"
-                        android:textSize="32dp"
-                        tools:ignore="SpUsage"
-                        tools:text="00:05:00" />
-                </LinearLayout>
-            </FrameLayout>
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="16dp"
+                    android:textSize="32dp"
+                    tools:ignore="SpUsage"
+                    tools:text="00:05:00" />
+            </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/layoutWait"
@@ -156,9 +150,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="24dp"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="24dp"
                     android:enabled="true"
                     android:minWidth="230dp"
                     android:onClick="onStartTestClick"

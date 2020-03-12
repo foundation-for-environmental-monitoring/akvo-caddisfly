@@ -5,12 +5,6 @@
     <string name="prepare_camera_instruction">Don\'t take sample yet. Hold camera above colour card and adjust position until check succeeds.</string>
 
     <!--Water-->
-    <string name="as_ins_1">Insert a test strip into the cap so the pad completely covers the small opening. Close the flap and press to secure.</string>
-    <string name="as_ins_3">Add one <b>Reagent #1</b> and one <b>Reagent #2</b> powder pillow to the sample. If a rotten egg smell is detected after adding reagent #1, sulfide is present at interfering levels, <b>[a topic=sulfide]click here[/a]</b> to see how to remove sulfide before continuing the test procedure.</string>
-    <string name="as_ins_4">Immediately attach the cap to the reaction bottle. Swirl continuously for 60 seconds. <b>Do not shake or invert or allow sample to get on the strip.</b></string>
-    <string name="as_ins_7">Fill the square measuring vial to the top with sample (9.6 mL). Pour the sample into the reaction bottle.</string>
-    <string name="as_safety">DANGER: Hydrogen and arsine gases are generated during the test. Work in a well-ventilated area away from open flames and other sources of ignition. Review Material Safety Data Sheets for safe handling, storage and disposal information.</string>
-
     <string name="place_strip_clr_hg_1"><b>Place a clean test strip below the used test strip so that patch has a white background.</b></string>
     <string name="place_strip_clr_hg_2">Place the stacked strips with the patch facing <b>left</b> on the black area of the Colour Reference Card and press <b>Start</b>.</string>
     <string name="as_safety_1"><b>DANGER:</b> Hydrogen and arsine gases are generated during the test. Work in a well-ventilated area away from open flames and other sources of ignition.</string>

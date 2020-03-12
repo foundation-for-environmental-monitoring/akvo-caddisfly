@@ -121,8 +121,8 @@ class ChamberInstructions {
         sleep(1000)
         mDevice.waitForIdle()
         sleep(1000)
-        val id = Constants.FREE_CHLORINE_ID.substring(
-                Constants.FREE_CHLORINE_ID.lastIndexOf("-") + 1)
+        val id = TestConstants.FREE_CHLORINE_ID.substring(
+                TestConstants.FREE_CHLORINE_ID.lastIndexOf("-") + 1)
         takeScreenshot(id, -1)
         mDevice.waitForIdle()
 

@@ -26,12 +26,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.updater.NotificationCancelReceiver;
 import org.akvo.caddisfly.updater.UpdateAppReceiver;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
 public class NotificationScheduler {
     private static final String EXTRA_NOTIFICATION_ID = "android.intent.extra.NOTIFICATION_ID";
@@ -51,6 +51,7 @@ public class NotificationScheduler {
         PendingIntent snoozePendingIntent =
                 PendingIntent.getBroadcast(context, 0, snoozeIntent, 0);
 
+        @SuppressWarnings("deprecation")
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         Notification notification = builder.setContentTitle(title)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(content))

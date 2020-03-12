@@ -27,6 +27,7 @@
     android:background="?colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:titleTextColor="?colorPrimary"
+    tools:ignore="Overdraw"
     tools:showIn="@layout/activity_about">
 
     <TextView

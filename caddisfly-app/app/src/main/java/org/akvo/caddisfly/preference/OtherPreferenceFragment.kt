@@ -1,23 +1,4 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
 @file:Suppress("DEPRECATION")
-
 package org.akvo.caddisfly.preference
 
 import android.app.ProgressDialog
@@ -77,7 +58,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle(R.string.emailSupport)
                 builder.setMessage(getString(R.string.if_you_need_assistance) + "\n\n" +
-                        getString(R.string.select_email_app))
+                                getString(R.string.select_email_app))
                         .setCancelable(false)
                         .setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
                         .setPositiveButton(R.string.create_support_email) { dialog: DialogInterface, _: Int ->
@@ -132,8 +113,8 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
         private var listener: ExampleAsyncTaskListener? = null
         private val activityReference: WeakReference<OtherPreferenceFragment> = WeakReference(fragment)
         override fun doInBackground(vararg params: Void?): Int? {
-            val viewModel = ViewModelProvider((activityReference.get()
-                    ?.activity as FragmentActivity)).get(TestListViewModel::class.java)
+            val context = (activityReference.get()?.activity as FragmentActivity)
+            val viewModel = ViewModelProvider(context).get(TestListViewModel::class.java)
             val testList = viewModel.getTests(TestType.CHAMBER_TEST, TestSampleType.ALL)
             for (testInfo in testList) {
                 if (testInfo.isGroup) {

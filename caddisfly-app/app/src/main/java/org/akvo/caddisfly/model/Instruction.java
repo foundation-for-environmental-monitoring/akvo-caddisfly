@@ -45,30 +45,20 @@ public class Instruction implements Parcelable, Cloneable {
     };
     @SerializedName("section")
     @Expose
-    public List<String> section;
-    @SerializedName("image")
-    @Expose
-    public String image;
-    @SerializedName("layout")
-    @Expose
-    public String layout;
+    public final List<String> section;
     @SerializedName("testStage")
     @Expose
-    public int testStage;
+    public final int testStage;
     private int index;
 
     private Instruction(Instruction instruction) {
         index = instruction.index;
         section = new ArrayList<>(instruction.section);
-        image = instruction.image;
-        layout = instruction.layout;
         testStage = instruction.testStage;
     }
 
     private Instruction(Parcel in) {
         section = in.createStringArrayList();
-        image = in.readString();
-        layout = in.readString();
         testStage = in.readInt();
     }
 
@@ -86,8 +76,6 @@ public class Instruction implements Parcelable, Cloneable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeStringList(section);
-        parcel.writeString(image);
-        parcel.writeString(layout);
         parcel.writeInt(testStage);
     }
 
@@ -99,4 +87,3 @@ public class Instruction implements Parcelable, Cloneable {
         index = value;
     }
 }
-

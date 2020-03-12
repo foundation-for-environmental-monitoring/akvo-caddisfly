@@ -22,7 +22,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee"
-    tools:context=".sensor.striptest.ui.StripTestActivity">
+    tools:context=".sensor.striptest.ui.StripTestActivity"
+    tools:ignore="Overdraw">
 
     <ScrollView
         android:id="@+id/resultScrollView"

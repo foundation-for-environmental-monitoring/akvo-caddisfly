@@ -9,20 +9,21 @@
         android:id="@+id/tableDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:clickable="false"
             android:columnCount="2"
             android:focusable="false"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
             <Button
                 android:id="@+id/buttonColorExtract"
@@ -36,9 +37,9 @@
                 android:id="@+id/textValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:textSize="40dp"
                 tools:ignore="SpUsage"

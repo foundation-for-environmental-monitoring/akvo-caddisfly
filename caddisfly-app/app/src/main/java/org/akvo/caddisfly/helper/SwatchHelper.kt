@@ -105,7 +105,7 @@ object SwatchHelper {
             distance = nearestDistance
             matchedColor = nearestMatchedColor
         }
-        return ColorCompareInfo(resultValue, colorToFind, matchedColor, distance)
+        return ColorCompareInfo(resultValue, matchedColor, distance)
     }
 
     /**

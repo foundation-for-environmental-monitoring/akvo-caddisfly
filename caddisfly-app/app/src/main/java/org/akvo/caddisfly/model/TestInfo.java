@@ -124,7 +124,7 @@ public class TestInfo implements Parcelable {
     private String ranges;
     @SerializedName("dilutions")
     @Expose
-    private List<Integer> dilutions = new ArrayList<>();
+    private final List<Integer> dilutions = new ArrayList<>();
     @SerializedName("monthsValid")
     @Expose
     private Integer monthsValid;
@@ -178,7 +178,7 @@ public class TestInfo implements Parcelable {
         isCategory = true;
     }
 
-    protected TestInfo(Parcel in) {
+    private TestInfo(Parcel in) {
         isCategory = in.readByte() != 0;
         category = in.readString();
         name = in.readString();
@@ -268,6 +268,7 @@ public class TestInfo implements Parcelable {
         cameraAbove = value;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean getIsGroup() {
         return isCategory;
     }

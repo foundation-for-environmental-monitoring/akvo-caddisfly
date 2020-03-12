@@ -86,7 +86,7 @@ public final class CameraHelper {
      * @param onClickListener positive button listener
      * @return true if camera flash exists otherwise false
      */
-    @SuppressWarnings("SameParameterValue")
+    @SuppressWarnings({"SameParameterValue", "BooleanMethodIsAlwaysInverted"})
     public static boolean hasFeatureCameraFlash(Context context, @StringRes int errorTitle,
                                                 @StringRes int buttonText,
                                                 DialogInterface.OnClickListener onClickListener) {

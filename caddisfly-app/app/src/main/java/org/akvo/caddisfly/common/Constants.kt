@@ -22,7 +22,6 @@ object Constants {
     const val BRAND_IMAGE_PATH = "images/brand/"
     const val ILLUSTRATION_PATH = "images/instructions/"
     const val TESTS_META_FILENAME = "tests.json"
-    const val FREE_CHLORINE_ID = "c3535e72-ff77-4225-9f4a-41d3288780c6"
     const val FREE_CHLORINE_ID_2 = "a2413119-38eb-4959-92ee-cc169fdbb0fc"
     const val MIN_CAMERA_MEGA_PIXELS = 5
     const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"

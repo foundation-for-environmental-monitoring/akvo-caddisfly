@@ -29,11 +29,11 @@ import org.akvo.caddisfly.R
 class PreferenceCategoryCustom : PreferenceCategory {
     @Suppress("unused")
     constructor(context: Context?) : super(context) {
-        layoutResource = R.layout.preference_category
+        layoutResource = R.layout.preference_category_custom
     }
 
     @Suppress("unused")
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        layoutResource = R.layout.preference_category
+        layoutResource = R.layout.preference_category_custom
     }
 }

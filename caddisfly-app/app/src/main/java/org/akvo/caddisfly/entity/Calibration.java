@@ -4,12 +4,12 @@ package org.akvo.caddisfly.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
+
+import java.util.Objects;
 
 @Entity(primaryKeys = {"uid", "value"})
 public class Calibration implements Parcelable {
@@ -58,7 +58,7 @@ public class Calibration implements Parcelable {
         this.color = color;
     }
 
-    public Calibration(Parcel in) {
+    private Calibration(Parcel in) {
         uid = Objects.requireNonNull(in.readString());
         date = in.readLong();
         value = in.readDouble();

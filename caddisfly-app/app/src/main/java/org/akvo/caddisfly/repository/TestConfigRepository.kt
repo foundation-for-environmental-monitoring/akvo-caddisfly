@@ -21,6 +21,8 @@ import java.util.*
 
 class TestConfigRepository {
     private val assetsManager: AssetsManager = AssetsManager()
+
+    @SuppressWarnings("unused")
     fun getTests(testType: TestType): List<TestInfo> {
         return getTests(testType, TestSampleType.ALL)
     }

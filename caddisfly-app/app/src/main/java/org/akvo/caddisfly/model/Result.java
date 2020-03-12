@@ -93,7 +93,7 @@ public class Result implements Parcelable {
     public Result() {
     }
 
-    protected Result(Parcel in) {
+    private Result(Parcel in) {
         id = in.readByte() == 0x00 ? null : in.readInt();
         name = in.readString();
         unit = in.readString();
@@ -323,6 +323,7 @@ public class Result implements Parcelable {
         return value;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean highLevelsFound() {
         return highLevelsFound;
     }

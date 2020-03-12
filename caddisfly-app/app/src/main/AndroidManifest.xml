@@ -47,6 +47,7 @@
         android:extractNativeLibs="false"
         android:fullBackupContent="@xml/backup_scheme"
         android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/appName"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Main"
