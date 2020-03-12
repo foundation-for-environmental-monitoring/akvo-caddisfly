@@ -33,9 +33,4 @@ public class TestConfig {
     public List<TestInfo> getTests() {
         return tests;
     }
-
-    public void setTests(List<TestInfo> tests) {
-        this.tests = tests;
-    }
-
 }

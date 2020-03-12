@@ -32,13 +32,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import org.akvo.caddisfly.R;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import org.akvo.caddisfly.R;
 
 /**
  * Utility functions to show alert messages.
@@ -59,17 +59,6 @@ public final class AlertUtil {
      * @param message the message
      */
     public static void showMessage(@NonNull Context context, @StringRes int title, @StringRes int message) {
-        showAlert(context, title, message, null, null, null);
-    }
-
-    /**
-     * Displays an alert dialog.
-     *
-     * @param context the context
-     * @param title   the title
-     * @param message the message
-     */
-    public static void showMessage(@NonNull Context context, @StringRes int title, String message) {
         showAlert(context, title, message, null, null, null);
     }
 
@@ -109,15 +98,6 @@ public final class AlertUtil {
                                   DialogInterface.OnCancelListener cancelListener) {
 
         showAlert(context, context.getString(title), context.getString(message), R.string.ok, R.string.cancel,
-                true, false, positiveListener, negativeListener, cancelListener);
-    }
-
-    private static void showAlert(@NonNull Context context, @StringRes int title, String message,
-                                  DialogInterface.OnClickListener positiveListener,
-                                  DialogInterface.OnClickListener negativeListener,
-                                  DialogInterface.OnCancelListener cancelListener) {
-
-        showAlert(context, context.getString(title), message, R.string.ok, R.string.cancel,
                 true, false, positiveListener, negativeListener, cancelListener);
     }
 

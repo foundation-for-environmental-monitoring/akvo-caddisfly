@@ -21,9 +21,6 @@ package org.akvo.caddisfly.sensor.striptest.camera;
 
 import android.hardware.Camera;
 
-/**
- * Created by linda on 7/7/15
- */
 final class TheCamera {
 
     private TheCamera() {

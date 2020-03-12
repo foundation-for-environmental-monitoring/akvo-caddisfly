@@ -5,9 +5,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by linda on 9/13/15
- */
 public class FinderPatternInfoToJson {
 
     public static String toJson(FinderPatternInfo info) {

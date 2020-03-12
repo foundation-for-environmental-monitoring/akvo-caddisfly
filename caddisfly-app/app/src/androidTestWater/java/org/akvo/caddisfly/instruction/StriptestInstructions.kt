@@ -95,6 +95,7 @@ class StriptestInstructions {
                 1),
                 1), isDisplayed()))
         appCompatButton2.perform(click())
+
         onView(withText(string.as_safety_1)).check(matches(isDisplayed()))
         onView(withText("Arsenic (0 - 500)"))
                 .check(matches(isDisplayed()))

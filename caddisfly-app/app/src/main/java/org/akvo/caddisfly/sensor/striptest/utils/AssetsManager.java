@@ -29,9 +29,6 @@ import java.nio.charset.StandardCharsets;
 
 import timber.log.Timber;
 
-/**
- * Created by linda on 8/19/15
- */
 public final class AssetsManager {
 
     private static AssetsManager assetsManager;

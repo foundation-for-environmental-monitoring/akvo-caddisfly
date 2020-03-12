@@ -36,9 +36,6 @@ import java.util.List;
 
 import timber.log.Timber;
 
-/**
- * Created by linda on 7/7/15
- */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final int MIN_CAMERA_WIDTH = 1300;

@@ -226,10 +226,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
-    public Camera getCamera() {
-        return mCamera;
-    }
-
     interface OnSurfaceChangedListener {
         void onSurfaceChanged(int w, int h, int previewWidth, int previewHeight);
     }

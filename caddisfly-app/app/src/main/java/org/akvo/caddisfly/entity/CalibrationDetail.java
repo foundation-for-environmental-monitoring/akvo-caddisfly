@@ -58,7 +58,12 @@ public class CalibrationDetail implements Parcelable {
     }
 
     private CalibrationDetail(Parcel in) {
-        uid = in.readString();
+        String uuid = in.readString();
+        if (uuid != null) {
+            uid = uuid;
+        } else {
+            uid = "";
+        }
         date = in.readLong();
         expiry = in.readLong();
         batchNumber = in.readString();

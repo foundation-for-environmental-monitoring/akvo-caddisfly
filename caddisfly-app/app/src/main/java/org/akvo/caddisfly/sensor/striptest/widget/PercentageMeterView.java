@@ -28,9 +28,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-/**
- * Created by linda on 11/5/15
- */
 public class PercentageMeterView extends View {
 
     private static final int NUMBER_OF_BARS = 10;

@@ -39,9 +39,6 @@ import org.akvo.caddisfly.sensor.striptest.utils.Constants;
 
 import java.util.List;
 
-/**
- * Created by linda on 9/9/15
- */
 public class FinderPatternIndicatorView extends View {
     private static int mGridStepDisplay;
     private static int mGridStepImage;

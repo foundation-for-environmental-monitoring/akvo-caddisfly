@@ -22,6 +22,7 @@ import androidx.preference.PreferenceFragmentCompat
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.getAppVersion
 import org.akvo.caddisfly.helper.SwatchHelper.generateCalibrationFile
+import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.preference.OtherPreferenceFragment.GenerateMessageAsyncTask.ExampleAsyncTaskListener
@@ -112,10 +113,17 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
     internal class GenerateMessageAsyncTask(fragment: OtherPreferenceFragment) : AsyncTask<Void?, Void?, Int?>() {
         private var listener: ExampleAsyncTaskListener? = null
         private val activityReference: WeakReference<OtherPreferenceFragment> = WeakReference(fragment)
-        override fun doInBackground(vararg params: Void?): Int? {
+        private lateinit var viewModel: TestListViewModel
+        private lateinit var testList: List<TestInfo>
+
+        override fun onPreExecute() {
+            super.onPreExecute()
             val context = (activityReference.get()?.activity as FragmentActivity)
-            val viewModel = ViewModelProvider(context).get(TestListViewModel::class.java)
-            val testList = viewModel.getTests(TestType.CHAMBER_TEST, TestSampleType.ALL)
+            viewModel = ViewModelProvider(context).get(TestListViewModel::class.java)
+            testList = viewModel.getTests(TestType.CHAMBER_TEST, TestSampleType.ALL)
+        }
+
+        override fun doInBackground(vararg params: Void?): Int? {
             for (testInfo in testList) {
                 if (testInfo.isGroup) {
                     continue

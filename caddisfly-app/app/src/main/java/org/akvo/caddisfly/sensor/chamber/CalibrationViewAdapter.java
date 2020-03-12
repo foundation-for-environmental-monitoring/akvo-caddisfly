@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.akvo.caddisfly.R;
@@ -107,7 +108,6 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
                 mListener.onCalibrationSelected(holder.mItem);
             }
         });
-
     }
 
     @Override
@@ -125,15 +125,15 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
         private final TextView textBrightness;
         Calibration mItem;
 
-        ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = view.findViewById(R.id.buttonColor);
-            textValue = view.findViewById(R.id.textValue);
-            textUnit = view.findViewById(R.id.textUnit);
-            textRgb = view.findViewById(R.id.textRgb);
-            textHsv = view.findViewById(R.id.textHsv);
-            textBrightness = view.findViewById(R.id.textBrightness);
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mView = itemView;
+            mIdView = itemView.findViewById(R.id.buttonColor);
+            textValue = itemView.findViewById(R.id.textValue);
+            textUnit = itemView.findViewById(R.id.textUnit);
+            textRgb = itemView.findViewById(R.id.textRgb);
+            textHsv = itemView.findViewById(R.id.textHsv);
+            textBrightness = itemView.findViewById(R.id.textBrightness);
         }
 
         @NotNull
