@@ -16,24 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
-@file:Suppress("DEPRECATION")
+package org.akvo.caddisfly.model
 
-package org.akvo.caddisfly.util
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 
-import android.hardware.Camera
-
-object TheCamera {
-    /**
-     * A safe way to get an instance of the Camera object.
-     */
-    @JvmStatic
-    val cameraInstance: Camera?
-        get() {
-            var c: Camera? = null
-            try {
-                c = Camera.open() // attempt to get a Camera instance
-            } catch (e: Exception) { // Camera is not available (in use or does not exist)
-            }
-            return c // returns null if camera is unavailable
-        }
+class TestConfig {
+    @SerializedName("tests")
+    @Expose
+    val tests: ArrayList<TestInfo> = ArrayList()
 }

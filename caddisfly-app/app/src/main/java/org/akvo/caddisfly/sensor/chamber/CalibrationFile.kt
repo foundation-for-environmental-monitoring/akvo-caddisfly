@@ -43,7 +43,7 @@ object CalibrationFile {
 
         //Save a backup of the calibration details
         val calibrationDetails = generateCalibrationFile(context, testInfo, true)
-        val path = getFilesDir(FileType.CALIBRATION, testInfo.uuid)
+        val path = getFilesDir(FileType.CALIBRATION, testInfo.uuid!!)
         saveToFile(path, "_AutoBackup", calibrationDetails)
         Toast.makeText(context, R.string.calibrated, Toast.LENGTH_LONG).show()
     }

@@ -172,7 +172,7 @@ public class ResultFragment extends BaseFragment {
         // compute XYZ colours of patches and store as lab and xyz
         List<PatchResult> patchResultList = new ArrayList<>();
         for (Result patch : results) {
-            PatchResult patchResult = new PatchResult(patch.getId());
+            PatchResult patchResult = new PatchResult(patch.id);
             if (patch.getColors().size() == 0) {
                 continue;
             }
@@ -254,7 +254,7 @@ public class ResultFragment extends BaseFragment {
                 patchResult.setBracket(bracket);
 
                 // Put the result into results list
-                resultStringValues.put(patchResult.getPatch().getId(),
+                resultStringValues.put(patchResult.getPatch().id,
                         Float.isNaN(value) ? ""
                                 : String.valueOf(roundSignificant(value)));
                 brackets.put(patchResultList.get(0).getId(), bracket);
@@ -281,7 +281,7 @@ public class ResultFragment extends BaseFragment {
     private void createView(TestInfo testInfo, List<PatchResult> patchResultList) {
         // create view in case the strip was not found
         if (patchResultList == null || patchResultList.size() == 0) {
-            String patchDescription = testInfo.getName();
+            String patchDescription = testInfo.name;
             inflateView(patchDescription, "", null);
         }
         // else create view in case the strip is of type GROUP
@@ -292,13 +292,13 @@ public class ResultFragment extends BaseFragment {
 
             PatchResult patchResult = patchResultList.get(0);
 
-            String patchDescription = patchResult.getPatch().getName();
-            String unit = patchResult.getPatch().getUnit();
+            String patchDescription = patchResult.getPatch().name;
+            String unit = patchResult.getPatch().unit;
             String valueString = createValueUnitString(patchResult.getValue(), unit, getString(R.string.no_result));
 
             if (AppPreferences.isTestMode() && patchResultList.size() == 0) {
-                patchDescription = testInfo.getResults().get(0).getName();
-                unit = testInfo.getResults().get(0).getUnit();
+                patchDescription = testInfo.getResults().get(0).name;
+                unit = testInfo.getResults().get(0).unit;
                 valueString = createValueUnitString(0, unit, getString(R.string.no_result));
             }
 
@@ -315,16 +315,16 @@ public class ResultFragment extends BaseFragment {
             displayCalculatedResults(testInfo, patchResultList);
 
             if (AppPreferences.isTestMode() && patchResultList.size() == 0) {
-                String patchDescription = testInfo.getResults().get(0).getName();
-                String unit = testInfo.getResults().get(0).getUnit();
+                String patchDescription = testInfo.getResults().get(0).name;
+                String unit = testInfo.getResults().get(0).unit;
                 String valueString = createValueUnitString(0, unit, getString(R.string.no_result));
                 inflateView(patchDescription, valueString, null);
             }
 
             for (PatchResult patchResult : patchResultList) {
                 // create strings for description, unit, and value
-                String patchDescription = patchResult.getPatch().getName();
-                String unit = patchResult.getPatch().getUnit();
+                String patchDescription = patchResult.getPatch().name;
+                String unit = patchResult.getPatch().unit;
                 String valueString = createValueUnitString(patchResult.getValue(), unit, getString(R.string.no_result));
 
                 // create image to display on screen
@@ -368,10 +368,10 @@ public class ResultFragment extends BaseFragment {
         // pixels per mm on the strip image
         double stripRatio = mDecodeData.getStripPixelWidth() / brand.getStripLength();
 
-        double x = patch.getPatchPos() * stripRatio;
-        double y = 0.5 * patch.getPatchWidth() * stripRatio;
+        double x = patch.patchPos * stripRatio;
+        double y = 0.5 * patch.patchWidth * stripRatio;
 
-        double halfSize = 0.5 * Constants.STRIP_WIDTH_FRACTION * patch.getPatchWidth();
+        double halfSize = 0.5 * Constants.STRIP_WIDTH_FRACTION * patch.patchWidth;
         int tlx = (int) Math.round(x - halfSize);
         int tly = (int) Math.round(y - halfSize);
         int brx = (int) Math.round(x + halfSize);
@@ -419,8 +419,8 @@ public class ResultFragment extends BaseFragment {
 
                 // if displayResult formula exists then calculate and display
                 if (displayResult.getColors().size() == 0 && !displayResult.getFormula().isEmpty()) {
-                    String patchDescription = displayResult.getName();
-                    String unit = displayResult.getUnit();
+                    String patchDescription = displayResult.name;
+                    String unit = displayResult.unit;
 
                     Object[] results;
                     if (testInfo.getGroupingType() == GroupType.GROUP) {
@@ -445,7 +445,7 @@ public class ResultFragment extends BaseFragment {
                         return;
                     }
 
-                    resultStringValues.put(displayResult.getId(), String.valueOf(calculatedResult));
+                    resultStringValues.put(displayResult.id, String.valueOf(calculatedResult));
 
                     inflateView(patchDescription, createValueUnitString(
                             (float) calculatedResult, unit, getString(R.string.no_result)), null);

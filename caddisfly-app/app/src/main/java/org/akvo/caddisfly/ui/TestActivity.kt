@@ -194,19 +194,19 @@ class TestActivity : BaseActivity() {
         if (maxDilution == -1) {
             maxDilution = 15
         }
-        for (i in testInfo!!.results.indices) {
-            val result = testInfo!!.results[i]
+        for (i in testInfo!!.results!!.indices) {
+            val result = testInfo!!.results!![i]
             val random = Random()
             var maxValue = 100.0
-            if (result.colors.size > 0) {
-                maxValue = result.colors[result.colors.size - 1].value
+            if (result.colors.isNotEmpty()) {
+                maxValue = result.colors[result.colors.size - 1].value!!
             }
             val dilution = random.nextInt(maxDilution) + 1
             result.setResult(random.nextDouble() * maxValue,
                     dilution, maxDilution)
-            var testName = result.name.replace(" ", "_")
-            if (testInfo!!.nameSuffix != null && testInfo!!.nameSuffix.isNotEmpty()) {
-                testName += "_" + testInfo!!.nameSuffix.replace(" ", "_")
+            var testName = result.name?.replace(" ", "_")
+            if (testInfo!!.nameSuffix != null && testInfo!!.nameSuffix!!.isNotEmpty()) {
+                testName += "_" + testInfo!!.nameSuffix!!.replace(" ", "_")
             }
             resultIntent.putExtra(testName
                     + testInfo!!.resultSuffix, result.result)
@@ -215,7 +215,7 @@ class TestActivity : BaseActivity() {
                     + testInfo!!.resultSuffix, dilution)
             resultIntent.putExtra(testName
                     + "_" + SensorConstants.UNIT + testInfo!!.resultSuffix,
-                    testInfo!!.results[0].unit)
+                    testInfo!!.results!![0].unit)
             if (i == 0) {
                 resultIntent.putExtra(SensorConstants.VALUE, result.result)
             }

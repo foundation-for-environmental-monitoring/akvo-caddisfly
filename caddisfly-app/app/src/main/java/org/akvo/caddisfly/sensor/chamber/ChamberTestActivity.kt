@@ -137,7 +137,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
     }
 
     private fun start() {
-        if (testInfo!!.dilutions.size > 0) {
+        if (testInfo!!.dilutions.isNotEmpty()) {
             val selectDilutionFragment: Fragment = SelectDilutionFragment.newInstance(testInfo)
             goToFragment(selectDilutionFragment)
         } else {
@@ -294,7 +294,9 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
 
     private fun loadDetails() {
         val calibrations = db?.calibrationDao()!!.getAll(testInfo!!.uuid)
-        testInfo!!.calibrations = calibrations
+        if (calibrations != null) {
+            testInfo!!.calibrations = calibrations
+        }
         if (calibrationItemFragment != null) {
             calibrationItemFragment!!.setAdapter(testInfo)
         }
@@ -311,7 +313,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
             val builder = AlertDialog.Builder(context)
             builder.setTitle(R.string.loadCalibration)
             val arrayAdapter = ArrayAdapter<String>(context, R.layout.row_text)
-            val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo!!.uuid)
+            val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo!!.uuid!!)
             var listFilesTemp: Array<File>? = null
             if (path.exists() && path.isDirectory) {
                 listFilesTemp = path.listFiles()
@@ -370,7 +372,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         resultDetail.croppedBitmap = resultDetails[resultDetails.size - 1].croppedBitmap
         if (calibration == null) {
             val dilution = resultDetails[0].dilution
-            val result = testInfo!!.results[0]
+            val result = testInfo!!.results!![0]
             val value = resultDetail.result
             if (value > -1) {
                 if (supportActionBar != null) {
@@ -401,7 +403,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                     setResult(Activity.RESULT_CANCELED)
                     stopScreenPinning()
                     fragmentManager!!.popBackStack()
-                    if (testInfo!!.dilutions.size > 0) {
+                    if (testInfo!!.dilutions.isNotEmpty()) {
                         fragmentManager!!.popBackStack()
                     }
                     showDiagnosticResultDialog(true, resultDetail, resultDetails, false)
@@ -429,11 +431,11 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                     calibration.image = UUID.randomUUID().toString() + ".png"
                     // Save photo taken during the test
                     FileUtil.writeBitmapToExternalStorage(resultDetails[resultDetails.size - 1].bitmap,
-                            FileType.DIAGNOSTIC_IMAGE, calibration.image)
+                            FileType.DIAGNOSTIC_IMAGE, calibration.image!!)
                     calibration.croppedImage = UUID.randomUUID().toString() + ".png"
                     // Save photo taken during the test
                     FileUtil.writeBitmapToExternalStorage(resultDetails[resultDetails.size - 1].croppedBitmap,
-                            FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage)
+                            FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage!!)
                 }
                 dao!!.insert(calibration)
                 CalibrationFile.saveCalibratedData(this, testInfo!!, calibration, color)
@@ -488,7 +490,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
      */
     private fun showCalibrationDialog(calibration: Calibration) {
         val resultFragment = newInstance(
-                calibration, testInfo!!.decimalPlaces, testInfo!!.results[0].unit)
+                calibration, testInfo!!.decimalPlaces, testInfo!!.results!![0].unit)
         val ft = supportFragmentManager.beginTransaction()
         val prev = supportFragmentManager.findFragmentByTag("calibrationDialog")
         if (prev != null) {
@@ -505,11 +507,11 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
     fun onClickAcceptResult(@Suppress("UNUSED_PARAMETER") view: View?) {
         val resultIntent = Intent()
         val results = SparseArray<String>()
-        for (i in testInfo!!.results.indices) {
-            val result = testInfo!!.results[i]
-            var testName = result.name.replace(" ", "_")
-            if (testInfo!!.nameSuffix != null && testInfo!!.nameSuffix.isNotEmpty()) {
-                testName += "_" + testInfo!!.nameSuffix.replace(" ", "_")
+        for (i in testInfo!!.results!!.indices) {
+            val result = testInfo!!.results!![i]
+            var testName = result.name?.replace(" ", "_")
+            if (testInfo!!.nameSuffix != null && testInfo!!.nameSuffix!!.isNotEmpty()) {
+                testName += "_" + testInfo!!.nameSuffix!!.replace(" ", "_")
             }
             resultIntent.putExtra(testName
                     + testInfo!!.resultSuffix, result.result)
@@ -517,9 +519,9 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                     + "_" + SensorConstants.DILUTION
                     + testInfo!!.resultSuffix, testInfo!!.dilution)
             resultIntent.putExtra(
-                    result.name.replace(" ", "_")
+                    result.name?.replace(" ", "_")
                             + "_" + SensorConstants.UNIT + testInfo!!.resultSuffix,
-                    testInfo!!.results[0].unit)
+                    testInfo!!.results!![0].unit)
             if (i == 0) {
                 resultIntent.putExtra(SensorConstants.VALUE, result.result)
             }

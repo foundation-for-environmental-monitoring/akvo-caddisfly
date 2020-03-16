@@ -128,7 +128,7 @@ object StringUtil {
                     if (testInfo.getReagent(i - 1).reactionTime != null) {
                         builder.replace(m2.start(), m2.end(),
                                 context.resources.getQuantityString(R.plurals.minutes,
-                                        testInfo.getReagent(i - 1).reactionTime,
+                                        testInfo.getReagent(i - 1).reactionTime!!,
                                         testInfo.getReagent(i - 1).reactionTime))
                     }
                 }
@@ -177,7 +177,7 @@ object StringUtil {
             while (m1.find()) {
                 var name = testInfo!!.getReagent(i - 1).name
                 val code = testInfo.getReagent(i - 1).code
-                if (code.isNotEmpty()) {
+                if (code!!.isNotEmpty()) {
                     name = String.format("%s (%s)", name, code)
                 }
                 builder.replace(m1.start(), m1.end(), name)

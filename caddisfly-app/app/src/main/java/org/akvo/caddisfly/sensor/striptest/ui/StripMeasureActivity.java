@@ -101,10 +101,10 @@ public class StripMeasureActivity extends BaseActivity implements StripMeasureLi
         boolean startMeasure = getIntent().getBooleanExtra(ConstantKey.START_MEASURE, false);
 
         if (testInfo != null && testInfo.getUuid() != null) {
-            setTitle(testInfo.getName());
+            setTitle(testInfo.name);
             patches = testInfo.getResults();
             if (mCameraOpsManager == null) {
-                mCameraOpsManager = new CameraOperationsManager(testInfo.getName());
+                mCameraOpsManager = new CameraOperationsManager(testInfo.name);
             }
         } else {
             finish();
@@ -150,7 +150,7 @@ public class StripMeasureActivity extends BaseActivity implements StripMeasureLi
         startCameraPreview();
 
         if (AppPreferences.isTestMode()) {
-            byte[] bytes = ImageUtil.loadImageBytes(testInfo.getName(), FileType.TEST_IMAGE);
+            byte[] bytes = ImageUtil.loadImageBytes(testInfo.name, FileType.TEST_IMAGE);
             if (bytes.length == 0) {
                 setResult(Activity.RESULT_OK, new Intent());
                 (new Handler()).postDelayed(this::finish, 4000);

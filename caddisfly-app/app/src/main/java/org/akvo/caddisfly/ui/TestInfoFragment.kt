@@ -64,7 +64,7 @@ class TestInfoFragment : Fragment() {
                 model.setTest(testInfo)
                 b.testInfoViewModel = model
                 b.testInfo = testInfo
-                if (testInfo.instructions == null || testInfo.instructions.size == 0) {
+                if (testInfo.instructions == null || testInfo.instructions!!.isEmpty()) {
                     b.buttonInstructions.visibility = View.GONE
                 }
                 if (testInfo.subtype == TestType.STRIP_TEST) {

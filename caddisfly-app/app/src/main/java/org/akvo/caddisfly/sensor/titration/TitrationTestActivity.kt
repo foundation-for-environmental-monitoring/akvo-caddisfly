@@ -56,21 +56,21 @@ class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitRes
 
     override fun onSubmitResult(results: FloatArray) {
         for (i in results.indices) {
-            testInfo!!.results[i].setResult(results[i].toDouble(), 0, 0)
+            testInfo!!.results!![i].setResult(results[i].toDouble(), 0, 0)
         }
         val resultIntent = Intent()
         val resultsValues = SparseArray<String>()
-        for (i in testInfo!!.results.indices) {
-            val result = testInfo!!.results[i]
-            resultIntent.putExtra(result.name.replace(" ", "_")
+        for (i in testInfo!!.results!!.indices) {
+            val result = testInfo!!.results!![i]
+            resultIntent.putExtra(result.name?.replace(" ", "_")
                     + testInfo!!.resultSuffix, result.result)
-            resultIntent.putExtra(result.name.replace(" ", "_")
+            resultIntent.putExtra(result.name?.replace(" ", "_")
                     + "_" + SensorConstants.DILUTION
                     + testInfo!!.resultSuffix, testInfo!!.dilution)
             resultIntent.putExtra(
-                    result.name.replace(" ", "_")
+                    result.name?.replace(" ", "_")
                             + "_" + SensorConstants.UNIT + testInfo!!.resultSuffix,
-                    testInfo!!.results[0].unit)
+                    testInfo!!.results!![0].unit)
             resultsValues.append(result.id, result.result)
         }
         val resultJson = getJsonResult(testInfo!!, resultsValues, null, -1, null)

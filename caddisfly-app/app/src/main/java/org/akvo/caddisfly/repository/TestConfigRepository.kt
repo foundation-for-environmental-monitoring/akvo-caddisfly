@@ -55,8 +55,7 @@ class TestConfigRepository {
                 }
             }
             testInfoList.sortWith(Comparator { object1: TestInfo, object2: TestInfo ->
-                object1.name
-                        .compareTo(object2.name, ignoreCase = true)
+                object1.name!!.compareTo(object2.name!!, ignoreCase = true)
             })
             if (isDiagnosticMode()) {
                 addExperimentalTests(testType, testSampleType, testInfoList)
@@ -74,7 +73,7 @@ class TestConfigRepository {
                 }
                 if (customList.size > 0) {
                     customList.sortWith(Comparator { object1: TestInfo, object2: TestInfo ->
-                        object1.name.compareTo(object2.name, ignoreCase = true)
+                        object1.name!!.compareTo(object2.name!!, ignoreCase = true)
                     })
                     testInfoList.add(TestInfo("Custom"))
                     testInfoList.addAll(customList)
@@ -109,7 +108,7 @@ class TestConfigRepository {
             }
             if (experimentalList.size > 0) {
                 experimentalList.sortWith(Comparator { object1: TestInfo, object2: TestInfo ->
-                    object1.name.compareTo(object2.name, ignoreCase = true)
+                    object1.name!!.compareTo(object2.name!!, ignoreCase = true)
                 })
                 testInfoList.add(TestInfo("Experimental"))
                 testInfoList.addAll(experimentalList)
@@ -140,7 +139,7 @@ class TestConfigRepository {
 
     private fun localizeTestName(testInfo: TestInfo) {
         if (testInfo.name != null) {
-            var name = testInfo.name.toLowerCase(Locale.ROOT)
+            var name = testInfo.name!!.toLowerCase(Locale.ROOT)
                     .replace(")", "")
                     .replace("(", "")
                     .replace("- ", "")
@@ -178,7 +177,7 @@ class TestConfigRepository {
                                 val calibrationsOld = getBackedUpCalibrations(testInfo)
                                 for (calibration in calibrations) {
                                     for (calibrationOld in calibrationsOld) {
-                                        if (calibration!!.value == calibrationOld.value) {
+                                        if (calibration.value == calibrationOld.value) {
                                             calibration.color = calibrationOld.color
                                         }
                                     }
@@ -199,13 +198,13 @@ class TestConfigRepository {
         return null
     }
 
-    private fun getPlaceHolderCalibrations(testInfo: TestInfo): List<Calibration?> {
-        val calibrations: MutableList<Calibration?> = ArrayList()
-        for (colorItem in testInfo.results[0].colors) {
+    private fun getPlaceHolderCalibrations(testInfo: TestInfo): List<Calibration> {
+        val calibrations: MutableList<Calibration> = ArrayList()
+        for (colorItem in testInfo.results!![0].colors) {
             val calibration = Calibration()
-            calibration.uid = testInfo.uuid
+            calibration.uid = testInfo.uuid!!
             calibration.color = Color.TRANSPARENT
-            calibration.value = colorItem.value
+            calibration.value = colorItem.value!!
             calibrations.add(calibration)
         }
         return calibrations
@@ -214,18 +213,18 @@ class TestConfigRepository {
     private fun getBackedUpCalibrations(testInfo: TestInfo): List<Calibration> {
         var calibrations: ArrayList<Calibration> = ArrayList()
         val context: Context? = app
-        val colors = testInfo.results[0].colors
+        val colors = testInfo.results!![0].colors
         for (color in colors) {
             val key = String.format(Locale.US, "%s-%.2f",
                     testInfo.uuid, color.value)
             val calibration = Calibration()
-            calibration.uid = testInfo.uuid
+            calibration.uid = testInfo.uuid!!
             calibration.color = getInt(context, key, 0)
-            calibration.value = color.value
+            calibration.value = color.value!!
             calibrations.add(calibration)
         }
         val calibrationDetail = CalibrationDetail()
-        calibrationDetail.uid = testInfo.uuid
+        calibrationDetail.uid = testInfo.uuid!!
         val date = getLong(context!!,
                 testInfo.uuid, R.string.calibrationDateKey)
         if (date > 0) {
@@ -266,12 +265,11 @@ class TestConfigRepository {
     private fun convertRangePropertyToArray(testInfo: TestInfo) {
         // If colors are defined as comma delimited range values then create array
         try {
-            if (testInfo.results[0].colors.size == 0
-                    && testInfo.ranges.isNotEmpty()) {
-                val values = testInfo.ranges.split(",").toTypedArray()
+            if (testInfo.results!![0].colors.isEmpty()
+                    && testInfo.ranges!!.isNotEmpty()) {
+                val values = testInfo.ranges!!.split(",").toTypedArray()
                 for (value in values) {
-                    testInfo.results[0].colors
-                            .add(ColorItem(value.toDouble()))
+                    testInfo.results!![0].colors.add(ColorItem(value.toDouble()))
                 }
             }
         } catch (ignored: NumberFormatException) {

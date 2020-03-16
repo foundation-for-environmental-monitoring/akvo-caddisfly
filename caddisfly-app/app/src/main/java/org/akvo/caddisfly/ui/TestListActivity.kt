@@ -95,11 +95,11 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
     }
 
     private fun startTest() {
-        testInfo = TestConfigRepository().getTestInfo(testInfo!!.uuid)
+        testInfo = TestConfigRepository().getTestInfo(testInfo!!.uuid.toString())
         if (testInfo == null || testInfo!!.isGroup) {
             return
         }
-        if (testInfo!!.results.size == 0) {
+        if (testInfo!!.results!!.isEmpty()) {
             alertCouldNotLoadConfig(this)
             return
         }
@@ -127,7 +127,7 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
         if (useExternalCamera()
                 || CameraHelper.hasFeatureCameraFlash(this,
                         R.string.cannotCalibrate, R.string.ok, null)) {
-            val intent: Intent = if (testInfo!!.results[0].colors.size > 0) {
+            val intent: Intent = if (testInfo!!.results!![0].colors.size > 0) {
                 Intent(this, ChamberTestActivity::class.java)
             } else {
                 alertCouldNotLoadConfig(this)

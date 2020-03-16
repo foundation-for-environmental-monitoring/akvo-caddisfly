@@ -65,7 +65,7 @@ class InstructionFragment : Fragment() {
         if (arguments != null) {
             mTestInfo = arguments!!.getParcelable(ConstantKey.TEST_INFO)
 
-            InstructionHelper.setupInstructions(mTestInfo!!.instructions,
+            InstructionHelper.setupInstructions(mTestInfo!!.instructions!!,
                     instructionList, pageIndex, false)
 
             image_pageRight.setOnClickListener {

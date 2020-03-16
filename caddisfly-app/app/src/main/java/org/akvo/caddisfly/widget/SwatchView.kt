@@ -47,23 +47,21 @@ class SwatchView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         super.onDraw(canvas)
         if (testInfo != null) {
             var index = -1
-            for (resultIndex in testInfo!!.results.indices) {
-                val colors = testInfo!!.results[resultIndex].colors
-                if (colors.size > 0) {
+            for (resultIndex in testInfo!!.results!!.indices) {
+                val colors = testInfo!!.results!![resultIndex].colors
+                if (colors.isNotEmpty()) {
                     index += 1
                     val colorCount = colors.size
                     for (i in 0 until colorCount) {
                         val colorItem = colors[i]
-                        if (colorItem != null) {
-                            paintColor.color = colorItem.rgbInt
-                            canvas.drawRect(MARGIN + i * totalWidth, MARGIN + index * lineHeight,
-                                    i * totalWidth + blockWidth, index * lineHeight + blockWidth, paintColor)
-                            if (testInfo!!.groupingType == GroupType.INDIVIDUAL
-                                    || index == testInfo!!.results.size - 1) {
-                                canvas.drawText(ResultUtils.createValueString(colorItem.value.toFloat()),
-                                        MARGIN + (i * totalWidth + blockWidth / 2),
-                                        MARGIN + index * lineHeight + blockWidth + VAL_BAR_HEIGHT, blackText)
-                            }
+                        paintColor.color = colorItem.rgbInt
+                        canvas.drawRect(MARGIN + i * totalWidth, MARGIN + index * lineHeight,
+                                i * totalWidth + blockWidth, index * lineHeight + blockWidth, paintColor)
+                        if (testInfo!!.groupingType == GroupType.INDIVIDUAL
+                                || index == testInfo!!.results!!.size - 1) {
+                            canvas.drawText(ResultUtils.createValueString(colorItem.value!!.toFloat()),
+                                    MARGIN + (i * totalWidth + blockWidth / 2),
+                                    MARGIN + index * lineHeight + blockWidth + VAL_BAR_HEIGHT, blackText)
                         }
                     }
                 }
@@ -83,8 +81,8 @@ class SwatchView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
             extraHeight = 40
         }
         lineCount = 0
-        for (resultIndex in testInfo.results.indices) {
-            val colors = testInfo.results[resultIndex].colors
+        for (resultIndex in testInfo.results!!.indices) {
+            val colors = testInfo.results!![resultIndex].colors
             if (colors.size > 0) {
                 lineCount += 1
                 val colorCount = colors.size
@@ -93,7 +91,7 @@ class SwatchView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 // get lab colours and turn them to RGB
                 for (i in 0 until colorCount) {
                     val patchColorValues = colors[i].lab
-                    if (patchColorValues != null) {
+                    if (patchColorValues.isNotEmpty()) {
                         lab[0] = patchColorValues[0].toFloat()
                         lab[1] = patchColorValues[1].toFloat()
                         lab[2] = patchColorValues[2].toFloat()
@@ -111,8 +109,8 @@ class SwatchView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         if (measuredWidth != 0 && measuredHeight != 0) {
             val width = measuredWidth - MARGIN * 2
             if (testInfo != null) {
-                for (resultIndex in testInfo!!.results.indices) {
-                    val colors = testInfo!!.results[resultIndex].colors
+                for (resultIndex in testInfo!!.results!!.indices) {
+                    val colors = testInfo!!.results!![resultIndex].colors
                     if (colors.size > 0) {
                         val colorCount = colors.size.toFloat()
                         if (blockWidth == 0f) {

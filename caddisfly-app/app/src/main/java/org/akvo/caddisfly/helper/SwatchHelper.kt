@@ -188,12 +188,12 @@ object SwatchHelper {
     @Throws(IOException::class)
     fun loadCalibrationFromFile(testInfo: TestInfo, fileName: String): ArrayList<Calibration> {
         val calibrations: ArrayList<Calibration> = ArrayList()
-        val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo.uuid)
+        val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo.uuid!!)
         val dao = db!!.calibrationDao()
         val calibrationDetails = FileUtil.loadFromFile(path, fileName)
         if (calibrationDetails != null) {
             val calibrationDetail = dao!!.getCalibrationDetails(testInfo.uuid)
-            calibrationDetail!!.uid = testInfo.uuid
+            calibrationDetail!!.uid = testInfo.uuid!!
             for (i in calibrationDetails.indices.reversed()) {
                 val line = calibrationDetails[i]
                 if (!line.contains("=")) {
@@ -225,7 +225,7 @@ object SwatchHelper {
             for (rgb in calibrationDetails) {
                 val values = rgb.split("=").toTypedArray()
                 val calibration = Calibration()
-                calibration.uid = testInfo.uuid
+                calibration.uid = testInfo.uuid!!
                 calibration.date = Date().time
                 calibration.value = stringToDouble(values[0])
                 if (values.size > 1) {
@@ -249,7 +249,7 @@ object SwatchHelper {
      * @return The list of generated color swatches
      */
     @JvmStatic
-    fun generateGradient(swatches: MutableList<Swatch>): List<Swatch> {
+    fun generateGradient(swatches: MutableList<Swatch>): MutableList<Swatch> {
         val list: MutableList<Swatch> = ArrayList()
         if (swatches.size < 2) {
             return list
@@ -304,7 +304,7 @@ object SwatchHelper {
         }
         var result = true
         val calibrations = testInfo.calibrations
-        if (calibrations == null || calibrations.size < 1) {
+        if (calibrations.isEmpty()) {
             return false
         }
         for (swatch1 in calibrations) {

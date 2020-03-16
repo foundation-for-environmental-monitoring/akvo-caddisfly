@@ -58,7 +58,7 @@ object TestConfigHelper {
             resultJson.put(ConstantJsonKey.NAME, testInfo.name)
             resultJson.put(ConstantJsonKey.UUID, testInfo.uuid)
             val resultsJsonArray = JSONArray()
-            for (subTest in testInfo.results) {
+            for (subTest in testInfo.results!!) {
                 val subTestJson = JSONObject()
                 subTestJson.put(ConstantJsonKey.DILUTION, subTest.dilution)
                 subTestJson.put(ConstantJsonKey.NAME, subTest.name)

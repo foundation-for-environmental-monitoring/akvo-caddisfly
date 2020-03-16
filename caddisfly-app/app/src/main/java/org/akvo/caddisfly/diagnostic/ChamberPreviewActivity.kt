@@ -115,7 +115,7 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
                 if (supportActionBar != null) {
                     supportActionBar!!.setDisplayHomeAsUpEnabled(false)
                 }
-                val result = testInfo!!.results[0]
+                val result = testInfo!!.results!![0]
                 result.setResult(value, dilution, testInfo!!.maxDilution)
                 if (result.highLevelsFound() && testInfo!!.dilution != testInfo!!.maxDilution) {
                     playShortResource(this, R.raw.beep_long)

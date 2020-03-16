@@ -132,7 +132,7 @@ class SaveCalibrationDialogFragment : DialogFragment() {
         date[Calendar.MILLISECOND] = date.getMinimum(Calendar.MILLISECOND)
         datePickerDialog.datePicker.minDate = date.timeInMillis
         if (testInfo!!.monthsValid != null) {
-            date.add(Calendar.MONTH, testInfo!!.monthsValid)
+            date.add(Calendar.MONTH, testInfo!!.monthsValid!!)
             date[Calendar.HOUR_OF_DAY] = date.getMaximum(Calendar.HOUR_OF_DAY)
             date[Calendar.MINUTE] = date.getMaximum(Calendar.MINUTE)
             date[Calendar.SECOND] = date.getMaximum(Calendar.SECOND)
@@ -161,7 +161,7 @@ class SaveCalibrationDialogFragment : DialogFragment() {
                 override fun onClick(v: View) {
                     if (formEntryValid()) {
                         if (editName!!.text.toString().trim { it <= ' ' }.isNotEmpty()) {
-                            val path = getFilesDir(FileType.CALIBRATION, testInfo!!.uuid)
+                            val path = getFilesDir(FileType.CALIBRATION, testInfo!!.uuid!!)
                             val file = File(path, editName!!.text.toString())
                             if (file.exists()) {
                                 AlertUtil.askQuestion(context, R.string.fileAlreadyExists,

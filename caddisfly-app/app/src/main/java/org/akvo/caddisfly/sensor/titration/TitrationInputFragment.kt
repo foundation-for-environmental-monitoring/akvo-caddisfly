@@ -55,9 +55,9 @@ class TitrationInputFragment : BaseFragment() {
         if (arguments != null) {
             val testInfo: TestInfo? = arguments!!.getParcelable(ARG_PARAM1)
             if (testInfo != null) {
-                if (testInfo.results.size > 1) {
-                    textInput1.text = String.format("%s (N1)", testInfo.results[0].name)
-                    textInput2.text = String.format("%s (N2)", testInfo.results[1].name)
+                if (testInfo.results!!.size > 1) {
+                    textInput1.text = String.format("%s (N1)", testInfo.results!![0].name)
+                    textInput2.text = String.format("%s (N2)", testInfo.results!![1].name)
                     editTitration2.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
                             if (mListener != null) {
@@ -67,7 +67,7 @@ class TitrationInputFragment : BaseFragment() {
                                     editTitration1.error = "Value is required"
                                     editTitration1.requestFocus()
                                 } else {
-                                    val results = FloatArray(testInfo.results.size)
+                                    val results = FloatArray(testInfo.results!!.size)
                                     val n1 = n1String.toFloat()
                                     if (n2String.isEmpty()) {
                                         editTitration2.error = "Value is required"
@@ -80,9 +80,9 @@ class TitrationInputFragment : BaseFragment() {
                                         } else {
                                             closeKeyboard(activity, editTitration2)
                                             closeKeyboard(context, editTitration1)
-                                            for (i in testInfo.results.indices) {
-                                                val formula = testInfo.results[i].formula
-                                                if (formula.isNotEmpty()) {
+                                            for (i in testInfo.results!!.indices) {
+                                                val formula = testInfo.results!![i].formula
+                                                if (formula!!.isNotEmpty()) {
                                                     results[i] = MathUtil.eval(String.format(Locale.US, formula, n1, n2)).toFloat()
                                                 }
                                             }
@@ -109,10 +109,10 @@ class TitrationInputFragment : BaseFragment() {
                                 } else {
                                     closeKeyboard(activity, editTitration2)
                                     closeKeyboard(context, editTitration1)
-                                    val results = FloatArray(testInfo.results.size)
+                                    val results = FloatArray(testInfo.results!!.size)
                                     val n1 = n1String.toFloat()
-                                    val formula = testInfo.results[0].formula
-                                    results[0] = MathUtil.eval(String.format(Locale.US, formula, n1)).toFloat()
+                                    val formula = testInfo.results!![0].formula
+                                    results[0] = MathUtil.eval(String.format(Locale.US, formula!!, n1)).toFloat()
                                     mListener!!.onSubmitResult(results)
                                 }
                             }

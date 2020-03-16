@@ -147,9 +147,9 @@ public class BitmapUtils {
     public static Bitmap createValueBitmap(PatchResult patchResult, String defaultString) {
         Bitmap resultImage = Bitmap.createBitmap(IMG_WIDTH, VALUE_HEIGHT, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(resultImage);
-        String unit = patchResult.getPatch().getUnit();
+        String unit = patchResult.getPatch().unit;
         String valueString = createValueUnitString(patchResult.getValue(), unit, defaultString);
-        valueString = patchResult.getPatch().getName() + ": " + valueString + "  " + patchResult.getBracket();
+        valueString = patchResult.getPatch().name + ": " + valueString + "  " + patchResult.getBracket();
 
         // create paint
         Paint blackText = new Paint();
@@ -198,10 +198,10 @@ public class BitmapUtils {
                 Result patch = patchResult.getPatch();
                 double stripRatio = 5;
 
-                double x = patch.getPatchPos() * stripRatio;
-                double y = 0.5 * patch.getPatchWidth() * stripRatio;
+                double x = patch.patchPos * stripRatio;
+                double y = 0.5 * patch.patchWidth * stripRatio;
 
-                double halfSize = 0.5 * Constants.STRIP_WIDTH_FRACTION * patch.getPatchWidth();
+                double halfSize = 0.5 * Constants.STRIP_WIDTH_FRACTION * patch.patchWidth;
                 int tlx = (int) Math.round(x - halfSize);
                 int tly = (int) Math.round(y - halfSize);
                 int brx = (int) Math.round(x + halfSize);
@@ -223,7 +223,7 @@ public class BitmapUtils {
 
     // create bitmap with a black triangle that indicates the position of the patch for this measurement.
     public static Bitmap createTriangleBitmap(PatchResult patchResult, TestInfo brand) {
-        double patchPos = patchResult.getPatch().getPatchPos();
+        double patchPos = patchResult.getPatch().patchPos;
         float stripWidth = (float) brand.getStripLength();
 
         float xPos = (float) ((patchPos / stripWidth) * IMG_WIDTH);

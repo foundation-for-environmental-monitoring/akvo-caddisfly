@@ -41,7 +41,7 @@ class CalibrationGraphActivity : BaseActivity() {
         seriesBlue.isDrawDataPoints = true
         seriesBlue.dataPointsRadius = 9f
         graphBlue.addSeries(seriesBlue)
-        val seriesRed2 = LineGraphSeries(getPresetDataPoints(presetCalibrations, Color.RED))
+        val seriesRed2 = LineGraphSeries(getPresetDataPoints(presetCalibrations!!, Color.RED))
         seriesRed2.color = Color.BLACK
         seriesRed2.thickness = 3
         seriesRed2.isDrawDataPoints = true
@@ -71,7 +71,7 @@ class CalibrationGraphActivity : BaseActivity() {
                 Color.GREEN -> value = colorItems[i].rgb[1]
                 Color.BLUE -> value = colorItems[i].rgb[2]
             }
-            dataPoints[i] = DataPoint(colorItems[i].value, value.toDouble())
+            dataPoints[i] = DataPoint(colorItems[i].value!!, value.toDouble())
         }
         return dataPoints
     }

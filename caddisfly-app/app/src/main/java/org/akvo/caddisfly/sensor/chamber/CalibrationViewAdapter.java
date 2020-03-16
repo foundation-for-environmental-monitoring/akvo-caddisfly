@@ -71,9 +71,9 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
         Result result = testInfo.getResults().get(0);
         List<ColorItem> colors = result.getColors();
         if (position < colors.size()) {
-            int color = colors.get(position).getRgbInt();
+            int color = colors.get(position).rgbInt;
             holder.mIdView.setBackground(new ColorDrawable(color));
-            holder.textUnit.setText(String.valueOf(result.getUnit()));
+            holder.textUnit.setText(String.valueOf(result.unit));
 
             //display additional information if we are in diagnostic mode
             if (AppPreferences.getShowDebugInfo()) {
@@ -91,7 +91,7 @@ public class CalibrationViewAdapter extends RecyclerView.Adapter<CalibrationView
 
                 double distance = 0;
                 if (position > 0) {
-                    int previousColor = colors.get(position - 1).getRgbInt();
+                    int previousColor = colors.get(position - 1).rgbInt;
                     distance = ColorUtil.getColorDistance(previousColor, color);
                 }
 

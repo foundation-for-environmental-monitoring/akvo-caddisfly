@@ -281,7 +281,7 @@ public class StripTestActivity extends BaseActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        setTitle(testInfo.getName());
+        setTitle(testInfo.name);
     }
 
     @Override
@@ -336,20 +336,20 @@ public class StripTestActivity extends BaseActivity {
 
         for (int i = 0; i < testInfo.getResults().size(); i++) {
             Result result = testInfo.getResults().get(i);
-            intent.putExtra(result.getName().replace(" ", "_")
-                    + testInfo.getResultSuffix(), result.getResult());
+            intent.putExtra(result.name.replace(" ", "_")
+                    + testInfo.resultSuffix, result.result);
 
-            intent.putExtra(result.getName().replace(" ", "_")
+            intent.putExtra(result.name.replace(" ", "_")
                     + "_" + SensorConstants.DILUTION
-                    + testInfo.getResultSuffix(), testInfo.getDilution());
+                    + testInfo.resultSuffix, testInfo.getDilution());
 
             intent.putExtra(
-                    result.getName().replace(" ", "_")
-                            + "_" + SensorConstants.UNIT + testInfo.getResultSuffix(),
-                    testInfo.getResults().get(0).getUnit());
+                    result.name.replace(" ", "_")
+                            + "_" + SensorConstants.UNIT + testInfo.resultSuffix,
+                    testInfo.getResults().get(0).unit);
 
             if (i == 0) {
-                intent.putExtra(SensorConstants.VALUE, result.getResult());
+                intent.putExtra(SensorConstants.VALUE, result.result);
             }
         }
 
@@ -438,14 +438,14 @@ public class StripTestActivity extends BaseActivity {
                 results.put(2, String.valueOf(testInfo.getResults().get(1).getResultValue()));
 
                 for (Result result : testInfo.getResults()) {
-                    String valueString = createValueUnitString(result.getResultValue(), result.getUnit(),
+                    String valueString = createValueUnitString(result.getResultValue(), result.unit,
                             getString(R.string.no_result));
 
                     LinearLayout itemResult;
                     itemResult = (LinearLayout) inflater.inflate(R.layout.item_result,
                             viewRoot, false);
                     TextView textTitle = itemResult.findViewById(R.id.text_title);
-                    textTitle.setText(result.getName());
+                    textTitle.setText(result.name);
 
                     TextView textResult = itemResult.findViewById(R.id.text_result);
                     textResult.setText(valueString);

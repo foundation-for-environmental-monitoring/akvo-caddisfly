@@ -90,15 +90,15 @@ class TestInfoViewModel(application: Application) : AndroidViewModel(application
                         when {
                             m.find() -> {
                                 rowView.setNumber(m.group(1)?.trim { it <= ' ' })
-                                text = m.group(2)?.trim { it <= ' ' }
+                                text = m.group(2)?.trim { it <= ' ' }.toString()
                             }
                             m1.find() -> {
                                 rowView.setNumber(m1.group(1)?.trim { it <= ' ' })
-                                text = m1.group(2)?.trim { it <= ' ' }
+                                text = m1.group(2)?.trim { it <= ' ' }.toString()
                             }
                             m2.find() -> {
                                 rowView.setNumber("   ")
-                                text = m2.group(2)?.trim { it <= ' ' }
+                                text = m2.group(2)?.trim { it <= ' ' }.toString()
                             }
                         }
 

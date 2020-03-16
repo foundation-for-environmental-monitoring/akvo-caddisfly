@@ -42,7 +42,7 @@ object InstructionHelper {
             var instruction: Instruction
             try {
                 instruction = testInstructions[i].clone()
-                val section = instruction.section
+                val section = instruction.section!!
                 var indent = false
                 subSequenceIndex = 0
                 var leaveOut = false

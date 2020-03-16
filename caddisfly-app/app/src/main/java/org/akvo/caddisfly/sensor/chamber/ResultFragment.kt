@@ -42,7 +42,7 @@ class ResultFragment : Fragment() {
         if (arguments != null) {
             val testInfo: TestInfo? = arguments!!.getParcelable(TEST_INFO)
             if (testInfo != null) {
-                val result = testInfo.results[0]
+                val result = testInfo.results!![0]
                 b.textResult.text = result.result
                 b.textTitle.text = testInfo.name
                 b.textDilution.text = resources.getQuantityString(R.plurals.dilutions,

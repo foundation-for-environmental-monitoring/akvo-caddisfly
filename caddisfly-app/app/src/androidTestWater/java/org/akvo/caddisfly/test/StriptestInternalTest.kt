@@ -116,19 +116,19 @@ class StriptestInternalTest {
             assertEquals(testInfo.subtype, TestType.STRIP_TEST)
 
             val uuid = testInfo.uuid
-            val id = uuid.substring(uuid.lastIndexOf("-") + 1)
+            val id = uuid!!.substring(uuid.lastIndexOf("-") + 1)
 
             run {
 
                 @Suppress("SpellCheckingInspection")
-                if (!isStripPatchAvailable(testInfo.name)) {
+                if (!isStripPatchAvailable(testInfo.name!!)) {
                     resultWaitDelay = 7000
                 } else if (("6843158b47b4 6ed8142b6b07, 420551851acd 1b7db640037c d555f04db952 aa4a4e3100c9 "
                                 + "411a4093f6b6 321bbbd9876b 798b81d2b019 32d9b8f4aecf").contains(id)) {
                     resultWaitDelay = 0
-                    for (result in testInfo.results) {
+                    for (result in testInfo.results!!) {
                         if (result.timeDelay > resultWaitDelay) {
-                            resultWaitDelay = result.timeDelay!!
+                            resultWaitDelay = result.timeDelay
                         }
                     }
                     resultWaitDelay = max(7000, (resultWaitDelay + 5) * 1000)

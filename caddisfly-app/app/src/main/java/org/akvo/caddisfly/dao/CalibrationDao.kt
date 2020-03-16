@@ -7,7 +7,7 @@ import org.akvo.caddisfly.entity.CalibrationDetail
 @Dao
 interface CalibrationDao {
     @Query("SELECT * FROM calibration WHERE uid = :uuid ORDER BY value")
-    fun getAll(uuid: String?): List<Calibration?>?
+    fun getAll(uuid: String?): List<Calibration>?
 
     @Query("SELECT * FROM calibrationdetail WHERE uid = :uuid")
     fun getCalibrationDetails(uuid: String?): CalibrationDetail?

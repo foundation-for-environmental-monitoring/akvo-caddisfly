@@ -231,6 +231,6 @@ public class DecodeData {
     }
 
     public void saveCapturedImage() {
-        ImageUtil.saveYuvImage(decodeImageByteArray, FileType.TEST_IMAGE, testInfo.getName());
+        ImageUtil.saveYuvImage(decodeImageByteArray, FileType.TEST_IMAGE, testInfo.name);
     }
 }

@@ -93,7 +93,7 @@ open class BaseRunTest : Fragment(), RunTest {
         mCamera!!.startPreview()
         val bitmap = ImageUtil.getBitmap(data)
         getAnalyzedResult(bitmap)
-        if (mTestInfo!!.results[0].timeDelay > 0) { // test has time delay so take the pictures quickly with short delay
+        if (mTestInfo!!.results!![0].timeDelay > 0) { // test has time delay so take the pictures quickly with short delay
             mHandler!!.postDelayed(mRunnableCode, (SHORT_DELAY * 1000).toLong())
         } else {
             mHandler!!.postDelayed(mRunnableCode, ChamberTestConfig.DELAY_BETWEEN_SAMPLING * 1000.toLong())
@@ -138,7 +138,8 @@ open class BaseRunTest : Fragment(), RunTest {
         mHandler = Handler()
     }
 
-    protected fun setupCamera() { // Create our Preview view and set it as the content of our activity.
+    protected fun setupCamera() {
+        // Create our Preview view and set it as the content of our activity.
         mCameraPreview = ChamberCameraPreview(activity)
         mCamera = mCameraPreview!!.camera
         mCameraPreview!!.setupCamera(mCamera)
@@ -192,8 +193,8 @@ open class BaseRunTest : Fragment(), RunTest {
         }
         countdown[0] = 0
         // If the test has a time delay config then use that otherwise use standard delay
-        if (mTestInfo!!.results[0].timeDelay > 10) {
-            timeDelay = max(SHORT_DELAY, mTestInfo!!.results[0].timeDelay.toDouble()).toInt()
+        if (mTestInfo!!.results!![0].timeDelay > 10) {
+            timeDelay = max(SHORT_DELAY, mTestInfo!!.results!![0].timeDelay.toDouble()).toInt()
             binding!!.timeLayout.visibility = View.VISIBLE
             binding!!.countdownTimer.setProgress(timeDelay, timeDelay)
             setCountDown()
@@ -239,7 +240,7 @@ open class BaseRunTest : Fragment(), RunTest {
         //Extract the color from the photo which will be used for comparison
         val photoColor: ColorInfo
         if (croppedBitmap != null) {
-            if (mTestInfo!!.results[0].grayScale) {
+            if (mTestInfo!!.results!![0].grayScale) {
                 croppedBitmap = ImageUtil.getGrayscale(croppedBitmap)
             }
             photoColor = ColorUtil.getColorFromBitmap(croppedBitmap!!,
@@ -290,7 +291,7 @@ open class BaseRunTest : Fragment(), RunTest {
             playShortResource(activity!!, R.raw.futurebeep2)
             var initialDelay = 0
             //If the test has a time delay config then use that otherwise use standard delay
-            if (mTestInfo!!.results[0].timeDelay < 5) {
+            if (mTestInfo!!.results!![0].timeDelay < 5) {
                 initialDelay = ChamberTestConfig.DELAY_INITIAL + ChamberTestConfig.DELAY_BETWEEN_SAMPLING
             }
             binding!!.layoutWait.visibility = View.VISIBLE
