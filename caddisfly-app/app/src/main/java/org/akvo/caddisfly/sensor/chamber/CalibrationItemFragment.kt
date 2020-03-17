@@ -50,13 +50,13 @@ import java.util.*
 
 class CalibrationItemFragment : Fragment() {
     private var binding: FragmentCalibrationListBinding? = null
-    private var testInfo: TestInfo? = null
+    private lateinit var testInfo: TestInfo
     private var mListener: OnCalibrationSelectedListener? = null
     private var isInternal = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            testInfo = arguments!!.getParcelable(ARG_TEST_INFO)
+            testInfo = arguments!!.getParcelable(ARG_TEST_INFO)!!
             isInternal = arguments!!.getBoolean(IS_INTERNAL, true)
         }
     }
@@ -87,7 +87,7 @@ class CalibrationItemFragment : Fragment() {
      */
     fun loadDetails() {
         setAdapter(testInfo)
-        val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo!!.uuid)
+        val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo.uuid)
         if (calibrationDetail != null) {
             binding!!.textSubtitle.text = calibrationDetail.cuvetteType
             if (calibrationDetail.date > 0) {
@@ -120,7 +120,7 @@ class CalibrationItemFragment : Fragment() {
         mListener = null
     }
 
-    fun setAdapter(testInfo: TestInfo?) {
+    fun setAdapter(testInfo: TestInfo) {
         binding!!.calibrationList.adapter = CalibrationViewAdapter(testInfo, mListener)
         binding!!.invalidateAll()
     }

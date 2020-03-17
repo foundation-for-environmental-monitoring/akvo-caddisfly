@@ -142,7 +142,7 @@ open class BaseRunTest : Fragment(), RunTest {
         // Create our Preview view and set it as the content of our activity.
         mCameraPreview = ChamberCameraPreview(activity)
         mCamera = mCameraPreview!!.camera
-        mCameraPreview!!.setupCamera(mCamera)
+        mCameraPreview!!.setupCamera(mCamera!!)
         binding!!.cameraView.addView(mCameraPreview)
         binding!!.cameraView.viewTreeObserver.addOnGlobalLayoutListener(
                 object : OnGlobalLayoutListener {

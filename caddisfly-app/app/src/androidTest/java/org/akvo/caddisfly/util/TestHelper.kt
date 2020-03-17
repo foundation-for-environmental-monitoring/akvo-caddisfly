@@ -21,13 +21,11 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.*
 import org.akvo.caddisfly.BuildConfig
-import org.akvo.caddisfly.R
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.app.CaddisflyApp
@@ -50,13 +48,13 @@ fun isStripPatchAvailable(name: String = "."): Boolean {
 }
 
 fun clickStartButton() {
-    onView(Matchers.allOf(withId(R.id.buttonStart), withText(R.string.start),
+    onView(Matchers.allOf(withId(id.buttonStart), withText(string.start),
             TestUtil.childAtPosition(
                     TestUtil.childAtPosition(
-                            ViewMatchers.withClassName(Matchers.`is`("android.widget.RelativeLayout")),
+                            withClassName(Matchers.`is`("android.widget.RelativeLayout")),
                             2),
                     2),
-            ViewMatchers.isDisplayed())).perform(click())
+            isDisplayed())).perform(click())
 }
 
 object TestHelper {

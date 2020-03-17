@@ -18,6 +18,7 @@ import org.akvo.caddisfly.util.PreferencesUtil.getLong
 import timber.log.Timber
 import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TestConfigRepository {
     private val assetsManager: AssetsManager = AssetsManager()
@@ -33,8 +34,8 @@ class TestConfigRepository {
      * @param testType the test type
      * @return the list of tests
      */
-    fun getTests(testType: TestType, testSampleType: TestSampleType): List<TestInfo> {
-        var testInfoList: MutableList<TestInfo> = ArrayList()
+    fun getTests(testType: TestType, testSampleType: TestSampleType): ArrayList<TestInfo> {
+        var testInfoList: ArrayList<TestInfo> = ArrayList()
         if (testSampleType === TestSampleType.ALL) {
             if (testMap.containsKey(testType.toString())) {
                 return testMap[testType.toString()]!!
@@ -282,7 +283,7 @@ class TestConfigRepository {
     }
 
     companion object {
-        private val testMap = HashMap<String, List<TestInfo>>()
+        private val testMap = HashMap<String, ArrayList<TestInfo>>()
     }
 
 }

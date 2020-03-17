@@ -128,21 +128,23 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 if (testInfo.isGroup) {
                     continue
                 }
-                val testInfo1 = viewModel.getTestInfo(testInfo.uuid)
+                val testInfo1 = viewModel.getTestInfo(testInfo.uuid!!)
                 var calibrated = false
-                for (calibration in testInfo1.calibrations) {
-                    if (calibration.color != Color.TRANSPARENT &&
-                            calibration.color != Color.BLACK) {
-                        calibrated = true
-                        break
+                if (testInfo1 != null) {
+                    for (calibration in testInfo1.calibrations) {
+                        if (calibration.color != Color.TRANSPARENT &&
+                                calibration.color != Color.BLACK) {
+                            calibrated = true
+                            break
+                        }
                     }
-                }
-                if (calibrated) {
-                    message.append(generateCalibrationFile(activityReference.get()!!.activity,
-                            testInfo1, false))
-                    message.append("\n")
-                    message.append("-------------------------------------------------")
-                    message.append("\n")
+                    if (calibrated) {
+                        message.append(generateCalibrationFile(activityReference.get()!!.activity,
+                                testInfo1, false))
+                        message.append("\n")
+                        message.append("-------------------------------------------------")
+                        message.append("\n")
+                    }
                 }
             }
             if (message.toString().isEmpty()) {
