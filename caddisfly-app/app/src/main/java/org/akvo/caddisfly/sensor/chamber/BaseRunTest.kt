@@ -350,7 +350,7 @@ open class BaseRunTest : Fragment(), RunTest {
      * @param message the message to be displayed
      * @param bitmap  any bitmap image to displayed along with error message
      */
-    fun showError(message: String?,
+    fun showError(message: String,
                   bitmap: Bitmap?,
                   activity: Activity) {
         stopScreenPinning(activity)

@@ -52,28 +52,31 @@ object ErrorMessages {
         var message = activity.getString(R.string.errorCalibrationIncomplete, testInfo.name)
         message = String.format(MESSAGE_TWO_LINE_FORMAT, message,
                 activity.getString(R.string.doYouWantToCalibrate))
+
         AlertUtil.showAlert(activity, R.string.cannotStartTest, message, R.string.calibrate,
-                { dialogInterface: DialogInterface, _: Int ->
+                DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
                     val intent = Intent(activity, ChamberTestActivity::class.java)
                     intent.putExtra(ConstantKey.TEST_INFO, testInfo)
                     intent.putExtra(ConstantKey.IS_INTERNAL, isInternal)
                     activity.startActivity(intent)
                     activity.setResult(Activity.RESULT_CANCELED)
                     dialogInterface.dismiss()
-                }, { dialogInterface: DialogInterface, _: Int ->
-            activity.setResult(Activity.RESULT_CANCELED)
-            dialogInterface.dismiss()
-            if (finishActivity) {
-                activity.finish()
-            }
-        }
-        ) { dialogInterface: DialogInterface ->
-            activity.setResult(Activity.RESULT_CANCELED)
-            dialogInterface.dismiss()
-            if (finishActivity) {
-                activity.finish()
-            }
-        }
+                },
+                DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
+                    activity.setResult(Activity.RESULT_CANCELED)
+                    dialogInterface.dismiss()
+                    if (finishActivity) {
+                        activity.finish()
+                    }
+                },
+                DialogInterface.OnCancelListener { dialogInterface: DialogInterface ->
+                    activity.setResult(Activity.RESULT_CANCELED)
+                    dialogInterface.dismiss()
+                    if (finishActivity) {
+                        activity.finish()
+                    }
+                }
+        )
     }
 
     fun alertCalibrationExpired(activity: Activity) {

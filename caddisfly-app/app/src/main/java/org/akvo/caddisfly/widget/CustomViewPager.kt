@@ -11,11 +11,11 @@ class CustomViewPager : ViewPager {
     private var direction: SwipeDirection
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {
-        direction = SwipeDirection.all
+        direction = SwipeDirection.ALL
     }
 
     constructor(context: Context) : super(context) {
-        direction = SwipeDirection.all
+        direction = SwipeDirection.ALL
     }
 
     /*****DispatchTouchEvent for the View Pager to intercept and block swipes Right */
@@ -27,9 +27,9 @@ class CustomViewPager : ViewPager {
                     return super.dispatchTouchEvent(ev)
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    if (ev.x - startX < 0 && direction == SwipeDirection.left) {
+                    if (ev.x - startX < 0 && direction == SwipeDirection.LEFT) {
                         ev.action = MotionEvent.ACTION_CANCEL
-                    } else if (ev.x - startX > 0 && direction == SwipeDirection.right) {
+                    } else if (ev.x - startX > 0 && direction == SwipeDirection.RIGHT) {
                         ev.action = MotionEvent.ACTION_CANCEL
                     }
                     super.dispatchTouchEvent(ev)

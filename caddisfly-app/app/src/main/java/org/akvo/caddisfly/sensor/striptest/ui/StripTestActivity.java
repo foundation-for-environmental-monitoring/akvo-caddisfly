@@ -220,7 +220,7 @@ public class StripTestActivity extends BaseActivity {
             return;
         }
         showSkipMenu = false;
-        viewPager.setAllowedSwipeDirection(SwipeDirection.all);
+        viewPager.setAllowedSwipeDirection(SwipeDirection.ALL);
         imagePageLeft.setVisibility(View.VISIBLE);
         imagePageRight.setVisibility(View.VISIBLE);
         pagerIndicator.setVisibility(View.VISIBLE);
@@ -236,25 +236,25 @@ public class StripTestActivity extends BaseActivity {
 
         if (viewPager.getCurrentItem() == resultPageNumber) {
             setTitle(R.string.result);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.none);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.NONE);
             footerLayout.setVisibility(View.GONE);
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             }
         } else if (viewPager.getCurrentItem() > 0 &&
                 instructionList.get(viewPager.getCurrentItem() - 1).testStage > 0) {
-            viewPager.setAllowedSwipeDirection(SwipeDirection.right);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.RIGHT);
             imagePageLeft.setVisibility(View.INVISIBLE);
         } else if (instructionList.get(viewPager.getCurrentItem()).testStage > 0) {
-            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.LEFT);
             imagePageRight.setVisibility(View.INVISIBLE);
             showSkipMenu = false;
         } else if (viewPager.getCurrentItem() == resultPageNumber - 1) {
             imagePageRight.setVisibility(View.INVISIBLE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.left);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.LEFT);
         } else {
             footerLayout.setVisibility(View.VISIBLE);
-            viewPager.setAllowedSwipeDirection(SwipeDirection.all);
+            viewPager.setAllowedSwipeDirection(SwipeDirection.ALL);
             if (viewPager.getCurrentItem() == 0) {
                 imagePageLeft.setVisibility(View.INVISIBLE);
             }
