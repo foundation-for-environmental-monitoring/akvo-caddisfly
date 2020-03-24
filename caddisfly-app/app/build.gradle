@@ -138,8 +138,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.2.4'
-    kapt 'androidx.room:room-compiler:2.2.4'
+    implementation 'androidx.room:room-runtime:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
     kapt 'android.arch.persistence.room:compiler:1.1.1'
 
     // Gson
@@ -163,9 +163,9 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
 
     // Espresso
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha04'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0-alpha04'
-    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.3.0-alpha04') {
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha05'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0-alpha05'
+    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.3.0-alpha05') {
         exclude group: 'com.android.support'
         exclude group: 'javax.inject'
     }

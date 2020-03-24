@@ -234,37 +234,35 @@ open class BaseRunTest : Fragment(), RunTest {
      * @param bmp the bitmap of the photo taken during analysis
      */
     private fun getAnalyzedResult(bmp: Bitmap) {
-        val bitmap = ImageUtil.rotateImage(activity, bmp)
+        val bitmap = ImageUtil.rotateImage(activity!!.parent, bmp)
         var croppedBitmap = ImageUtil.getCroppedBitmap(bitmap,
                 ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
         //Extract the color from the photo which will be used for comparison
         val photoColor: ColorInfo
-        if (croppedBitmap != null) {
-            if (mTestInfo!!.results!![0].grayScale) {
-                croppedBitmap = ImageUtil.getGrayscale(croppedBitmap)
-            }
-            photoColor = ColorUtil.getColorFromBitmap(croppedBitmap!!,
-                    ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
-            if (mCalibration != null) {
-                mCalibration!!.color = photoColor.color
-                mCalibration!!.date = Date().time
-            }
-            val resultDetail = analyzeColor(mTestInfo!!.swatches.size,
-                    photoColor, mTestInfo!!.swatches)
-            resultDetail.bitmap = bitmap
-            resultDetail.croppedBitmap = croppedBitmap
-            resultDetail.dilution = dilution
-            resultDetail.quality = photoColor.quality
-            //            Timber.d("Result is: " + String.valueOf(resultDetail.getResult()));
-            results.add(resultDetail)
-            if (mListener != null && pictureCount >= AppPreferences.samplingTimes) { // ignore the first two results
-                for (i in 0 until ChamberTestConfig.SKIP_SAMPLING_COUNT) {
-                    if (results.size > 1) {
-                        results.removeAt(0)
-                    }
+        if (mTestInfo!!.results!![0].grayScale) {
+            croppedBitmap = ImageUtil.getGrayscale(croppedBitmap)
+        }
+        photoColor = ColorUtil.getColorFromBitmap(croppedBitmap,
+                ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
+        if (mCalibration != null) {
+            mCalibration!!.color = photoColor.color
+            mCalibration!!.date = Date().time
+        }
+        val resultDetail = analyzeColor(mTestInfo!!.swatches.size,
+                photoColor, mTestInfo!!.swatches)
+        resultDetail.bitmap = bitmap
+        resultDetail.croppedBitmap = croppedBitmap
+        resultDetail.dilution = dilution
+        resultDetail.quality = photoColor.quality
+        //            Timber.d("Result is: " + String.valueOf(resultDetail.getResult()));
+        results.add(resultDetail)
+        if (mListener != null && pictureCount >= AppPreferences.samplingTimes) { // ignore the first two results
+            for (i in 0 until ChamberTestConfig.SKIP_SAMPLING_COUNT) {
+                if (results.size > 1) {
+                    results.removeAt(0)
                 }
-                mListener!!.onResult(results, mCalibration)
             }
+            mListener!!.onResult(results, mCalibration)
         }
     }
 
