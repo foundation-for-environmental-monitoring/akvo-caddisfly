@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.common.Constants;
 import org.akvo.caddisfly.sensor.striptest.ui.StripMeasureActivity;
+import org.akvo.caddisfly.util.ApiUtil;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -49,7 +50,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         super(context);
 
         // Create an instance of Camera
-        mCamera = TheCamera.getCameraInstance();
+        mCamera = ApiUtil.getCameraInstance();
 
         try {
             activity = (StripMeasureActivity) context;

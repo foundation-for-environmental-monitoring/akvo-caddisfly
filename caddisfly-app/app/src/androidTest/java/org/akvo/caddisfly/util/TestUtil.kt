@@ -2,21 +2,18 @@
 
 package org.akvo.caddisfly.util
 
-import android.app.Activity
 import android.os.Build
+import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.test.InstrumentationRegistry.getContext
-import androidx.test.InstrumentationRegistry.getInstrumentation
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry
-import androidx.test.runner.lifecycle.Stage
 import androidx.test.uiautomator.*
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.TestConstantKeys
@@ -25,7 +22,6 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 import org.hamcrest.core.AllOf.allOf
-import timber.log.Timber
 
 /**
  * Utility functions for automated testing
@@ -63,25 +59,21 @@ object TestUtil {
     }
 
     fun sleep(time: Int) {
-        try {
-            Thread.sleep(time.toLong())
-        } catch (e: InterruptedException) {
-            Timber.e(e)
-        }
+        SystemClock.sleep(time.toLong())
     }
 
-    val activityInstance: Activity
-        get() {
-            val activity = arrayOfNulls<Activity?>(1)
-            getInstrumentation().runOnMainSync {
-                val resumedActivities: Collection<*> = ActivityLifecycleMonitorRegistry.getInstance()
-                        .getActivitiesInStage(Stage.RESUMED)
-                if (resumedActivities.iterator().hasNext()) {
-                    activity[0] = resumedActivities.iterator().next() as Activity?
-                }
-            }
-            return activity[0]!!
-        }
+//    val activityInstance: Activity
+//        get() {
+//            val activity = arrayOfNulls<Activity?>(1)
+//            getInstrumentation().runOnMainSync {
+//                val resumedActivities: Collection<*> = ActivityLifecycleMonitorRegistry.getInstance()
+//                        .getActivitiesInStage(Stage.RESUMED)
+//                if (resumedActivities.iterator().hasNext()) {
+//                    activity[0] = resumedActivities.iterator().next() as Activity?
+//                }
+//            }
+//            return activity[0]!!
+//        }
 
     internal fun findButtonInScrollable(name: String?) {
         val listView = UiScrollable(UiSelector().className(ScrollView::class.java.name))

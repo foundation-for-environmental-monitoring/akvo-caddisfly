@@ -151,7 +151,7 @@
       ]
     },
     {
-      "name": "Exchangeable Calcium and Magnesium",
+      "name": "Calcium and Magnesium",
       "type": "soil",
       "subtype": "titration",
       "uuid": "52ec4ca0-d691-4f2b-b17a-232c2966974a",
@@ -160,15 +160,15 @@
       "results": [
         {
           "id": 1,
-          "name": "Exchangeable Calcium",
+          "name": "Calcium",
           "unit": "mg/kg",
-          "formula": "(0.4 * (%2$f / 24)) * 100"
+          "formula": "(0.4 * (%1$f / 24)) * 100"
         },
         {
           "id": 2,
-          "name": "Exchangeable Magnesium",
+          "name": "Magnesium",
           "unit": "mg/kg",
-          "formula": "((0.4 * (%1$f / 24)) - (0.4 * (%2$f / 24))) * 60"
+          "formula": "((0.4 * (%2$f / 24)) - (0.4 * (%1$f / 24))) * 60"
         }
       ]
     },

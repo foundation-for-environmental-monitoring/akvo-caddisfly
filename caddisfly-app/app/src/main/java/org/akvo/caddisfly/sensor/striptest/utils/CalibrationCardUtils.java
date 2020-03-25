@@ -10,6 +10,7 @@ import org.akvo.caddisfly.sensor.striptest.qrdetector.Detector;
 import org.akvo.caddisfly.sensor.striptest.qrdetector.FinderPattern;
 import org.akvo.caddisfly.sensor.striptest.qrdetector.PerspectiveTransform;
 import org.akvo.caddisfly.sensor.striptest.qrdetector.ResultPoint;
+import org.akvo.caddisfly.util.MathUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +22,6 @@ import java.util.Map;
 import timber.log.Timber;
 
 import static org.akvo.caddisfly.sensor.striptest.qrdetector.MathUtils.distance;
-import static org.akvo.caddisfly.sensor.striptest.utils.MathUtils.meanMedianMax;
 
 public class CalibrationCardUtils {
     private static final int VERSION_NUMBER_NOT_FOUND_CODE = 0;
@@ -382,6 +382,6 @@ public class CalibrationCardUtils {
             deltaEArray[i] = deltaE2000;
             i++;
         }
-        return meanMedianMax(deltaEArray);
+        return MathUtil.meanMedianMax(deltaEArray);
     }
 }

@@ -1,9 +1,9 @@
 package org.akvo.caddisfly.test
 
 import android.content.SharedPreferences
+import android.os.SystemClock
 import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -53,21 +53,31 @@ class ManualTest {
         nextSurveyPage(2, "Soil Tests 3")
         clickExternalSourceButton(0, TestConstant.GO_TO_TEST)
         onView(withText(string.next)).perform(click())
+
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
                 .perform(replaceText("123"), closeSoftKeyboard())
         onView(withId(id.editTitration2)).check(matches(isDisplayed()))
                 .perform(replaceText("12"), closeSoftKeyboard())
-        val textInputEditText3: ViewInteraction = onView(
-                allOf(withId(id.editTitration2), withText("12"),
-                        childAtPosition(
-                                childAtPosition(withId(id.fragment_container),
-                                        0),
-                                4), isDisplayed()))
-        textInputEditText3.perform(pressImeActionButton())
-        assertNotNull(mDevice.findObject(By.text("Exchangeable Calcium: ")))
+        onView(allOf(withId(id.editTitration2), withText("12"),
+                childAtPosition(childAtPosition(withId(id.fragment_container), 0),
+                        4), isDisplayed())).perform(pressImeActionButton())
+
+        SystemClock.sleep(1000)
+
+        onView(withId(id.editTitration1)).check(matches(isDisplayed()))
+                .perform(replaceText("12"), closeSoftKeyboard())
+        onView(withId(id.editTitration2)).check(matches(isDisplayed()))
+                .perform(replaceText("20"), closeSoftKeyboard())
+        onView(allOf(withId(id.editTitration2), withText("20"),
+                childAtPosition(childAtPosition(withId(id.fragment_container), 0),
+                        4), isDisplayed())).perform(pressImeActionButton())
+
+        SystemClock.sleep(1000)
+
+        assertNotNull(mDevice.findObject(By.text("Calcium: ")))
         assertNotNull(mDevice.findObject(By.text("20.00")))
-        assertNotNull(mDevice.findObject(By.text("Exchangeable Magnesium: ")))
-        assertNotNull(mDevice.findObject(By.text("111.00")))
+        assertNotNull(mDevice.findObject(By.text("Magnesium: ")))
+        assertNotNull(mDevice.findObject(By.text("8.00")))
     }
 
     companion object {

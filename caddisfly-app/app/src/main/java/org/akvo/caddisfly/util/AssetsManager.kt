@@ -31,8 +31,8 @@ import java.io.InputStream
 import java.nio.charset.StandardCharsets
 
 class AssetsManager {
-    lateinit var customJson: String
-    lateinit var json: String
+    var customJson: String
+    var json: String
     private val manager: AssetManager? = app!!.applicationContext.assets
     private fun loadJsonFromAsset(@Suppress("SameParameterValue") fileName: String): String {
         val json: String

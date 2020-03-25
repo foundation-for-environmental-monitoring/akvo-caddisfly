@@ -18,6 +18,7 @@
  */
 package org.akvo.caddisfly.util
 
+import java.util.*
 import kotlin.math.*
 
 object MathUtil {
@@ -129,5 +130,31 @@ object MathUtil {
                 return x
             }
         }.parse()
+    }
+
+    @JvmStatic
+    fun meanMedianMax(m: FloatArray): FloatArray? {
+        // compute mean
+        var sum = 0f
+        for (aM in m) {
+            sum += aM
+        }
+        val mean = sum / m.size
+
+        // sort array
+        Arrays.sort(m)
+
+        // compute median
+        val median: Float
+        val middle = m.size / 2
+        median = if (m.size % 2 == 1) {
+            m[middle]
+        } else {
+            (m[middle - 1] + m[middle]) / 2.0f
+        }
+
+        // max (we have already sorted the array)
+        val max = m[m.size - 1]
+        return floatArrayOf(mean, median, max)
     }
 }
