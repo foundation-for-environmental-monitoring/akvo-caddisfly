@@ -112,9 +112,9 @@ class TitrationTest {
         sleep(1000)
 
         assertNotNull(mDevice.findObject(By.text("Calcium: ")))
-        assertNotNull(mDevice.findObject(By.text("10.00")))
+        assertNotNull(mDevice.findObject(By.text("100.00")))
         assertNotNull(mDevice.findObject(By.text("Magnesium: ")))
-        assertNotNull(mDevice.findObject(By.text("4.00")))
+        assertNotNull(mDevice.findObject(By.text("40.00")))
 
         mActivityRule.finishActivity()
 

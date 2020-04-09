@@ -813,13 +813,13 @@
           "id": 1,
           "name": "Calcium",
           "unit": "mg/l",
-          "formula": "(%1$f/24) * 20"
+          "formula": "(%1$f/3) * 25"
         },
         {
           "id": 2,
           "name": "Magnesium",
           "unit": "mg/l",
-          "formula": "((%2$f / 24) - (%1$f / 24)) * 12"
+          "formula": "(%2$f-%1$f) * 5"
         }
       ]
     },
