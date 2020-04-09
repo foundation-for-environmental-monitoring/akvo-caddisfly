@@ -67,17 +67,17 @@ class ManualTest {
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
                 .perform(replaceText("12"), closeSoftKeyboard())
         onView(withId(id.editTitration2)).check(matches(isDisplayed()))
-                .perform(replaceText("20"), closeSoftKeyboard())
-        onView(allOf(withId(id.editTitration2), withText("20"),
+                .perform(replaceText("24"), closeSoftKeyboard())
+        onView(allOf(withId(id.editTitration2), withText("24"),
                 childAtPosition(childAtPosition(withId(id.fragment_container), 0),
                         4), isDisplayed())).perform(pressImeActionButton())
 
         SystemClock.sleep(1000)
 
         assertNotNull(mDevice.findObject(By.text("Calcium: ")))
-        assertNotNull(mDevice.findObject(By.text("20.00")))
+        assertNotNull(mDevice.findObject(By.text("500.00")))
         assertNotNull(mDevice.findObject(By.text("Magnesium: ")))
-        assertNotNull(mDevice.findObject(By.text("8.00")))
+        assertNotNull(mDevice.findObject(By.text("300.00")))
     }
 
     companion object {
