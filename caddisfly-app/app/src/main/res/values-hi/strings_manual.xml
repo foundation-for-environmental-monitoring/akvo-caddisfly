@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="titration_entry_error">N1 को N2 से कम या बराबर होना चाहिए</string>
+    <string name="titration_entry_error">कैल्शियम को मैग्निशियम से कम या बराबर होना चाहिए</string>
 </resources>

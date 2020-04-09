@@ -21,6 +21,7 @@
     <string name="analyze">Analyse</string>
     <!-- Tests -->
     <string name="aluminum">.</string>
+    <string name="calcium">.</string>
     <string name="total_arsenic">.</string>
     <string name="chromium">.</string>
     <string name="copper">.</string>
@@ -35,7 +36,7 @@
     <string name="sulphate">.</string>
     <string name="total_iron">.</string>
     <string name="chlorophyll_a">.</string>
-    <string name="zinc">.</string>
+    <string name="magnesium">.</string>
     <string name="organic_carbon">.</string>
     <string name="potassium">.</string>
     <string name="available_boron">.</string>
@@ -46,6 +47,7 @@
     <string name="alkalinity">.</string>
     <string name="ammonia">.</string>
     <string name="nitrite">.</string>
+    <string name="zinc">.</string>
 
     <string name="up_to_with_dilution">Up to %s with dilution</string>
 

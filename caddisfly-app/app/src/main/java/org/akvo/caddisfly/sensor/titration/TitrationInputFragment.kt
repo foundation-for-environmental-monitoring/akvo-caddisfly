@@ -56,8 +56,8 @@ class TitrationInputFragment : BaseFragment() {
             val testInfo: TestInfo? = arguments!!.getParcelable(ARG_PARAM1)
             if (testInfo != null) {
                 if (testInfo.results!!.size > 1) {
-                    textInput1.text = String.format("%s (N1)", testInfo.results!![0].name)
-                    textInput2.text = String.format("%s (N2)", testInfo.results!![1].name)
+                    textInput1.text = testInfo.results!![0].name
+                    textInput2.text = testInfo.results!![1].name
                     editTitration2.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
                             if (mListener != null) {
