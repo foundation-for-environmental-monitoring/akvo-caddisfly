@@ -61,17 +61,7 @@ class MainActivity : BaseActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        buttonCalibrate?.setOnClickListener {
-            if (permissionsDelegate.hasPermissions(storagePermission)) {
-                startCalibrate(TestSampleType.ALL)
-            } else {
-                if (BuildConfig.APPLICATION_ID.contains("soil")) {
-                    permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL)
-                } else {
-                    permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER)
-                }
-            }
-        }
+
         buttonSettings?.setOnClickListener {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivityForResult(intent, 100)
@@ -114,13 +104,9 @@ class MainActivity : BaseActivity() {
             when (requestCode) {
                 STORAGE_PERMISSION_WATER -> if (runTest) {
                     startTest(TestSampleType.WATER)
-                } else {
-                    startCalibrate(TestSampleType.WATER)
                 }
                 STORAGE_PERMISSION_SOIL -> if (runTest) {
                     startTest(TestSampleType.SOIL)
-                } else {
-                    startCalibrate(TestSampleType.SOIL)
                 }
             }
         } else {
@@ -132,11 +118,6 @@ class MainActivity : BaseActivity() {
             AlertUtil.showSettingsSnackbar(this,
                     window.decorView.rootView, message)
         }
-    }
-
-    private fun startCalibrate(testSampleType: TestSampleType) {
-        FileHelper.migrateFolders()
-        navigationController!!.navigateToTestType(TestType.CHAMBER_TEST, testSampleType, false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -134,4 +134,5 @@
     <string name="software_notices">Software Notices</string>
     <string name="software_incorporates_material">This software incorporates material from the projects listed below</string>
     <string name="navigate_up">Navigate up</string>
+    <string name="calibrate_summary">Calibrate a test with standards</string>
 </resources>

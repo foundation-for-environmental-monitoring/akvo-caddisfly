@@ -76,16 +76,6 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonCalibrate"
-            style="@style/ListButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="80dp"
-            android:text="@string/calibrate"
-            android:textAlignment="center"
-            android:textColor="?longButtonText" />
-
-        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSettings"
             style="@style/ListButton"
             android:layout_width="match_parent"

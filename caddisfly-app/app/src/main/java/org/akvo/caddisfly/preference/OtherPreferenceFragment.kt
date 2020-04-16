@@ -1,6 +1,7 @@
 @file:Suppress("DEPRECATION")
 package org.akvo.caddisfly.preference
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -19,28 +20,56 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.getAppVersion
+import org.akvo.caddisfly.common.NavigationController
+import org.akvo.caddisfly.helper.FileHelper
+import org.akvo.caddisfly.helper.PermissionsDelegate
 import org.akvo.caddisfly.helper.SwatchHelper.generateCalibrationFile
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.preference.OtherPreferenceFragment.GenerateMessageAsyncTask.ExampleAsyncTaskListener
 import org.akvo.caddisfly.ui.AboutActivity
+import org.akvo.caddisfly.ui.STORAGE_PERMISSION_SOIL
+import org.akvo.caddisfly.ui.STORAGE_PERMISSION_WATER
 import org.akvo.caddisfly.util.ListViewUtil
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 import java.lang.ref.WeakReference
 
 class OtherPreferenceFragment : PreferenceFragmentCompat() {
     private var list: ListView? = null
+    private lateinit var permissionsDelegate: PermissionsDelegate
+    private val storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private var navigationController: NavigationController? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.pref_other)
+        navigationController = NavigationController(activity!!)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list = view.findViewById(android.R.id.list)
+
+        permissionsDelegate = PermissionsDelegate(activity!!)
+
+        val calibratePreference = findPreference<Preference>("calibrate")
+        if (calibratePreference != null) {
+            calibratePreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                if (permissionsDelegate.hasPermissions(storagePermission)) {
+                    startCalibrate()
+                } else {
+                    if (BuildConfig.APPLICATION_ID.contains("soil")) {
+                        permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL)
+                    } else {
+                        permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER)
+                    }
+                }
+                true
+            }
+        }
 
         val aboutPreference = findPreference<Preference>("about")
         if (aboutPreference != null) {
@@ -51,6 +80,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 true
             }
         }
+
         val emailSupportPreference = findPreference<Preference>("emailSupport")
         if (emailSupportPreference != null) {
             emailSupportPreference.setSummary(R.string.send_details_to_support)
@@ -59,7 +89,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle(R.string.emailSupport)
                 builder.setMessage(getString(R.string.if_you_need_assistance) + "\n\n" +
-                                getString(R.string.select_email_app))
+                        getString(R.string.select_email_app))
                         .setCancelable(false)
                         .setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
                         .setPositiveButton(R.string.create_support_email) { dialog: DialogInterface, _: Int ->
@@ -90,6 +120,11 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 true
             }
         }
+    }
+
+    private fun startCalibrate() {
+        FileHelper.migrateFolders()
+        navigationController!!.navigateToTestType(TestType.CHAMBER_TEST, TestSampleType.ALL, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -128,7 +163,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 if (testInfo.isGroup) {
                     continue
                 }
-                val testInfo1 = viewModel.getTestInfo(testInfo.uuid!!)
+                val testInfo1 = viewModel.getTestInfo(testInfo.uuid)
                 var calibrated = false
                 if (testInfo1 != null) {
                     for (calibration in testInfo1.calibrations) {

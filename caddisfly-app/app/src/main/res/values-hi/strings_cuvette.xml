@@ -110,4 +110,5 @@
     <string name="software_notices">सॉफ्टवेयर नोटिस</string>
     <string name="software_incorporates_material">इस सॉफ्टवेयर में नीचे सूचीबद्ध परियोजनाओं से सामग्री शामिल है</string>
     <string name="testWithDilution">डाइलूशन करने के साथ जाँच</string>
+    <string name="calibrate_summary">मानकों के साथ एक परीक्षण कैलिब्रेट करें</string>
 </resources>
