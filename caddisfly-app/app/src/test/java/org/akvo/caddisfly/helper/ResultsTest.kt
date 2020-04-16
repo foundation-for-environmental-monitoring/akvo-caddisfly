@@ -19,6 +19,7 @@
 
 package org.akvo.caddisfly.helper
 
+import android.os.Build
 import android.util.SparseArray
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_ID_1
@@ -30,7 +31,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
 class ResultsTest {
     @Test
@@ -42,8 +45,6 @@ class ResultsTest {
         val resultJson: JSONObject = TestConfigHelper.getJsonResult(testInfo, results, null, -1, "")
 
         // Replace items that cannot be tested (e.g. currentTime)
-
-
         var json = resultJson.toString().replace("(\"testDate\":\").*?\"".toRegex(), "$1today\"")
         json = json.replace("(\"appVersion\":\").*?\"".toRegex(), "$1version\"")
         json = json.replace("(\"country\":\").*?\"".toRegex(), "$1\"")

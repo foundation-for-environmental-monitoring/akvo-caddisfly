@@ -314,7 +314,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
             val builder = AlertDialog.Builder(context)
             builder.setTitle(R.string.loadCalibration)
             val arrayAdapter = ArrayAdapter<String>(context, R.layout.row_text)
-            val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo.uuid!!)
+            val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo.uuid)
             var listFilesTemp: Array<File>? = null
             if (path.exists() && path.isDirectory) {
                 listFilesTemp = path.listFiles()

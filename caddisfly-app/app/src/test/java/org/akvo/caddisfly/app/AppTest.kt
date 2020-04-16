@@ -1,5 +1,6 @@
 package org.akvo.caddisfly.app
 
+import android.os.Build
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -9,8 +10,8 @@ import org.robolectric.manifest.AndroidManifest
 import org.robolectric.res.Fs
 import java.util.*
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE)
 class AppTest {
     @Test
     fun shouldMatchPermissions() {

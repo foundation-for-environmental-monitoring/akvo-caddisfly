@@ -21,6 +21,7 @@ package org.akvo.caddisfly.color
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import junit.framework.TestCase.assertEquals
 import org.akvo.caddisfly.common.ChamberTestConfig
 import org.akvo.caddisfly.entity.Calibration
@@ -33,8 +34,9 @@ import org.akvo.caddisfly.util.ColorUtil
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import java.util.*
+import org.robolectric.annotation.Config
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
 class ColorTest {
     @Test
@@ -51,7 +53,7 @@ class ColorTest {
         result.colors.add(ColorItem(1.0))
         result.colors.add(ColorItem(1.5))
         result.colors.add(ColorItem(2.0))
-        testInfo.results.add(result)
+        (testInfo.results!! as ArrayList).add(result)
         val calibrations: MutableList<Calibration> = ArrayList()
         calibrations.add(Calibration(0.0, Color.rgb(255, 87, 181)))
         calibrations.add(Calibration(0.5, Color.rgb(255, 124, 157)))
@@ -78,7 +80,7 @@ class ColorTest {
         result.colors.add(ColorItem(1.0))
         result.colors.add(ColorItem(1.5))
         result.colors.add(ColorItem(2.0))
-        testInfo.results.add(result)
+        (testInfo.results!! as ArrayList).add(result)
         val calibrations: MutableList<Calibration> = ArrayList()
         calibrations.add(Calibration(0.0, Color.rgb(253, 0, 18)))
         calibrations.add(Calibration(0.5, Color.rgb(254, 1, 21)))
@@ -105,7 +107,7 @@ class ColorTest {
         result.colors.add(ColorItem(1.0))
         result.colors.add(ColorItem(1.5))
         result.colors.add(ColorItem(2.0))
-        testInfo.results.add(result)
+        (testInfo.results!! as ArrayList).add(result)
         val calibrations: MutableList<Calibration> = ArrayList()
         calibrations.add(Calibration(0.0, Color.rgb(255, 117, 195)))
         calibrations.add(Calibration(0.5, Color.rgb(255, 117, 195)))

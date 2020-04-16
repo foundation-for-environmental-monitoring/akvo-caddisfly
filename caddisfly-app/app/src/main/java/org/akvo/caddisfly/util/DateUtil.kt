@@ -34,6 +34,7 @@ object DateUtil {
      * @param calendar2 the second date
      * @return the number days
      */
+    @JvmStatic
     fun getDaysDifference(calendar1: Calendar?, calendar2: Calendar?): Int {
         return if (calendar1 == null || calendar2 == null) {
             0
@@ -48,6 +49,7 @@ object DateUtil {
      * @param calendar2 the second date
      * @return the number hours
      */
+    @JvmStatic
     fun getHoursDifference(calendar1: Calendar?, calendar2: Calendar?): Int {
         return if (calendar1 == null || calendar2 == null) {
             0
@@ -55,6 +57,7 @@ object DateUtil {
                 - calendar1.timeInMillis) / (1000 * 60 * 60)).toInt()
     }
 
+    @JvmStatic
     fun convertStringToDate(dateString: String, format: String): Date? {
         val simpleDateFormat = SimpleDateFormat(format, Locale.US)
         try {

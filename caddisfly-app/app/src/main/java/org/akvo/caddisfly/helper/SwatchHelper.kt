@@ -41,8 +41,10 @@ import kotlin.math.min
 
 object SwatchHelper {
     private const val MAX_DISTANCE = 999
+
     @Transient
     private val symbols = DecimalFormatSymbols(Locale.US)
+
     @Transient
     private val decimalFormat = DecimalFormat("#.###", symbols)
 
@@ -188,12 +190,12 @@ object SwatchHelper {
     @Throws(IOException::class)
     fun loadCalibrationFromFile(testInfo: TestInfo, fileName: String): ArrayList<Calibration> {
         val calibrations: ArrayList<Calibration> = ArrayList()
-        val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo.uuid!!)
+        val path = FileHelper.getFilesDir(FileType.CALIBRATION, testInfo.uuid)
         val dao = db!!.calibrationDao()
         val calibrationDetails = FileUtil.loadFromFile(path, fileName)
         if (calibrationDetails != null) {
             val calibrationDetail = dao!!.getCalibrationDetails(testInfo.uuid)
-            calibrationDetail!!.uid = testInfo.uuid!!
+            calibrationDetail!!.uid = testInfo.uuid
             for (i in calibrationDetails.indices.reversed()) {
                 val line = calibrationDetails[i]
                 if (!line.contains("=")) {
@@ -225,7 +227,7 @@ object SwatchHelper {
             for (rgb in calibrationDetails) {
                 val values = rgb.split("=").toTypedArray()
                 val calibration = Calibration()
-                calibration.uid = testInfo.uuid!!
+                calibration.uid = testInfo.uuid
                 calibration.date = Date().time
                 calibration.value = stringToDouble(values[0])
                 if (values.size > 1) {
@@ -361,6 +363,7 @@ object SwatchHelper {
      * @param resultDetails the result info
      * @return the average value
      */
+    @JvmStatic
     fun getAverageResult(resultDetails: ArrayList<ResultDetail>): Double {
         var result = 0.0
         for (i in resultDetails.indices) {

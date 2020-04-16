@@ -2,8 +2,9 @@ package org.akvo.caddisfly.navigation
 
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -30,7 +31,7 @@ class RunTestNavigation {
 
     @Rule
     @JvmField
-    var mActivityTestRule = ActivityTestRule<MainActivity>(MainActivity::class.java)
+    var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Rule
     @JvmField
@@ -62,8 +63,9 @@ class RunTestNavigation {
 //
 //        onView(allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click())
 
-        onView(allOf(withId(R.id.buttonCalibrate), withText("Calibrate"), isDisplayed()))
-                .perform(click())
+        onView(withText(R.string.settings)).perform(click())
+        onView(withId(R.id.scrollViewSettings)).perform(ViewActions.swipeUp())
+        onView(withText(R.string.calibrate)).check(matches(isDisplayed())).perform(click())
 
         val relativeLayout3 = onView(
                 allOf(childAtPosition(
@@ -77,7 +79,7 @@ class RunTestNavigation {
         if (TestUtil.isEmulator) {
             onView(withText(R.string.errorCameraFlashRequired))
                     .inRoot(RootMatchers.withDecorView(Matchers.not(`is`(mActivityTestRule.activity.window
-                            .decorView)))).check(ViewAssertions.matches(isDisplayed()))
+                            .decorView)))).check(matches(isDisplayed()))
             return
         }
 
@@ -134,16 +136,16 @@ class RunTestNavigation {
                         isDisplayed()))
         appCompatImageButton2.perform(click())
 
-        val appCompatImageButton3 = onView(
-                allOf(withContentDescription("Navigate up"),
-                        childAtPosition(
-                                allOf(withId(R.id.toolbar),
-                                        childAtPosition(
-                                                withId(R.id.mainLayout),
-                                                0)),
-                                1),
-                        isDisplayed()))
-        appCompatImageButton3.perform(click())
+        onView(allOf(withContentDescription("Navigate up"),
+                childAtPosition(
+                        allOf(withId(R.id.toolbar),
+                                childAtPosition(
+                                        withId(R.id.mainLayout),
+                                        0)),
+                        1),
+                isDisplayed())).perform(click())
+
+        onView(allOf(withContentDescription("Navigate up"), isDisplayed())).perform(click())
 
         onView(allOf(withId(R.id.buttonRunTest), withText("Run Test"), isDisplayed()))
                 .perform(click())

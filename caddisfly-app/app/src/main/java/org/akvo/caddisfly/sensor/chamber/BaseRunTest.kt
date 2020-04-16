@@ -234,7 +234,7 @@ open class BaseRunTest : Fragment(), RunTest {
      * @param bmp the bitmap of the photo taken during analysis
      */
     private fun getAnalyzedResult(bmp: Bitmap) {
-        val bitmap = ImageUtil.rotateImage(activity!!.parent, bmp)
+        val bitmap = ImageUtil.rotateImage(activity!!, bmp)
         var croppedBitmap = ImageUtil.getCroppedBitmap(bitmap,
                 ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
         //Extract the color from the photo which will be used for comparison

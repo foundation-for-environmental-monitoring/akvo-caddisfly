@@ -161,7 +161,7 @@ class SaveCalibrationDialogFragment : DialogFragment() {
                 override fun onClick(v: View) {
                     if (formEntryValid()) {
                         if (editName!!.text.toString().trim { it <= ' ' }.isNotEmpty()) {
-                            val path = getFilesDir(FileType.CALIBRATION, testInfo!!.uuid!!)
+                            val path = getFilesDir(FileType.CALIBRATION, testInfo!!.uuid)
                             val file = File(path, editName!!.text.toString())
                             if (file.exists()) {
                                 AlertUtil.askQuestion(context, R.string.fileAlreadyExists,

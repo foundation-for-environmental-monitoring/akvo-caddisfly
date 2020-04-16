@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
@@ -32,7 +33,6 @@ import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
@@ -85,7 +85,6 @@ class ChamberRunTest {
     }
 
     @Test
-    @RequiresDevice
     fun testFreeChlorine() {
         saveCalibration("TestValidChlorine", Constants.FREE_CHLORINE_ID_2)
         onView(withText(string.settings)).perform(click())
@@ -93,7 +92,6 @@ class ChamberRunTest {
     }
 
     @Test
-    @RequiresDevice
     fun testStartHighLevelTest() {
         saveCalibration("HighLevelTest", TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
@@ -103,6 +101,8 @@ class ChamberRunTest {
         enterDiagnosticMode()
         goToMainScreen()
         try {
+            onView(withText(string.settings)).perform(click())
+            onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
             onView(withText(string.calibrate)).perform(click())
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
@@ -126,6 +126,8 @@ class ChamberRunTest {
         leaveDiagnosticMode()
         goToMainScreen()
         try {
+            onView(withText(string.settings)).perform(click())
+            onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
             onView(withText(string.calibrate)).perform(click())
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
@@ -238,7 +240,6 @@ class ChamberRunTest {
     }
 
     @Test
-    @RequiresDevice
     fun testStartNoDilutionTest() {
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
@@ -248,6 +249,8 @@ class ChamberRunTest {
         enterDiagnosticMode()
         goToMainScreen()
         try {
+            onView(withText(string.settings)).perform(click())
+            onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
             onView(withText(string.calibrate)).perform(click())
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
@@ -270,6 +273,8 @@ class ChamberRunTest {
         leaveDiagnosticMode()
         goToMainScreen()
         try {
+            onView(withText(string.settings)).perform(click())
+            onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
             onView(withText(string.calibrate)).perform(click())
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
@@ -325,6 +330,7 @@ class ChamberRunTest {
 
     companion object {
         private const val TEST_START_DELAY = 24
+
         @JvmStatic
         @BeforeClass
         fun initialize() {

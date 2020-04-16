@@ -1,12 +1,12 @@
 package org.akvo.caddisfly.diagnostic
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
@@ -44,14 +44,16 @@ class DiagnosticTest {
     }
 
     @Test
-    @RequiresDevice
     fun testDiagnosticMode() {
+        goToMainScreen()
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         for (i in 0..9) {
             onView(withId(id.textVersion)).perform(click())
         }
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         onView(RecyclerViewMatcher(id.list_types)
                 .atPositionOnView(CUVETTE_TEST_INDEX, id.text_title))

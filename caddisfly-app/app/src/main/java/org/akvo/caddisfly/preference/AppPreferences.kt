@@ -100,6 +100,7 @@ object AppPreferences {
             ChamberTestConfig.MAX_COLOR_DISTANCE_CALIBRATION
         }
 
+    @JvmStatic
     val isSoundOn: Boolean
         get() = !isDiagnosticMode() || PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.soundOnKey, true)
 

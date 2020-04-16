@@ -22,6 +22,7 @@ package org.akvo.caddisfly.ui
 import android.R
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +34,7 @@ import org.akvo.caddisfly.common.UnitTestConstants.SAMPLE_TYPE
 import org.akvo.caddisfly.common.UnitTestConstants.STRIP_TESTS_COUNT
 import org.akvo.caddisfly.common.UnitTestConstants.STRIP_TEST_NAME
 import org.akvo.caddisfly.model.TestInfo
+import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
 import org.junit.Assert.assertSame
 import org.junit.Test
@@ -41,16 +43,18 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowActivity
 import org.robolectric.shadows.ShadowLooper
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
 class StripsTest {
     @Test
     fun titleIsCorrect() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestSampleType.WATER)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()

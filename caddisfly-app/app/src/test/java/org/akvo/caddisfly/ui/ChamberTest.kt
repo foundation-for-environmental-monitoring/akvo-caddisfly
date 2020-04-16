@@ -25,6 +25,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -43,6 +44,7 @@ import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_2
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_3
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_4
 import org.akvo.caddisfly.model.TestInfo
+import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity
 import org.junit.Test
@@ -51,15 +53,17 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.*
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
 class ChamberTest {
     @Test
     fun titleIsCorrect() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -79,7 +83,7 @@ class ChamberTest {
     fun testCount() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -110,7 +114,7 @@ class ChamberTest {
     fun testTitles() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -125,7 +129,7 @@ class ChamberTest {
         val recyclerView: RecyclerView = activity.findViewById(id.list_types)
         for (i in 0 until recyclerView.childCount) {
             val testInfo: TestInfo = (recyclerView.adapter as TestInfoAdapter?)!!.getItemAt(i)
-            assertTestTitle(recyclerView, i, testInfo.name)
+            assertTestTitle(recyclerView, i, testInfo.name!!)
         }
     }
 
@@ -134,7 +138,7 @@ class ChamberTest {
         val permissions = arrayOf(permission.CAMERA, permission.WRITE_EXTERNAL_STORAGE)
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -170,7 +174,7 @@ class ChamberTest {
     fun clickHome() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -230,9 +234,8 @@ class ChamberTest {
         button.performClick()
         val alert: AlertDialog? = ShadowAlertDialog.getLatestAlertDialog()
         val sAlert: ShadowAlertDialog = shadowOf(alert)
-        assertEquals("Calibration for " + CUVETTE_TEST_NAME_1 + " is incomplete\n" +
-                "\n" +
-                "Do you want to calibrate now?", sAlert.message)
+        assertEquals("Calibration for " + CUVETTE_TEST_NAME_1 + " is incomplete\r\n" +
+                "\r\nDo you want to calibrate now?", sAlert.message)
     }
 
 //

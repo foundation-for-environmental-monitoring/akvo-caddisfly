@@ -14,5 +14,4 @@ object ConstantKey {
     const val TYPE = NAMESPACE_PREFIX + "type"
     const val SAMPLE_TYPE = NAMESPACE_PREFIX + "sampleType"
     const val NEXT_UPDATE_CHECK = NAMESPACE_PREFIX + "lastUpdateCheck"
-    const val VALUE = NAMESPACE_PREFIX + "value"
 }

@@ -19,6 +19,7 @@
 
 package org.akvo.caddisfly.ui
 
+import android.os.Build
 import androidx.annotation.StringRes
 import androidx.test.core.app.ApplicationProvider
 import org.akvo.caddisfly.R.string
@@ -28,9 +29,11 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
 class AppPreferencesTest {
     @Test

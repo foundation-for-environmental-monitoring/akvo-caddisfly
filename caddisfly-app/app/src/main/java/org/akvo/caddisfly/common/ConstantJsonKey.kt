@@ -19,7 +19,6 @@
 package org.akvo.caddisfly.common
 
 object ConstantJsonKey {
-    const val APP = "app"
     const val BRACKET = "bracket"
     const val ID = "id"
     const val IMAGE = "image"

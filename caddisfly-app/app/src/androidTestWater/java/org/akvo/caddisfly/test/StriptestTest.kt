@@ -3,9 +3,9 @@ package org.akvo.caddisfly.test
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
@@ -43,7 +43,6 @@ class StriptestTest {
     }
 
     @Test
-    @RequiresDevice
     fun startStriptest() {
         activateTestMode(mActivityRule.activity)
         testArsenic()
@@ -73,6 +72,13 @@ class StriptestTest {
             }
         }
 
+        if (TestUtil.isEmulator) {
+            onView(withText(string.camera_not_good))
+                    .inRoot(RootMatchers.withDecorView(Matchers.not(Matchers.`is`(mActivityRule.activity.window
+                            .decorView)))).check(matches(isDisplayed()))
+            return
+        }
+
         clickStartButton()
         sleep(5000)
         onView(withText(string.result)).check(matches(isDisplayed()))
@@ -100,6 +106,13 @@ class StriptestTest {
                 sleep(200)
                 break
             }
+        }
+
+        if (TestUtil.isEmulator) {
+            onView(withText(string.camera_not_good))
+                    .inRoot(RootMatchers.withDecorView(Matchers.not(Matchers.`is`(mActivityRule.activity.window
+                            .decorView)))).check(matches(isDisplayed()))
+            return
         }
 
         clickStartButton()

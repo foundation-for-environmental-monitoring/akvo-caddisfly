@@ -22,22 +22,24 @@ package org.akvo.caddisfly.ui
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.widget.Button
 import android.widget.TextView
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.preference.SettingsActivity
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
+import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowApplication
 import org.robolectric.shadows.ShadowLooper
 
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
 class MainTest {
     @Test
@@ -86,10 +88,11 @@ class MainTest {
         val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val controller: ActivityController<*> = Robolectric.buildActivity(MainActivity::class.java).create().start()
         val activity = controller.get() as Activity
-        val button: Button = activity.findViewById(R.id.buttonCalibrate)
+        val button: Button = activity.findViewById(R.id.buttonSettings)
         button.performClick()
         val nextIntent: Intent? = shadowOf(activity).nextStartedActivity
-        assertNull(nextIntent)
+        assertEquals(SettingsActivity::class.java.canonicalName,
+                nextIntent!!.component!!.className)
         val application: ShadowApplication = shadowOf(activity.application)
         application.grantPermissions(*permissions)
         controller.resume()
@@ -98,7 +101,7 @@ class MainTest {
         button.performClick()
         val intent: Intent = shadowOf(activity).nextStartedActivity
         if (intent.component != null) {
-            assertEquals(TestListActivity::class.java.canonicalName,
+            assertEquals(SettingsActivity::class.java.canonicalName,
                     intent.component!!.className)
         }
     }

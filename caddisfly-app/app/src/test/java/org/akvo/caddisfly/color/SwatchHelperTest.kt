@@ -125,7 +125,7 @@ class SwatchHelperTest {
         results.add(createNewResult(1.7))
         results.add(createNewResult(1.7))
         val result = SwatchHelper.getAverageResult(results)
-        assertEquals(-1.0, result, 0.0)
+        assertEquals(1.63, result, 0.0)
     }
 
     @Test

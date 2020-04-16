@@ -28,6 +28,7 @@ import org.akvo.caddisfly.helper.SwatchHelper.generateGradient
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -39,9 +40,6 @@ class TestInfo : Parcelable {
     @Transient
     private val decimalFormat = DecimalFormat("#.###", symbols)
 
-    //    @SerializedName("reagentType")
-    //    @Expose
-    //    private String reagentType = "";
     @SerializedName("reagents")
     @Expose
     private var reagents: List<Reagent> = emptyList()
@@ -84,7 +82,7 @@ class TestInfo : Parcelable {
 
     @SerializedName("uuid")
     @Expose
-    var uuid: String? = null
+    var uuid: String = ""
         private set
 
     @SerializedName("calibration")
@@ -149,22 +147,11 @@ class TestInfo : Parcelable {
     @Expose
     val dilutions: List<Int> = ArrayList()
 
-    //    public void setSwatches(List<Swatch> swatches) {
-    //        this.swatches = swatches;
-    //    }
     @SerializedName("monthsValid")
     @Expose
     var monthsValid: Int? = null
         private set
 
-    //
-    //    public Double getHeight() {
-    //        return height;
-    //    }
-    //
-    //    public void setHeight(Double height) {
-    //        this.height = height;
-    //    }
     @SerializedName("sampleQuantity")
     @Expose
     var sampleQuantity: String? = null
@@ -191,9 +178,6 @@ class TestInfo : Parcelable {
     @Expose
     private var instructions2: List<Instruction>? = null
 
-    //    public void setInstructions(List<Instruction> instructions) {
-    //        this.instructions = instructions;
-    //    }
     @SerializedName("image")
     @Expose
     var image: String? = null
@@ -216,9 +200,6 @@ class TestInfo : Parcelable {
             return results!![0].presetColors
         }
 
-    //    public void setImage(String image) {
-    //        this.image = image;
-    //    }
     @SerializedName("imageScale")
     @Expose
     var imageScale: String? = null
@@ -235,7 +216,7 @@ class TestInfo : Parcelable {
                 val newCalibrations: MutableList<Calibration> = ArrayList()
                 for (colorItem in result.colors) {
                     val newCalibration = Calibration(colorItem.value!!, Color.TRANSPARENT)
-                    newCalibration.uid = uuid!!
+                    newCalibration.uid = uuid
                     for (i in value.indices.reversed()) {
                         val calibration = value[i]
                         if (calibration.value == colorItem.value) {
@@ -265,24 +246,6 @@ class TestInfo : Parcelable {
             field = max(1, dilution)
         }
 
-    //    /**
-    //     * Connected device id.
-    //     *
-    //     * @return the device id
-    //     */
-    //    public String getDeviceId() {
-    //        return deviceId;
-    //    }
-    //
-    //    /**
-    //     * Use the response format to display the results in test id order.
-    //     *
-    //     * @return the Format
-    //     */
-    //    public String getResponseFormat() {
-    //        return responseFormat;
-    //    }
-    //
     var swatches: MutableList<Swatch> = ArrayList()
     var decimalPlaces = 0
     var resultDetail: ResultDetail? = null
@@ -304,7 +267,7 @@ class TestInfo : Parcelable {
         tags = `in`.createStringArrayList()
         reagents = ArrayList()
         `in`.readTypedList(reagents, Reagent.CREATOR)
-        uuid = `in`.readString()
+        uuid = `in`.readString()!!
         calibration = `in`.readString()
         calibrations = ArrayList()
         `in`.readTypedList(calibrations, Calibration.CREATOR)
@@ -369,14 +332,6 @@ class TestInfo : Parcelable {
         resultSuffix = `in`.readString()
     }
 
-    //
-    //    public boolean getCameraAbove() {
-    //        return cameraAbove == null ? false : cameraAbove;
-    //    }
-    //    public void setCameraAbove(boolean value) {
-    //        cameraAbove = value;
-    //    }
-    //
     val isGroup: Boolean
         get() {
             return isCategory
@@ -386,19 +341,6 @@ class TestInfo : Parcelable {
         return category
     }
 
-    //    public double getMinRangeValue() {
-    //        if (ranges != null) {
-    //            try {
-    //                String[] array = ranges.split(",");
-    //                return Double.parseDouble(array[0]);
-    //            } catch (NumberFormatException e) {
-    //                return -1;
-    //            }
-    //        } else {
-    //            return -1;
-    //        }
-    //    }
-    //
     private fun getMaxRangeValue(): Double {
         return if (ranges != null) {
             try {
@@ -542,20 +484,10 @@ class TestInfo : Parcelable {
         }
     }
 
-    //    public String getSelectInstruction() {
-    //        return selectInstruction;
-    //    }
-    //
-    //    public String getEndInstruction() {
-    //        return endInstruction;
-    //    }
     fun getStripLength(): Double {
         return length!!
     }
 
-    //    public Boolean getHasImage() {
-    //        return hasImage;
-    //    }
     val maxDilution: Int
         get() {
             return if (dilutions.isNotEmpty()) {

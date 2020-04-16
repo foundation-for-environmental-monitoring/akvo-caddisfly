@@ -7,6 +7,7 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
@@ -15,7 +16,6 @@ import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
@@ -63,7 +63,6 @@ class NavigationTest {
     }
 
     @Test
-    @RequiresDevice
     fun testNavigateAll() {
         saveCalibration("TestInvalid", TestConstants.CUVETTE_TEST_ID_1)
         val path = (mActivityRule.activity.getExternalFilesDir(null)?.path
@@ -77,6 +76,7 @@ class NavigationTest {
 
         //Main Screen
         takeScreenshot()
+
         onView(withText(string.settings)).perform(click())
 
         //Settings Screen
@@ -100,6 +100,8 @@ class NavigationTest {
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         sleep(4000)
         onView(allOf(withId(id.list_types), childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
@@ -122,6 +124,8 @@ class NavigationTest {
         sleep(4000)
 
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
 
         //Test Types Screen
@@ -162,6 +166,8 @@ class NavigationTest {
         enterDiagnosticMode()
         Espresso.pressBack()
         Espresso.pressBack()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         sleep(4000)
         onView(allOf(withId(id.list_types), childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
@@ -174,6 +180,8 @@ class NavigationTest {
         leaveDiagnosticMode()
 
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
 
         goToMainScreen()

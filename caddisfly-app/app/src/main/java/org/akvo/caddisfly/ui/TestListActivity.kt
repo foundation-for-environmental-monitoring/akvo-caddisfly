@@ -95,7 +95,7 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
     }
 
     private fun startTest() {
-        testInfo = TestConfigRepository().getTestInfo(testInfo!!.uuid.toString())
+        testInfo = TestConfigRepository().getTestInfo(testInfo!!.uuid)
         if (testInfo == null || testInfo!!.isGroup) {
             return
         }

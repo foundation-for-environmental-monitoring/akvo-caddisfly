@@ -26,6 +26,7 @@ import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -79,7 +80,8 @@ class SurveyTest {
     @Test
     fun testChangeTestType() {
         goToMainScreen()
-        onView(withText(string.calibrate)).perform(click())
+        onView(withText(string.settings)).perform(click())
+        onView(withText(string.calibrate)).check(matches(isDisplayed())).perform(click())
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
@@ -132,7 +134,9 @@ class SurveyTest {
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
-        onView(withText(string.calibrate)).perform(click())
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
+        onView(withText(string.calibrate)).check(matches(isDisplayed())).perform(click())
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(

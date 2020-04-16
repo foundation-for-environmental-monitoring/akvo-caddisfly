@@ -39,6 +39,7 @@ const val MIN_DISTANCE = 6.0
  */
 object ColorUtil {
 
+    @JvmStatic
     fun getMaxDistance(defaultValue: Double): Double {
         return if (defaultValue > 0) {
             defaultValue
@@ -54,6 +55,7 @@ object ColorUtil {
      * @param sampleLength The max length of the image to traverse
      * @return The extracted color information
      */
+    @JvmStatic
     fun getColorFromBitmap(bitmap: Bitmap,
                            sampleLength: Int): ColorInfo {
         var highestCount = 0
@@ -106,6 +108,7 @@ object ColorUtil {
      * @param color The color
      * @return The brightness value
      */
+    @JvmStatic
     fun getBrightness(color: Int): Int {
         val r = Color.red(color)
         val g = Color.green(color)
@@ -121,6 +124,7 @@ object ColorUtil {
      * @param color2 the color to compare with
      * @return the distance between the two colors
      */
+    @JvmStatic
     fun getColorDistance(color1: Int, color2: Int): Double {
         val r: Double = (Color.red(color2) - Color.red(color1).toDouble()).pow(2.0)
         val g: Double = (Color.green(color2) - Color.green(color1).toDouble()).pow(2.0)
@@ -131,7 +135,7 @@ object ColorUtil {
     //    public static boolean areColorsTooDissimilar(int color1, int color2) {
     //        return getColorDistanceRgb(color1, color2) > MAX_SAMPLING_COLOR_DISTANCE_RGB;
     //    }
-
+    @JvmStatic
     fun areColorsSimilar(color1: Int, color2: Int): Boolean {
         return getColorDistance(color1, color2) < MIN_DISTANCE
     }
@@ -145,6 +149,7 @@ object ColorUtil {
      * @param i          The index at which the color is to be calculated
      * @return The newly generated color
      */
+    @JvmStatic
     fun getGradientColor(startColor: Int, endColor: Int, n: Int, i: Int): Int {
         return Color.rgb(interpolate(Color.red(startColor), Color.red(endColor), n, i),
                 interpolate(Color.green(startColor), Color.green(endColor), n, i),
@@ -160,6 +165,7 @@ object ColorUtil {
      * @param i     The index at which the color is to be calculated
      * @return The calculated color component
      */
+    @JvmStatic
     private fun interpolate(start: Int, end: Int, n: Int, i: Int): Int {
         return (start.toFloat() + (end.toFloat() - start.toFloat()) / n * i).toInt()
     }
@@ -170,6 +176,7 @@ object ColorUtil {
      * @param color The color to convert
      * @return The rgb value as string
      */
+    @JvmStatic
     fun getColorRgbString(color: Int): String {
         return if (color == Color.TRANSPARENT) {
             ""
@@ -182,10 +189,11 @@ object ColorUtil {
      * @param rgbValue The rgb string representation of the color
      * @return An Integer color value
      */
+    @JvmStatic
     fun getColorFromRgb(rgbValue: String): Int {
         var rgb = rgbValue
         rgb = rgb.replace(",", " ")
-        val rgbArray = rgb.split("\\s+").toTypedArray()
+        val rgbArray = rgb.split("\\s+".toPattern()).toTypedArray()
         return Color.rgb(rgbArray[0].toInt(), rgbArray[1].toInt(), rgbArray[2].toInt())
     }
 }

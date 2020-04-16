@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
@@ -34,8 +35,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
-import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
@@ -60,12 +59,14 @@ import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.Matchers.*
 import org.hamcrest.`object`.HasToString.hasToString
-import org.junit.*
+import org.junit.Before
+import org.junit.BeforeClass
+import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-@LargeTest
 class CalibrationTest {
     @JvmField
     @Rule
@@ -79,8 +80,6 @@ class CalibrationTest {
     }
 
     @Test
-    @RequiresDevice
-    @Ignore
     fun testOutOfSequence() {
         saveCalibration("OutOfSequence", TestConstants.CUVETTE_TEST_ID_1)
         goToMainScreen()
@@ -88,6 +87,8 @@ class CalibrationTest {
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         sleep(4000)
         onView(allOf(withId(id.list_types),
@@ -114,17 +115,20 @@ class CalibrationTest {
                 mActivityRule.activity.getString(string.tryRecalibrating)))).check(matches(not(isDisplayed())))
         sleep(2000)
         leaveDiagnosticMode()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
     }
 
     @Test
-    @RequiresDevice
     fun testExpiryDate() {
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         Espresso.pressBack()
         Espresso.pressBack()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         sleep(500)
         onView(allOf(withId(id.list_types),
@@ -143,6 +147,8 @@ class CalibrationTest {
         sleep(500)
         leaveDiagnosticMode()
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
@@ -195,6 +201,8 @@ class CalibrationTest {
             onView(withText(string.ok)).perform(click())
         }
         mActivityRule.launchActivity(Intent())
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
 
 //        onView(withText(currentHashMap.get(TestConstant.FLUORIDE))).perform(click());

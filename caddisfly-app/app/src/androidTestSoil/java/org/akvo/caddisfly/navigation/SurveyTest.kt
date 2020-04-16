@@ -26,6 +26,7 @@ import androidx.test.espresso.AmbiguousViewMatcherException
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
@@ -33,7 +34,6 @@ import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import androidx.test.filters.RequiresDevice
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
@@ -81,9 +81,10 @@ class SurveyTest {
     }
 
     @Test
-    @RequiresDevice
     fun testChangeTestType() {
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
@@ -107,6 +108,8 @@ class SurveyTest {
         Espresso.pressBack()
         Espresso.pressBack()
         Espresso.pressBack()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
 
 //        onView(withText(currentHashMap.get("chlorine"))).perform(click());
@@ -130,13 +133,14 @@ class SurveyTest {
     }
 
     @Test
-    @RequiresDevice
     fun testStartASurvey() {
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()
+        onView(withText(string.settings)).perform(click())
+        onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         onView(allOf(withId(id.list_types),
                 childAtPosition(withClassName(`is`("android.widget.LinearLayout")),

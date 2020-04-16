@@ -203,7 +203,7 @@ class TestConfigRepository {
         val calibrations: MutableList<Calibration> = ArrayList()
         for (colorItem in testInfo.results!![0].colors) {
             val calibration = Calibration()
-            calibration.uid = testInfo.uuid!!
+            calibration.uid = testInfo.uuid
             calibration.color = Color.TRANSPARENT
             calibration.value = colorItem.value!!
             calibrations.add(calibration)
@@ -219,13 +219,13 @@ class TestConfigRepository {
             val key = String.format(Locale.US, "%s-%.2f",
                     testInfo.uuid, color.value)
             val calibration = Calibration()
-            calibration.uid = testInfo.uuid!!
+            calibration.uid = testInfo.uuid
             calibration.color = getInt(context, key, 0)
             calibration.value = color.value!!
             calibrations.add(calibration)
         }
         val calibrationDetail = CalibrationDetail()
-        calibrationDetail.uid = testInfo.uuid!!
+        calibrationDetail.uid = testInfo.uuid
         val date = getLong(context!!,
                 testInfo.uuid, R.string.calibrationDateKey)
         if (date > 0) {
