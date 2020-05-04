@@ -169,10 +169,10 @@ dependencies {
 
     // Firebase (Experiment Flavor)
     tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:17.3.0'
-    tryoutImplementation 'com.google.firebase:firebase-database:19.2.1'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:21.4.2'
+    tryoutImplementation 'com.google.firebase:firebase-core:17.4.0'
+    tryoutImplementation 'com.google.firebase:firebase-database:19.3.0'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:21.4.3'
     tryoutImplementation 'com.google.firebase:firebase-storage:19.1.1'
-    tryoutImplementation 'com.google.firebase:firebase-auth:19.3.0'
+    tryoutImplementation 'com.google.firebase:firebase-auth:19.3.1'
 }
 apply plugin: 'com.google.gms.google-services'
