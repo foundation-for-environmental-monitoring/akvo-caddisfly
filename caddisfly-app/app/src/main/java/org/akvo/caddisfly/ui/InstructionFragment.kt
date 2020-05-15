@@ -63,7 +63,7 @@ class InstructionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (arguments != null) {
-            mTestInfo = arguments!!.getParcelable(ConstantKey.TEST_INFO)
+            mTestInfo = requireArguments().getParcelable(ConstantKey.TEST_INFO)
 
             InstructionHelper.setupInstructions(mTestInfo!!.instructions!!,
                     instructionList, pageIndex, false)
@@ -117,7 +117,7 @@ class InstructionFragment : Fragment() {
             fragmentInstructionBinding = DataBindingUtil.inflate(inflater,
                     R.layout.fragment_instruction, container, false)
             if (arguments != null) {
-                instruction = arguments!!.getParcelable(ARG_SECTION_NUMBER)
+                instruction = requireArguments().getParcelable(ARG_SECTION_NUMBER)
                 fragmentInstructionBinding!!.instruction = instruction
             }
             return fragmentInstructionBinding!!.root

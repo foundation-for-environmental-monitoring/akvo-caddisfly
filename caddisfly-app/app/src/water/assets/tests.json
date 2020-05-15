@@ -370,68 +370,6 @@
         2,
         5
       ],
-      "instructions": [
-        {
-          "section": [
-            "bc_rinse",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_fill",
-            "image:bc_fill"
-          ]
-        },
-        {
-          "section": [
-            "bc_add_capsule",
-            "image:bc_add_capsule"
-          ]
-        },
-        {
-          "section": [
-            "bc_screw",
-            "image:bc_screw"
-          ]
-        },
-        {
-          "section": [
-            "bc_shake",
-            "image:bc_shake"
-          ]
-        },
-        {
-          "section": [
-            "bc_wipe_bottom",
-            "image:bc_wipe_bottom"
-          ]
-        },
-        {
-          "section": [
-            "bc_wipe_camera",
-            "image:bc_wipe_camera"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_chamber",
-            "image:bc_place_chamber"
-          ]
-        },
-        {
-          "section": [
-            "bc_select_dilution",
-            "image:bc_select_dilution"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_phone",
-            "image:bc_place_phone"
-          ]
-        }
-      ],
       "results": [
         {
           "id": 1,
@@ -455,68 +393,6 @@
         2,
         5
       ],
-      "instructions": [
-        {
-          "section": [
-            "bc_rinse",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_fill",
-            "image:bc_fill"
-          ]
-        },
-        {
-          "section": [
-            "bc_add_capsule",
-            "image:bc_add_capsule"
-          ]
-        },
-        {
-          "section": [
-            "bc_screw",
-            "image:bc_screw"
-          ]
-        },
-        {
-          "section": [
-            "bc_shake",
-            "image:bc_shake"
-          ]
-        },
-        {
-          "section": [
-            "bc_wipe_bottom",
-            "image:bc_wipe_bottom"
-          ]
-        },
-        {
-          "section": [
-            "bc_wipe_camera",
-            "image:bc_wipe_camera"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_chamber",
-            "image:bc_place_chamber"
-          ]
-        },
-        {
-          "section": [
-            "bc_select_dilution",
-            "image:bc_select_dilution"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_phone",
-            "image:bc_place_phone"
-          ]
-        }
-      ],
       "results": [
         {
           "id": 1,
@@ -535,62 +411,6 @@
       "calibrate": true,
       "ranges": "0,0.5,1,1.5,2,2.5,3",
       "monthsValid": 24,
-      "instructions": [
-        {
-          "section": [
-            "bc_rinse",
-            "image:bc_rinse"
-          ]
-        },
-        {
-          "section": [
-            "bc_frc_1",
-            "image:bc_add_powder"
-          ]
-        },
-        {
-          "section": [
-            "bc_frc_2",
-            "image:bc_fill"
-          ]
-        },
-        {
-          "section": [
-            "bc_screw",
-            "image:bc_screw_frc"
-          ]
-        },
-        {
-          "section": [
-            "bc_shake",
-            "image:bc_shake"
-          ]
-        },
-        {
-          "section": [
-            "bc_wipe_bottom",
-            "image:bc_wipe_bottom"
-          ]
-        },
-        {
-          "section": [
-            "bc_wipe_camera",
-            "image:bc_wipe_camera"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_chamber",
-            "image:bc_place_chamber"
-          ]
-        },
-        {
-          "section": [
-            "bc_place_phone",
-            "image:bc_place_phone"
-          ]
-        }
-      ],
       "results": [
         {
           "id": 1,

@@ -21,7 +21,6 @@ package org.akvo.caddisfly.util
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Typeface
@@ -154,9 +153,6 @@ object StringUtil {
                         if (topic.equals("sulfide", ignoreCase = true)) {
                             val newFragment: DialogFragment = SulfideDialogFragment()
                             newFragment.show(context.supportFragmentManager, "sulfideDialog")
-                        } else {
-                            val newFragment: DialogFragment = DilutionDialogFragment()
-                            newFragment.show(context.supportFragmentManager, "dilutionDialog")
                         }
                     }
 
@@ -189,20 +185,9 @@ object StringUtil {
         @SuppressLint("InflateParams")
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(requireContext())
-            val inflater = activity!!.layoutInflater
+            val inflater = requireActivity().layoutInflater
             builder.setView(inflater.inflate(R.layout.dialog_sulfide_instruction, null)) // Add action buttons
                     .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
-            return builder.create()
-        }
-    }
-
-    class DilutionDialogFragment : DialogFragment() {
-        @SuppressLint("InflateParams")
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val builder = AlertDialog.Builder(activity!!)
-            val inflater = activity!!.layoutInflater
-            builder.setView(inflater.inflate(R.layout.dialog_dilution_instruction, null)) // Add action buttons
-                    .setPositiveButton(R.string.ok) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
             return builder.create()
         }
     }
