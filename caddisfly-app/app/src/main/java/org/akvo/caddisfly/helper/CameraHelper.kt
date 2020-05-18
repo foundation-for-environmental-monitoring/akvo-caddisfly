@@ -55,9 +55,11 @@ object CameraHelper {
         val camera = cameraInstance
         if (hasFeatureBackCamera(context, onClickListener) && camera == null) {
             val message = String.format("%s%n%n%s",
-                    context.getString(R.string.cannotUseCamera),
-                    context.getString(R.string.tryRestarting))
-            showError(context, R.string.cameraBusy,
+                context.getString(R.string.cannot_use_camera),
+                context.getString(R.string.try_restarting)
+            )
+            showError(
+                context, R.string.camera_busy,
                     message, null, R.string.ok, onClickListener, null, null)
             return null
         }
@@ -69,8 +71,9 @@ object CameraHelper {
                                      onClickListener: DialogInterface.OnClickListener?): Boolean {
         val packageManager = context.packageManager
         if (!packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            showAlert(context, R.string.cameraNotAvailable,
-                    R.string.cameraRequired,
+            showAlert(
+                context, R.string.camera_not_available,
+                R.string.camera_required,
                     R.string.ok, onClickListener, null, null)
             return false
         }
@@ -102,7 +105,7 @@ object CameraHelper {
         }
         if (!hasCameraFlash) {
             showAlert(context, errorTitle,
-                    R.string.errorCameraFlashRequired,
+                R.string.error_camera_flash_required,
                     buttonText, onClickListener, null, null)
         }
         return hasCameraFlash

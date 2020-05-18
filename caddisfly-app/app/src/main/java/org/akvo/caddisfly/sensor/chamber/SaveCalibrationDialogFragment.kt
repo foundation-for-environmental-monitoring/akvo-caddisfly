@@ -91,7 +91,7 @@ class SaveCalibrationDialogFragment : DialogFragment() {
             editName?.visibility = View.GONE
         }
         val b = AlertDialog.Builder(getActivity())
-                .setTitle(R.string.calibrationDetails)
+            .setTitle(R.string.calibration_details)
                 .setPositiveButton(R.string.save
                 ) { _: DialogInterface?, _: Int ->
                     closeKeyboard(activity, editName)

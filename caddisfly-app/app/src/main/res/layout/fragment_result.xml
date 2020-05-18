@@ -64,7 +64,7 @@
                 android:visibility="visible"
                 app:background="@{``}"
                 tools:background="@color/primary"
-                tools:text="@string/timesDilution" />
+                tools:text="@string/times_dilution" />
 
             <TextView
                 android:id="@+id/textResult"
@@ -101,7 +101,7 @@
                     style="@style/Button"
                     android:layout_gravity="center_horizontal"
                     android:onClick="onClickAcceptResult"
-                    android:text="@string/acceptResult"
+                    android:text="@string/accept_result"
                     android:theme="?primaryButtonStyle" />
             </LinearLayout>
         </LinearLayout>
@@ -122,7 +122,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:lineSpacingExtra="4dp"
-                android:text="@string/highLevelRecommendation"
+                android:text="@string/high_level_recommendation"
                 android:textColor="#444"
                 android:textSize="16sp" />
 
@@ -138,7 +138,7 @@
                 android:onClick="onTestWithDilution"
                 android:paddingStart="@dimen/activity_horizontal_margin"
                 android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:text="@string/testWithDilution"
+                android:text="@string/test_with_dilution"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="16sp"

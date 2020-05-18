@@ -58,13 +58,13 @@
                 android:textColor="#d6f6fdf6"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="@string/noDilution" />
+                tools:text="@string/no_dilution" />
 
             <TextView
                 android:id="@+id/textSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/selectDilution"
+                android:text="@string/select_dilution"
                 android:textColor="#d6f6fdf6"
                 android:textSize="16sp" />
 
@@ -77,7 +77,7 @@
             android:layout_marginTop="25dp"
             android:minHeight="70dp"
             android:minWidth="260dp"
-            android:text="@string/noDilution"
+            android:text="@string/no_dilution"
             android:theme="?secondaryButtonStyle" />
 
         <Button
@@ -86,7 +86,7 @@
             android:layout_marginBottom="10dp"
             android:minHeight="70dp"
             android:minWidth="260dp"
-            android:text="@string/timesDilution"
+            android:text="@string/times_dilution"
             android:theme="?secondaryButtonStyle" />
 
         <Button
@@ -95,7 +95,7 @@
             android:layout_marginBottom="10dp"
             android:minHeight="70dp"
             android:minWidth="260dp"
-            android:text="@string/timesDilution"
+            android:text="@string/times_dilution"
             android:theme="?secondaryButtonStyle" />
 
         <Button
@@ -103,7 +103,7 @@
             style="@style/Button"
             android:minHeight="70dp"
             android:minWidth="260dp"
-            android:text="@string/customDilution"
+            android:text="@string/custom_dilution"
             android:theme="?secondaryButtonStyle" />
 
     </LinearLayout>

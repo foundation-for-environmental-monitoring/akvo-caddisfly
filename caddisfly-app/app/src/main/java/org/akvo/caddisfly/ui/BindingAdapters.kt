@@ -75,7 +75,8 @@ object BindingAdapters {
             val milliseconds = calibrationDetail.expiry
             if (milliseconds > 0 && milliseconds <= Date().time) {
                 view.text = String.format("%s. %s", context.getString(R.string.expired),
-                        context.getString(R.string.calibrateWithNewReagent))
+                    context.getString(R.string.calibrate_with_new_reagent)
+                )
                 view.visibility = View.VISIBLE
                 return
             }
@@ -84,8 +85,9 @@ object BindingAdapters {
                 && !isSwatchListValid(testInfo)) {
             //Display error if calibration is completed but invalid
             view.text = String.format("%s. %s",
-                    context.getString(R.string.calibrationIsInvalid),
-                    context.getString(R.string.tryRecalibrating))
+                context.getString(R.string.calibration_is_invalid),
+                context.getString(R.string.try_recalibrating)
+            )
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE

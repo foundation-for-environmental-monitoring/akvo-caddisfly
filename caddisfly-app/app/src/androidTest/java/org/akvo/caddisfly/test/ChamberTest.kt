@@ -115,7 +115,7 @@ class ChamberTest {
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return
@@ -170,9 +170,9 @@ class ChamberTest {
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
         onView(withId(id.buttonNoDilution)).perform(click())
-        onView(allOf(withId(id.textDilution), withText(string.noDilution)))
+        onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
                 .check(matches(isCompletelyDisplayed()))
-        onView(allOf(withId(id.textDilution), withText(string.noDilution)))
+        onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
                 .check(matches(isCompletelyDisplayed()))
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
         sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
@@ -185,7 +185,11 @@ class ChamberTest {
         onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
         onView(withId(id.buttonDilution1)).perform(click())
         onView(allOf(withId(id.textDilution), withText(String.format(mActivityRule.activity
-                .getString(string.timesDilution), 2))))
+            .getString(string.times_dilution), 2
+        )
+        )
+        )
+        )
                 .check(matches(isCompletelyDisplayed()))
 
         //Test Start Screen
@@ -196,7 +200,7 @@ class ChamberTest {
         sleep((TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
                 + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                 * 1000)
-        onView(withText(mActivityRule.activity.getString(string.testWithDilution)))
+        onView(withText(mActivityRule.activity.getString(string.test_with_dilution)))
                 .check(matches(isDisplayed()))
 
         //High levels found dialog
@@ -210,7 +214,11 @@ class ChamberTest {
         onView(withId(id.buttonDilution2)).check(matches(isDisplayed()))
         onView(withId(id.buttonDilution2)).perform(click())
         onView(allOf(withId(id.textDilution), withText(String.format(mActivityRule.activity
-                .getString(string.timesDilution), 5)))).check(matches(isCompletelyDisplayed()))
+            .getString(string.times_dilution), 5
+        )
+        )
+        )
+        ).check(matches(isCompletelyDisplayed()))
 
         //Test Progress Screen
 
@@ -226,12 +234,12 @@ class ChamberTest {
         if (CUVETTE_TEST_TIME_DELAY > 0) {
             val result: Double = (resultString.replace(">", "").trim { it <= ' ' }).toDouble()
             assertTrue("Result is wrong", result > 49)
-            onView(withText(mActivityRule.activity.getString(string.testWithDilution)))
+            onView(withText(mActivityRule.activity.getString(string.test_with_dilution)))
                     .check(matches(isDisplayed()))
         } else {
             val result: Double = (resultString.replace(">", "").trim { it <= ' ' }).toDouble()
             assertTrue("Result is wrong", result > 9)
-            onView(withText(mActivityRule.activity.getString(string.testWithDilution)))
+            onView(withText(mActivityRule.activity.getString(string.test_with_dilution)))
                     .check(matches(not(isDisplayed())))
         }
         onView(withId(id.buttonAccept)).perform(click())
@@ -265,7 +273,7 @@ class ChamberTest {
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return

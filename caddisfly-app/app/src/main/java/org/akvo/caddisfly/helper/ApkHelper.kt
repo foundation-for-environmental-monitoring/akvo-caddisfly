@@ -47,10 +47,12 @@ object ApkHelper {
             appExpiryDate.time = BuildConfig.BUILD_TIME
             appExpiryDate.add(Calendar.DAY_OF_YEAR, 15)
             if (GregorianCalendar().after(appExpiryDate)) {
-                val message = String.format("%s%n%n%s", activity.getString(R.string.thisVersionHasExpired),
-                        activity.getString(R.string.uninstallAndInstallFromStore))
+                val message = String.format(
+                    "%s%n%n%s", activity.getString(R.string.version_has_expired),
+                    activity.getString(R.string.uninstall_install_from_store)
+                )
                 val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
-                builder.setTitle(R.string.versionExpired)
+                builder.setTitle(R.string.version_expired)
                         .setMessage(message)
                         .setCancelable(false)
                 builder.setPositiveButton(R.string.ok) { dialogInterface: DialogInterface, _: Int ->

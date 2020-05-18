@@ -2,6 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation, UnusedResources">
 
     <string name="skip">Skip</string>
+    <string name="no_strip_found">Strip not found</string>
     <string name="prepare_camera_instruction">Don\'t take sample yet. Hold camera above colour card and adjust position until check succeeds.</string>
 
     <!--Water-->
@@ -60,4 +61,19 @@
     <string name="as_remove_sulfide_4">Insert the test strip as detailed in step 1 of the 0–500 or 0–4000 ppb test procedure and continue with the test.</string>
     <string name="as_remove_sulfide_note"><b>Note:</b> The lead acetate must not contact the test strip!</string>
     <string name="as_remove_sulfide_wear_gloves">Always wear gloves or wash hands thoroughly after handling lead acetate.</string>
+
+    <string name="measure_instruction">Put strip on black area with colour patches to the left. Hold camera above colour card until measurement is complete.</string>
+    <string name="image_quality">Image quality</string>
+    <string name="prepare_test">Prepare for test</string>
+    <string name="taking_photo">Taking photo</string>
+    <string name="waiting">Waiting</string>
+    <string name="no_result">No Result</string>
+    <string name="just_a_moment">Just a moment…</string>
+    <string name="checking_image_quality">Checking image quality</string>
+    <string name="seconds">Sec.</string>
+    <string name="detecting_color_card">Looking for colour card</string>
+    <string name="ready_for_photo">Ready for photo</string>
+    <string name="tilt_camera_in_direction">Tilt camera in direction of arrow</string>
+    <string name="move_camera_closer">Move camera closer to the card</string>
+    <string name="avoid_shadows_on_card">Please avoid shadows on the card</string>
 </resources>

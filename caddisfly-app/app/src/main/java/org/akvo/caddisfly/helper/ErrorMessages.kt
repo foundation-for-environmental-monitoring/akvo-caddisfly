@@ -37,8 +37,9 @@ object ErrorMessages {
     @JvmStatic
     fun alertCouldNotLoadConfig(activity: Activity) {
         val message = String.format(TWO_SENTENCE_FORMAT,
-                activity.getString(R.string.errorLoadingConfiguration),
-                activity.getString(R.string.pleaseContactSupport))
+            activity.getString(R.string.error_loading_config),
+            activity.getString(R.string.please_contact_support)
+        )
         AlertUtil.showError(activity, R.string.error, message, null, R.string.ok,
                 DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int -> dialogInterface.dismiss() }, null, null)
     }
@@ -49,11 +50,13 @@ object ErrorMessages {
     @JvmStatic
     fun alertCalibrationIncomplete(activity: Activity, testInfo: TestInfo,
                                    isInternal: Boolean, finishActivity: Boolean) {
-        var message = activity.getString(R.string.errorCalibrationIncomplete, testInfo.name)
+        var message = activity.getString(R.string.error_calibration_incomplete, testInfo.name)
         message = String.format(MESSAGE_TWO_LINE_FORMAT, message,
-                activity.getString(R.string.doYouWantToCalibrate))
+            activity.getString(R.string.do_you_want_to_calibrate)
+        )
 
-        AlertUtil.showAlert(activity, R.string.cannotStartTest, message, R.string.calibrate,
+        AlertUtil.showAlert(
+            activity, R.string.cannot_start_test, message, R.string.calibrate,
                 DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
                     val intent = Intent(activity, ChamberTestActivity::class.java)
                     intent.putExtra(ConstantKey.TEST_INFO, testInfo)
@@ -81,9 +84,11 @@ object ErrorMessages {
 
     fun alertCalibrationExpired(activity: Activity) {
         val message = String.format(MESSAGE_TWO_LINE_FORMAT,
-                activity.getString(R.string.errorCalibrationExpired),
-                activity.getString(R.string.orderFreshBatch))
-        AlertUtil.showAlert(activity, R.string.cannotStartTest,
+            activity.getString(R.string.error_calibration_expired),
+            activity.getString(R.string.order_fresh_batch)
+        )
+        AlertUtil.showAlert(
+            activity, R.string.cannot_start_test,
                 message, R.string.ok,
                 DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.dismiss()

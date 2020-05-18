@@ -73,7 +73,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
-                android:text="@string/copyrightMessage"
+                android:text="@string/copyright"
                 android:textSize="15sp"
                 android:textStyle="normal" />
 
@@ -85,7 +85,7 @@
                 android:onClick="onSoftwareNoticesClick"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="@string/legalInformation"
+                android:text="@string/legal_information"
                 android:textColor="@color/text_links"
                 android:textSize="15sp" />
 

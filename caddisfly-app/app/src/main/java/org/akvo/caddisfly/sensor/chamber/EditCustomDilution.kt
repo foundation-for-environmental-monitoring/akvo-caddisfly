@@ -48,7 +48,7 @@ class EditCustomDilution : DialogFragment() {
         editDilutionFactor = view.findViewById(R.id.editDilutionFactor)
         editDilutionFactor?.requestFocus()
         val b = AlertDialog.Builder(activity)
-                .setTitle(R.string.customDilution)
+            .setTitle(R.string.custom_dilution)
                 .setPositiveButton(R.string.ok
                 ) { _: DialogInterface?, _: Int ->
                     closeKeyboard(activity, editDilutionFactor)

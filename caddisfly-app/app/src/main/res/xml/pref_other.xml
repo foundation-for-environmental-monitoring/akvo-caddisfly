@@ -7,7 +7,7 @@
         app:iconSpaceReserved="false" />
     <Preference
         android:key="emailSupport"
-        android:title="@string/emailSupport"
+        android:title="@string/email_support"
         app:iconSpaceReserved="false" />
     <Preference
         android:key="about"

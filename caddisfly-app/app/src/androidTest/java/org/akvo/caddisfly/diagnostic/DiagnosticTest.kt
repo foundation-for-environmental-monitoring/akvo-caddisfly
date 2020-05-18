@@ -63,7 +63,7 @@ class DiagnosticTest {
         mDevice.waitForIdle()
 
         if (TestUtil.isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return

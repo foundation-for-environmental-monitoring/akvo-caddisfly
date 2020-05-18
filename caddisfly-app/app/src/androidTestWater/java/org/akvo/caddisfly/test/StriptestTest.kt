@@ -86,7 +86,9 @@ class StriptestTest {
         onView(withText(string.no_result)).check(matches(isDisplayed()))
         onView(withId(id.image_result)).check(matches(isDisplayed()))
 
-        onView(Matchers.allOf(withId(id.buttonSubmitResult), withText(string.submitResult),
+        onView(
+            Matchers.allOf(
+                withId(id.buttonSubmitResult), withText(string.submit_result),
                 isDisplayed())).perform(click())
     }
 
@@ -122,7 +124,9 @@ class StriptestTest {
         onView(withText("No Result")).check(matches(isDisplayed()))
         onView(withId(id.image_result)).check(matches(isDisplayed()))
 
-        onView(Matchers.allOf(withId(id.buttonSubmitResult), withText(string.submitResult),
+        onView(
+            Matchers.allOf(
+                withId(id.buttonSubmitResult), withText(string.submit_result),
                 isDisplayed())).perform(click())
 
 //        assertNotNull(mDevice.findObject(By.text("Unit: ")))

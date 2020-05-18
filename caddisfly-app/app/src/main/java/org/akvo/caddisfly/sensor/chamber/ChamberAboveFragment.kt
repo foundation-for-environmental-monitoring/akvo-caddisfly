@@ -53,8 +53,12 @@ class ChamberAboveFragment : BaseRunTest(), RunTest {
                         return
                     }
                     mWaitingForStillness = true
-                    showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.errorTestInterrupted),
-                            getString(R.string.doNotMoveDeviceDuringTest)), null, activity!!)
+                    showError(
+                        String.format(
+                            TWO_SENTENCE_FORMAT, getString(R.string.error_test_interrupted),
+                            getString(R.string.do_not_move_device)
+                        ), null, activity!!
+                    )
                 }
             }, object : OnNoShakeListener {
                 override fun onNoShake() {

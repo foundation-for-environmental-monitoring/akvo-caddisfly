@@ -108,7 +108,7 @@ class NavigationTest {
                 0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()))
         if (TestUtil.isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return
@@ -118,8 +118,11 @@ class NavigationTest {
         onData(hasToString(startsWith("TestInvalid"))).perform(click())
         sleep(2000)
         onView(withText(String.format("%s. %s", mActivityRule.activity
-                .getString(string.calibrationIsInvalid),
-                mActivityRule.activity.getString(string.tryRecalibrating)))).check(matches(isDisplayed()))
+            .getString(string.calibration_is_invalid),
+            mActivityRule.activity.getString(string.try_recalibrating)
+        )
+        )
+        ).check(matches(isDisplayed()))
         leaveDiagnosticMode()
         sleep(4000)
 

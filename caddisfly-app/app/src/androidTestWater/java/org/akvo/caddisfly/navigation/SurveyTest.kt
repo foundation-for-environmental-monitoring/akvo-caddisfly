@@ -87,7 +87,7 @@ class SurveyTest {
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return
@@ -142,7 +142,7 @@ class SurveyTest {
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return

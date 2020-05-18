@@ -278,7 +278,9 @@ class TestActivity : BaseActivity() {
     private fun startChamberTest() { //Only start the colorimetry calibration if the device has a camera flash
         if (AppPreferences.useExternalCamera()
                 || CameraHelper.hasFeatureCameraFlash(this,
-                        R.string.cannotStartTest, R.string.ok, null)) {
+                R.string.cannot_start_test, R.string.ok, null
+            )
+        ) {
             if (!isSwatchListValid(testInfo)) {
                 ErrorMessages.alertCalibrationIncomplete(this, testInfo!!,
                         isInternal = false, finishActivity = true)
@@ -391,7 +393,7 @@ class TestActivity : BaseActivity() {
             FileHelper.migrateFolders()
             startTest()
         } else {
-            val message = getString(R.string.cameraAndStoragePermissions)
+            val message = getString(R.string.camera_storage_permissions)
             AlertUtil.showSettingsSnackbar(this,
                     window.decorView.rootView, message)
         }
@@ -401,9 +403,14 @@ class TestActivity : BaseActivity() {
      * Alert displayed when an unsupported contaminant test type was requested.
      */
     private fun alertTestTypeNotSupported() {
-        var message = getString(R.string.errorTestNotAvailable)
-        message = String.format(MESSAGE_TWO_LINE_FORMAT, message, getString(R.string.pleaseContactSupport))
-        AlertUtil.showAlert(this, R.string.cannotStartTest, message,
+        var message = getString(R.string.error_test_not_available)
+        message = String.format(
+            MESSAGE_TWO_LINE_FORMAT,
+            message,
+            getString(R.string.please_contact_support)
+        )
+        AlertUtil.showAlert(
+            this, R.string.cannot_start_test, message,
                 R.string.ok,
                 DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.dismiss()

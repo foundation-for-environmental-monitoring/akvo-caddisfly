@@ -95,7 +95,7 @@ object TestHelper {
         return res.getString(resourceId)
     }
 
-    fun loadData(activity: Activity, languageCode: String) {
+    fun loadData(activity: Context, languageCode: String) {
         mCurrentLanguage = languageCode
         STRING_HASH_MAP_EN.clear()
         STRING_HASH_MAP_FR.clear()

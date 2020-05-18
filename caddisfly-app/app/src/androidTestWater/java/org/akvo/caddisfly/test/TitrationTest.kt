@@ -2,13 +2,14 @@ package org.akvo.caddisfly.test
 
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager.getDefaultSharedPreferences
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import junit.framework.TestCase.assertNotNull
@@ -34,14 +35,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class TitrationTest {
-    @JvmField
-    @Rule
-    var mActivityRule = ActivityTestRule(MainActivity::class.java)
+
+    @get:Rule
+    val mActivityRule = activityScenarioRule<MainActivity>()
 
     @Before
     fun setUp() {
-        loadData(mActivityRule.activity, mCurrentLanguage)
-        val prefs: SharedPreferences = getDefaultSharedPreferences(mActivityRule.activity)
+        loadData(ApplicationProvider.getApplicationContext(), mCurrentLanguage)
+        val prefs: SharedPreferences =
+            getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
         prefs.edit().clear().apply()
     }
 
@@ -66,8 +68,6 @@ class TitrationTest {
 
         assertNotNull(mDevice.findObject(By.text("Carbonate: ")))
         assertNotNull(mDevice.findObject(By.text("300.00")))
-
-        mActivityRule.finishActivity()
 
         mDevice.waitForIdle()
 
@@ -115,8 +115,6 @@ class TitrationTest {
         assertNotNull(mDevice.findObject(By.text("100.00")))
         assertNotNull(mDevice.findObject(By.text("Magnesium: ")))
         assertNotNull(mDevice.findObject(By.text("40.00")))
-
-        mActivityRule.finishActivity()
 
         mDevice.waitForIdle()
 

@@ -410,8 +410,11 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                     showDiagnosticResultDialog(true, resultDetail, resultDetails, false)
                 } else {
                     fragmentManager!!.popBackStack()
-                    showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.errorTestFailed),
-                            getString(R.string.checkChamberPlacement)),
+                    showError(
+                        String.format(
+                            TWO_SENTENCE_FORMAT, getString(R.string.error_test_failed),
+                            getString(R.string.check_chamber_placement)
+                        ),
                             resultDetails[resultDetails.size - 1].croppedBitmap)
                 }
             }
@@ -421,8 +424,11 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                 if (AppPreferences.showDebugInfo) {
                     showDiagnosticResultDialog(true, resultDetail, resultDetails, true)
                 }
-                showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.couldNotCalibrate),
-                        getString(R.string.checkChamberPlacement)),
+                showError(
+                    String.format(
+                        TWO_SENTENCE_FORMAT, getString(R.string.could_not_calibrate),
+                        getString(R.string.check_chamber_placement)
+                    ),
                         resultDetails[resultDetails.size - 1].croppedBitmap)
             } else {
                 val dao = db!!.calibrationDao()

@@ -51,13 +51,15 @@ class SelectDilutionFragment : Fragment() {
         if (dilutions.size > 1) {
             val dilution = dilutions[1]
             binding.buttonDilution1.text = String.format(Locale.getDefault(),
-                    getString(R.string.timesDilution), dilution)
+                getString(R.string.times_dilution), dilution
+            )
             binding.buttonDilution1.setOnClickListener { mListener!!.onDilutionSelected(dilution) }
         }
         if (dilutions.size > 2) {
             val dilution = dilutions[2]
             binding.buttonDilution2.text = String.format(Locale.getDefault(),
-                    getString(R.string.timesDilution), dilution)
+                getString(R.string.times_dilution), dilution
+            )
             binding.buttonDilution2.setOnClickListener { mListener!!.onDilutionSelected(dilution) }
         } else {
             binding.buttonDilution2.visibility = View.GONE

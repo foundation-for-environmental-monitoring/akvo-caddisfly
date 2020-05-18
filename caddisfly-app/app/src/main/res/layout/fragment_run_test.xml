@@ -68,13 +68,13 @@
                 android:textColor="#d6f6fdf6"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="@string/noDilution" />
+                tools:text="@string/no_dilution" />
 
             <TextView
                 android:id="@+id/textSubtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/placeDevice"
+                android:text="@string/place_device"
                 android:textColor="#d6f6fdf6"
                 android:textSize="16sp" />
         </LinearLayout>

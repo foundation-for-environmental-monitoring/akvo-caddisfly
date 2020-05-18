@@ -54,9 +54,9 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
             startTest()
         } else {
             val message: String = if (requestCode == REQUEST_SYNC_PERMISSION) {
-                getString(R.string.storagePermission)
+                getString(R.string.storage_permission)
             } else {
-                getString(R.string.cameraAndStoragePermissions)
+                getString(R.string.camera_storage_permissions)
             }
             AlertUtil.showSettingsSnackbar(this,
                     window.decorView.rootView, message)
@@ -66,7 +66,7 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<ViewDataBinding>(this, R.layout.activity_test_list)
-        setTitle(R.string.selectTest)
+        setTitle(R.string.select_test)
 
         // Add list fragment if this is first creation
         if (savedInstanceState == null) {
@@ -126,7 +126,9 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
         //Only start the colorimetry calibration if the device has a camera flash
         if (useExternalCamera()
                 || CameraHelper.hasFeatureCameraFlash(this,
-                        R.string.cannotCalibrate, R.string.ok, null)) {
+                R.string.cannot_calibrate, R.string.ok, null
+            )
+        ) {
             val intent: Intent = if (testInfo!!.results!![0].colors.size > 0) {
                 Intent(this, ChamberTestActivity::class.java)
             } else {

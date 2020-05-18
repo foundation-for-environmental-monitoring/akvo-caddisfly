@@ -78,7 +78,7 @@ class MiscTest {
     fun testSoftwareNotices() {
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
-        onView(withText(string.legalInformation)).check(matches(isDisplayed())).perform(click())
+        onView(withText(string.legal_information)).check(matches(isDisplayed())).perform(click())
         Espresso.pressBack()
         Espresso.pressBack()
     }
@@ -100,7 +100,7 @@ class MiscTest {
 //        onView(withText(currentHashMap.get("fluoride"))).perform(click());
 
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return
@@ -120,7 +120,7 @@ class MiscTest {
                 0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return
@@ -202,7 +202,7 @@ class MiscTest {
                 0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired)).perform(click())
+            onView(withText(string.error_camera_flash_required)).perform(click())
         }
     }
 

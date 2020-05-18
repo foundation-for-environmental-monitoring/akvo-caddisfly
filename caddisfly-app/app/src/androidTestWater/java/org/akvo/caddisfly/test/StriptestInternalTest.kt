@@ -116,7 +116,7 @@ class StriptestInternalTest {
             assertEquals(testInfo.subtype, TestType.STRIP_TEST)
 
             val uuid = testInfo.uuid
-            val id = uuid!!.substring(uuid.lastIndexOf("-") + 1)
+            val id = uuid.substring(uuid.lastIndexOf("-") + 1)
 
             run {
 
@@ -189,7 +189,9 @@ class StriptestInternalTest {
 
                 takeScreenshot(id, ++pages)
 
-                onView(Matchers.allOf(withId(R.id.buttonSubmitResult), withText(R.string.submitResult),
+                onView(
+                    Matchers.allOf(
+                        withId(R.id.buttonSubmitResult), withText(R.string.submit_result),
                         ViewMatchers.isDisplayed())).perform(click())
             }
         }

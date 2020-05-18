@@ -87,7 +87,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
             emailSupportPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 message.setLength(0)
                 val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle(R.string.emailSupport)
+                builder.setTitle(R.string.email_support)
                 builder.setMessage(getString(R.string.if_you_need_assistance) + "\n\n" +
                         getString(R.string.select_email_app))
                         .setCancelable(false)
@@ -108,7 +108,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                             generateMessageAsyncTask.setListener(exampleAsyncTaskListener)
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
                             progressDialog.isIndeterminate = true
-                            progressDialog.setTitle(R.string.creatingMessage)
+                            progressDialog.setTitle(R.string.creating_message)
                             progressDialog.setMessage(getString(R.string.just_a_moment))
                             progressDialog.setCancelable(false)
                             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && progressDialog.window != null) {

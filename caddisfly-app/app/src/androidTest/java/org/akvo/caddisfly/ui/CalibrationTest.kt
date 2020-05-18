@@ -96,7 +96,7 @@ class CalibrationTest {
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return
@@ -105,14 +105,26 @@ class CalibrationTest {
         sleep(2000)
         onData(hasToString(startsWith("OutOfSequence"))).perform(click())
         sleep(2000)
-        onView(withText(String.format("%s. %s", mActivityRule.activity.getString(string.calibrationIsInvalid),
-                mActivityRule.activity.getString(string.tryRecalibrating)))).check(matches(isDisplayed()))
+        onView(
+            withText(
+                String.format(
+                    "%s. %s", mActivityRule.activity.getString(string.calibration_is_invalid),
+                    mActivityRule.activity.getString(string.try_recalibrating)
+                )
+            )
+        ).check(matches(isDisplayed()))
         onView(withId(id.menuLoad)).perform(click())
         sleep(2000)
         onData(hasToString(startsWith("TestValid"))).perform(click())
         sleep(2000)
-        onView(withText(String.format("%s. %s", mActivityRule.activity.getString(string.calibrationIsInvalid),
-                mActivityRule.activity.getString(string.tryRecalibrating)))).check(matches(not(isDisplayed())))
+        onView(
+            withText(
+                String.format(
+                    "%s. %s", mActivityRule.activity.getString(string.calibration_is_invalid),
+                    mActivityRule.activity.getString(string.try_recalibrating)
+                )
+            )
+        ).check(matches(not(isDisplayed())))
         sleep(2000)
         leaveDiagnosticMode()
         onView(withText(string.settings)).perform(click())
@@ -136,7 +148,7 @@ class CalibrationTest {
                         0))).perform(actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()))
         if (isEmulator) {
-            onView(withText(string.errorCameraFlashRequired))
+            onView(withText(string.error_camera_flash_required))
                     .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return
@@ -182,7 +194,10 @@ class CalibrationTest {
 
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             onView(withText(String.format("%s. %s", mActivityRule.activity.getString(string.expired),
-                    mActivityRule.activity.getString(string.calibrateWithNewReagent))))
+                mActivityRule.activity.getString(string.calibrate_with_new_reagent)
+            )
+            )
+            )
                     .check(matches(isDisplayed()))
         }
         onView(withId(id.fabEditCalibration)).perform(click())
@@ -195,8 +210,9 @@ class CalibrationTest {
         onView(withId(id.button_prepare)).perform(click())
         if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             val message = String.format("%s%n%n%s",
-                    mActivityRule.activity.getString(string.errorCalibrationExpired),
-                    mActivityRule.activity.getString(string.orderFreshBatch))
+                mActivityRule.activity.getString(string.error_calibration_expired),
+                mActivityRule.activity.getString(string.order_fresh_batch)
+            )
             onView(withText(message)).check(matches(isDisplayed()))
             onView(withText(string.ok)).perform(click())
         }
@@ -240,11 +256,13 @@ class CalibrationTest {
         gotoSurveyForm()
         clickExternalSourceButton(0)
         mDevice.waitForWindowUpdate("", 2000)
-        onView(withText(string.cannotStartTest)).check(matches(isDisplayed()))
-        var message = mActivityRule.activity.getString(string.errorCalibrationIncomplete,
+        onView(withText(string.cannot_start_test)).check(matches(isDisplayed()))
+        var message = mActivityRule.activity.getString(
+            string.error_calibration_incomplete,
                 currentHashMap["chlorine"])
         message = String.format("%s%n%n%s", message,
-                mActivityRule.activity.getString(string.doYouWantToCalibrate))
+            mActivityRule.activity.getString(string.do_you_want_to_calibrate)
+        )
         onView(withText(message)).check(matches(isDisplayed()))
         onView(withText(string.cancel)).check(matches(isDisplayed()))
         onView(withText(string.calibrate)).check(matches(isDisplayed()))

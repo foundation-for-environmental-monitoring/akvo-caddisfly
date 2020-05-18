@@ -77,7 +77,7 @@ class RunTestNavigation {
         relativeLayout3.perform(click())
 
         if (TestUtil.isEmulator) {
-            onView(withText(R.string.errorCameraFlashRequired))
+            onView(withText(R.string.error_camera_flash_required))
                     .inRoot(RootMatchers.withDecorView(Matchers.not(`is`(mActivityTestRule.activity.window
                             .decorView)))).check(matches(isDisplayed()))
             return

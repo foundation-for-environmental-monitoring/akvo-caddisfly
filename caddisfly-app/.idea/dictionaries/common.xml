@@ -5,6 +5,7 @@
       <w>adjoint</w>
       <w>akvo</w>
       <w>arsine</w>
+      <w>attrib</w>
       <w>autofocus</w>
       <w>barcodes</w>
       <w>bresenham</w>
@@ -21,8 +22,10 @@
       <w>colorp</w>
       <w>cuvette</w>
       <w>duplicative</w>
+      <w>etree</w>
       <w>ffem</w>
       <w>fileprovider</w>
+      <w>findall</w>
       <w>finlayson</w>
       <w>firebase</w>
       <w>gson</w>
@@ -46,6 +49,7 @@
       <w>unmock</w>
       <w>viewmodel</w>
       <w>wolberg</w>
+      <w>writerow</w>
       <w>xing</w>
     </words>
   </dictionary>

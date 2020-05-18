@@ -93,7 +93,8 @@ internal class UpdateCheckTask(context: Context) : AsyncTask<String?, String?, S
             if (serverVersion > versionCode) {
                 NotificationScheduler.showNotification(context,
                         context.getString(R.string.appName),
-                        context.getString(R.string.updateAvailable))
+                    context.getString(R.string.update_available)
+                )
             }
         } catch (e: NumberFormatException) {
             e.printStackTrace()

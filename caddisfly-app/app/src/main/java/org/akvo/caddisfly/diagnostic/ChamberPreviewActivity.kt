@@ -140,8 +140,11 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
                     fragmentManager!!.beginTransaction()
                             .remove((runTestFragment as Fragment?)!!)
                             .commit()
-                    showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.errorTestFailed),
-                            getString(R.string.checkChamberPlacement)),
+                    showError(
+                        String.format(
+                            TWO_SENTENCE_FORMAT, getString(R.string.error_test_failed),
+                            getString(R.string.check_chamber_placement)
+                        ),
                             resultDetails[resultDetails.size - 1].croppedBitmap)
                 }
             }
