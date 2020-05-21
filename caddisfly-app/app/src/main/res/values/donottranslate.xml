@@ -6,11 +6,15 @@
     <string-array name="languages">
         <item>English</item>
         <item>Hindi</item>
+        <item>Kannada</item>
+        <item>Telugu</item>
     </string-array>
 
     <string-array name="language_codes">
         <item>en</item>
         <item>hi</item>
+        <item>kn</item>
+        <item>te</item>
     </string-array>
 
     <string name="number_1">1.</string>
