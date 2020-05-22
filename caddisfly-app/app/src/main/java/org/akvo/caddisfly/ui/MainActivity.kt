@@ -40,7 +40,7 @@ class MainActivity : BaseActivity() {
         CaddisflyApp.app?.setAppLanguage(null, false, null)
         navigationController = NavigationController(this)
         setContentView(R.layout.activity_main)
-        setTitle(R.string.appName)
+        setTitle(R.string.app_name)
         try {
             if (BuildConfig.BUILD_TYPE.equals("release", ignoreCase = true) &&
                     ApkHelper.isNonStoreVersion(this)) {

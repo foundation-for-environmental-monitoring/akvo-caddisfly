@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
-
-    <!-- Tests -->
-    <string name="aluminum">.</string>
-    <string name="calcium">.</string>
-    <string name="total_arsenic">.</string>
-    <string name="chromium">.</string>
-    <string name="copper">.</string>
-    <string name="dissolved_oxygen">.</string>
-    <string name="fluoride">.</string>
-    <string name="fluoride_high_range">.</string>
-    <string name="free_chlorine">.</string>
-    <string name="hydrogen_peroxide">.</string>
-    <string name="nitrate">.</string>
-    <string name="ph">.</string>
-    <string name="phosphate">.</string>
-    <string name="sulphate">.</string>
-    <string name="total_iron">.</string>
-    <string name="chlorophyll_a">.</string>
-    <string name="magnesium">.</string>
-    <string name="organic_carbon">.</string>
-    <string name="potassium">.</string>
-    <string name="available_boron">.</string>
-    <string name="available_iron">.</string>
-    <string name="available_nitrogen">.</string>
-    <string name="available_phosphorous">.</string>
-    <string name="available_potassium">.</string>
-    <string name="alkalinity">.</string>
-    <string name="ammonia">.</string>
-    <string name="nitrite">.</string>
-    <string name="zinc">.</string>
+    <string name="aluminum">Aluminium</string>
+    <string name="calcium">Calcium</string>
+    <string name="total_arsenic">Total Arsenic</string>
+    <string name="chromium">Chromium</string>
+    <string name="copper">Copper</string>
+    <string name="dissolved_oxygen">Dissolved Oxygen</string>
+    <string name="fluoride">Fluoride</string>
+    <string name="fluoride_high_range">Fluoride High Range</string>
+    <string name="free_chlorine">Residual Chlorine</string>
+    <string name="hydrogen_peroxide">Hydrogen Peroxide</string>
+    <string name="nitrate">Nitrate</string>
+    <string name="ph">pH</string>
+    <string name="phosphate">Phosphate</string>
+    <string name="sulphate">Sulphate</string>
+    <string name="total_iron">Total Iron</string>
+    <string name="chlorophyll_a">Chlorophyll A</string>
+    <string name="magnesium">Magnesium</string>
+    <string name="organic_carbon">Organic Carbon</string>
+    <string name="potassium">Potassium</string>
+    <string name="available_boron">Available Boron</string>
+    <string name="available_iron">Available Iron</string>
+    <string name="available_nitrogen">Available Nitrogen</string>
+    <string name="available_phosphorous">Available Phosphorous</string>
+    <string name="available_potassium">Available Potassium</string>
+    <string name="alkalinity">Alkalinity</string>
+    <string name="ammonia">Ammonia</string>
+    <string name="nitrite">Nitrate</string>
+    <string name="zinc">Zinc</string>
 </resources>

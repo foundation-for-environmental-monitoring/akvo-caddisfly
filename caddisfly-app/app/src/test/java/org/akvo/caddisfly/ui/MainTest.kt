@@ -49,9 +49,9 @@ class MainTest {
 
         controller.start()
         val activity: Activity = controller.get()
-        assertEquals(activity.title, activity.getString(R.string.appName))
+        assertEquals(activity.title, activity.getString(R.string.app_name))
         val textView: TextView = activity.findViewById(R.id.textToolbarTitle)
-        assertEquals(textView.text, activity.getString(R.string.appName))
+        assertEquals(textView.text, activity.getString(R.string.app_name))
     }
 
 //    @Test

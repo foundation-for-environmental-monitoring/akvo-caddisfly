@@ -1,5 +1,7 @@
 package org.akvo.caddisfly.common
 
+import org.akvo.caddisfly.R
+
 object TestConstants {
     const val STRIP_TESTS_COUNT = 2
     const val FREE_CHLORINE_ID = "c3535e72-ff77-4225-9f4a-41d3288780c6"
@@ -9,5 +11,5 @@ object TestConstants {
     const val CUVETTE_TEST_TIME_DELAY = 0
     const val DELAY_EXTRA = 4
     const val CUVETTE_TEST_INDEX = 1
-    const val CUVETTE_TEST_NAME_1 = "Aluminum"
+    const val CUVETTE_TEST_NAME_1 = R.string.aluminum
 }

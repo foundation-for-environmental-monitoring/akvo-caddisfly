@@ -15,6 +15,7 @@ import android.os.Environment
 import android.preference.PreferenceManager
 import android.util.DisplayMetrics
 import androidx.annotation.StringRes
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
@@ -85,7 +86,7 @@ object TestHelper {
     }
 
     @Suppress("SameParameterValue")
-    fun getString(activity: Activity?, @StringRes resourceId: Int): String {
+    fun getString(activity: Context?, @StringRes resourceId: Int): String {
         val currentResources: Resources? = activity!!.resources
         val assets: AssetManager? = currentResources!!.assets
         val metrics: DisplayMetrics? = currentResources.displayMetrics
@@ -259,7 +260,7 @@ object TestHelper {
             if (VERSION.SDK_INT == VERSION_CODES.M
                     && (text == TestConstant.USE_EXTERNAL_SOURCE || text == TestConstant.GO_TO_TEST)) {
                 sleep(1000)
-                mDevice.findObject(By.text(context!!.getString(string.appName))).click()
+                mDevice.findObject(By.text(context!!.getString(string.app_name))).click()
                 sleep(1000)
             }
             mDevice.waitForWindowUpdate("", 2000)
@@ -334,6 +335,12 @@ object TestHelper {
     fun clearPreferences(activityTestRule: ActivityTestRule<*>?) {
         val prefs: SharedPreferences? = PreferenceManager.getDefaultSharedPreferences(activityTestRule!!.activity)
         prefs!!.edit().clear().apply()
+    }
+
+    fun clearPreferences() {
+        val prefs =
+            androidx.preference.PreferenceManager.getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
+        prefs.edit().clear().apply()
     }
 
     fun isDeviceInitialized(): Boolean {

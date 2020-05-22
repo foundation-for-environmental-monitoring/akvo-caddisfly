@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" tools:ignore="MissingTranslation">
+    <string name="aluminum">అల్యూమినియం</string>
+    <string name="calcium">కాల్షియం</string>
+    <string name="total_arsenic">మొత్తం ఆర్సెనిక్</string>
+    <string name="chromium">క్రోమియం</string>
+    <string name="copper">కాపర్</string>
+    <string name="dissolved_oxygen">కరిగిన ఆక్సిజన్</string>
+    <string name="fluoride">ఫ్లోరైడ్</string>
+    <string name="fluoride_high_range">ఫ్లోరైడ్ హై రేంజ్</string>
+    <string name="free_chlorine">అవశేష క్లోరిన్</string>
+    <string name="hydrogen_peroxide">హైడ్రోజన్ పెరాక్సైడ్</string>
+    <string name="nitrate">నైట్రేట్</string>
+    <string name="ph">.</string>
+    <string name="phosphate">ఫాస్ఫేట్</string>
+    <string name="sulphate">సల్ఫేట్</string>
+    <string name="total_iron">.</string>
+    <string name="chlorophyll_a">క్లోరోఫిల్ a</string>
+    <string name="magnesium">మెగ్నీషియం</string>
+    <string name="organic_carbon">.</string>
+    <string name="potassium">పొటాషియం</string>
+    <string name="available_boron">.</string>
+    <string name="available_iron">.</string>
+    <string name="available_nitrogen">.</string>
+    <string name="available_phosphorous">.</string>
+    <string name="available_potassium">.</string>
+    <string name="alkalinity">.</string>
+    <string name="ammonia">అమ్మోనియా</string>
+    <string name="nitrite">నైట్రేట్</string>
+    <string name="zinc">జింక్</string>
+</resources>

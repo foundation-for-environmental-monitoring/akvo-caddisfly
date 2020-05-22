@@ -22,6 +22,7 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.AsyncTask
+import android.os.Build
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.updater.UpdateCheck.setNextUpdateCheck
 import org.akvo.caddisfly.util.ApiUtil.getAppVersionCode
@@ -39,39 +40,47 @@ internal class UpdateCheckTask(context: Context) : AsyncTask<String?, String?, S
     private val contextRef: WeakReference<Context> = WeakReference(context)
     override fun doInBackground(vararg params: String?): String? {
         val context = contextRef.get()
-        var versionCode = 0
+
         try {
-            versionCode = context!!.packageManager
-                    .getPackageInfo(context.packageName, 0).versionCode
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-        if (getInt(contextRef.get(), "serverVersionCode", 0) < versionCode) {
-            var connection: HttpURLConnection? = null
-            var reader: BufferedReader? = null
-            try {
-                val url = URL(params[0])
-                connection = url.openConnection() as HttpURLConnection
-                connection.connect()
-                val stream = connection.inputStream
-                reader = BufferedReader(InputStreamReader(stream))
-                val buffer = StringBuilder()
-                var line: String?
-                while (reader.readLine().also { line = it } != null) {
-                    buffer.append(line).append("\n")
+            val packageInfo = context!!.packageManager.getPackageInfo(context.packageName, 0)
+
+            @Suppress("DEPRECATION")
+            val versionCode: Long =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    packageInfo.longVersionCode
+                } else {
+                    packageInfo.versionCode.toLong()
                 }
-                return buffer.toString()
-            } catch (e: IOException) {
-                e.printStackTrace()
-                setNextUpdateCheck(context!!, AlarmManager.INTERVAL_HALF_HOUR)
-            } finally {
-                connection?.disconnect()
+
+            if (getInt(contextRef.get(), "serverVersionCode", 0) < versionCode) {
+                var connection: HttpURLConnection? = null
+                var reader: BufferedReader? = null
                 try {
-                    reader?.close()
+                    val url = URL(params[0])
+                    connection = url.openConnection() as HttpURLConnection
+                    connection.connect()
+                    val stream = connection.inputStream
+                    reader = BufferedReader(InputStreamReader(stream))
+                    val buffer = StringBuilder()
+                    var line: String?
+                    while (reader.readLine().also { line = it } != null) {
+                        buffer.append(line).append("\n")
+                    }
+                    return buffer.toString()
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    setNextUpdateCheck(context, AlarmManager.INTERVAL_HALF_HOUR)
+                } finally {
+                    connection?.disconnect()
+                    try {
+                        reader?.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
                 }
             }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
         }
         return null
     }
@@ -91,8 +100,9 @@ internal class UpdateCheckTask(context: Context) : AsyncTask<String?, String?, S
                 serverVersion = getInt(context, "serverVersionCode", 0)
             }
             if (serverVersion > versionCode) {
-                NotificationScheduler.showNotification(context,
-                        context.getString(R.string.appName),
+                NotificationScheduler.showNotification(
+                    context,
+                    context.getString(R.string.app_name),
                     context.getString(R.string.update_available)
                 )
             }
