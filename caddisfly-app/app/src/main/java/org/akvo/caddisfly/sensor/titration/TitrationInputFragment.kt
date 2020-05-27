@@ -53,7 +53,7 @@ class TitrationInputFragment : BaseFragment() {
         })
 
         if (arguments != null) {
-            val testInfo: TestInfo? = arguments!!.getParcelable(ARG_PARAM1)
+            val testInfo: TestInfo? = requireArguments().getParcelable(ARG_PARAM1)
             if (testInfo != null) {
                 if (testInfo.results!!.size > 1) {
                     textInput1.text = testInfo.results!![0].name
@@ -78,8 +78,8 @@ class TitrationInputFragment : BaseFragment() {
                                             editTitration1.error = getString(R.string.titration_entry_error)
                                             editTitration1.requestFocus()
                                         } else {
-                                            closeKeyboard(activity, editTitration2)
-                                            closeKeyboard(context, editTitration1)
+                                            closeKeyboard(editTitration2)
+                                            closeKeyboard(editTitration1)
                                             for (i in testInfo.results!!.indices) {
                                                 val formula = testInfo.results!![i].formula
                                                 if (formula!!.isNotEmpty()) {
@@ -107,8 +107,8 @@ class TitrationInputFragment : BaseFragment() {
                                     editTitration1.error = getString(R.string.value_is_required)
                                     editTitration1.requestFocus()
                                 } else {
-                                    closeKeyboard(activity, editTitration2)
-                                    closeKeyboard(context, editTitration1)
+                                    closeKeyboard(editTitration2)
+                                    closeKeyboard(editTitration1)
                                     val results = FloatArray(testInfo.results!!.size)
                                     val n1 = n1String.toFloat()
                                     val formula = testInfo.results!![0].formula
@@ -125,13 +125,13 @@ class TitrationInputFragment : BaseFragment() {
         }
     }
 
-    private fun closeKeyboard(context: Context?, input: EditText?) {
+    private fun closeKeyboard(input: EditText?) {
         try {
-            val imm = context!!.getSystemService(
+            val imm = requireContext().getSystemService(
                     Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(input!!.windowToken, 0)
             if (activity != null) {
-                val view = activity!!.currentFocus
+                val view = requireActivity().currentFocus
                 if (view != null) {
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
@@ -142,8 +142,9 @@ class TitrationInputFragment : BaseFragment() {
     }
 
     private fun showSoftKeyboard(view: View?) {
-        if (activity != null && view!!.requestFocus()) {
-            val imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (activity != null && requireView().requestFocus()) {
+            val imm =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
         }
     }

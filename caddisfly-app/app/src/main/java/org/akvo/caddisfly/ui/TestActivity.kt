@@ -16,6 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
  */
+@file:Suppress("DEPRECATION")
+
 package org.akvo.caddisfly.ui
 
 import android.Manifest
@@ -59,6 +61,7 @@ import org.akvo.caddisfly.sensor.striptest.ui.StripTestActivity
 import org.akvo.caddisfly.sensor.titration.TitrationTestActivity
 import org.akvo.caddisfly.util.AlertUtil
 import org.akvo.caddisfly.util.PreferencesUtil
+import org.akvo.caddisfly.util.toLocalString
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -78,7 +81,8 @@ class TestActivity : BaseActivity() {
     private val handler = WeakRefHandler(this)
     private val permissionsDelegate = PermissionsDelegate(this)
     private val storagePermissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    private val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val permissions =
+        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var testInfo: TestInfo? = null
     private var cameraIsOk = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,8 +98,10 @@ class TestActivity : BaseActivity() {
                     startTest()
                 } else {
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
-                                    TestActivity::class.java.simpleName).commit()
+                        .replace(
+                            R.id.fragment_container, TestInfoFragment.getInstance(testInfo),
+                            TestActivity::class.java.simpleName
+                        ).commit()
                 }
             }
         }
@@ -107,14 +113,17 @@ class TestActivity : BaseActivity() {
 
     private fun getTestSelectedByExternalApp(fragmentManager: FragmentManager, intent: Intent) {
         app!!.setAppLanguage(
-                intent.getStringExtra(SensorConstants.LANGUAGE), true, handler)
+            intent.getStringExtra(SensorConstants.LANGUAGE), true, handler
+        )
         val uuid = intent.getStringExtra(SensorConstants.TEST_ID)
         if (uuid != null) {
             val viewModel = ViewModelProvider(this).get(TestListViewModel::class.java)
             testInfo = viewModel.getTestInfo(uuid)
             if (testInfo != null && intent.extras != null) {
                 for (i in intent.extras!!.keySet().indices) {
-                    val code = Objects.requireNonNull<Array<Any>>(intent.extras!!.keySet().toTypedArray())[i].toString()
+                    val code = Objects.requireNonNull<Array<Any>>(
+                        intent.extras!!.keySet().toTypedArray()
+                    )[i].toString()
                     if (code != SensorConstants.TEST_ID) {
                         val pattern = Pattern.compile("_(\\d*?)$")
                         val matcher = pattern.matcher(code)
@@ -133,7 +142,8 @@ class TestActivity : BaseActivity() {
         } else {
             val fragment = TestInfoFragment.getInstance(testInfo)
             fragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, fragment, TestActivity::class.java.simpleName).commit()
+                .add(R.id.fragment_container, fragment, TestActivity::class.java.simpleName)
+                .commit()
         }
         //        String suffix = "";
 //            Pattern pattern = Pattern.compile("(.*?)(_\\d*?)$");
@@ -161,7 +171,7 @@ class TestActivity : BaseActivity() {
             return
         }
         if (testInfo != null) {
-            title = testInfo!!.name
+            title = testInfo!!.name!!.toLocalString()
         }
     }
 
@@ -172,7 +182,8 @@ class TestActivity : BaseActivity() {
      */
     fun onStartTestClick(@Suppress("UNUSED_PARAMETER") view: View?) { // if app was launched in debug mode then send dummy results without running test
         if (AppPreferences.returnDummyResults() ||
-                intent.getBooleanExtra(SensorConstants.DEBUG_MODE, false)) {
+            intent.getBooleanExtra(SensorConstants.DEBUG_MODE, false)
+        ) {
             sendDummyResultForDebugging()
             return
         }
@@ -202,27 +213,37 @@ class TestActivity : BaseActivity() {
                 maxValue = result.colors[result.colors.size - 1].value!!
             }
             val dilution = random.nextInt(maxDilution) + 1
-            result.setResult(random.nextDouble() * maxValue,
-                    dilution, maxDilution)
+            result.setResult(
+                random.nextDouble() * maxValue,
+                dilution, maxDilution
+            )
             var testName = result.name?.replace(" ", "_")
             if (testInfo!!.nameSuffix != null && testInfo!!.nameSuffix!!.isNotEmpty()) {
                 testName += "_" + testInfo!!.nameSuffix!!.replace(" ", "_")
             }
-            resultIntent.putExtra(testName
-                    + testInfo!!.resultSuffix, result.result)
-            resultIntent.putExtra(testName
-                    + "_" + SensorConstants.DILUTION
-                    + testInfo!!.resultSuffix, dilution)
-            resultIntent.putExtra(testName
-                    + "_" + SensorConstants.UNIT + testInfo!!.resultSuffix,
-                    testInfo!!.results!![0].unit)
+            resultIntent.putExtra(
+                testName
+                        + testInfo!!.resultSuffix, result.result
+            )
+            resultIntent.putExtra(
+                testName
+                        + "_" + SensorConstants.DILUTION
+                        + testInfo!!.resultSuffix, dilution
+            )
+            resultIntent.putExtra(
+                testName
+                        + "_" + SensorConstants.UNIT + testInfo!!.resultSuffix,
+                testInfo!!.results!![0].unit
+            )
             if (i == 0) {
                 resultIntent.putExtra(SensorConstants.VALUE, result.result)
             }
             results.append(result.id, result.result)
         }
-        val resultJson = getJsonResult(testInfo!!, results,
-                null, -1, null)
+        val resultJson = getJsonResult(
+            testInfo!!, results,
+            null, -1, null
+        )
         resultIntent.putExtra(SensorConstants.RESULT_JSON, resultJson.toString())
         val pd = ProgressDialog(this)
         pd.setMessage("Sending dummy result...")
@@ -242,11 +263,14 @@ class TestActivity : BaseActivity() {
         if (testInfo != null) {
             if (testInfo!!.subtype == TestType.CHAMBER_TEST) {
                 if (!isSwatchListValid(testInfo)) {
-                    ErrorMessages.alertCalibrationIncomplete(this, testInfo!!,
-                            isInternal = false, finishActivity = true)
+                    ErrorMessages.alertCalibrationIncomplete(
+                        this, testInfo!!,
+                        isInternal = false, finishActivity = true
+                    )
                     return
                 }
-                val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo!!.uuid)
+                val calibrationDetail =
+                    db?.calibrationDao()!!.getCalibrationDetails(testInfo!!.uuid)
                 if (calibrationDetail != null) {
                     val milliseconds = calibrationDetail.expiry
                     if (milliseconds > 0 && milliseconds <= Date().time) {
@@ -277,13 +301,16 @@ class TestActivity : BaseActivity() {
 
     private fun startChamberTest() { //Only start the colorimetry calibration if the device has a camera flash
         if (AppPreferences.useExternalCamera()
-                || CameraHelper.hasFeatureCameraFlash(this,
+            || CameraHelper.hasFeatureCameraFlash(
+                this,
                 R.string.cannot_start_test, R.string.ok, null
             )
         ) {
             if (!isSwatchListValid(testInfo)) {
-                ErrorMessages.alertCalibrationIncomplete(this, testInfo!!,
-                        isInternal = false, finishActivity = true)
+                ErrorMessages.alertCalibrationIncomplete(
+                    this, testInfo!!,
+                    isInternal = false, finishActivity = true
+                )
                 return
             }
             val intent = Intent(this, ChamberTestActivity::class.java)
@@ -329,10 +356,12 @@ class TestActivity : BaseActivity() {
     fun onInstructionsClick(@Suppress("UNUSED_PARAMETER") view: View?) {
         val instructionFragment = InstructionFragment.getInstance(testInfo)
         supportFragmentManager
-                .beginTransaction()
-                .addToBackStack("instructions")
-                .replace(R.id.fragment_container,
-                        instructionFragment, null).commit()
+            .beginTransaction()
+            .addToBackStack("instructions")
+            .replace(
+                R.id.fragment_container,
+                instructionFragment, null
+            ).commit()
     }
 
     /**
@@ -360,20 +389,22 @@ class TestActivity : BaseActivity() {
                     val checkBoxView = View.inflate(this, R.layout.dialog_message, null)
                     val checkBox = checkBoxView.findViewById<CheckBox>(R.id.checkbox)
                     checkBox.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-                        PreferencesUtil.setBoolean(baseContext,
-                                R.string.showMinMegaPixelDialogKey, !isChecked)
+                        PreferencesUtil.setBoolean(
+                            baseContext,
+                            R.string.showMinMegaPixelDialogKey, !isChecked
+                        )
                     }
                     val builder = AlertDialog.Builder(this)
                     builder.setTitle(R.string.warning)
                     builder.setMessage(R.string.camera_not_good)
-                            .setView(checkBoxView)
-                            .setCancelable(false)
-                            .setPositiveButton(R.string.continue_anyway) { _: DialogInterface?, _: Int -> startTest() }
-                            .setNegativeButton(R.string.stop_test) { dialog: DialogInterface, _: Int ->
-                                dialog.dismiss()
-                                cameraIsOk = false
-                                finish()
-                            }.show()
+                        .setView(checkBoxView)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.continue_anyway) { _: DialogInterface?, _: Int -> startTest() }
+                        .setNegativeButton(R.string.stop_test) { dialog: DialogInterface, _: Int ->
+                            dialog.dismiss()
+                            cameraIsOk = false
+                            finish()
+                        }.show()
                 } else {
                     startTest()
                 }
@@ -385,17 +416,21 @@ class TestActivity : BaseActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (permissionsDelegate.resultGranted(grantResults)) {
             FileHelper.migrateFolders()
             startTest()
         } else {
             val message = getString(R.string.camera_storage_permissions)
-            AlertUtil.showSettingsSnackbar(this,
-                    window.decorView.rootView, message)
+            AlertUtil.showSettingsSnackbar(
+                this,
+                window.decorView.rootView, message
+            )
         }
     }
 
@@ -411,15 +446,15 @@ class TestActivity : BaseActivity() {
         )
         AlertUtil.showAlert(
             this, R.string.cannot_start_test, message,
-                R.string.ok,
-                DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.dismiss()
-                    finish()
-                }, null,
-                DialogInterface.OnCancelListener { dialogInterface: DialogInterface ->
-                    dialogInterface.dismiss()
-                    finish()
-                }
+            R.string.ok,
+            DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+                finish()
+            }, null,
+            DialogInterface.OnCancelListener { dialogInterface: DialogInterface ->
+                dialogInterface.dismiss()
+                finish()
+            }
         )
     }
 

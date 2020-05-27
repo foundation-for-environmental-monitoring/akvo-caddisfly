@@ -176,7 +176,7 @@ open class BaseRunTest : Fragment(), RunTest {
                 container, false)
         pictureCount = 0
         if (arguments != null) {
-            mTestInfo = arguments!!.getParcelable(ConstantKey.TEST_INFO)
+            mTestInfo = requireArguments().getParcelable(ConstantKey.TEST_INFO)
         }
         if (mTestInfo != null) {
             mTestInfo!!.dilution = dilution

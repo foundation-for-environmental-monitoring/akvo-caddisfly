@@ -88,10 +88,6 @@ class TestConfigRepository {
         } else {
             testMap[testType.toString() + testSampleType.toString()] = testInfoList
         }
-        for (i in testInfoList.indices.reversed()) {
-            val testInfo = testInfoList[i]
-            localizeTestName(testInfo)
-        }
         return testInfoList
     }
 
@@ -134,27 +130,7 @@ class TestConfigRepository {
                 testInfo = getTestInfoItem(assetsManager.customJson, id)
             }
         }
-        testInfo?.let { localizeTestName(it) }
         return testInfo
-    }
-
-    private fun localizeTestName(testInfo: TestInfo) {
-        if (testInfo.name != null) {
-            var name = testInfo.name!!.toLowerCase(Locale.ROOT)
-                    .replace(")", "")
-                    .replace("(", "")
-                    .replace("- ", "")
-                    .replace(" ", "_")
-            val nameId = app!!.resources
-                    .getIdentifier(name, "string",
-                            app!!.packageName)
-            if (nameId > 0) {
-                name = app!!.getString(nameId)
-                if (name != ".") {
-                    testInfo.name = name
-                }
-            }
-        }
     }
 
     private fun getTestInfoItem(json: String, id: String): TestInfo? {

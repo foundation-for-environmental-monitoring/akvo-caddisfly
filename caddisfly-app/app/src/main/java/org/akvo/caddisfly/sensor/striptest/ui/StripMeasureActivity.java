@@ -44,6 +44,7 @@ import org.akvo.caddisfly.sensor.striptest.camera.CameraPreview;
 import org.akvo.caddisfly.sensor.striptest.models.TimeDelayDetail;
 import org.akvo.caddisfly.sensor.striptest.widget.FinderPatternIndicatorView;
 import org.akvo.caddisfly.ui.BaseActivity;
+import org.akvo.caddisfly.util.ExtensionUtilKt;
 import org.akvo.caddisfly.util.ImageUtil;
 import org.akvo.caddisfly.widget.TimerView;
 
@@ -59,7 +60,6 @@ import timber.log.Timber;
 public class StripMeasureActivity extends BaseActivity implements StripMeasureListener {
 
     public static final boolean DEBUG = false;
-    private TestInfo testInfo;
     // a handler to handle the state machine of the preview, capture, decode, fullCapture cycle
     private StriptestHandler mStriptestHandler;
     private FinderPatternIndicatorView mFinderPatternIndicatorView;
@@ -95,13 +95,13 @@ public class StripMeasureActivity extends BaseActivity implements StripMeasureLi
     public void onResume() {
         super.onResume();
 
-        testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
+        TestInfo testInfo = getIntent().getParcelableExtra(ConstantKey.TEST_INFO);
         int currentStage = getIntent().getIntExtra(ConstantKey.TEST_STAGE, 1);
 
         boolean startMeasure = getIntent().getBooleanExtra(ConstantKey.START_MEASURE, false);
 
         if (testInfo != null && testInfo.getUuid() != null) {
-            setTitle(testInfo.name);
+            setTitle(ExtensionUtilKt.toLocalString(testInfo.name));
             patches = testInfo.getResults();
             if (mCameraOpsManager == null) {
                 mCameraOpsManager = new CameraOperationsManager(testInfo.name);

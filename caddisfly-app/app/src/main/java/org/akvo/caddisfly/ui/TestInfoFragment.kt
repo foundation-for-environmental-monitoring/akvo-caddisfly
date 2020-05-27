@@ -44,18 +44,21 @@ import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.databinding.FragmentTestDetailBinding
 import org.akvo.caddisfly.model.TestInfo
-import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.viewmodel.TestInfoViewModel
 
 class TestInfoFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? { // Inflate this data b layout
-        val b: FragmentTestDetailBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_test_detail, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? { // Inflate this data b layout
+        val b: FragmentTestDetailBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_test_detail, container, false
+        )
         val model = ViewModelProvider(this).get(TestInfoViewModel::class.java)
         if (arguments != null) {
-            val testInfo: TestInfo? = arguments!!.getParcelable(ConstantKey.TEST_INFO)
+            val testInfo: TestInfo? = requireArguments().getParcelable(ConstantKey.TEST_INFO)
             if (testInfo != null) {
                 if (AppPreferences.isDiagnosticMode()) {
                     b.swatchView.visibility = View.VISIBLE
@@ -66,9 +69,6 @@ class TestInfoFragment : Fragment() {
                 b.testInfo = testInfo
                 if (testInfo.instructions == null || testInfo.instructions!!.isEmpty()) {
                     b.buttonInstructions.visibility = View.GONE
-                }
-                if (testInfo.subtype == TestType.STRIP_TEST) {
-                    b.buttonPrepare.setText(R.string.prepare_test)
                 }
             }
         }

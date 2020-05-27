@@ -36,6 +36,7 @@ import org.akvo.caddisfly.model.Result;
 import org.akvo.caddisfly.model.TestInfo;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.ui.BaseFragment;
+import org.akvo.caddisfly.util.ExtensionUtilKt;
 import org.akvo.caddisfly.widget.CustomViewPager;
 import org.akvo.caddisfly.widget.PageIndicatorView;
 import org.akvo.caddisfly.widget.SwipeDirection;
@@ -43,7 +44,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static org.akvo.caddisfly.sensor.striptest.utils.ResultUtils.createValueUnitString;
 
@@ -281,7 +281,7 @@ public class StripTestActivity extends BaseActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        setTitle(testInfo.name);
+        setTitle(ExtensionUtilKt.toLocalString(testInfo.name));
     }
 
     @Override
@@ -427,7 +427,7 @@ public class StripTestActivity extends BaseActivity {
         public void setResult(TestInfo testInfo) {
             if (testInfo != null) {
 
-                LayoutInflater inflater = (LayoutInflater) Objects.requireNonNull(getActivity())
+                LayoutInflater inflater = (LayoutInflater) requireActivity()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                 resultLayout.removeAllViews();

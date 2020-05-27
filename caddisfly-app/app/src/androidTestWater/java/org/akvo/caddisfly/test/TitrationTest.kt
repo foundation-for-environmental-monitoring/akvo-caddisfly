@@ -16,12 +16,10 @@ import junit.framework.TestCase.assertNotNull
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.ui.MainActivity
-import org.akvo.caddisfly.util.TestConstant
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
-import org.akvo.caddisfly.util.TestHelper.mCurrentLanguage
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
 import org.akvo.caddisfly.util.TestUtil.sleep
@@ -41,7 +39,7 @@ class TitrationTest {
 
     @Before
     fun setUp() {
-        loadData(ApplicationProvider.getApplicationContext(), mCurrentLanguage)
+        loadData(ApplicationProvider.getApplicationContext())
         val prefs: SharedPreferences =
             getDefaultSharedPreferences(ApplicationProvider.getApplicationContext())
         prefs.edit().clear().apply()
@@ -51,7 +49,7 @@ class TitrationTest {
     fun runCarbonateTitrationTest() {
         gotoSurveyForm()
         nextSurveyPage(3, "Water Tests")
-        clickExternalSourceButton(0, TestConstant.GO_TO_TEST)
+        clickExternalSourceButton(0)
         onView(withText(string.next)).perform(click())
 
         onView(withId(id.editTitration1)).perform(pressImeActionButton())
@@ -59,10 +57,10 @@ class TitrationTest {
         sleep(1000)
 
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
-                .perform(replaceText("12"), closeSoftKeyboard())
+            .perform(replaceText("12"), closeSoftKeyboard())
 
         onView(allOf(withId(id.editTitration1), withText("12"), isDisplayed()))
-                .perform(pressImeActionButton())
+            .perform(pressImeActionButton())
 
         sleep(1000)
 
@@ -87,27 +85,40 @@ class TitrationTest {
 
         sleep(2000)
         gotoSurveyForm()
-        nextSurveyPage(3, "Water Tests")
-        clickExternalSourceButton(1, TestConstant.GO_TO_TEST)
+        sleep(2000)
+        nextSurveyPage(4, "Water Tests")
+        clickExternalSourceButton(1)
         onView(withText(string.next)).perform(click())
 
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
-                .perform(replaceText("123"), closeSoftKeyboard())
+            .perform(replaceText("123"), closeSoftKeyboard())
         onView(withId(id.editTitration2)).check(matches(isDisplayed()))
-                .perform(replaceText("12"), closeSoftKeyboard())
-        onView(allOf(withId(id.editTitration2), withText("12"),
-                childAtPosition(childAtPosition(withId(id.fragment_container), 0),
-                        4), isDisplayed())).perform(pressImeActionButton())
+            .perform(replaceText("12"), closeSoftKeyboard())
+        onView(
+            allOf(
+                withId(id.editTitration2), withText("12"),
+                childAtPosition(
+                    childAtPosition(withId(id.fragment_container), 0),
+                    4
+                ), isDisplayed()
+            )
+        ).perform(pressImeActionButton())
 
         sleep(1000)
 
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
-                .perform(replaceText("12"), closeSoftKeyboard())
+            .perform(replaceText("12"), closeSoftKeyboard())
         onView(withId(id.editTitration2)).check(matches(isDisplayed()))
-                .perform(replaceText("20"), closeSoftKeyboard())
-        onView(allOf(withId(id.editTitration2), withText("20"),
-                childAtPosition(childAtPosition(withId(id.fragment_container), 0),
-                        4), isDisplayed())).perform(pressImeActionButton())
+            .perform(replaceText("20"), closeSoftKeyboard())
+        onView(
+            allOf(
+                withId(id.editTitration2), withText("20"),
+                childAtPosition(
+                    childAtPosition(withId(id.fragment_container), 0),
+                    4
+                ), isDisplayed()
+            )
+        ).perform(pressImeActionButton())
 
         sleep(1000)
 

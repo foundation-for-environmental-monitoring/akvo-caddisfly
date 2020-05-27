@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
 import android.widget.LinearLayout
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.ViewInteraction
@@ -30,10 +31,10 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.swipeLeft
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.UiDevice
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
@@ -43,7 +44,6 @@ import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
-import org.akvo.caddisfly.util.TestHelper.mCurrentLanguage
 import org.akvo.caddisfly.util.TestUtil.nextPage
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
 import org.akvo.caddisfly.util.TestUtil.sleep
@@ -64,20 +64,13 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class StriptestInstructions {
 
-    @Rule
-    @JvmField
-    var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+    @get:Rule
+    val mActivityRule = activityScenarioRule<MainActivity>()
 
     @Before
     fun setUp() {
-        loadData(mActivityTestRule.activity, mCurrentLanguage)
-
-//        SharedPreferences prefs =
-//                PreferenceManager.getDefaultSharedPreferences(mActivityTestRule.getActivity());
-//        prefs.edit().clear().apply();
-
-//        resetLanguage();
-
+        loadData(ApplicationProvider.getApplicationContext())
+        TestHelper.clearPreferences()
     }
 
     @Test
@@ -85,27 +78,40 @@ class StriptestInstructions {
         goToMainScreen()
         gotoSurveyForm()
         nextSurveyPage(3, "Arsenic")
+        sleep(2000)
         clickExternalSourceButton(0)
-        sleep(1000)
         mDevice.waitForIdle()
-        sleep(1000)
-        onView(withText("Arsenic (0 - 500)"))
-                .check(matches(isDisplayed()))
-        val appCompatButton2: ViewInteraction = onView(allOf(withId(id.button_instructions), withText(string.instructions), childAtPosition(childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
-                1),
-                1), isDisplayed()))
+        sleep(2000)
+        onView(withText(string.arsenic_0_500)).check(matches(isDisplayed()))
+        val appCompatButton2: ViewInteraction = onView(
+            allOf(
+                withId(id.button_instructions), withText(string.instructions), childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.LinearLayout")),
+                        1
+                    ),
+                    1
+                ), isDisplayed()
+            )
+        )
         appCompatButton2.perform(click())
 
         onView(withText(string.as_safety_1)).check(matches(isDisplayed()))
-        onView(withText("Arsenic (0 - 500)"))
-                .check(matches(isDisplayed()))
+        onView(withText(string.arsenic_0_500))
+            .check(matches(isDisplayed()))
         nextPage()
         onView(withText(string.as_ins_1a))
-                .check(matches(isDisplayed()))
+            .check(matches(isDisplayed()))
         onView(withId(id.pager_indicator)).check(matches(isDisplayed()))
         onView(withId(id.viewPager))
-                .perform(swipeLeft())
-        val appCompatImageButton: ViewInteraction = onView(allOf(withContentDescription(string.navigate_up), withParent(withId(id.toolbar)), isDisplayed()))
+            .perform(swipeLeft())
+        val appCompatImageButton: ViewInteraction = onView(
+            allOf(
+                withContentDescription(string.navigate_up),
+                withParent(withId(id.toolbar)),
+                isDisplayed()
+            )
+        )
         appCompatImageButton.perform(click())
 
 //        ViewInteraction imageView2 = onView(
@@ -119,14 +125,29 @@ class StriptestInstructions {
 //        imageView2.check(matches(isDisplayed()));
 
 
-        val button1: ViewInteraction = onView(allOf(withId(id.button_prepare), childAtPosition(childAtPosition(
-                IsInstanceOf.instanceOf(LinearLayout::class.java),
-                1),
-                0), isDisplayed()))
+        val button1: ViewInteraction = onView(
+            allOf(
+                withId(id.button_prepare), childAtPosition(
+                    childAtPosition(
+                        IsInstanceOf.instanceOf(LinearLayout::class.java),
+                        1
+                    ),
+                    0
+                ), isDisplayed()
+            )
+        )
         button1.check(matches(isDisplayed()))
-        val appCompatButton3: ViewInteraction = onView(allOf(withId(id.button_instructions), withText(string.instructions), childAtPosition(childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
-                1),
-                1), isDisplayed()))
+        val appCompatButton3: ViewInteraction = onView(
+            allOf(
+                withId(id.button_instructions), withText(string.instructions), childAtPosition(
+                    childAtPosition(
+                        withClassName(`is`("android.widget.LinearLayout")),
+                        1
+                    ),
+                    1
+                ), isDisplayed()
+            )
+        )
         appCompatButton3.perform(click())
         pressBack()
 
@@ -141,12 +162,25 @@ class StriptestInstructions {
 //        imageView3.check(matches(isDisplayed()));
 
 
-        val button2: ViewInteraction = onView(allOf(withId(id.button_prepare), childAtPosition(childAtPosition(
-                IsInstanceOf.instanceOf(LinearLayout::class.java),
-                1),
-                0), isDisplayed()))
+        val button2: ViewInteraction = onView(
+            allOf(
+                withId(id.button_prepare), childAtPosition(
+                    childAtPosition(
+                        IsInstanceOf.instanceOf(LinearLayout::class.java),
+                        1
+                    ),
+                    0
+                ), isDisplayed()
+            )
+        )
         button2.check(matches(isDisplayed()))
-        onView(allOf(withContentDescription(string.navigate_up), withParent(withId(id.toolbar)), isDisplayed())).perform(click())
+        onView(
+            allOf(
+                withContentDescription(string.navigate_up),
+                withParent(withId(id.toolbar)),
+                isDisplayed()
+            )
+        ).perform(click())
     }
 
     companion object {
@@ -159,7 +193,8 @@ class StriptestInstructions {
         }
 
         private fun childAtPosition(
-                parentMatcher: Matcher<View>, position: Int): Matcher<View> {
+            parentMatcher: Matcher<View>, position: Int
+        ): Matcher<View> {
             return object : TypeSafeMatcher<View>() {
                 override fun describeTo(description: Description) {
                     description.appendText("Child at position $position in parent ")

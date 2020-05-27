@@ -26,6 +26,7 @@ import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity
 import org.akvo.caddisfly.util.AlertUtil
+import org.akvo.caddisfly.util.toLocalString
 
 object ErrorMessages {
     private const val MESSAGE_TWO_LINE_FORMAT = "%s%n%n%s"
@@ -50,7 +51,10 @@ object ErrorMessages {
     @JvmStatic
     fun alertCalibrationIncomplete(activity: Activity, testInfo: TestInfo,
                                    isInternal: Boolean, finishActivity: Boolean) {
-        var message = activity.getString(R.string.error_calibration_incomplete, testInfo.name)
+        var message = activity.getString(
+            R.string.error_calibration_incomplete,
+            testInfo.name!!.toLocalString()
+        )
         message = String.format(MESSAGE_TWO_LINE_FORMAT, message,
             activity.getString(R.string.do_you_want_to_calibrate)
         )

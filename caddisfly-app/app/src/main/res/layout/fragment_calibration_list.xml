@@ -27,6 +27,8 @@
             name="testInfoViewModel"
             type="org.akvo.caddisfly.viewmodel.TestInfoViewModel" />
 
+        <import type="org.akvo.caddisfly.util.ExtensionUtilKt" />
+
         <variable
             name="binding"
             type="org.akvo.caddisfly.ui.BindingAdapters" />
@@ -56,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-light"
-                android:text="@{testInfoViewModel.test.name}"
+                android:text="@{ExtensionUtilKt.toLocalString(testInfoViewModel.test.name)}"
                 android:textColor="#fff"
                 android:textSize="30sp"
                 tools:text="Contaminant" />
@@ -152,7 +154,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_directions_run_black_24dp"
                     android:onClick="runTestClick"
-                    android:text="@string/runTest" />
+                    android:text="@string/run_test" />
 
             </LinearLayout>
 

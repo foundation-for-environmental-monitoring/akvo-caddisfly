@@ -20,7 +20,6 @@ import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.loadData
-import org.akvo.caddisfly.util.TestHelper.mCurrentLanguage
 import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.mDevice
 import org.junit.Before
@@ -37,9 +36,8 @@ class DiagnosticTest {
 
     @Before
     fun setUp() {
-        loadData(ApplicationProvider.getApplicationContext(), mCurrentLanguage)
+        loadData(ApplicationProvider.getApplicationContext())
         TestHelper.clearPreferences()
-//        resetLanguage();
     }
 
     @Test

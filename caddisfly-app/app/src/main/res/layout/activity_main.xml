@@ -27,7 +27,7 @@
             android:layout_marginTop="0dp"
             android:minHeight="80dp"
             android:onClick="onRunTestClick"
-            android:text="@string/runTest"
+            android:text="@string/run_test"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="#fff"

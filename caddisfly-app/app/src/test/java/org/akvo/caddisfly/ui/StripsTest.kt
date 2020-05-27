@@ -36,6 +36,7 @@ import org.akvo.caddisfly.common.UnitTestConstants.STRIP_TEST_NAME
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
+import org.akvo.caddisfly.util.toLocalString
 import org.junit.Assert.assertSame
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -118,7 +119,7 @@ class StripsTest {
         val recyclerView: RecyclerView = activity.findViewById(id.list_types)
         for (i in 0 until recyclerView.childCount) {
             val testInfo: TestInfo = (recyclerView.adapter as TestInfoAdapter?)!!.getItemAt(0)
-            val title: String? = testInfo.name
+            val title: String? = testInfo.name!!.toLocalString()
             assertEquals(title,
                     (recyclerView.getChildAt(0).findViewById<View>(id.text_title) as TextView).text)
         }

@@ -47,6 +47,7 @@ import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.sensor.chamber.ChamberTestActivity
+import org.akvo.caddisfly.util.toLocalString
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -129,7 +130,7 @@ class ChamberTest {
         val recyclerView: RecyclerView = activity.findViewById(id.list_types)
         for (i in 0 until recyclerView.childCount) {
             val testInfo: TestInfo = (recyclerView.adapter as TestInfoAdapter?)!!.getItemAt(i)
-            assertTestTitle(recyclerView, i, testInfo.name!!)
+            assertTestTitle(recyclerView, i, testInfo.name!!.toLocalString())
         }
     }
 

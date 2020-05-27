@@ -45,6 +45,8 @@
             name="testInfo"
             type="org.akvo.caddisfly.model.TestInfo" />
 
+        <import type="org.akvo.caddisfly.util.ExtensionUtilKt" />
+
         <variable
             name="callback"
             type="org.akvo.caddisfly.ui.TestInfoClickCallback" />
@@ -92,7 +94,7 @@
                 android:id="@+id/text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{testInfo.name}"
+                android:text="@{ExtensionUtilKt.toLocalString(testInfo.name) }"
                 android:textIsSelectable="false"
                 android:textSize="18sp"
                 tools:text="Contaminant" />

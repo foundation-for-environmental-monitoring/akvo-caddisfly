@@ -54,8 +54,8 @@ class TestListFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         if (arguments != null) {
-            mTestType = arguments!![ConstantKey.TYPE] as TestType?
-            mSampleType = arguments!![ConstantKey.SAMPLE_TYPE] as TestSampleType?
+            mTestType = requireArguments()[ConstantKey.TYPE] as TestType?
+            mSampleType = requireArguments()[ConstantKey.SAMPLE_TYPE] as TestSampleType?
         }
         mTestInfoAdapter = TestInfoAdapter(mTestInfoClickCallback)
         return view

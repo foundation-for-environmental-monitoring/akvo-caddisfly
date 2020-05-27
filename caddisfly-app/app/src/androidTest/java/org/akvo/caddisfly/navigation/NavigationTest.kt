@@ -1,8 +1,8 @@
 package org.akvo.caddisfly.navigation
 
-import android.content.Intent
 import android.widget.DatePicker
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
@@ -12,14 +12,13 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.PickerActions
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
-import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import androidx.test.rule.ActivityTestRule
+import androidx.test.rule.GrantPermissionRule
 import androidx.test.uiautomator.UiDevice
-import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
@@ -32,7 +31,6 @@ import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.loadData
-import org.akvo.caddisfly.util.TestHelper.mCurrentLanguage
 import org.akvo.caddisfly.util.TestHelper.saveCalibration
 import org.akvo.caddisfly.util.TestHelper.takeScreenshot
 import org.akvo.caddisfly.util.TestUtil
@@ -46,31 +44,32 @@ import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class NavigationTest {
-    @JvmField
+
+    @get:Rule
+    val mActivityRule = activityScenarioRule<MainActivity>()
+
     @Rule
-    var mActivityRule = ActivityTestRule(MainActivity::class.java)
+    @JvmField
+    var mGrantPermissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(
+            "android.permission.CAMERA",
+            "android.permission.WRITE_EXTERNAL_STORAGE"
+        )
 
     @Before
     fun setUp() {
-        loadData(mActivityRule.activity, mCurrentLanguage)
-        clearPreferences(mActivityRule)
-//        resetLanguage();
+        loadData(ApplicationProvider.getApplicationContext())
+        clearPreferences()
     }
 
     @Test
     fun testNavigateAll() {
         saveCalibration("TestInvalid", TestConstants.CUVETTE_TEST_ID_1)
-        val path = (mActivityRule.activity.getExternalFilesDir(null)?.path
-                + "/" + BuildConfig.APPLICATION_ID + "/screenshots")
-        val folder = File(path)
-        if (!folder.exists()) {
-            folder.mkdirs()
-        }
+
         mDevice.waitForWindowUpdate("", 2000)
         goToMainScreen()
 
@@ -104,24 +103,37 @@ class NavigationTest {
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         sleep(4000)
-        onView(allOf(withId(id.list_types), childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
-                0))).perform(actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()))
+        onView(
+            allOf(
+                withId(id.list_types), childAtPosition(
+                    withClassName(`is`("android.widget.LinearLayout")),
+                    0
+                )
+            )
+        ).perform(
+            actionOnItemAtPosition<ViewHolder?>(
+                TestConstants.TEST_INDEX, click()
+            )
+        )
         if (TestUtil.isEmulator) {
-            onView(withText(string.error_camera_flash_required))
-                    .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
-                            .decorView)))).check(matches(isDisplayed()))
+//            onView(withText(string.error_camera_flash_required))
+//                    .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
+//                            .decorView)))).check(matches(isDisplayed()))
             return
         }
         onView(withId(id.menuLoad)).perform(click())
         sleep(2000)
         onData(hasToString(startsWith("TestInvalid"))).perform(click())
         sleep(2000)
-        onView(withText(String.format("%s. %s", mActivityRule.activity
-            .getString(string.calibration_is_invalid),
-            mActivityRule.activity.getString(string.try_recalibrating)
-        )
-        )
+
+        onView(
+            withText(
+                String.format(
+                    "%s. %s",
+                    getInstrumentation().targetContext.getString(string.calibration_is_invalid),
+                    getInstrumentation().targetContext.getString(string.try_recalibrating)
+                )
+            )
         ).check(matches(isDisplayed()))
         leaveDiagnosticMode()
         sleep(4000)
@@ -133,9 +145,18 @@ class NavigationTest {
 
         //Test Types Screen
         takeScreenshot()
-        onView(allOf(withId(id.list_types), childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
-                0))).perform(actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()))
+        onView(
+            allOf(
+                withId(id.list_types), childAtPosition(
+                    withClassName(`is`("android.widget.LinearLayout")),
+                    0
+                )
+            )
+        ).perform(
+            actionOnItemAtPosition<ViewHolder?>(
+                TestConstants.TEST_INDEX, click()
+            )
+        )
 
         //Calibrate Swatches Screen
 
@@ -151,11 +172,17 @@ class NavigationTest {
 
         onView(withId(id.editExpiryDate)).perform(click())
         onView(withClassName(equalTo(DatePicker::class.java.name)))
-                .perform(PickerActions.setDate(2025, 8, 25))
+            .perform(PickerActions.setDate(2025, 8, 25))
         onView(withId(android.R.id.button1)).perform(click())
         onView(withText(string.save)).perform(click())
-        val recyclerView3: ViewInteraction = onView(allOf(withId(id.calibrationList), childAtPosition(withClassName(`is`("android.widget.RelativeLayout")),
-                0)))
+        val recyclerView3: ViewInteraction = onView(
+            allOf(
+                withId(id.calibrationList), childAtPosition(
+                    withClassName(`is`("android.widget.RelativeLayout")),
+                    0
+                )
+            )
+        )
         recyclerView3.perform(actionOnItemAtPosition<ViewHolder?>(4, click()))
 
         // onView(withText("2" + dfs.getDecimalSeparator() + "0 mg/l")).perform(click());
@@ -173,9 +200,18 @@ class NavigationTest {
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         sleep(4000)
-        onView(allOf(withId(id.list_types), childAtPosition(withClassName(`is`("android.widget.LinearLayout")),
-                0))).perform(actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()))
+        onView(
+            allOf(
+                withId(id.list_types), childAtPosition(
+                    withClassName(`is`("android.widget.LinearLayout")),
+                    0
+                )
+            )
+        ).perform(
+            actionOnItemAtPosition<ViewHolder?>(
+                TestConstants.TEST_INDEX, click()
+            )
+        )
         onView(withId(id.menuLoad)).perform(click())
         sleep(2000)
         onData(hasToString(startsWith("TestValid"))).perform(click())
@@ -197,7 +233,7 @@ class NavigationTest {
         //Dilution dialog
         takeScreenshot()
         TestUtil.goBack(5)
-        mActivityRule.launchActivity(Intent())
+//        mActivityRule.launchActivity(Intent())
         gotoSurveyForm()
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.testName)).check(matches(isDisplayed()))
@@ -236,8 +272,6 @@ class NavigationTest {
 //
 //        clickExternalSourceButton(0); //Iron
 //
-//        onView(withText(R.string.prepare_test)).check(matches(isDisplayed()));
-
         //onView(withText(R.string.cannotStartTest)).check(matches(isDisplayed()));
 
         //onView(withText(R.string.ok)).perform(click());

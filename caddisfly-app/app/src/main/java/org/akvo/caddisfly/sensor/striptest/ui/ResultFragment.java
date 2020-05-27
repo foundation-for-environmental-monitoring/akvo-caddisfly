@@ -52,6 +52,7 @@ import org.akvo.caddisfly.sensor.striptest.utils.ColorUtils;
 import org.akvo.caddisfly.sensor.striptest.utils.Constants;
 import org.akvo.caddisfly.sensor.striptest.utils.ResultUtils;
 import org.akvo.caddisfly.ui.BaseFragment;
+import org.akvo.caddisfly.util.ExtensionUtilKt;
 import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.MathUtil;
 import org.json.JSONObject;
@@ -59,7 +60,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -150,7 +150,7 @@ public class ResultFragment extends BaseFragment {
 
             intent.putExtra(SensorConstants.RESPONSE, resultJsonObj.toString());
 
-            Objects.requireNonNull(getActivity()).setResult(Activity.RESULT_OK, intent);
+            requireActivity().setResult(Activity.RESULT_OK, intent);
 
             getActivity().finish();
         });
@@ -281,7 +281,7 @@ public class ResultFragment extends BaseFragment {
     private void createView(TestInfo testInfo, List<PatchResult> patchResultList) {
         // create view in case the strip was not found
         if (patchResultList == null || patchResultList.size() == 0) {
-            String patchDescription = testInfo.name;
+            String patchDescription = ExtensionUtilKt.toLocalString(testInfo.name);
             inflateView(patchDescription, "", null);
         }
         // else create view in case the strip is of type GROUP
@@ -292,7 +292,7 @@ public class ResultFragment extends BaseFragment {
 
             PatchResult patchResult = patchResultList.get(0);
 
-            String patchDescription = patchResult.getPatch().name;
+            String patchDescription = ExtensionUtilKt.toLocalString(patchResult.getPatch().name);
             String unit = patchResult.getPatch().unit;
             String valueString = createValueUnitString(patchResult.getValue(), unit, getString(R.string.no_result));
 
@@ -315,7 +315,7 @@ public class ResultFragment extends BaseFragment {
             displayCalculatedResults(testInfo, patchResultList);
 
             if (AppPreferences.isTestMode() && patchResultList.size() == 0) {
-                String patchDescription = testInfo.getResults().get(0).name;
+                String patchDescription = ExtensionUtilKt.toLocalString(testInfo.getResults().get(0).name);
                 String unit = testInfo.getResults().get(0).unit;
                 String valueString = createValueUnitString(0, unit, getString(R.string.no_result));
                 inflateView(patchDescription, valueString, null);
@@ -323,7 +323,7 @@ public class ResultFragment extends BaseFragment {
 
             for (PatchResult patchResult : patchResultList) {
                 // create strings for description, unit, and value
-                String patchDescription = patchResult.getPatch().name;
+                String patchDescription = ExtensionUtilKt.toLocalString(patchResult.getPatch().name);
                 String unit = patchResult.getPatch().unit;
                 String valueString = createValueUnitString(patchResult.getValue(), unit, getString(R.string.no_result));
 
@@ -340,8 +340,7 @@ public class ResultFragment extends BaseFragment {
 
     @SuppressLint({"InflateParams"})
     private void inflateView(String patchDescription, String valueString, Bitmap resultImage) {
-        LayoutInflater inflater = (LayoutInflater) Objects.requireNonNull(
-                getActivity()).getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) requireActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout itemResult;
         if (inflater != null) {
             itemResult = (LinearLayout) inflater.inflate(R.layout.item_result, null, false);

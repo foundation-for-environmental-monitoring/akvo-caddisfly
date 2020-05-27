@@ -65,7 +65,7 @@ class SaveCalibrationDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            testInfo = arguments!!.getParcelable(ARG_TEST_INFO)
+            testInfo = requireArguments().getParcelable(ARG_TEST_INFO)
         }
     }
 

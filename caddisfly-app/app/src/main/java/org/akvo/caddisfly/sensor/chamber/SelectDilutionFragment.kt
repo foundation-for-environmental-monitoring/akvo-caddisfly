@@ -38,7 +38,7 @@ class SelectDilutionFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            testInfo = arguments!!.getParcelable(ARG_PARAM_TEST_INFO)
+            testInfo = requireArguments().getParcelable(ARG_PARAM_TEST_INFO)
         }
     }
 

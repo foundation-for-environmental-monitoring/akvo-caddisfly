@@ -56,8 +56,8 @@ class CalibrationItemFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            testInfo = arguments!!.getParcelable(ARG_TEST_INFO)!!
-            isInternal = arguments!!.getBoolean(IS_INTERNAL, true)
+            testInfo = requireArguments().getParcelable(ARG_TEST_INFO)!!
+            isInternal = requireArguments().getBoolean(IS_INTERNAL, true)
         }
     }
 

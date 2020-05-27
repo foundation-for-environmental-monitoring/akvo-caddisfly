@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
-import androidx.test.InstrumentationRegistry.getContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
@@ -16,8 +15,6 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.uiautomator.*
 import org.akvo.caddisfly.R
-import org.akvo.caddisfly.common.TestConstantKeys
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
@@ -92,8 +89,10 @@ object TestUtil {
         val listViewItem: UiObject
         try {
             if (listView.scrollTextIntoView(name)) {
-                listViewItem = listView.getChildByText(UiSelector()
-                        .className(TextView::class.java.name), "" + name + "")
+                listViewItem = listView.getChildByText(
+                    UiSelector()
+                        .className(TextView::class.java.name), "" + name + ""
+                )
                 listViewItem.click()
             } else {
                 return false
@@ -106,7 +105,9 @@ object TestUtil {
 
     private fun swipeLeft() {
         if (isEmulator) {
-            clickExternalSourceButton(getContext(), TestConstantKeys.NEXT)
+            mDevice.findObject(
+                By.text(TestHelper.STRING_HASH_MAP_EN["next"])
+            ).click()
         } else {
             mDevice.waitForIdle()
             mDevice.swipe(500, 400, 50, 400, 4)
@@ -128,7 +129,8 @@ object TestUtil {
     }
 
     fun childAtPosition(
-            parentMatcher: Matcher<View>, position: Int): Matcher<View> {
+        parentMatcher: Matcher<View>, position: Int
+    ): Matcher<View> {
 
         return object : TypeSafeMatcher<View>() {
             override fun describeTo(description: Description) {

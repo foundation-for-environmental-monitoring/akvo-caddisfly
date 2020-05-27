@@ -29,6 +29,7 @@ import org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL
 import org.akvo.caddisfly.common.ConstantKey.TEST_INFO
 import org.akvo.caddisfly.databinding.FragmentResultBinding
 import org.akvo.caddisfly.model.TestInfo
+import org.akvo.caddisfly.util.toLocalString
 
 class ResultFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +38,14 @@ class ResultFragment : Fragment() {
                 R.layout.fragment_result, container, false)
         val view = b.root
         if (activity != null) {
-            activity!!.setTitle(R.string.result)
+            requireActivity().setTitle(R.string.result)
         }
         if (arguments != null) {
-            val testInfo: TestInfo? = arguments!!.getParcelable(TEST_INFO)
+            val testInfo: TestInfo? = requireArguments().getParcelable(TEST_INFO)
             if (testInfo != null) {
                 val result = testInfo.results!![0]
                 b.textResult.text = result.result
-                b.textTitle.text = testInfo.name
+                b.textTitle.text = testInfo.name!!.toLocalString()
                 b.textDilution.text = resources.getQuantityString(R.plurals.dilutions,
                         testInfo.dilution, testInfo.dilution)
                 b.textUnit.text = result.unit
