@@ -24,6 +24,7 @@ import android.os.Build.VERSION_CODES
 import android.widget.DatePicker
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
@@ -57,10 +58,7 @@ import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.CoreMatchers.startsWith
 import org.hamcrest.Matchers.*
 import org.hamcrest.`object`.HasToString.hasToString
-import org.junit.Before
-import org.junit.BeforeClass
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 import java.util.*
 
@@ -76,6 +74,7 @@ class CalibrationTest {
         clearPreferences()
     }
 
+    @Ignore("Checking for out of sequence calibration is currently disabled")
     @Test
     fun testOutOfSequence() {
         saveCalibration("OutOfSequence", TestConstants.CUVETTE_TEST_ID_1)
@@ -264,7 +263,10 @@ class CalibrationTest {
             onView(withText(message)).check(matches(isDisplayed()))
             onView(withText(string.ok)).perform(click())
         }
-//        mActivityRule.launchActivity(Intent())
+
+        launchActivity<MainActivity>()
+        sleep(1000)
+
         onView(withText(string.settings)).perform(click())
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())

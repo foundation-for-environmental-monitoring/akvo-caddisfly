@@ -233,7 +233,7 @@ class NavigationTest {
         //Dilution dialog
         takeScreenshot()
         TestUtil.goBack(5)
-//        mActivityRule.launchActivity(Intent())
+
         gotoSurveyForm()
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.testName)).check(matches(isDisplayed()))

@@ -48,7 +48,7 @@ class TitrationTest {
     @Test
     fun runCarbonateTitrationTest() {
         gotoSurveyForm()
-        nextSurveyPage(3, "Water Tests")
+        nextSurveyPage(5, "Water Tests")
         clickExternalSourceButton(0)
         onView(withText(string.next)).perform(click())
 
@@ -86,7 +86,7 @@ class TitrationTest {
         sleep(2000)
         gotoSurveyForm()
         sleep(2000)
-        nextSurveyPage(4, "Water Tests")
+        nextSurveyPage(5, "Water Tests")
         clickExternalSourceButton(1)
         onView(withText(string.next)).perform(click())
 

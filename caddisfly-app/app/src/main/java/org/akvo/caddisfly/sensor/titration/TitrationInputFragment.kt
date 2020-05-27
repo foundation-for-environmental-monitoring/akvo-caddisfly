@@ -18,6 +18,7 @@ import org.akvo.caddisfly.R
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.ui.BaseFragment
 import org.akvo.caddisfly.util.MathUtil
+import org.akvo.caddisfly.util.toLocalString
 import timber.log.Timber
 import java.util.*
 
@@ -56,21 +57,21 @@ class TitrationInputFragment : BaseFragment() {
             val testInfo: TestInfo? = requireArguments().getParcelable(ARG_PARAM1)
             if (testInfo != null) {
                 if (testInfo.results!!.size > 1) {
-                    textInput1.text = testInfo.results!![0].name
-                    textInput2.text = testInfo.results!![1].name
+                    textInput1.text = testInfo.results!![0].name!!.toLocalString()
+                    textInput2.text = testInfo.results!![1].name!!.toLocalString()
                     editTitration2.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
                         if (actionId == EditorInfo.IME_ACTION_DONE) {
                             if (mListener != null) {
                                 val n1String = editTitration1.text.toString()
                                 val n2String = editTitration2.text.toString()
                                 if (n1String.isEmpty()) {
-                                    editTitration1.error = "Value is required"
+                                    editTitration1.error = getString(R.string.value_is_required)
                                     editTitration1.requestFocus()
                                 } else {
                                     val results = FloatArray(testInfo.results!!.size)
                                     val n1 = n1String.toFloat()
                                     if (n2String.isEmpty()) {
-                                        editTitration2.error = "Value is required"
+                                        editTitration2.error = getString(R.string.value_is_required)
                                         editTitration2.requestFocus()
                                     } else {
                                         val n2 = n2String.toFloat()

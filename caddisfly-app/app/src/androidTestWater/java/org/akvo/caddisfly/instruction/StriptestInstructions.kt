@@ -76,12 +76,16 @@ class StriptestInstructions {
     @Test
     fun arsenicStripTestInstructions() {
         goToMainScreen()
+        sleep(2000)
         gotoSurveyForm()
-        nextSurveyPage(3, "Arsenic")
+        sleep(2000)
+        nextSurveyPage(6, "Arsenic")
         sleep(2000)
         clickExternalSourceButton(0)
+        sleep(1000)
         mDevice.waitForIdle()
         sleep(2000)
+        mDevice.waitForIdle()
         onView(withText(string.arsenic_0_500)).check(matches(isDisplayed()))
         val appCompatButton2: ViewInteraction = onView(
             allOf(
