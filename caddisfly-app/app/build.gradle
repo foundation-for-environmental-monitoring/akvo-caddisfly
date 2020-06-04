@@ -90,7 +90,6 @@ android {
         // do not change these defaults
         buildConfigField "Boolean", "TEST_RUNNING", "false"
         buildConfigField "Boolean", "TAKE_SCREENSHOTS", "false"
-        buildConfigField "String", "TEST_LANGUAGE", "\"en\""
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + 0L + ")"
     }
 
@@ -154,25 +153,24 @@ dependencies {
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
 
-    // Testing
-    testImplementation 'org.assertj:assertj-core:3.8.0'
-    testImplementation 'androidx.test:core:1.2.0'
-
-    implementation "androidx.core:core-ktx:1.2.0"
+    implementation "androidx.core:core-ktx:1.3.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    // Testing
+    testImplementation 'org.assertj:assertj-core:3.8.0'
+    testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test:runner:1.3.0-beta02'
-    androidTestImplementation "androidx.test.ext:junit:1.1.2-beta02"
+    androidTestImplementation 'androidx.test:runner:1.3.0-rc01'
+    androidTestImplementation "androidx.test.ext:junit:1.1.2-rc01"
     androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.1'
     androidTestImplementation 'androidx.test:core-ktx:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
 
     // Espresso
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-beta02'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0-beta02'
-    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.3.0-beta02') {
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-rc01'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0-rc01'
+    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.3.0-rc01') {
         exclude group: 'com.android.support'
         exclude group: 'javax.inject'
     }
