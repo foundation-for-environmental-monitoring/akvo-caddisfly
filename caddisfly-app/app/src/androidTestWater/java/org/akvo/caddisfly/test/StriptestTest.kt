@@ -12,17 +12,15 @@ import androidx.test.uiautomator.UiDevice
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.ui.MainActivity
-import org.akvo.caddisfly.util.TestHelper
+import org.akvo.caddisfly.util.*
 import org.akvo.caddisfly.util.TestHelper.activateTestMode
 import org.akvo.caddisfly.util.TestHelper.clearPreferences
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
-import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
 import org.akvo.caddisfly.util.TestUtil.sleep
-import org.akvo.caddisfly.util.clickStartButton
-import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.Matchers
 import org.junit.*
 import org.junit.runner.RunWith
@@ -80,8 +78,12 @@ class StriptestTest {
         clickStartButton()
         sleep(5000)
         onView(withText(string.result)).check(matches(isDisplayed()))
-        onView(withText(string.arsenic)).check(matches(isDisplayed()))
-        onView(withText(string.no_result)).check(matches(isDisplayed()))
+        onView(withText(string.arsenic_0_500)).check(matches(isDisplayed()))
+        if (isStripPatchAvailable(getString(string.arsenic_0_500))) {
+            onView(withText(string.no_result)).check(matches(isDisplayed()))
+        } else {
+            onView(withText(string.no_strip_found)).check(matches(isDisplayed()))
+        }
         onView(withId(id.image_result)).check(matches(isDisplayed()))
 
         onView(
@@ -121,8 +123,12 @@ class StriptestTest {
         clickStartButton()
         sleep(5000)
         onView(withText(string.result)).check(matches(isDisplayed()))
-        onView(withText(string.arsenic)).check(matches(isDisplayed()))
-        onView(withText(string.no_result)).check(matches(isDisplayed()))
+        onView(withText(string.arsenic_0_4000)).check(matches(isDisplayed()))
+        if (isStripPatchAvailable(getString(string.arsenic_0_500))) {
+            onView(withText(string.no_result)).check(matches(isDisplayed()))
+        } else {
+            onView(withText(string.no_strip_found)).check(matches(isDisplayed()))
+        }
         onView(withId(id.image_result)).check(matches(isDisplayed()))
 
         onView(

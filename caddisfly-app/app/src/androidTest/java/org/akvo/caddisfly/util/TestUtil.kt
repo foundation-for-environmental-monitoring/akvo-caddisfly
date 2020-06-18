@@ -13,6 +13,7 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.*
 import org.akvo.caddisfly.R
 import org.hamcrest.Description
@@ -104,15 +105,20 @@ object TestUtil {
     }
 
     private fun swipeLeft() {
+        SystemClock.sleep(1000)
+        mDevice.waitForIdle()
         if (isEmulator) {
             mDevice.findObject(
-                By.text(TestHelper.STRING_HASH_MAP_EN["next"])
+                By.text(
+                    InstrumentationRegistry.getInstrumentation()
+                        .targetContext.getString(R.string.next).toUpperCase()
+                )
             ).click()
         } else {
-            mDevice.waitForIdle()
             mDevice.swipe(500, 400, 50, 400, 4)
-            mDevice.waitForIdle()
         }
+        mDevice.waitForIdle()
+        SystemClock.sleep(1000)
     }
 
     private fun swipeDown() {
@@ -162,7 +168,7 @@ object TestUtil {
                 if (tab != null) {
                     break
                 }
-                tab = mDevice.findObject(By.text("Soil Tests 1"))
+                tab = mDevice.findObject(By.text("Lite"))
                 if (tab != null) {
                     for (ii in 0 until times) {
                         mDevice.waitForIdle()

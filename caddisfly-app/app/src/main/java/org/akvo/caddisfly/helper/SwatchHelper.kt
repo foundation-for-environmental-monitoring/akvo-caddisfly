@@ -57,7 +57,8 @@ object SwatchHelper {
     @JvmStatic
     fun analyzeColor(steps: Int, photoColor: ColorInfo, swatches: List<Swatch>): ResultDetail {
         //Find the color within the generated gradient that matches the photoColor
-        val colorCompareInfo: ColorCompareInfo = getNearestColorFromSwatches(photoColor.color, swatches)
+        val colorCompareInfo: ColorCompareInfo =
+            getNearestColorFromSwatches(photoColor.color, swatches)
         //set the result
         val resultDetail = ResultDetail((-1).toDouble(), photoColor.color, photoColor.quality)
         if (colorCompareInfo.result > -1) {
@@ -77,7 +78,8 @@ object SwatchHelper {
      * @return details of the matching color with its corresponding value
      */
     private fun getNearestColorFromSwatches(
-            colorToFind: Int, swatches: List<Swatch>): ColorCompareInfo {
+        colorToFind: Int, swatches: List<Swatch>
+    ): ColorCompareInfo {
         var distance: Double
         distance = ColorUtil.getMaxDistance(AppPreferences.colorDistanceTolerance.toDouble())
         var resultValue = -1.0
@@ -129,8 +131,8 @@ object SwatchHelper {
 //                    .append("=")
 //                    .append(ColorUtil.getColorRgbString(calibration.color));
             calibrationDetails.append(decimalFormat.format(calibration.value))
-                    .append("=")
-                    .append(ColorUtil.getColorRgbString(calibration.color))
+                .append("=")
+                .append(ColorUtil.getColorRgbString(calibration.color))
             calibrationDetails.append('\n')
         }
         val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo.uuid)
@@ -147,17 +149,30 @@ object SwatchHelper {
         if (internal) {
             calibrationDetails.append("\n")
             calibrationDetails.append("Date: ")
-            calibrationDetails.append(SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(System.currentTimeMillis()))
+            calibrationDetails.append(
+                SimpleDateFormat(
+                    "yyyy-MM-dd HH:mm",
+                    Locale.US
+                ).format(System.currentTimeMillis())
+            )
         }
         if (calibrationDate > 0) {
             calibrationDetails.append("\n")
             calibrationDetails.append("Calibrated: ")
-            calibrationDetails.append(SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(calibrationDate))
+            calibrationDetails.append(
+                SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(
+                    calibrationDate
+                )
+            )
         }
         if (calibrationDetail!!.expiry > 0) {
             calibrationDetails.append("\n")
             calibrationDetails.append("ReagentExpiry: ")
-            calibrationDetails.append(SimpleDateFormat("yyyy-MM-dd", Locale.US).format(calibrationDetail.expiry))
+            calibrationDetails.append(
+                SimpleDateFormat("yyyy-MM-dd", Locale.US).format(
+                    calibrationDetail.expiry
+                )
+            )
         }
         calibrationDetails.append("\n")
         calibrationDetails.append("Version: ")
@@ -165,11 +180,11 @@ object SwatchHelper {
         calibrationDetails.append("\n")
         calibrationDetails.append("Model: ")
         calibrationDetails.append(Build.MODEL).append(" (")
-                .append(Build.PRODUCT).append(")")
+            .append(Build.PRODUCT).append(")")
         calibrationDetails.append("\n")
         calibrationDetails.append("OS: ")
         calibrationDetails.append(Build.VERSION.RELEASE).append(" (")
-                .append(Build.VERSION.SDK_INT).append(")")
+            .append(Build.VERSION.SDK_INT).append(")")
         if (internal) {
             calibrationDetails.append("\n")
             calibrationDetails.append("DeviceId: ")
@@ -201,8 +216,10 @@ object SwatchHelper {
                 if (!line.contains("=")) {
                     if (line.contains("Calibrated:")) {
                         val calendar = Calendar.getInstance()
-                        val date = DateUtil.convertStringToDate(line.substring(line.indexOf(':') + 1),
-                                "yyyy-MM-dd HH:mm")
+                        val date = DateUtil.convertStringToDate(
+                            line.substring(line.indexOf(':') + 1),
+                            "yyyy-MM-dd HH:mm"
+                        )
                         if (date != null) {
                             calendar.time = date
                             calibrationDetail.date = calendar.timeInMillis
@@ -210,15 +227,18 @@ object SwatchHelper {
                     }
                     if (line.contains("ReagentExpiry:")) {
                         val calendar = Calendar.getInstance()
-                        val date = DateUtil.convertStringToDate(line.substring(line.indexOf(':') + 1),
-                                "yyyy-MM-dd")
+                        val date = DateUtil.convertStringToDate(
+                            line.substring(line.indexOf(':') + 1),
+                            "yyyy-MM-dd"
+                        )
                         if (date != null) {
                             calendar.time = date
                             calibrationDetail.expiry = calendar.timeInMillis
                         }
                     }
                     if (line.contains("Cuvette:")) {
-                        calibrationDetail.cuvetteType = line.substring(line.indexOf(':') + 1).trim { it <= ' ' }
+                        calibrationDetail.cuvetteType =
+                            line.substring(line.indexOf(':') + 1).trim { it <= ' ' }
                     }
                     calibrationDetails.removeAt(i)
                 }
@@ -273,8 +293,12 @@ object SwatchHelper {
                 list.add(Swatch(startValue + j * increment, color, Color.TRANSPARENT))
             }
         }
-        list.add(Swatch(swatches[swatches.size - 1].value,
-                swatches[swatches.size - 1].color, Color.TRANSPARENT))
+        list.add(
+            Swatch(
+                swatches[swatches.size - 1].value,
+                swatches[swatches.size - 1].color, Color.TRANSPARENT
+            )
+        )
         return list
     }
 
@@ -315,7 +339,11 @@ object SwatchHelper {
                 break
             }
             for (swatch2 in calibrations) {
-                if (swatch1 != swatch2 && ColorUtil.areColorsSimilar(swatch1.color, swatch2.color)) { //Duplicate color
+                if (swatch1 != swatch2 && ColorUtil.areColorsSimilar(
+                        swatch1.color,
+                        swatch2.color
+                    )
+                ) { //Duplicate color
                     result = false
                     break
                 }
@@ -370,7 +398,11 @@ object SwatchHelper {
             val color1 = resultDetails[i].color
             for (j in resultDetails.indices) {
                 val color2 = resultDetails[j].color
-                if (ColorUtil.getColorDistance(color1, color2) > AppPreferences.averagingColorDistanceTolerance) {
+                if (ColorUtil.getColorDistance(
+                        color1,
+                        color2
+                    ) > AppPreferences.averagingColorDistanceTolerance
+                ) {
                     return (-1).toDouble()
                 }
             }
@@ -412,7 +444,11 @@ object SwatchHelper {
             //check all the colors are mostly similar otherwise return -1
             for (j in resultDetails.indices) {
                 val color2 = resultDetails[j].color
-                if (ColorUtil.getColorDistance(color1, color2) > AppPreferences.averagingColorDistanceTolerance) {
+                if (ColorUtil.getColorDistance(
+                        color1,
+                        color2
+                    ) > AppPreferences.averagingColorDistanceTolerance
+                ) {
                     return Color.TRANSPARENT
                 }
             }
