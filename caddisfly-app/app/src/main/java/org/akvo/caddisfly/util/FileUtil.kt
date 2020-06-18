@@ -45,7 +45,7 @@ object FileUtil {
     }
 
     /**
-     * Get the root of the files storage directory, depending on the resource being app internal
+     * Get the root of the files storage directory, depending on the resource being app internalṇ
      * (not concerning the user) or not (users might need to pull the resource from the storage).
      *
      * @param internal true for app specific resources, false otherwise

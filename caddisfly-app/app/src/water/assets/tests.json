@@ -96,7 +96,7 @@
       ]
     },
     {
-      "name": "Arsenic (0 - 4000)",
+      "name": "Arsenic (0 – 4000)",
       "nameSuffix": "HR",
       "type": "water",
       "subtype": "striptest",
@@ -189,7 +189,7 @@
       ]
     },
     {
-      "name": "Arsenic (0 - 500)",
+      "name": "Arsenic (0 – 500)",
       "nameSuffix": "LR",
       "type": "water",
       "subtype": "striptest",

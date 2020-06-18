@@ -145,23 +145,6 @@ class TestActivity : BaseActivity() {
                 .add(R.id.fragment_container, fragment, TestActivity::class.java.simpleName)
                 .commit()
         }
-        //        String suffix = "";
-//            Pattern pattern = Pattern.compile("(.*?)(_\\d*?)$");
-//            Matcher matcher = pattern.matcher(uuid);
-//            if (matcher.find()) {
-//                uuid = matcher.group(1);
-//                suffix = matcher.group(2);
-//            } else if (uuid.contains("_x")) {
-//                Pattern pattern2 = Pattern.compile("(.*?)(_x.*?)$");
-//                matcher = pattern2.matcher(uuid);
-//                if (matcher.find()) {
-//                    uuid = matcher.group(1);
-//                    suffix = matcher.group(2);
-//                }
-//            }
-//            if (testInfo != null) {
-//                testInfo.setResultSuffix(suffix);
-//            }
     }
 
     override fun onStart() {
@@ -217,7 +200,7 @@ class TestActivity : BaseActivity() {
                 random.nextDouble() * maxValue,
                 dilution, maxDilution
             )
-            var testName = result.name?.replace(" ", "_")
+            var testName = result.name.replace(" ", "_")
             if (testInfo!!.nameSuffix != null && testInfo!!.nameSuffix!!.isNotEmpty()) {
                 testName += "_" + testInfo!!.nameSuffix!!.replace(" ", "_")
             }
@@ -326,7 +309,7 @@ class TestActivity : BaseActivity() {
         startActivityForResult(intent, REQUEST_TEST)
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_TEST && resultCode == Activity.RESULT_OK) { //return the test result to the external app
             val intent = Intent(data)
