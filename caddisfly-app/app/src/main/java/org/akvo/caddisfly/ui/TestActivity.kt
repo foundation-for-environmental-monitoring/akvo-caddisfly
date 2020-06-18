@@ -200,7 +200,7 @@ class TestActivity : BaseActivity() {
                 random.nextDouble() * maxValue,
                 dilution, maxDilution
             )
-            var testName = result.name.replace(" ", "_")
+            var testName = result.name!!.replace(" ", "_")
             if (testInfo!!.nameSuffix != null && testInfo!!.nameSuffix!!.isNotEmpty()) {
                 testName += "_" + testInfo!!.nameSuffix!!.replace(" ", "_")
             }
