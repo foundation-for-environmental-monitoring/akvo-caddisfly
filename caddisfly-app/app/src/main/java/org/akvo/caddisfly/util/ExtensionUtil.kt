@@ -10,6 +10,7 @@ fun String.toLocalString(): String {
         .replace("(", "")
         .replace("- ", "")
         .replace(" ", "_")
+        .replace("_–_", "_")
     val resourceId = CaddisflyApp.app!!.resources
         .getIdentifier(
             value, "string",

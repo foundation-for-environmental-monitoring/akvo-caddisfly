@@ -13,6 +13,7 @@ import org.akvo.caddisfly.common.SensorConstants
 import org.akvo.caddisfly.helper.TestConfigHelper.getJsonResult
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.ui.BaseActivity
+import org.akvo.caddisfly.util.toLocalString
 
 class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitResultListener {
     private var testInfo: TestInfo? = null
@@ -25,7 +26,7 @@ class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitRes
             testInfo = intent.getParcelableExtra(ConstantKey.TEST_INFO)
         }
         if (testInfo != null) {
-            title = testInfo!!.name
+            title = testInfo!!.name!!.toLocalString()
         }
         startManualTest()
     }

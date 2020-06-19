@@ -53,10 +53,7 @@ class DiagnosticTest {
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
 
-        val testName = getString(
-            ApplicationProvider.getApplicationContext(),
-            TestConstants.CUVETTE_TEST_NAME_1
-        )
+        val testName = getString(TestConstants.CUVETTE_TEST_NAME_1)
 
         onView(
             RecyclerViewMatcher(id.list_types)

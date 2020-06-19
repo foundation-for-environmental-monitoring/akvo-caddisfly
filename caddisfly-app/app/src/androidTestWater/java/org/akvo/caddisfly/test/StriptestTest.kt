@@ -19,6 +19,7 @@ import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
+import org.akvo.caddisfly.util.TestHelper.startSurveyApp
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
 import org.akvo.caddisfly.util.TestUtil.sleep
 import org.hamcrest.Matchers
@@ -39,7 +40,7 @@ class StriptestTest {
 
     @Test
     fun startStriptest() {
-        activateTestMode(ApplicationProvider.getApplicationContext())
+        activateTestMode()
         testArsenic()
         testArsenic2()
     }
@@ -51,7 +52,7 @@ class StriptestTest {
 
     private fun testArsenic() {
         gotoSurveyForm()
-        nextSurveyPage(4, "Arsenic")
+        nextSurveyPage(4, getString(string.arsenic))
         sleep(2000)
         clickExternalSourceButton(0)
         mDevice.waitForIdle()
@@ -95,8 +96,9 @@ class StriptestTest {
     }
 
     private fun testArsenic2() {
+        startSurveyApp()
         gotoSurveyForm()
-        nextSurveyPage(4, "Arsenic")
+        nextSurveyPage(4, getString(string.arsenic))
         sleep(2000)
         clickExternalSourceButton(2)
         mDevice.waitForIdle()

@@ -57,6 +57,7 @@ import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
 import kotlin.math.max
 
 @LargeTest
@@ -88,7 +89,7 @@ class StriptestInternalTest {
     fun setUp() {
         loadData(ApplicationProvider.getApplicationContext())
         clearPreferences()
-        activateTestMode(ApplicationProvider.getApplicationContext())
+        activateTestMode()
     }
 
     @Test
@@ -135,7 +136,6 @@ class StriptestInternalTest {
                 intent.action = BuildConfig.APPLICATION_ID
                 val data = Bundle()
                 data.putString(SensorConstants.TEST_ID, uuid)
-                data.putString(SensorConstants.LANGUAGE, BuildConfig.TEST_LANGUAGE)
                 intent.putExtras(data)
 
                 mDevice.waitForIdle()
@@ -232,7 +232,7 @@ class StriptestInternalTest {
                         if (pages == 5) {
 
                             // todo: Click location should be based on screen resolution?
-                            when (BuildConfig.TEST_LANGUAGE) {
+                            when (Locale.getDefault().language.substring(0, 2)) {
                                 "en" -> {
                                     mDevice.click(350, 390)
                                 }

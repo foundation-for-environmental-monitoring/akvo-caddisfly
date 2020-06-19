@@ -166,6 +166,9 @@
     <string name="move_camera_closer">ಕ್ಯಾಮರಾವನ್ನು ಕಾರ್ಡ್‌ಗೆ ಹತ್ತಿರಕ್ಕೆ ಸರಿಸಿ</string>
     <string name="avoid_shadows_on_card">ದಯವಿಟ್ಟು ಕಾರ್ಡ್‌ನಲ್ಲಿ ನೆರಳುಗಳನ್ನು ತಪ್ಪಿಸಿ</string>
 
+    <string name="arsenic">ಆರ್ಸೆನಿಕ್</string>
+    <string name="arsenic_0_500">ಆರ್ಸೆನಿಕ್ (0 – 500)</string>
+    <string name="arsenic_0_4000">ಆರ್ಸೆನಿಕ್ (0 – 4000)</string>
     <string name="aluminum">ಅಲ್ಯೂಮಿನಿಯಂ</string>
     <string name="calcium">ಕ್ಯಾಲ್ಸಿಯಂ</string>
     <string name="carbonate">ಕಾರ್ಬೊನೇಟ್</string>
@@ -180,7 +183,7 @@
     <string name="free_chlorine">ಉಳಿದ ಕ್ಲೋರಿನ್</string>
     <string name="hydrogen_peroxide">ಹೈಡ್ರೋಜನ್ ಪೆರಾಕ್ಸೈಡ್</string>
     <string name="nitrate">ನೈಟ್ರೇಟ್</string>
-    <string name="ph">ಹೈಡ್ರೋಜನ್ ಸಂಭಾವ್ಯತೆ</string>
+    <string name="ph">ಪಿಎಚ್‌</string>
     <string name="phosphate">ಫಾಸ್ಫೇಟ್</string>
     <string name="sulphate">ಸಲ್ಫೇಟ್</string>
     <string name="total_iron">ಒಟ್ಟು ಕಬ್ಬಿಣ</string>

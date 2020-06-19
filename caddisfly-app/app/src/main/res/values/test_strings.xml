@@ -2,6 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,MissingTranslation">
     <string name="testName">Fluoride</string>
     <string name="freeChlorine">Free Chlorine</string>
-    <string name="electricalConductivity">Electrical Conductivity</string>
     <string name="launch">Launch</string>
+    <string name="water_tests">Water Tests</string>
+    <string name="unit">Unit</string>
+    <string name="titration">Titration</string>
 </resources>

@@ -32,6 +32,7 @@ import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.saveCalibration
+import org.akvo.caddisfly.util.TestHelper.startSurveyApp
 import org.akvo.caddisfly.util.TestHelper.takeScreenshot
 import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
@@ -224,6 +225,8 @@ class NavigationTest {
         onView(withText(string.calibrate)).perform(click())
 
         goToMainScreen()
+        startSurveyApp()
+        takeScreenshot()
         gotoSurveyForm()
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
@@ -234,6 +237,8 @@ class NavigationTest {
         takeScreenshot()
         TestUtil.goBack(5)
 
+        startSurveyApp()
+        takeScreenshot()
         gotoSurveyForm()
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.testName)).check(matches(isDisplayed()))

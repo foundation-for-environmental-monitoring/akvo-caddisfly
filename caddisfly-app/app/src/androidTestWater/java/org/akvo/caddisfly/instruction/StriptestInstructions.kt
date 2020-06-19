@@ -41,6 +41,7 @@ import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
@@ -79,7 +80,7 @@ class StriptestInstructions {
         sleep(2000)
         gotoSurveyForm()
         sleep(2000)
-        nextSurveyPage(6, "Arsenic")
+        nextSurveyPage(6, getString(string.arsenic))
         sleep(2000)
         clickExternalSourceButton(0)
         sleep(1000)

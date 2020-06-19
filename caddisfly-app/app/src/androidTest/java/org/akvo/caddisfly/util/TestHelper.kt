@@ -11,6 +11,7 @@ import android.content.res.Resources
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.Environment
+import android.os.SystemClock
 import android.preference.PreferenceManager
 import android.util.DisplayMetrics
 import androidx.annotation.StringRes
@@ -30,6 +31,7 @@ import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.app.CaddisflyApp
 import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.FileType
+import org.akvo.caddisfly.util.TestConstant.EXTERNAL_SURVEY_PACKAGE_NAME
 import org.akvo.caddisfly.util.TestUtil.clickListViewItem
 import org.akvo.caddisfly.util.TestUtil.findButtonInScrollable
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
@@ -63,7 +65,7 @@ fun clickStartButton() {
 }
 
 object TestHelper {
-    val STRING_HASH_MAP_EN = HashMap<String, String>()
+    private val STRING_HASH_MAP_EN = HashMap<String, String>()
     private val STRING_HASH_MAP_FR = HashMap<String, String>()
     private val STRING_HASH_MAP_HI = HashMap<String, String>()
     private val CALIBRATION_HASH_MAP: MutableMap<String, String> = HashMap()
@@ -85,14 +87,8 @@ object TestHelper {
     }
 
     @Suppress("SameParameterValue")
-    fun getString(activity: Context?, @StringRes resourceId: Int): String {
-        val currentResources: Resources? = activity!!.resources
-        val assets: AssetManager? = currentResources!!.assets
-        val metrics: DisplayMetrics? = currentResources.displayMetrics
-        val config = Configuration(currentResources.configuration)
-        config.locale = Locale(BuildConfig.TEST_LANGUAGE)
-        val res = Resources(assets, metrics, config)
-        return res.getString(resourceId)
+    fun getString(@StringRes resourceId: Int): String {
+        return getInstrumentation().targetContext.getString(resourceId)
     }
 
     fun loadData(activity: Context) {
@@ -104,7 +100,6 @@ object TestHelper {
         val assets: AssetManager? = currentResources!!.assets
         val metrics: DisplayMetrics? = currentResources.displayMetrics
         val config = Configuration(currentResources.configuration)
-        config.locale = Locale(BuildConfig.TEST_LANGUAGE)
         val res = Resources(assets, metrics, config)
         addString("chlorine", res.getString(string.freeChlorine))
         addString("survey", res.getString(string.survey))
@@ -169,15 +164,14 @@ object TestHelper {
                     + "2.5=255  101  24\n"
                     + "3.0=255  121  14\n"
         )
-        currentHashMap = when (BuildConfig.TEST_LANGUAGE) {
-            "en" -> STRING_HASH_MAP_EN
-            "hi" -> STRING_HASH_MAP_HI
-            else -> STRING_HASH_MAP_FR
-        }
     }
 
     fun takeScreenshot() {
         takeScreenshot("app", screenshotCount++)
+    }
+
+    fun takeScreenshot(name: String) {
+        takeScreenshot(name, screenshotCount++)
     }
 
     fun takeScreenshot(name: String, page: Int) {
@@ -185,11 +179,13 @@ object TestHelper {
             && VERSION.SDK_INT >= VERSION_CODES.JELLY_BEAN_MR1
         ) {
             val folder = File(
-                Environment.getExternalStorageDirectory().path +
-                        "/" + BuildConfig.APPLICATION_ID + "/screenshots/"
+                getInstrumentation().targetContext.getExternalFilesDir(
+                    Environment.DIRECTORY_PICTURES
+                )
+                    .toString() + "/screenshots/"
             )
             val path = File(
-                folder, name + "-" + BuildConfig.TEST_LANGUAGE + "-" +
+                folder, name + "-" + Locale.getDefault().language.substring(0, 2) + "-" +
                         String.format("%02d", page + 1) + ".png"
             )
 
@@ -213,7 +209,7 @@ object TestHelper {
         }
     }
 
-    fun activateTestMode(context: Context?) {
+    fun activateTestMode() {
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         val version: String? = CaddisflyApp.getAppVersion(false)
@@ -221,7 +217,7 @@ object TestHelper {
         enterDiagnosticMode()
         goToMainScreen()
         onView(withText(string.settings)).perform(click())
-        clickListViewItem(getString(context, string.testModeOn))
+        clickListViewItem(getString(string.testModeOn))
     }
 
     fun clickExternalSourceButton(id: String?) {
@@ -262,17 +258,20 @@ object TestHelper {
         FileUtil.saveToFile(path, name, CALIBRATION_HASH_MAP[name])
     }
 
-    fun gotoSurveyForm() {
+    fun startSurveyApp() {
         val context: Context? = getInstrumentation().context
         val intent =
-            context!!.packageManager.getLaunchIntentForPackage(TestConstant.EXTERNAL_SURVEY_PACKAGE_NAME)
+            context!!.packageManager.getLaunchIntentForPackage(EXTERNAL_SURVEY_PACKAGE_NAME)
         intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         context.startActivity(intent)
         mDevice.waitForIdle()
-        sleep(1000)
+        SystemClock.sleep(1000)
+    }
+
+    private fun startSurveyForm() {
         val addButton: UiObject? = mDevice.findObject(
             UiSelector()
-                .resourceId(TestConstant.EXTERNAL_SURVEY_PACKAGE_NAME + ":id/enter_data")
+                .resourceId("$EXTERNAL_SURVEY_PACKAGE_NAME:id/enter_data")
         )
         try {
             if (addButton!!.exists() && addButton.isEnabled) {
@@ -286,7 +285,7 @@ object TestHelper {
         mDevice.waitForIdle()
         val goToStartButton: UiObject? = mDevice.findObject(
             UiSelector()
-                .resourceId(TestConstant.EXTERNAL_SURVEY_PACKAGE_NAME + ":id/jumpBeginningButton")
+                .resourceId("$EXTERNAL_SURVEY_PACKAGE_NAME:id/jumpBeginningButton")
         )
         try {
             if (goToStartButton!!.exists() && goToStartButton.isEnabled) {
@@ -296,6 +295,11 @@ object TestHelper {
             Timber.e(e)
         }
         mDevice.waitForIdle()
+    }
+
+    fun gotoSurveyForm() {
+        startSurveyApp()
+        startSurveyForm()
     }
 
     fun enterDiagnosticMode() {

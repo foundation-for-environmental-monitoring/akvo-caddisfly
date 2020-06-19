@@ -166,6 +166,9 @@
     <string name="move_camera_closer">కెమెరాను కార్డుకు దగ్గరగా తరలించండి</string>
     <string name="avoid_shadows_on_card">దయచేసి కార్డులోని నీడలను నివారించండి</string>
 
+    <string name="arsenic">ఆర్సెనిక్</string>
+    <string name="arsenic_0_500">ఆర్సెనిక్ (0 – 500)</string>
+    <string name="arsenic_0_4000">ఆర్సెనిక్ (0 – 4000)</string>
     <string name="aluminum">అల్యూమినియం</string>
     <string name="calcium">కాల్షియం</string>
     <string name="carbonate">కార్బోనేట్</string>
@@ -180,7 +183,7 @@
     <string name="free_chlorine">అవశేష క్లోరిన్</string>
     <string name="hydrogen_peroxide">హైడ్రోజన్ పెరాక్సైడ్</string>
     <string name="nitrate">నైట్రేట్</string>
-    <string name="ph">హైడ్రోజన్ సంభావ్యత</string>
+    <string name="ph">pH</string>
     <string name="phosphate">ఫాస్ఫేట్</string>
     <string name="sulphate">సల్ఫేట్</string>
     <string name="total_iron">మొత్తం ఇనుము</string>

@@ -15,11 +15,16 @@ import androidx.test.uiautomator.UiDevice
 import junit.framework.TestCase.assertNotNull
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
+import org.akvo.caddisfly.model.TestType
+import org.akvo.caddisfly.repository.TestConfigRepository
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
+import org.akvo.caddisfly.util.TestHelper.startSurveyApp
+import org.akvo.caddisfly.util.TestHelper.takeScreenshot
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
 import org.akvo.caddisfly.util.TestUtil.sleep
@@ -45,50 +50,79 @@ class TitrationTest {
         prefs.edit().clear().apply()
     }
 
-    @Test
-    fun runCarbonateTitrationTest() {
-        gotoSurveyForm()
-        nextSurveyPage(5, "Water Tests")
-        clickExternalSourceButton(0)
-        onView(withText(string.next)).perform(click())
-
-        onView(withId(id.editTitration1)).perform(pressImeActionButton())
-
-        sleep(1000)
-
-        onView(withId(id.editTitration1)).check(matches(isDisplayed()))
-            .perform(replaceText("12"), closeSoftKeyboard())
-
-        onView(allOf(withId(id.editTitration1), withText("12"), isDisplayed()))
-            .perform(pressImeActionButton())
-
-        sleep(1000)
-
-        assertNotNull(mDevice.findObject(By.text("Carbonate: ")))
-        assertNotNull(mDevice.findObject(By.text("300.00")))
-
-        mDevice.waitForIdle()
-
-        mDevice.pressBack()
-
-        mDevice.pressBack()
-    }
+//    @Test
+//    fun runCarbonateTitrationTest() {
+//        val testConfigRepository = TestConfigRepository()
+//        val testList = testConfigRepository.getTests(TestType.TITRATION)
+//        val uuid = testList[2].uuid
+//        val screenshotName = uuid.substring(uuid.lastIndexOf("-") + 1)
+//
+//        startSurveyApp()
+//
+//        takeScreenshot(screenshotName)
+//
+//        gotoSurveyForm()
+//
+//        nextSurveyPage(5, getString(string.titration))
+//
+//        takeScreenshot(screenshotName)
+//
+//        clickExternalSourceButton(0)
+//
+//        takeScreenshot(screenshotName)
+//
+//        onView(withText(string.next)).perform(click())
+//
+//        takeScreenshot(screenshotName)
+//
+//        onView(withId(id.editTitration1)).perform(pressImeActionButton())
+//
+//        sleep(1000)
+//
+//        onView(withId(id.editTitration1)).check(matches(isDisplayed()))
+//            .perform(replaceText("12"), closeSoftKeyboard())
+//
+//        takeScreenshot(screenshotName)
+//
+//        onView(allOf(withId(id.editTitration1), withText("12"), isDisplayed()))
+//            .perform(pressImeActionButton())
+//
+//        sleep(1000)
+//
+//        assertNotNull(mDevice.findObject(By.text(getString(string.carbonate) + ": ")))
+//        assertNotNull(mDevice.findObject(By.text("300.00")))
+//
+//        takeScreenshot(screenshotName)
+//
+//        mDevice.waitForIdle()
+//
+//        mDevice.pressBack()
+//
+//        mDevice.pressBack()
+//    }
 
     @Test
     fun runCalciumTitrationTest() {
-
+        val testConfigRepository = TestConfigRepository()
+        val testList = testConfigRepository.getTests(TestType.TITRATION)
+        val uuid = testList[1].uuid
+        val screenshotName = uuid.substring(uuid.lastIndexOf("-") + 1)
         mDevice.waitForIdle()
 
-        mDevice.pressBack()
-
-        mDevice.pressBack()
-
         sleep(2000)
+        startSurveyApp()
+        sleep(2000)
+        takeScreenshot(screenshotName)
         gotoSurveyForm()
         sleep(2000)
-        nextSurveyPage(5, "Water Tests")
+        nextSurveyPage(5, getString(string.titration))
+
+        takeScreenshot(screenshotName)
         clickExternalSourceButton(1)
+        sleep(2000)
+        takeScreenshot(screenshotName)
         onView(withText(string.next)).perform(click())
+        takeScreenshot(screenshotName)
 
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
             .perform(replaceText("123"), closeSoftKeyboard())
@@ -110,6 +144,9 @@ class TitrationTest {
             .perform(replaceText("12"), closeSoftKeyboard())
         onView(withId(id.editTitration2)).check(matches(isDisplayed()))
             .perform(replaceText("20"), closeSoftKeyboard())
+
+        sleep(1000)
+        takeScreenshot(screenshotName)
         onView(
             allOf(
                 withId(id.editTitration2), withText("20"),
@@ -122,10 +159,12 @@ class TitrationTest {
 
         sleep(1000)
 
-        assertNotNull(mDevice.findObject(By.text("Calcium: ")))
+        assertNotNull(mDevice.findObject(By.text(getString(string.calcium) + ": ")))
         assertNotNull(mDevice.findObject(By.text("100.00")))
-        assertNotNull(mDevice.findObject(By.text("Magnesium: ")))
+        assertNotNull(mDevice.findObject(By.text(getString(string.magnesium) + ": ")))
         assertNotNull(mDevice.findObject(By.text("40.00")))
+
+        takeScreenshot(screenshotName)
 
         mDevice.waitForIdle()
 
