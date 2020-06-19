@@ -69,6 +69,10 @@ class NavigationTest {
 
     @Test
     fun testNavigateAll() {
+
+        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
+            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
+
         saveCalibration("TestInvalid", TestConstants.CUVETTE_TEST_ID_1)
 
         mDevice.waitForWindowUpdate("", 2000)
@@ -228,7 +232,7 @@ class NavigationTest {
         startSurveyApp()
         takeScreenshot()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
@@ -240,7 +244,7 @@ class NavigationTest {
         startSurveyApp()
         takeScreenshot()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         onView(withText(string.testName)).check(matches(isDisplayed()))
 
 //        //Calibration incomplete

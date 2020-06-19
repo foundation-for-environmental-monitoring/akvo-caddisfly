@@ -146,6 +146,9 @@ class SurveyTest {
 
     @Test
     fun testStartASurvey() {
+        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
+            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
+
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
@@ -178,7 +181,7 @@ class SurveyTest {
         onData(hasToString(startsWith("TestValid"))).perform(click())
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))

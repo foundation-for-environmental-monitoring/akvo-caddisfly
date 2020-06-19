@@ -30,6 +30,7 @@ import org.akvo.caddisfly.R
 import org.akvo.caddisfly.databinding.FragmentSelectDilutionBinding
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.sensor.chamber.EditCustomDilution.Companion.newInstance
+import org.akvo.caddisfly.util.toLocalString
 import java.util.*
 
 class SelectDilutionFragment : Fragment() {
@@ -69,7 +70,8 @@ class SelectDilutionFragment : Fragment() {
         } else {
             binding.buttonCustomDilution.visibility = View.GONE
         }
-        (binding.root.findViewById<View>(R.id.textTitle) as TextView).text = testInfo!!.name
+        (binding.root.findViewById<View>(R.id.textTitle) as TextView).text =
+            testInfo!!.name!!.toLocalString()
         return binding.root
     }
 

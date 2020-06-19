@@ -220,14 +220,20 @@ object TestHelper {
         clickListViewItem(getString(string.testModeOn))
     }
 
-    fun clickExternalSourceButton(id: String?) {
+    fun clickExternalSourceButton(id: String?, screenshotName: String) {
         when (id) {
             TestConstant.WATER_FLUORIDE_ID -> {
-                nextSurveyPage(4, "Water Tests 1")
+                nextSurveyPage(4, getString(string.water_tests_1))
+                if (screenshotName.isNotEmpty()) {
+                    takeScreenshot(screenshotName)
+                }
                 clickExternalSourceButton(2)
             }
             TestConstant.SOIL_IRON_ID -> {
                 nextSurveyPage(3, "Soil Tests 2")
+                if (screenshotName.isNotEmpty()) {
+                    takeScreenshot(screenshotName)
+                }
                 clickExternalSourceButton(2)
             }
         }
@@ -268,7 +274,7 @@ object TestHelper {
         SystemClock.sleep(1000)
     }
 
-    private fun startSurveyForm() {
+    fun startSurveyForm() {
         val addButton: UiObject? = mDevice.findObject(
             UiSelector()
                 .resourceId("$EXTERNAL_SURVEY_PACKAGE_NAME:id/enter_data")

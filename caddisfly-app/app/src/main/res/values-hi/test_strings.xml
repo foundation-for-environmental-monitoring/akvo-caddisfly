@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,MissingTranslation">
     <string name="testName">फ्लोराइड</string>
-    <string name="water_tests">जल परीक्षण</string>
+    <string name="water_tests_1">जल परीक्षण 1</string>
     <string name="titration">अनुमापन</string>
     <string name="launch">जारी करें</string>
     <string name="unit">इकाई</string>

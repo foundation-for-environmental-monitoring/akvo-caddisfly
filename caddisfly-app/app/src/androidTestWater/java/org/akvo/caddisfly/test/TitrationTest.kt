@@ -21,9 +21,9 @@ import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.getString
-import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.startSurveyApp
+import org.akvo.caddisfly.util.TestHelper.startSurveyForm
 import org.akvo.caddisfly.util.TestHelper.takeScreenshot
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
@@ -113,7 +113,7 @@ class TitrationTest {
         startSurveyApp()
         sleep(2000)
         takeScreenshot(screenshotName)
-        gotoSurveyForm()
+        startSurveyForm()
         sleep(2000)
         nextSurveyPage(5, getString(string.titration))
 

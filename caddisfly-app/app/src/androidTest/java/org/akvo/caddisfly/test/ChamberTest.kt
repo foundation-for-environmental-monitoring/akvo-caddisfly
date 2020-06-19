@@ -56,6 +56,8 @@ import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.saveCalibration
+import org.akvo.caddisfly.util.TestHelper.startSurveyApp
+import org.akvo.caddisfly.util.TestHelper.startSurveyForm
 import org.akvo.caddisfly.util.TestHelper.takeScreenshot
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
 import org.akvo.caddisfly.util.TestUtil.clickListViewItem
@@ -94,7 +96,12 @@ class ChamberTest {
 
     @Test
     fun testStartHighLevelTest() {
+
+        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
+            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
+
         saveCalibration("HighLevelTest", TestConstants.CUVETTE_TEST_ID_1)
+
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         val version: String? = CaddisflyApp.getAppVersion(false)
@@ -108,6 +115,7 @@ class ChamberTest {
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
         }
+
         onView(
             allOf(
                 withId(id.list_types),
@@ -136,9 +144,13 @@ class ChamberTest {
         leaveDiagnosticMode()
         goToMainScreen()
         try {
+            sleep(2000)
+            takeScreenshot(screenshotName)
             onView(withText(string.settings)).perform(click())
             onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
+            takeScreenshot(screenshotName)
             onView(withText(string.calibrate)).perform(click())
+            takeScreenshot(screenshotName)
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
         }
@@ -155,11 +167,11 @@ class ChamberTest {
                 TEST_INDEX, click()
             )
         )
+
+        takeScreenshot(screenshotName)
+
         onView(withId(id.fabEditCalibration)).perform(click())
-
-//        onView(withText(R.string.save)).perform(click());
-
-
+        takeScreenshot(screenshotName)
         onView(withId(id.editExpiryDate)).perform(click())
         val date: Calendar = Calendar.getInstance()
         date.add(Calendar.MONTH, 2)
@@ -183,35 +195,54 @@ class ChamberTest {
         )
         recyclerView2.perform(actionOnItemAtPosition<ViewHolder?>(4, click()))
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
+        sleep(3000)
+
+        takeScreenshot(screenshotName)
         sleep(
             (TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
                     + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                     * 1000
         )
+
+        takeScreenshot(screenshotName)
         onView(withId(id.buttonOk)).perform(click())
         goToMainScreen()
-        gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+
+        startSurveyApp()
+        sleep(2000)
+        takeScreenshot(screenshotName)
+
+        startSurveyForm()
+        sleep(2000)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         sleep(1000)
+
+        takeScreenshot(screenshotName)
+
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
         onView(withId(id.buttonNoDilution)).perform(click())
+
         onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
             .check(matches(isCompletelyDisplayed()))
         onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
             .check(matches(isCompletelyDisplayed()))
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
+
         sleep(
             (TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
                     + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                     * 1000
         )
         onView(withId(id.buttonAccept)).perform(click())
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
+        takeScreenshot(screenshotName)
+
         onView(withId(id.buttonDilution1)).perform(click())
         onView(
             allOf(
@@ -226,10 +257,10 @@ class ChamberTest {
             .check(matches(isCompletelyDisplayed()))
 
         //Test Start Screen
-
-
-        takeScreenshot()
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
+        sleep(3000)
+        takeScreenshot(screenshotName)
+
         sleep(
             (TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
                     + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
@@ -239,14 +270,13 @@ class ChamberTest {
             .check(matches(isDisplayed()))
 
         //High levels found dialog
-
-
-        takeScreenshot()
+        takeScreenshot(screenshotName)
         onView(withId(id.buttonAccept)).perform(click())
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonDilution2)).check(matches(isDisplayed()))
+
         onView(withId(id.buttonDilution2)).perform(click())
         onView(
             allOf(
@@ -260,9 +290,6 @@ class ChamberTest {
         ).check(matches(isCompletelyDisplayed()))
 
         //Test Progress Screen
-
-
-        takeScreenshot()
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
         sleep(
             (TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
@@ -283,12 +310,14 @@ class ChamberTest {
             onView(withText(getInstrumentation().targetContext.getString(string.test_with_dilution)))
                 .check(matches(not(isDisplayed())))
         }
+
+        takeScreenshot(screenshotName)
         onView(withId(id.buttonAccept)).perform(click())
         mDevice.waitForIdle()
         sleep(2000)
         assertNotNull(mDevice.findObject(By.text(resultString)))
-        mDevice.pressBack()
-        mDevice.pressBack()
+        takeScreenshot(screenshotName)
+
         mDevice.pressBack()
         mDevice.pressBack()
     }
@@ -399,7 +428,7 @@ class ChamberTest {
         goToMainScreen()
         gotoSurveyForm()
         sleep(1000)
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
         sleep(1000)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
@@ -414,7 +443,7 @@ class ChamberTest {
         //Result dialog
 
 
-        takeScreenshot()
+        takeScreenshot("screenshotName")
         val resultString = getText(withId(id.textResult))
         onView(withId(id.buttonAccept)).perform(click())
         mDevice.waitForIdle()

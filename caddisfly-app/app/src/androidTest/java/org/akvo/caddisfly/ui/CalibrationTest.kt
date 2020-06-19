@@ -149,6 +149,9 @@ class CalibrationTest {
 
     @Test
     fun testExpiryDate() {
+        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
+            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
+
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
@@ -250,7 +253,7 @@ class CalibrationTest {
         mDevice.pressBack()
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         sleep(500)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
@@ -304,7 +307,7 @@ class CalibrationTest {
         onView(withId(id.textCalibrationError)).check(matches(not(isDisplayed())))
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         sleep(500)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
