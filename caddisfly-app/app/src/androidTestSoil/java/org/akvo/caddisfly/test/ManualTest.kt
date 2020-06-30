@@ -18,6 +18,7 @@ import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
@@ -82,9 +83,9 @@ class ManualTest {
 
         SystemClock.sleep(1000)
 
-        assertNotNull(mDevice.findObject(By.text("Calcium: ")))
+        assertNotNull(mDevice.findObject(By.text(getString(string.calcium) + ": ")))
         assertNotNull(mDevice.findObject(By.text("500.00")))
-        assertNotNull(mDevice.findObject(By.text("Magnesium: ")))
+        assertNotNull(mDevice.findObject(By.text(getString(string.magnesium) + ": ")))
         assertNotNull(mDevice.findObject(By.text("300.00")))
     }
 

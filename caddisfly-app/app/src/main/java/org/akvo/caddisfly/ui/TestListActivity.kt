@@ -72,7 +72,7 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
         if (savedInstanceState == null) {
             val testType = intent.getSerializableExtra(ConstantKey.TYPE) as TestType
             val sampleType = intent
-                    .getSerializableExtra(ConstantKey.SAMPLE_TYPE) as TestSampleType
+                .getSerializableExtra(ConstantKey.SAMPLE_TYPE_KEY) as TestSampleType
             val fragment = newInstance(testType, sampleType)
             supportFragmentManager.beginTransaction()
                     .add(R.id.fragment_container, fragment, TestListFragment.TAG).commit()

@@ -46,14 +46,14 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.pref_other)
-        navigationController = NavigationController(activity!!)
+        navigationController = NavigationController(requireActivity())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list = view.findViewById(android.R.id.list)
 
-        permissionsDelegate = PermissionsDelegate(activity!!)
+        permissionsDelegate = PermissionsDelegate(requireActivity())
 
         val calibratePreference = findPreference<Preference>("calibrate")
         if (calibratePreference != null) {

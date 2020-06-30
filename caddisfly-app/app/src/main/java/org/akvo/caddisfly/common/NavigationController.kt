@@ -25,7 +25,7 @@ class NavigationController(private val context: Context) {
             intent = Intent(context, TestListActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra(ConstantKey.TYPE, testType)
-            intent.putExtra(ConstantKey.SAMPLE_TYPE, testSampleType)
+            intent.putExtra(ConstantKey.SAMPLE_TYPE_KEY, testSampleType)
         }
         if (runTest) {
             intent.putExtra(ConstantKey.RUN_TEST, true)

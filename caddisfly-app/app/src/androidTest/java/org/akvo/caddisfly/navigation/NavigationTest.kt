@@ -245,7 +245,7 @@ class NavigationTest {
         takeScreenshot()
         gotoSurveyForm()
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
-        onView(withText(string.testName)).check(matches(isDisplayed()))
+        onView(withText(TestConstants.CUVETTE_TEST_NAME_1)).check(matches(isDisplayed()))
 
 //        //Calibration incomplete
         takeScreenshot()

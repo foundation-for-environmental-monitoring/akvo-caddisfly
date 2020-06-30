@@ -55,7 +55,7 @@ class StripsTest {
     fun titleIsCorrect() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, TestSampleType.WATER)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE_KEY, TestSampleType.WATER)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -75,7 +75,7 @@ class StripsTest {
     fun testCount() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE_KEY, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -104,7 +104,7 @@ class StripsTest {
     fun testTitles() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE_KEY, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
@@ -158,7 +158,7 @@ class StripsTest {
     fun clickHome() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.STRIP_TEST)
-        intent.putExtra(ConstantKey.SAMPLE_TYPE, SAMPLE_TYPE)
+        intent.putExtra(ConstantKey.SAMPLE_TYPE_KEY, SAMPLE_TYPE)
         val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()

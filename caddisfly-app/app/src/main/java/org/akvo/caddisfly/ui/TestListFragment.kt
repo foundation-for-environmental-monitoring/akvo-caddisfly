@@ -55,7 +55,7 @@ class TestListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         if (arguments != null) {
             mTestType = requireArguments()[ConstantKey.TYPE] as TestType?
-            mSampleType = requireArguments()[ConstantKey.SAMPLE_TYPE] as TestSampleType?
+            mSampleType = requireArguments()[ConstantKey.SAMPLE_TYPE_KEY] as TestSampleType?
         }
         mTestInfoAdapter = TestInfoAdapter(mTestInfoClickCallback)
         return view
@@ -108,7 +108,7 @@ class TestListFragment : Fragment() {
             val fragment = TestListFragment()
             val args = Bundle()
             args.putSerializable(ConstantKey.TYPE, testType)
-            args.putSerializable(ConstantKey.SAMPLE_TYPE, sampleType)
+            args.putSerializable(ConstantKey.SAMPLE_TYPE_KEY, sampleType)
             fragment.arguments = args
             return fragment
         }

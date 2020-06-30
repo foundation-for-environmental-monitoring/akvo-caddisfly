@@ -12,6 +12,6 @@ object ConstantKey {
     const val START_MEASURE = "start_measure"
     const val TEST_STAGE = NAMESPACE_PREFIX + "testStage"
     const val TYPE = NAMESPACE_PREFIX + "type"
-    const val SAMPLE_TYPE = NAMESPACE_PREFIX + "sampleType"
+    const val SAMPLE_TYPE_KEY = NAMESPACE_PREFIX + "sampleType"
     const val NEXT_UPDATE_CHECK = NAMESPACE_PREFIX + "lastUpdateCheck"
 }

@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.AssetManager
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
@@ -43,11 +42,13 @@ import java.util.*
 
 lateinit var mDevice: UiDevice
 
+@Suppress("unused")
 fun isStripPatchAvailable(name: String = "."): Boolean {
     val file = File(FileHelper.getFilesDir(FileType.TEST_IMAGE, ""), "$name.yuv")
     return file.exists()
 }
 
+@Suppress("unused")
 fun clickStartButton() {
     onView(
         Matchers.allOf(
@@ -73,20 +74,10 @@ object TestHelper {
 
     private var screenshotCount = -1
 
-    private fun addString(key: String, vararg values: String) {
-        STRING_HASH_MAP_EN[key] = values[0]
-        if (values.size > 1) {
-            STRING_HASH_MAP_HI[key] = values[1]
-        }
-        STRING_HASH_MAP_FR[key] = values[0]
-        STRING_HASH_MAP_HI[key] = values[0]
-    }
-
     private fun addCalibration(key: String, colors: String) {
         CALIBRATION_HASH_MAP[key] = colors
     }
 
-    @Suppress("SameParameterValue")
     fun getString(@StringRes resourceId: Int): String {
         return getInstrumentation().targetContext.getString(resourceId)
     }
@@ -99,16 +90,6 @@ object TestHelper {
         val currentResources: Resources? = activity.resources
         val assets: AssetManager? = currentResources!!.assets
         val metrics: DisplayMetrics? = currentResources.displayMetrics
-        val config = Configuration(currentResources.configuration)
-        val res = Resources(assets, metrics, config)
-        addString("chlorine", res.getString(string.freeChlorine))
-        addString("survey", res.getString(string.survey))
-        addString("next", res.getString(string.next))
-        addString(TestConstant.GO_TO_TEST, res.getString(string.launch))
-        addString(
-            "soilRange", "0 - 125 mg/kg (Up to 625+ with dilution)",
-            "0 - 125 mg/kg (कमजोर पड़ने के साथ 625+ तक)"
-        )
 
         Resources(assets, metrics, currentResources.configuration)
         addCalibration(
@@ -209,6 +190,7 @@ object TestHelper {
         }
     }
 
+    @Suppress("unused")
     fun activateTestMode() {
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
@@ -321,6 +303,7 @@ object TestHelper {
 //        onView(withId(id.fabDisableDiagnostics)).perform(click())
     }
 
+    @Suppress("unused")
     fun clearPreferences(activityTestRule: ActivityTestRule<*>?) {
         val prefs: SharedPreferences? =
             PreferenceManager.getDefaultSharedPreferences(activityTestRule!!.activity)

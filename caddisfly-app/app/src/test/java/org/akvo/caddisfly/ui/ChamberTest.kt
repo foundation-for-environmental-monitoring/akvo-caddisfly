@@ -35,7 +35,7 @@ import junit.framework.TestCase.*
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.common.ConstantKey
-import org.akvo.caddisfly.common.ConstantKey.SAMPLE_TYPE
+import org.akvo.caddisfly.common.ConstantKey.SAMPLE_TYPE_KEY
 import org.akvo.caddisfly.common.SensorConstants
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TESTS_COUNT
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_ID_1
@@ -43,6 +43,7 @@ import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_1
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_2
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_3
 import org.akvo.caddisfly.common.UnitTestConstants.CUVETTE_TEST_NAME_4
+import org.akvo.caddisfly.common.UnitTestConstants.SAMPLE_TYPE
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
@@ -64,8 +65,9 @@ class ChamberTest {
     fun titleIsCorrect() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
-        val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
+        intent.putExtra(SAMPLE_TYPE_KEY, TestSampleType.WATER)
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
         ShadowLooper.pauseMainLooper()
@@ -84,8 +86,9 @@ class ChamberTest {
     fun testCount() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
-        val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
+        intent.putExtra(SAMPLE_TYPE_KEY, SAMPLE_TYPE)
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
         ShadowLooper.pauseMainLooper()
@@ -105,18 +108,23 @@ class ChamberTest {
     }
 
     private fun assertTestTitle(recyclerView: RecyclerView, index: Int, title: String) {
-        assertEquals(title,
-                (recyclerView.adapter as TestInfoAdapter?)!!.getItemAt(index).name)
-        assertEquals(title,
-                (recyclerView.getChildAt(index).findViewById<View>(id.text_title) as TextView).text)
+        assertEquals(
+            title,
+            (recyclerView.adapter as TestInfoAdapter?)!!.getItemAt(index).name
+        )
+        assertEquals(
+            title,
+            (recyclerView.getChildAt(index).findViewById<View>(id.text_title) as TextView).text
+        )
     }
 
     @Test
     fun testTitles() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
-        val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
+        intent.putExtra(SAMPLE_TYPE_KEY, TestSampleType.WATER)
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
         ShadowLooper.pauseMainLooper()
@@ -139,8 +147,9 @@ class ChamberTest {
         val permissions = arrayOf(permission.CAMERA, permission.WRITE_EXTERNAL_STORAGE)
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
-        val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
+        intent.putExtra(SAMPLE_TYPE_KEY, SAMPLE_TYPE)
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
         ShadowLooper.pauseMainLooper()
@@ -166,8 +175,10 @@ class ChamberTest {
         ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
         val nextIntent2: Intent = shadowOf(activity).nextStartedActivity
         if (nextIntent2.component != null) {
-            assertEquals(ChamberTestActivity::class.java.canonicalName,
-                    nextIntent2.component!!.className)
+            assertEquals(
+                ChamberTestActivity::class.java.canonicalName,
+                nextIntent2.component!!.className
+            )
         }
     }
 
@@ -175,8 +186,9 @@ class ChamberTest {
     fun clickHome() {
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
-        intent.putExtra(SAMPLE_TYPE, TestSampleType.WATER)
-        val controller: ActivityController<*> = Robolectric.buildActivity(TestListActivity::class.java, intent).create()
+        intent.putExtra(SAMPLE_TYPE_KEY, TestSampleType.WATER)
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(TestListActivity::class.java, intent).create()
 
         Robolectric.flushForegroundThreadScheduler()
         ShadowLooper.pauseMainLooper()
@@ -203,7 +215,8 @@ class ChamberTest {
         data.putString(CADDISFLY_LANGUAGE, "en")
         intent.putExtras(data)
         intent.type = "text/plain"
-        val controller: ActivityController<*> = Robolectric.buildActivity(TestActivity::class.java, intent).create()
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(TestActivity::class.java, intent).create()
         val activity = controller.get() as Activity
         controller.start()
         val button: Button = activity.findViewById(id.button_prepare)
@@ -223,7 +236,8 @@ class ChamberTest {
         data.putString(CADDISFLY_LANGUAGE, "en")
         intent.putExtras(data)
         intent.type = "text/plain"
-        val controller: ActivityController<*> = Robolectric.buildActivity(TestActivity::class.java, intent).create()
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(TestActivity::class.java, intent).create()
         val activity = controller.get() as Activity
         val application: ShadowApplication = shadowOf(activity.application)
         application.grantPermissions(*permissions)
@@ -235,8 +249,10 @@ class ChamberTest {
         button.performClick()
         val alert: AlertDialog? = ShadowAlertDialog.getLatestAlertDialog()
         val sAlert: ShadowAlertDialog = shadowOf(alert)
-        assertEquals("Calibration for " + CUVETTE_TEST_NAME_1 + " is incomplete\r\n" +
-                "\r\nDo you want to calibrate now?", sAlert.message)
+        assertEquals(
+            "Calibration for " + CUVETTE_TEST_NAME_1 + " is incomplete\r\n" +
+                    "\r\nDo you want to calibrate now?", sAlert.message
+        )
     }
 
 //

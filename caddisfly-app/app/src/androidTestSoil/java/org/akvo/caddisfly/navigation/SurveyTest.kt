@@ -42,8 +42,8 @@ import org.akvo.caddisfly.common.TestConstants
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
-import org.akvo.caddisfly.util.TestHelper.currentHashMap
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
+import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
@@ -123,28 +123,30 @@ class SurveyTest {
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
 
-//        onView(withText(currentHashMap.get("chlorine"))).perform(click());
+        val text =
+            "0 - 125 mg/kg (" + String.format(getString(string.up_to_with_dilution), "625+") + ")"
 
-        onView(withText(currentHashMap["soilRange"])).perform(click())
+        onView(withText(text)).perform(click())
         onView(withText("15")).check(matches(isDisplayed()))
         try {
             onView(withText("mg/kg")).check(matches(isDisplayed()))
             fail("Multiple matches not found")
         } catch (e: AmbiguousViewMatcherException) {
             // multiple matches found
-
         }
+
         Espresso.pressBack()
+        onView(withId(id.list_types)).perform(ViewActions.swipeUp())
+
         onView(withText("4 - 10 ")).perform(click())
         onView(withText("7")).check(matches(isDisplayed()))
-
-        //        onView(withText("0" + dfs.getDecimalSeparator() + "5 mg/l")).check(matches(isDisplayed()));
-
-
     }
 
     @Test
     fun testStartASurvey() {
+        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
+            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
+
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
@@ -177,7 +179,7 @@ class SurveyTest {
         onData(hasToString(startsWith("TestValid"))).perform(click())
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1)
+        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
