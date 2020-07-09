@@ -83,7 +83,7 @@ open class BaseRunTest : Fragment(), RunTest {
     private val mRunnableCode = Runnable {
         if (pictureCount < AppPreferences.samplingTimes) {
             pictureCount++
-            playShortResource(activity!!, R.raw.beep)
+            playShortResource(requireActivity(), R.raw.beep)
             takePicture()
         } else {
             releaseResources()
@@ -105,7 +105,7 @@ open class BaseRunTest : Fragment(), RunTest {
             binding!!.timeLayout.visibility = View.VISIBLE
             countdown[0]++
             if (timeDelay > 10 && (timeDelay - countdown[0]) % 15 == 0) {
-                playShortResource(activity!!, R.raw.beep)
+                playShortResource(requireActivity(), R.raw.beep)
             }
             //            binding.countdownTimer.setProgress(timeDelay - countdown[0], timeDelay);
             binding!!.textTimeRemaining.text = timeConversion(timeDelay - countdown[0])
@@ -121,14 +121,14 @@ open class BaseRunTest : Fragment(), RunTest {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (mCalibration != null && activity != null) { // disable the key guard when device wakes up and shake alert is displayed
-            activity!!.window.setFlags(
-                    WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                            or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                            or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN
-                            or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                            or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                            or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+            requireActivity().window.setFlags(
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+                        or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
             )
         }
     }
@@ -234,9 +234,11 @@ open class BaseRunTest : Fragment(), RunTest {
      * @param bmp the bitmap of the photo taken during analysis
      */
     private fun getAnalyzedResult(bmp: Bitmap) {
-        val bitmap = ImageUtil.rotateImage(activity!!, bmp)
-        var croppedBitmap = ImageUtil.getCroppedBitmap(bitmap,
-                ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT)
+        val bitmap = ImageUtil.rotateImage(requireActivity(), bmp)
+        var croppedBitmap = ImageUtil.getCroppedBitmap(
+            bitmap,
+            ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT
+        )
         //Extract the color from the photo which will be used for comparison
         val photoColor: ColorInfo
         if (mTestInfo!!.results!![0].grayScale) {
@@ -286,7 +288,7 @@ open class BaseRunTest : Fragment(), RunTest {
         if (!cameraStarted) {
             setupCamera()
             cameraStarted = true
-            playShortResource(activity!!, R.raw.futurebeep2)
+            playShortResource(requireActivity(), R.raw.futurebeep2)
             var initialDelay = 0
             //If the test has a time delay config then use that otherwise use standard delay
             if (mTestInfo!!.results!![0].timeDelay < 5) {
@@ -320,7 +322,10 @@ open class BaseRunTest : Fragment(), RunTest {
         val parameters = mCamera!!.parameters
         val flashMode = Camera.Parameters.FLASH_MODE_TORCH
         parameters.flashMode = flashMode
-        mCamera!!.parameters = parameters
+        try {
+            mCamera!!.parameters = parameters
+        } catch (e: Exception) {
+        }
     }
 
     protected open fun releaseResources() {
@@ -351,24 +356,24 @@ open class BaseRunTest : Fragment(), RunTest {
     fun showError(message: String,
                   bitmap: Bitmap?,
                   activity: Activity) {
-        stopScreenPinning(activity)
+        stopScreenPinning()
         releaseResources()
-        playShortResource(getActivity()!!, R.raw.err)
+        playShortResource(requireActivity(), R.raw.err)
         alertDialogToBeDestroyed = AlertUtil.showError(activity,
                 R.string.error, message, bitmap, R.string.ok,
                 DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
                     dialogInterface.dismiss()
                     activity.setResult(Activity.RESULT_CANCELED)
-                    stopScreenPinning(getActivity())
+                    stopScreenPinning()
                     activity.finish()
                 }, null, null
         )
     }
 
-    private fun stopScreenPinning(activity: Activity?) {
+    private fun stopScreenPinning() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             try {
-                activity!!.stopLockTask()
+                requireActivity().stopLockTask()
             } catch (ignored: Exception) {
             }
         }

@@ -32,7 +32,7 @@ class CalibrationResultDialog : DialogFragment() {
         buttonOk.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 try {
-                    activity!!.stopLockTask()
+                    requireActivity().stopLockTask()
                 } catch (ignored: Exception) {
                 }
             }

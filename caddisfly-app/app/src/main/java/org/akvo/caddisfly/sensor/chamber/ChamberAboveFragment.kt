@@ -40,7 +40,8 @@ class ChamberAboveFragment : BaseRunTest(), RunTest {
         super.onCreate(savedInstanceState)
         if (activity != null) {
             //Set up the shake detector
-            mSensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+            mSensorManager =
+                requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
             if (mSensorManager != null) {
                 mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
             }

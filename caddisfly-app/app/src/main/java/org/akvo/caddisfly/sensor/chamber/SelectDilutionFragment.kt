@@ -77,7 +77,7 @@ class SelectDilutionFragment : Fragment() {
 
     private fun showCustomDilutionDialog() {
         if (activity != null) {
-            val ft = activity!!.supportFragmentManager.beginTransaction()
+            val ft = requireActivity().supportFragmentManager.beginTransaction()
             val editCustomDilution = newInstance()
             editCustomDilution.show(ft, "editCustomDilution")
         }
