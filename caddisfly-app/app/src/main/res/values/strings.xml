@@ -247,4 +247,6 @@
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrate</string>
     <string name="zinc">Zinc</string>
+    <string name="recalibrate">Recalibrate</string>
+    <string name="recalibrate_summary">Recalibrate with a single standard</string>
 </resources>

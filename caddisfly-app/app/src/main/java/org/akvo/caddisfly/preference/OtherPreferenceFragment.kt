@@ -55,6 +55,28 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
 
         permissionsDelegate = PermissionsDelegate(requireActivity())
 
+        val recalibratePreference = findPreference<Preference>("recalibrate")
+        if (recalibratePreference != null) {
+            recalibratePreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                if (permissionsDelegate.hasPermissions(storagePermission)) {
+                    startCalibrate()
+                } else {
+                    if (BuildConfig.APPLICATION_ID.contains("soil")) {
+                        permissionsDelegate.requestPermissions(
+                            storagePermission,
+                            STORAGE_PERMISSION_SOIL
+                        )
+                    } else {
+                        permissionsDelegate.requestPermissions(
+                            storagePermission,
+                            STORAGE_PERMISSION_WATER
+                        )
+                    }
+                }
+                true
+            }
+        }
+
         val calibratePreference = findPreference<Preference>("calibrate")
         if (calibratePreference != null) {
             calibratePreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -62,7 +84,10 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                     startCalibrate()
                 } else {
                     if (BuildConfig.APPLICATION_ID.contains("soil")) {
-                        permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL)
+                        permissionsDelegate.requestPermissions(
+                            storagePermission,
+                            STORAGE_PERMISSION_SOIL
+                        )
                     } else {
                         permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER)
                     }
