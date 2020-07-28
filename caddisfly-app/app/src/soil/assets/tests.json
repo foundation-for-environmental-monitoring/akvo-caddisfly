@@ -226,7 +226,7 @@
       "name": "Organic Carbon",
       "type": "soil",
       "subtype": "cuvette",
-      "uuid": "4c18efa6-8d0d-4bd2-8f4a-60b2d09eaac8",
+      "uuid": "1830c0f7-b31e-4093-8b50-e804cb209ae8",
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
