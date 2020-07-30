@@ -76,6 +76,7 @@ import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.util.StringUtil;
 import org.akvo.caddisfly.viewmodel.TestListViewModel;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
@@ -249,6 +250,7 @@ public class TestActivity extends BaseActivity {
 
         switch (testInfo.getSubtype()) {
             case SENSOR:
+            case TITRATION:
                 startTest();
                 return;
             case MANUAL:
@@ -260,9 +262,6 @@ public class TestActivity extends BaseActivity {
             case BLUETOOTH:
                 checkPermissions = bluetoothPermissions;
                 break;
-            case TITRATION:
-                startTest();
-                return;
             default:
         }
 
@@ -499,10 +498,8 @@ public class TestActivity extends BaseActivity {
 //            }
 
             this.setResult(Activity.RESULT_OK, intent);
-            finish();
-        } else {
-            finish();
         }
+        finish();
     }
 
     /**
@@ -663,7 +660,7 @@ public class TestActivity extends BaseActivity {
         }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NotNull Message msg) {
             Activity f = ref.get();
             if (f != null) {
                 f.recreate();
