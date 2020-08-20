@@ -44,19 +44,20 @@ class EditCustomDilution : DialogFragment() {
     private var editDilutionFactor: EditText? = null
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity: Activity? = activity
-        @SuppressLint("InflateParams") val view = activity!!.layoutInflater.inflate(R.layout.edit_custom_dilution, null)
+        @SuppressLint("InflateParams") val view =
+            requireActivity().layoutInflater.inflate(R.layout.edit_custom_dilution, null)
         editDilutionFactor = view.findViewById(R.id.editDilutionFactor)
         editDilutionFactor?.requestFocus()
         val b = AlertDialog.Builder(activity)
             .setTitle(R.string.custom_dilution)
                 .setPositiveButton(R.string.ok
                 ) { _: DialogInterface?, _: Int ->
-                    closeKeyboard(activity, editDilutionFactor)
+                    closeKeyboard(editDilutionFactor)
                     dismiss()
                 }
                 .setNegativeButton(R.string.cancel
                 ) { _: DialogInterface?, _: Int ->
-                    closeKeyboard(activity, editDilutionFactor)
+                    closeKeyboard(editDilutionFactor)
                     dismiss()
                 }
         b.setView(view)
@@ -65,17 +66,19 @@ class EditCustomDilution : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        val context: Context? = activity
         val d = dialog as AlertDialog?
         if (d != null) {
             val positiveButton = d.getButton(Dialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View) {
-                    if (formEntryValid() && editDilutionFactor!!.text.toString().trim { it <= ' ' }.isNotEmpty()) {
+                    if (formEntryValid() && editDilutionFactor!!.text.toString().trim { it <= ' ' }
+                            .isNotEmpty()) {
                         if (mListener != null) {
-                            mListener!!.onCustomDilution(editDilutionFactor!!.text.toString().toInt())
+                            mListener!!.onCustomDilution(
+                                editDilutionFactor!!.text.toString().toInt()
+                            )
                         }
-                        closeKeyboard(context, editDilutionFactor)
+                        closeKeyboard(editDilutionFactor)
                         dismiss()
                     }
                 }
@@ -120,9 +123,10 @@ class EditCustomDilution : DialogFragment() {
      *
      * @param input the EditText for which the keyboard is open
      */
-    private fun closeKeyboard(context: Context?, input: EditText?) {
-        val imm = context!!.getSystemService(
-                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    private fun closeKeyboard(input: EditText?) {
+        val imm = requireContext().getSystemService(
+            Context.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
         imm.hideSoftInputFromWindow(input!!.windowToken, 0)
     }
 

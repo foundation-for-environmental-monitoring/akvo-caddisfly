@@ -245,6 +245,6 @@
     <string name="available_potassium">Available Potassium</string>
     <string name="alkalinity">Alkalinity</string>
     <string name="ammonia">Ammonia</string>
-    <string name="nitrite">Nitrate</string>
+    <string name="nitrite">Nitrite</string>
     <string name="zinc">Zinc</string>
 </resources>
