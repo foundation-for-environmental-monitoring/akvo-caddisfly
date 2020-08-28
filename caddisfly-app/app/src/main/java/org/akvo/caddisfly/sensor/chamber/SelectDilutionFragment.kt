@@ -1,21 +1,3 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
 package org.akvo.caddisfly.sensor.chamber
 
 import android.content.Context
@@ -57,15 +39,6 @@ class SelectDilutionFragment : Fragment() {
             binding.buttonDilution1.setOnClickListener { mListener!!.onDilutionSelected(dilution) }
         }
         if (dilutions.size > 2) {
-            val dilution = dilutions[2]
-            binding.buttonDilution2.text = String.format(Locale.getDefault(),
-                getString(R.string.times_dilution), dilution
-            )
-            binding.buttonDilution2.setOnClickListener { mListener!!.onDilutionSelected(dilution) }
-        } else {
-            binding.buttonDilution2.visibility = View.GONE
-        }
-        if (dilutions.size > 3) {
             binding.buttonCustomDilution.setOnClickListener { showCustomDilutionDialog() }
         } else {
             binding.buttonCustomDilution.visibility = View.GONE

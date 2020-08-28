@@ -13,7 +13,6 @@
       "monthsValid": 6,
       "dilutions": [
         1,
-        2,
         5,
         -1
       ],
@@ -57,7 +56,6 @@
       "monthsValid": 6,
       "dilutions": [
         1,
-        2,
         5,
         -1
       ],
@@ -83,7 +81,6 @@
       "monthsValid": 2,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -294,7 +291,6 @@
       "monthsValid": 3,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -318,7 +314,6 @@
       "monthsValid": 12,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -341,7 +336,6 @@
       "monthsValid": 12,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -364,7 +358,6 @@
       "monthsValid": 12,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -387,7 +380,6 @@
       "monthsValid": 12,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -446,7 +438,6 @@
       "monthsValid": 24,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -470,7 +461,6 @@
       "monthsValid": 6,
       "dilutions": [
         1,
-        2,
         5,
         -1
       ],
@@ -515,7 +505,6 @@
       "monthsValid": 6,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -540,7 +529,6 @@
       "monthsValid": 24,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -564,7 +552,6 @@
       "monthsValid": 12,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
@@ -587,7 +574,6 @@
       "monthsValid": 6,
       "dilutions": [
         1,
-        2,
         5
       ],
       "results": [
