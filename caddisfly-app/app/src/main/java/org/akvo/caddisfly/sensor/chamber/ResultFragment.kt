@@ -1,68 +1,106 @@
-/*
- * Copyright (C) Stichting Akvo (Akvo Foundation)
- *
- * This file is part of Akvo Caddisfly.
- *
- * Akvo Caddisfly is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Akvo Caddisfly is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
- */
 package org.akvo.caddisfly.sensor.chamber
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_result.*
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL
 import org.akvo.caddisfly.common.ConstantKey.TEST_INFO
 import org.akvo.caddisfly.databinding.FragmentResultBinding
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.util.toLocalString
+import java.util.*
 
 class ResultFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val b: FragmentResultBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_result, container, false)
-        val view = b.root
-        if (activity != null) {
-            requireActivity().setTitle(R.string.result)
-        }
+    private var mListener: OnDilutionSelectedListener? = null
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val b: FragmentResultBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_result, container, false
+        )
+
+        return b.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().setTitle(R.string.result)
+
         if (arguments != null) {
             val testInfo: TestInfo? = requireArguments().getParcelable(TEST_INFO)
             if (testInfo != null) {
                 val result = testInfo.results!![0]
-                b.textResult.text = result.result
-                b.textTitle.text = testInfo.name!!.toLocalString()
-                b.textDilution.text = resources.getQuantityString(R.plurals.dilutions,
-                        testInfo.dilution, testInfo.dilution)
-                b.textUnit.text = result.unit
+                textResult.text = result.result
+                textTitle.text = testInfo.name!!.toLocalString()
+                textDilution.text = resources.getQuantityString(
+                    R.plurals.dilutions,
+                    testInfo.dilution, testInfo.dilution
+                )
+                textUnit.text = result.unit
                 when {
                     testInfo.dilution == testInfo.maxDilution -> {
-                        b.dilutionLayout.visibility = View.GONE
+                        buttonDilution1.visibility = View.GONE
+                        high_level_txt.visibility = View.GONE
                     }
                     result.highLevelsFound() -> {
-                        b.dilutionLayout.visibility = View.VISIBLE
+                        buttonDilution1.visibility = View.VISIBLE
+                        high_level_txt.visibility = View.VISIBLE
                     }
                     else -> {
-                        b.dilutionLayout.visibility = View.GONE
+                        buttonDilution1.visibility = View.GONE
+                        high_level_txt.visibility = View.GONE
                     }
+                }
+
+                val dilutions = testInfo.dilutions
+                if (dilutions.size > 1) {
+                    val dilution = dilutions[1]
+                    buttonDilution1.text = String.format(
+                        Locale.getDefault(),
+                        getString(R.string.times_dilution), dilution
+                    )
+                    buttonDilution1.setOnClickListener { mListener!!.onDilutionSelected(dilution) }
+                }
+                if (dilutions.size > 2) {
+                    buttonCustomDilution.setOnClickListener { showCustomDilutionDialog() }
+                } else {
+                    buttonCustomDilution.visibility = View.GONE
                 }
             }
         }
-        return view
+    }
+
+    private fun showCustomDilutionDialog() {
+        if (activity != null) {
+            val ft = requireActivity().supportFragmentManager.beginTransaction()
+            val editCustomDilution = EditCustomDilution.newInstance()
+            editCustomDilution.show(ft, "editCustomDilution")
+        }
+    }
+
+    interface OnDilutionSelectedListener {
+        fun onDilutionSelected(dilution: Int)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mListener = if (context is OnDilutionSelectedListener) {
+            context
+        } else {
+            throw IllegalArgumentException(
+                context.toString()
+                        + " must implement OnDilutionSelectedListener"
+            )
+        }
     }
 
     companion object {

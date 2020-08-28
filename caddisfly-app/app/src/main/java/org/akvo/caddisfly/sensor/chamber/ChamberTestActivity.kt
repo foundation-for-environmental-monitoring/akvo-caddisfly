@@ -67,7 +67,6 @@ import org.akvo.caddisfly.sensor.chamber.CalibrationItemFragment.OnCalibrationSe
 import org.akvo.caddisfly.sensor.chamber.CalibrationResultDialog.Companion.newInstance
 import org.akvo.caddisfly.sensor.chamber.EditCustomDilution.OnCustomDilutionListener
 import org.akvo.caddisfly.sensor.chamber.SaveCalibrationDialogFragment.OnCalibrationDetailsSavedListener
-import org.akvo.caddisfly.sensor.chamber.SelectDilutionFragment.OnDilutionSelectedListener
 import org.akvo.caddisfly.ui.BaseActivity
 import org.akvo.caddisfly.util.AlertUtil
 import org.akvo.caddisfly.util.FileUtil
@@ -78,8 +77,8 @@ import java.io.File
 import java.util.*
 
 class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelectedListener,
-        OnCalibrationDetailsSavedListener, OnDilutionSelectedListener,
-        OnCustomDilutionListener, OnDismissed {
+    OnCalibrationDetailsSavedListener, ResultFragment.OnDilutionSelectedListener,
+    OnCustomDilutionListener, OnDismissed {
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             finish()
@@ -138,12 +137,9 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
     }
 
     private fun start() {
-        if (testInfo.dilutions.isNotEmpty()) {
-            val selectDilutionFragment: Fragment = SelectDilutionFragment.newInstance(testInfo)
-            goToFragment(selectDilutionFragment)
-        } else {
-            runTest()
-        }
+
+        runTest()
+
         setTitle(R.string.analyze)
         invalidateOptionsMenu()
     }
@@ -334,26 +330,35 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                         loadCalibrationFromFile(testInfo, fileName)
                         loadDetails()
                     } catch (ex: Exception) {
-                        AlertUtil.showError(context, R.string.error, getString(R.string.errorLoadingFile),
-                                null, R.string.ok,
-                                DialogInterface.OnClickListener { dialog1: DialogInterface, _: Int -> dialog1.dismiss() }, null, null)
+                        AlertUtil.showError(
+                            context,
+                            R.string.error,
+                            getString(R.string.errorLoadingFile),
+                            null,
+                            R.string.ok,
+                            { dialog1: DialogInterface, _: Int -> dialog1.dismiss() },
+                            null,
+                            null
+                        )
                     }
                 }
                 val alertDialog = builder.create()
                 alertDialog.setOnShowListener {
                     val listView = alertDialog.listView
                     listView.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
-                        AlertUtil.askQuestion(context, R.string.delete,
-                                R.string.deleteConfirm, R.string.delete, R.string.cancel, true,
-                                DialogInterface.OnClickListener { _: DialogInterface?, _: Int ->
-                                    val fileName = listFiles[i].name
-                                    FileUtil.deleteFile(path, fileName)
-                                    @Suppress("UNCHECKED_CAST")
-                                    val listAdapter = listView.adapter as ArrayAdapter<Any>
-                                    listAdapter.remove(listAdapter.getItem(i))
-                                    alertDialog.dismiss()
-                                    Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT).show()
-                                }, null)
+                        AlertUtil.askQuestion(
+                            context, R.string.delete,
+                            R.string.deleteConfirm, R.string.delete, R.string.cancel, true,
+                            { _: DialogInterface?, _: Int ->
+                                val fileName = listFiles[i].name
+                                FileUtil.deleteFile(path, fileName)
+                                @Suppress("UNCHECKED_CAST")
+                                val listAdapter = listView.adapter as ArrayAdapter<Any>
+                                listAdapter.remove(listAdapter.getItem(i))
+                                alertDialog.dismiss()
+                                Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT).show()
+                            }, null
+                        )
                         true
                     }
                 }
@@ -551,22 +556,23 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         stopScreenPinning()
         playShortResource(this, R.raw.err)
         releaseResources()
-        alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
-                DialogInterface.OnClickListener { _: DialogInterface?, _: Int ->
-                    stopScreenPinning()
-                    if (intent.getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                        start()
-                    } else {
-                        runTest()
-                    }
-                },
-                DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
-                    stopScreenPinning()
-                    dialogInterface.dismiss()
-                    releaseResources()
-                    setResult(Activity.RESULT_CANCELED)
-                    finish()
-                }, null
+        alertDialogToBeDestroyed = AlertUtil.showError(
+            this, R.string.error, message, bitmap, R.string.retry,
+            { _: DialogInterface?, _: Int ->
+                stopScreenPinning()
+                if (intent.getBooleanExtra(ConstantKey.RUN_TEST, false)) {
+                    start()
+                } else {
+                    runTest()
+                }
+            },
+            { dialogInterface: DialogInterface, _: Int ->
+                stopScreenPinning()
+                dialogInterface.dismiss()
+                releaseResources()
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }, null
         )
     }
 
@@ -574,17 +580,6 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         if (alertDialogToBeDestroyed != null) {
             alertDialogToBeDestroyed!!.dismiss()
         }
-    }
-
-    /**
-     * Navigate back to the dilution selection screen if re-testing.
-     */
-    fun onTestWithDilution(@Suppress("UNUSED_PARAMETER") view: View?) {
-        stopScreenPinning()
-        if (!fragmentManager!!.popBackStackImmediate("dilution", 0)) {
-            super.onBackPressed()
-        }
-        invalidateOptionsMenu()
     }
 
     override fun onDilutionSelected(dilution: Int) {

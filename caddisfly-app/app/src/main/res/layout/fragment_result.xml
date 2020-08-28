@@ -1,24 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--
-  ~ Copyright (C) Stichting Akvo (Akvo Foundation)
-  ~
-  ~ This file is part of Akvo Caddisfly.
-  ~
-  ~ Akvo Caddisfly is free software: you can redistribute it and/or modify
-  ~ it under the terms of the GNU General Public License as published by
-  ~ the Free Software Foundation, either version 3 of the License, or
-  ~ (at your option) any later version.
-  ~
-  ~ Akvo Caddisfly is distributed in the hope that it will be useful,
-  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
-  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  ~ GNU General Public License for more details.
-  ~
-  ~ You should have received a copy of the GNU General Public License
-  ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
-  -->
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -29,122 +9,108 @@
         android:orientation="vertical"
         android:weightSum="100">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textTitle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="30"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingBottom="3dp"
+            android:textColor="#fff"
+            android:textSize="32sp"
+            app:background="@{``}"
+            tools:background="@color/primary"
+            tools:text="Fluoride" />
 
-            <TextView
-                android:id="@+id/textTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:paddingBottom="3dp"
-                android:textColor="#fff"
-                android:textSize="32sp"
-                app:background="@{``}"
-                tools:background="@color/primary"
-                tools:text="Fluoride" />
+        <TextView
+            android:id="@+id/textDilution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:paddingBottom="15dp"
+            android:textColor="#e2e2e2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:background="@{``}"
+            tools:background="@color/primary"
+            tools:text="@string/times_dilution" />
 
-            <TextView
-                android:id="@+id/textDilution"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:paddingBottom="15dp"
-                android:textColor="#e2e2e2"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:visibility="visible"
-                app:background="@{``}"
-                tools:background="@color/primary"
-                tools:text="@string/times_dilution" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textResult"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="0dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:textSize="60sp"
+                android:textSize="40sp"
                 tools:text="15000" />
 
             <TextView
                 android:id="@+id/textUnit"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="-20dp"
-                android:layout_marginBottom="20dp"
                 android:textColor="#333"
                 android:textSize="20sp"
                 tools:text="mg/l" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_horizontal">
-
-                <Button
-                    android:id="@+id/buttonAccept"
-                    style="@style/Button"
-                    android:layout_gravity="center_horizontal"
-                    android:onClick="onClickAcceptResult"
-                    android:text="@string/accept_result"
-                    android:theme="?primaryButtonStyle" />
-            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/dilutionLayout"
+        <Button
+            android:id="@+id/buttonAccept"
+            style="@style/Button"
+            android:layout_gravity="center_horizontal"
+            android:minWidth="260dp"
+            android:onClick="onClickAcceptResult"
+            android:text="@string/accept_result"
+            android:theme="?primaryButtonStyle" />
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="30"
-            android:background="#e9e9e9"
-            android:orientation="vertical">
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="#000" />
 
-            <TextView
-                android:id="@+id/textMessage2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/high_level_recommendation"
-                android:textColor="#444"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/high_level_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/high_level_recommendation"
+            android:textColor="#444"
+            android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/button_instructions"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:drawableStart="@drawable/ic_flipped_play_arrow"
-                android:onClick="onTestWithDilution"
-                android:paddingStart="@dimen/activity_horizontal_margin"
-                android:paddingEnd="@dimen/activity_horizontal_margin"
-                android:text="@string/test_with_dilution"
-                android:textAlignment="textStart"
-                android:textColor="@android:color/holo_blue_dark"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+        <Button
+            android:id="@+id/buttonDilution1"
+            style="@style/Button"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="10dp"
+            android:minWidth="260dp"
+            android:minHeight="65dp"
+            android:text="@string/times_dilution"
+            android:theme="?secondaryButtonStyle" />
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/buttonCustomDilution"
+            style="@style/Button"
+            android:layout_gravity="center_horizontal"
+            android:minWidth="260dp"
+            android:minHeight="65dp"
+            android:text="@string/custom_dilution"
+            android:theme="?secondaryButtonStyle" />
 
     </LinearLayout>
 </layout>
