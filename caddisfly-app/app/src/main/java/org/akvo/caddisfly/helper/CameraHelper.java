@@ -24,12 +24,13 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 
+import androidx.annotation.StringRes;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ApiUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 
-import androidx.annotation.StringRes;
 import timber.log.Timber;
 
 public final class CameraHelper {
@@ -47,7 +48,6 @@ public final class CameraHelper {
      * @param onClickListener positive button listener
      * @return true if camera flash exists otherwise false
      */
-    @SuppressWarnings("deprecation")
     public static Camera getCamera(Context context,
                                    DialogInterface.OnClickListener onClickListener) {
 
@@ -93,7 +93,6 @@ public final class CameraHelper {
             hasCameraFlash = PreferencesUtil.getBoolean(context, R.string.hasCameraFlashKey, false);
         } else {
 
-            @SuppressWarnings("deprecation")
             Camera camera = getCamera(context, onClickListener);
             try {
                 if (camera != null) {
