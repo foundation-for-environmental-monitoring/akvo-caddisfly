@@ -18,6 +18,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -127,20 +128,12 @@
         </TableRow>
     </TableLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listResults"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:clickable="false"
-        android:divider="#ff37c0b6"
-        android:dividerHeight="1dp"
-        android:gravity="center"
-        android:horizontalSpacing="10dp"
-        android:numColumns="2"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp"
-        android:visibility="visible"
+        app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/row_info" />
 
     <LinearLayout
