@@ -122,15 +122,13 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
     private fun goToFragment(fragment: Fragment?) {
         if (fragmentManager!!.fragments.size > 0) {
             fragmentManager!!.beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.fragment_container, fragment!!).commit()
+                .addToBackStack(null)
+                .replace(R.id.fragment_container, fragment!!).commit()
         } else {
             fragmentManager!!.beginTransaction()
-                    .add(R.id.fragment_container, fragment!!).commit()
+                .add(R.id.fragment_container, fragment!!).commit()
         }
-        if (fragment is SelectDilutionFragment) {
-            testStarted = true
-        } else if (fragment !== runTestFragment) {
+        if (fragment !== runTestFragment) {
             testStarted = false
         }
         invalidateOptionsMenu()

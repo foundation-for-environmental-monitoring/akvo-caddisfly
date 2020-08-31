@@ -219,24 +219,6 @@ class RunTestNavigation {
         )
         relativeLayout4.perform(click())
 
-        val appCompatButton8 = onView(
-            allOf(
-                withId(R.id.buttonNoDilution), withText(R.string.no_dilution),
-                childAtPosition(
-                    allOf(
-                        withId(R.id.layoutDilutions),
-                        childAtPosition(
-                            withId(R.id.fragment_container),
-                            0
-                        )
-                    ),
-                    1
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatButton8.perform(click())
-
         val appCompatImageButton4 = onView(
             allOf(
                 withContentDescription(R.string.navigate_up),
@@ -272,23 +254,5 @@ class RunTestNavigation {
             )
         )
         appCompatImageButton5.perform(click())
-
-        val appCompatImageButton6 = onView(
-            allOf(
-                withContentDescription(R.string.navigate_up),
-                childAtPosition(
-                    allOf(
-                        withId(R.id.toolbar),
-                        childAtPosition(
-                            withId(R.id.mainLayout),
-                            0
-                        )
-                    ),
-                    1
-                ),
-                isDisplayed()
-            )
-        )
-        appCompatImageButton6.perform(click())
     }
 }

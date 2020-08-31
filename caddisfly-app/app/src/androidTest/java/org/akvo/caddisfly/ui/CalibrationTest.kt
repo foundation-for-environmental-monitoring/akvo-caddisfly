@@ -311,7 +311,6 @@ class CalibrationTest {
         sleep(500)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
-        onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
     }
 
     //@Test

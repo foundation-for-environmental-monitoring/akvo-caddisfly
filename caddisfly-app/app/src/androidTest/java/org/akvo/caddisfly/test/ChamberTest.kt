@@ -202,8 +202,6 @@ class ChamberTest {
 
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
-        onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
-        onView(withId(id.buttonNoDilution)).perform(click())
 
         onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
             .check(matches(isCompletelyDisplayed()))
@@ -221,23 +219,9 @@ class ChamberTest {
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
-        onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
         takeScreenshot(screenshotName)
 
-        onView(withId(id.buttonDilution1)).perform(click())
-        onView(
-            allOf(
-                withId(id.textDilution), withText(
-                    String.format(
-                        getInstrumentation().targetContext
-                            .getString(string.times_dilution), 2
-                    )
-                )
-            )
-        )
-            .check(matches(isCompletelyDisplayed()))
-
-        //Test Start Screen
+         //Test Start Screen
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
         sleep(3000)
         takeScreenshot(screenshotName)
@@ -247,30 +231,13 @@ class ChamberTest {
                     + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                     * 1000
         )
-        onView(withText(getInstrumentation().targetContext.getString(string.test_with_dilution)))
+        onView(withText(getInstrumentation().targetContext.getString(string.high_level_recommendation)))
             .check(matches(isDisplayed()))
 
-        //High levels found dialog
-        takeScreenshot(screenshotName)
-        onView(withId(id.buttonAccept)).perform(click())
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
-        onView(withId(id.button_prepare)).check(matches(isDisplayed()))
-        onView(withId(id.button_prepare)).perform(click())
-        onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
-
+        takeScreenshot()
         onView(withId(id.buttonDilution1)).perform(click())
-        onView(
-            allOf(
-                withId(id.textDilution), withText(
-                    String.format(
-                        getInstrumentation().targetContext
-                            .getString(string.times_dilution), 5
-                    )
-                )
-            )
-        ).check(matches(isCompletelyDisplayed()))
 
-        //Test Progress Screen
+        takeScreenshot()
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
         sleep(
             (TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
@@ -283,12 +250,12 @@ class ChamberTest {
         if (CUVETTE_TEST_TIME_DELAY > 0) {
             val result: Double = (resultString.replace(">", "").trim { it <= ' ' }).toDouble()
             assertTrue("Result is wrong", result > 49)
-            onView(withText(getInstrumentation().targetContext.getString(string.test_with_dilution)))
+            onView(withText(getInstrumentation().targetContext.getString(string.high_level_recommendation)))
                 .check(matches(isDisplayed()))
         } else {
             val result: Double = (resultString.replace(">", "").trim { it <= ' ' }).toDouble()
             assertTrue("Result is wrong", result > 9)
-            onView(withText(getInstrumentation().targetContext.getString(string.test_with_dilution)))
+            onView(withText(getInstrumentation().targetContext.getString(string.high_level_recommendation)))
                 .check(matches(not(isDisplayed())))
         }
 
@@ -375,9 +342,6 @@ class ChamberTest {
         )
         onView(withId(id.fabEditCalibration)).perform(click())
 
-//        onView(withText(R.string.save)).perform(click());
-
-
         onView(withId(id.editExpiryDate)).perform(click())
         val date: Calendar = Calendar.getInstance()
         date.add(Calendar.MONTH, 2)
@@ -413,8 +377,6 @@ class ChamberTest {
         sleep(1000)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
-        onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
-        onView(withId(id.buttonNoDilution)).perform(click())
         sleep(
             (TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
                     + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
@@ -422,18 +384,11 @@ class ChamberTest {
         )
 
         //Result dialog
-
-
         takeScreenshot("screenshotName")
         val resultString = getText(withId(id.textResult))
         onView(withId(id.buttonAccept)).perform(click())
         mDevice.waitForIdle()
         assertNotNull(mDevice.findObject(By.text(resultString)))
-
-//        onView(withId(android.R.id.list)).check(matches(withChildCount(is(greaterThan(0)))));
-//        onView(withText(R.string.startTestConfirm)).check(matches(isDisplayed()));
-
-
     }
 
     companion object {

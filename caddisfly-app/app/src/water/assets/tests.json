@@ -461,8 +461,7 @@
       "monthsValid": 6,
       "dilutions": [
         1,
-        5,
-        -1
+        5
       ],
       "results": [
         {

@@ -235,7 +235,6 @@ class NavigationTest {
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
-        onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
 
         //Dilution dialog
         takeScreenshot()

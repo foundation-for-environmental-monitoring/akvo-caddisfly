@@ -165,12 +165,6 @@ class SurveyTest {
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
-        onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
-        onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
-        onView(withId(id.buttonNoDilution)).perform(click())
-
-        //onView(withId(R.id.buttonStart)).perform(click());
-
         mDevice.waitForWindowUpdate("", 1000)
     }
 

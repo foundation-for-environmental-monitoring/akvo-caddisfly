@@ -46,34 +46,38 @@ class ResultFragment : Fragment() {
                     testInfo.dilution, testInfo.dilution
                 )
                 textUnit.text = result.unit
-                when {
-                    testInfo.dilution == testInfo.maxDilution -> {
-                        buttonDilution1.visibility = View.GONE
-                        high_level_txt.visibility = View.GONE
+                if (testInfo.dilutions.size > 1) {
+                    when {
+                        testInfo.dilution > 1 -> {
+                            buttonDilution1.visibility = View.GONE
+                            buttonCustomDilution.visibility = View.GONE
+                            high_level_txt.visibility = View.GONE
+                        }
+                        result.highLevelsFound() -> {
+                            buttonDilution1.visibility = View.VISIBLE
+                            high_level_txt.visibility = View.VISIBLE
+                            val dilution = testInfo.dilutions[1]
+                            buttonDilution1.text = String.format(
+                                Locale.getDefault(),
+                                getString(R.string.times_dilution), dilution
+                            )
+                            buttonDilution1.setOnClickListener {
+                                mListener!!.onDilutionSelected(
+                                    dilution
+                                )
+                            }
+                            if (testInfo.dilutions.size > 2) {
+                                buttonCustomDilution.visibility = View.VISIBLE
+                                buttonCustomDilution.setOnClickListener { showCustomDilutionDialog() }
+                            } else {
+                                buttonCustomDilution.visibility = View.GONE
+                            }
+                        }
+                        else -> {
+                            buttonDilution1.visibility = View.GONE
+                            high_level_txt.visibility = View.GONE
+                        }
                     }
-                    result.highLevelsFound() -> {
-                        buttonDilution1.visibility = View.VISIBLE
-                        high_level_txt.visibility = View.VISIBLE
-                    }
-                    else -> {
-                        buttonDilution1.visibility = View.GONE
-                        high_level_txt.visibility = View.GONE
-                    }
-                }
-
-                val dilutions = testInfo.dilutions
-                if (dilutions.size > 1) {
-                    val dilution = dilutions[1]
-                    buttonDilution1.text = String.format(
-                        Locale.getDefault(),
-                        getString(R.string.times_dilution), dilution
-                    )
-                    buttonDilution1.setOnClickListener { mListener!!.onDilutionSelected(dilution) }
-                }
-                if (dilutions.size > 2) {
-                    buttonCustomDilution.setOnClickListener { showCustomDilutionDialog() }
-                } else {
-                    buttonCustomDilution.visibility = View.GONE
                 }
             }
         }

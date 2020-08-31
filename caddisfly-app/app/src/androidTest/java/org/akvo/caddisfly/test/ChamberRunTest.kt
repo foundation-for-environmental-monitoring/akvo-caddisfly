@@ -182,8 +182,6 @@ class ChamberRunTest {
         )
 
         sleep(1000)
-        onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
-        onView(withId(id.buttonNoDilution)).perform(click())
         onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
             .check(matches(isCompletelyDisplayed()))
         onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
@@ -212,20 +210,6 @@ class ChamberRunTest {
             )
         )
 
-        onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
-        onView(withId(id.buttonDilution1)).perform(click())
-        onView(
-            allOf(
-                withId(id.textDilution), withText(
-                    String.format(
-                        getInstrumentation().targetContext
-                            .getString(string.times_dilution), 2
-                    )
-                )
-            )
-        )
-            .check(matches(isCompletelyDisplayed()))
-
         takeScreenshot()
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
         sleep(
@@ -233,43 +217,11 @@ class ChamberRunTest {
                     + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))
                     * 1000
         )
-        onView(withText(getInstrumentation().targetContext.getString(string.test_with_dilution)))
+        onView(withText(getInstrumentation().targetContext.getString(string.high_level_recommendation)))
             .check(matches(isDisplayed()))
 
-        //High levels found dialog
-
-
         takeScreenshot()
-        onView(withId(id.buttonAccept)).perform(click())
-
-        goToMainScreen()
-        onView(withText(string.run_test)).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
-
-        onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
         onView(withId(id.buttonDilution1)).perform(click())
-        onView(
-            allOf(
-                withId(id.textDilution), withText(
-                    String.format(
-                        getInstrumentation().targetContext
-                            .getString(string.times_dilution), 5
-                    )
-                )
-            )
-        ).check(matches(isCompletelyDisplayed()))
 
         takeScreenshot()
         onView(withId(id.layoutWait)).check(matches(isDisplayed()))
@@ -284,14 +236,26 @@ class ChamberRunTest {
         if (CUVETTE_TEST_TIME_DELAY > 0) {
             val result: Double = (resultString.replace(">", "").trim { it <= ' ' }).toDouble()
             assertTrue("Result is wrong", result > 49)
-            onView(withText(getInstrumentation().targetContext.getString(string.test_with_dilution)))
+            onView(withText(getInstrumentation().targetContext.getString(string.high_level_recommendation)))
                 .check(matches(isDisplayed()))
         } else {
             val result: Double = (resultString.replace(">", "").trim { it <= ' ' }).toDouble()
             assertTrue("Result is wrong", result > 9)
-            onView(withText(getInstrumentation().targetContext.getString(string.test_with_dilution)))
+            onView(withText(getInstrumentation().targetContext.getString(string.high_level_recommendation)))
                 .check(matches(not(isDisplayed())))
         }
+
+        onView(
+            allOf(
+                withId(id.textDilution), withText(
+                    String.format(
+                        getInstrumentation().targetContext
+                            .getString(string.times_dilution), 5
+                    )
+                )
+            )
+        ).check(matches(isCompletelyDisplayed()))
+
         onView(withId(id.buttonAccept)).perform(click())
         mDevice.waitForIdle()
     }
@@ -409,8 +373,6 @@ class ChamberRunTest {
         )
 
         sleep(1000)
-        onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
-        onView(withId(id.buttonNoDilution)).perform(click())
         sleep(
             (TEST_START_DELAY + CUVETTE_TEST_TIME_DELAY + DELAY_EXTRA
                     + DELAY_BETWEEN_SAMPLING * (ChamberTestConfig.SAMPLING_COUNT_DEFAULT + SKIP_SAMPLING_COUNT))

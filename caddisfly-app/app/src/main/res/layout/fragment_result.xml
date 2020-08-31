@@ -56,9 +56,9 @@
 
             <TextView
                 android:id="@+id/textUnit"
-                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:textColor="#333"
                 android:textSize="20sp"
                 tools:text="mg/l" />
@@ -90,7 +90,9 @@
             android:lineSpacingExtra="4dp"
             android:text="@string/high_level_recommendation"
             android:textColor="#444"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/buttonDilution1"
@@ -101,7 +103,9 @@
             android:minWidth="260dp"
             android:minHeight="65dp"
             android:text="@string/times_dilution"
-            android:theme="?secondaryButtonStyle" />
+            android:theme="?secondaryButtonStyle"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/buttonCustomDilution"
@@ -110,7 +114,9 @@
             android:minWidth="260dp"
             android:minHeight="65dp"
             android:text="@string/custom_dilution"
-            android:theme="?secondaryButtonStyle" />
+            android:theme="?secondaryButtonStyle"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </LinearLayout>
 </layout>
