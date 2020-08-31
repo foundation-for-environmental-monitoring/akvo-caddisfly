@@ -1,14 +1,17 @@
 package org.akvo.caddisfly.diagnostic
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TableLayout
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.RecyclerView
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.model.ResultDetail
 import org.akvo.caddisfly.sensor.chamber.BaseRunTest.OnResultListener
@@ -19,17 +22,26 @@ class DiagnosticResultDialog : DialogFragment() {
     private var resultDetails: ArrayList<ResultDetail>? = null
     private var result: ResultDetail? = null
     private var mListener: OnDismissed? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.dialog_diagnostic_result, container, false)
-        val listResults = view.findViewById<ListView>(R.id.listResults)
-        listResults.adapter = ResultListAdapter()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.dialog_diagnostic_result, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val listResults = view.findViewById<RecyclerView>(R.id.listResults)
+        listResults.adapter = ResultListAdapter(resultDetails!!)
         val testFailed = arguments?.getBoolean("testFailed")!!
         val isCalibration = arguments?.getBoolean("isCalibration")!!
         val buttonColorExtract = view.findViewById<Button>(R.id.buttonColorExtract)
         val buttonSwatchColor = view.findViewById<Button>(R.id.buttonSwatchColor)
         val textExtractedRgb = view.findViewById<TextView>(R.id.textExtractedRgb)
         val textSwatchRgb = view.findViewById<TextView>(R.id.textSwatchRgb)
-        //        TextView textDimension = view.findViewById(R.id.textDimension);
         val textDistance = view.findViewById<TextView>(R.id.textDistance)
         val textQuality = view.findViewById<TextView>(R.id.textQuality)
         val buttonCancel = view.findViewById<Button>(R.id.buttonCancel)
@@ -49,12 +61,20 @@ class DiagnosticResultDialog : DialogFragment() {
                 if (result!!.color == Color.TRANSPARENT) {
                     dialog?.setTitle(R.string.error)
                 } else {
-                    dialog?.setTitle(String.format("%s: %s", getString(R.string.result),
-                            ColorUtil.getColorRgbString(result!!.color)))
+                    dialog?.setTitle(
+                        String.format(
+                            "%s: %s", getString(R.string.result),
+                            ColorUtil.getColorRgbString(result!!.color)
+                        )
+                    )
                 }
             } else {
-                dialog?.setTitle(String.format(Locale.getDefault(),
-                        "%.2f %s", result!!.result, ""))
+                dialog?.setTitle(
+                    String.format(
+                        Locale.getDefault(),
+                        "%.2f %s", result!!.result, ""
+                    )
+                )
             }
         }
         buttonCancel.visibility = View.GONE
@@ -67,7 +87,6 @@ class DiagnosticResultDialog : DialogFragment() {
             }
             dismiss()
         }
-        return view
     }
 
     override fun onAttach(context: Context) {
@@ -81,37 +100,35 @@ class DiagnosticResultDialog : DialogFragment() {
         fun onDismissed()
     }
 
-    private inner class ResultListAdapter : BaseAdapter() {
-        override fun getCount(): Int {
-            return resultDetails!!.size
+    class ResultListAdapter(
+        private val values: List<ResultDetail>
+    ) : RecyclerView.Adapter<ResultListAdapter.ViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.row_info, parent, false)
+            return ViewHolder(view)
         }
 
-        override fun getItem(position: Int): Any? {
-            return null
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val result = values[position]
+            holder.imageView.setImageBitmap(result.croppedBitmap)
+            val color = result.color
+            holder.textSwatch.setBackgroundColor(color)
+
+            //display rgb value
+            val r = Color.red(color)
+            val g = Color.green(color)
+            val b = Color.blue(color)
+            holder.textRgb.text = String.format(Locale.getDefault(), "%d  %d  %d", r, g, b)
         }
 
-        override fun getItemId(position: Int): Long {
-            return 0
-        }
+        override fun getItemCount(): Int = values.size
 
-        override fun getView(position: Int, view: View, parent: ViewGroup): View? {
-            val inflater = activity?.layoutInflater
-            @SuppressLint("ViewHolder") val rowView = inflater?.inflate(R.layout.row_info, parent, false)
-            if (rowView != null) {
-                val imageView = rowView.findViewById<ImageView>(R.id.imageView)
-                val textRgb = rowView.findViewById<TextView>(R.id.textRgb)
-                val textSwatch = rowView.findViewById<TextView>(R.id.textSwatch)
-                val result = resultDetails!![position]
-                imageView.setImageBitmap(result.croppedBitmap)
-                val color = result.color
-                textSwatch.setBackgroundColor(color)
-                //display rgb value
-                val r = Color.red(color)
-                val g = Color.green(color)
-                val b = Color.blue(color)
-                textRgb.text = String.format(Locale.getDefault(), "%d  %d  %d", r, g, b)
-            }
-            return rowView
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val imageView: ImageView = view.findViewById(R.id.imageView)
+            val textRgb: TextView = view.findViewById(R.id.textRgb)
+            val textSwatch: TextView = view.findViewById(R.id.textSwatch)
         }
     }
 
@@ -126,9 +143,11 @@ class DiagnosticResultDialog : DialogFragment() {
          * @return the dialog
          */
         @JvmStatic
-        fun newInstance(testFailed: Boolean, resultDetail: ResultDetail?,
-                        resultDetails: ArrayList<ResultDetail>?,
-                        isCalibration: Boolean): DialogFragment {
+        fun newInstance(
+            testFailed: Boolean, resultDetail: ResultDetail?,
+            resultDetails: ArrayList<ResultDetail>?,
+            isCalibration: Boolean
+        ): DialogFragment {
             val fragment = DiagnosticResultDialog()
             val args = Bundle()
             fragment.result = resultDetail
