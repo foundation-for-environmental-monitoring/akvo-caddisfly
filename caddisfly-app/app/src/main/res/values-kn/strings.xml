@@ -62,8 +62,8 @@
     <string name="error_test_failed">ಬಣ್ಣವು ಯಾವುದೇ ಮಾಪನಾಂಕಿತ ಬಣ್ಣಗಳಿಗೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ.</string>
     <string name="check_chamber_placement">ಕೊಠಡಿಯನ್ನು ಸರಿಯಾಗಿ ಇರಿಸಲಾಗಿದೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸಿ.</string>
     <string name="accept_result">ಫಲಿತಾಂಶವನ್ನು ಸ್ವೀಕರಿಸಿ</string>
-    <string name="high_level_recommendation">ಮಾಲಿನ್ಯದ ಮಟ್ಟವು ಹೆಚ್ಚಿರುವುದರಿಂದ ದುರ್ಬಲಗೊಳಿಸುವಿಕೆಯೊಂದಿಗೆ ಮರುಪರಿಶೀಲಿಸಲು ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ.</string>
-    <string name="test_with_dilution">ದುರ್ಬಲಗೊಳಿಸುವಿಕೆಯೊಂದಿಗೆ ಪರೀಕ್ಷಿಸಿ</string>
+    <string name="high_level_recommendation">ಹೆಚ್ಚಿನ ಮಟ್ಟದ ಮಾಲಿನ್ಯ</string>
+    <string name="test_with_dilution">ದುರ್ಬಲಗೊಳಿಸುವಿಕೆಯೊಂದಿಗೆ ಪರೀಕ್ಷಿಸಲು ಸೂಚಿಸಲಾಗುತ್ತದೆ</string>
     <string name="storage_permission">ಸಂಗ್ರಹಣೆ ಅನುಮತಿ ಅಗತ್ಯವಿದೆ</string>
     <string name="camera_storage_permissions">ಕ್ಯಾಮೆರಾ ಮತ್ತು ಶೇಖರಣಾ ಅನುಮತಿಗಳು ಅಗತ್ಯವಿದೆ</string>
     <string name="cannot_start_test">ಪರೀಕ್ಷೆಯನ್ನು ಪ್ರಾರಂಭಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ</string>

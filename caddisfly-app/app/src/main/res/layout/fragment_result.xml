@@ -18,7 +18,7 @@
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingBottom="3dp"
             android:textColor="#fff"
-            android:textSize="32sp"
+            android:textSize="28sp"
             app:background="@{``}"
             tools:background="@color/primary"
             tools:text="Fluoride" />
@@ -32,7 +32,7 @@
             android:gravity="center"
             android:paddingBottom="15dp"
             android:textColor="#e2e2e2"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:visibility="visible"
             app:background="@{``}"
@@ -68,55 +68,70 @@
             android:id="@+id/buttonAccept"
             style="@style/Button"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:minWidth="260dp"
             android:onClick="onClickAcceptResult"
             android:text="@string/accept_result"
             android:theme="?primaryButtonStyle" />
 
-        <View
+
+        <LinearLayout
+            android:id="@+id/dilution_lyt"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="#000" />
-
-        <TextView
-            android:id="@+id/high_level_txt"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:lineSpacingExtra="4dp"
-            android:text="@string/high_level_recommendation"
-            android:textColor="#444"
-            android:textSize="16sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buttonDilution1"
-            style="@style/Button"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="10dp"
-            android:minWidth="260dp"
-            android:minHeight="65dp"
-            android:text="@string/times_dilution"
-            android:theme="?secondaryButtonStyle"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="26dp"
+                android:background="#000" />
 
-        <Button
-            android:id="@+id/buttonCustomDilution"
-            style="@style/Button"
-            android:layout_gravity="center_horizontal"
-            android:minWidth="260dp"
-            android:minHeight="65dp"
-            android:text="@string/custom_dilution"
-            android:theme="?secondaryButtonStyle"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/high_level_recommendation"
+                android:textColor="#A30000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/high_level_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="5dp"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/test_with_dilution"
+                android:textColor="#444"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/buttonDilution1"
+                style="@style/Button"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginBottom="10dp"
+                android:minWidth="260dp"
+                android:text="@string/times_dilution"
+                android:theme="?secondaryButtonStyle" />
+
+            <Button
+                android:id="@+id/buttonCustomDilution"
+                style="@style/Button"
+                android:layout_gravity="center_horizontal"
+                android:minWidth="260dp"
+                android:text="@string/custom_dilution"
+                android:theme="?secondaryButtonStyle"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
     </LinearLayout>
 </layout>

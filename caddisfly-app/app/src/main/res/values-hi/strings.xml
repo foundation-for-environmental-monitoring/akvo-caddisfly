@@ -63,8 +63,8 @@
     <string name="error_test_failed">रंग किसी भी कैलिब्रेटेड रंगों से मेल नहीं खाता है।</string>
     <string name="check_chamber_placement">जांचें कि कक्ष सही ढंग से रखा गया है।</string>
     <string name="accept_result">परिणाम स्वीकार करें</string>
-    <string name="high_level_recommendation">डिल्यूशन के साथ जाँच की सिफारिश की जाती है क्योंकि प्रदूषण का स्तर उच्च है।</string>
-    <string name="test_with_dilution">डाइलूशन करने के साथ जाँच</string>
+    <string name="high_level_recommendation">संदूषण के उच्च स्तर</string>
+    <string name="test_with_dilution">यह कमजोर पड़ने के साथ परीक्षण करने की सिफारिश की जाती है</string>
     <string name="storage_permission">स्टोरेज अनुमति की आवश्यकता है</string>
     <string name="camera_storage_permissions">कैमरा और स्टोरेज अनुमतियों की आवश्यकता है</string>
     <string name="cannot_start_test">परीक्षण शुरू नहीं कर सकता</string>

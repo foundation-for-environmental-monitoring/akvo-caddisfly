@@ -49,13 +49,10 @@ class ResultFragment : Fragment() {
                 if (testInfo.dilutions.size > 1) {
                     when {
                         testInfo.dilution > 1 -> {
-                            buttonDilution1.visibility = View.GONE
-                            buttonCustomDilution.visibility = View.GONE
-                            high_level_txt.visibility = View.GONE
+                            dilution_lyt.visibility = View.GONE
                         }
                         result.highLevelsFound() -> {
-                            buttonDilution1.visibility = View.VISIBLE
-                            high_level_txt.visibility = View.VISIBLE
+                            dilution_lyt.visibility = View.VISIBLE
                             val dilution = testInfo.dilutions[1]
                             buttonDilution1.text = String.format(
                                 Locale.getDefault(),
@@ -74,8 +71,7 @@ class ResultFragment : Fragment() {
                             }
                         }
                         else -> {
-                            buttonDilution1.visibility = View.GONE
-                            high_level_txt.visibility = View.GONE
+                            dilution_lyt.visibility = View.GONE
                         }
                     }
                 }

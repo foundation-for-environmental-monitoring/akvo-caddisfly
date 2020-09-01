@@ -62,8 +62,8 @@
     <string name="error_test_failed">రంగు క్రమాంకనం చేసిన రంగులతో సరిపోలడం లేదు.</string>
     <string name="check_chamber_placement">గది సరిగ్గా ఉంచబడిందో లేదో తనిఖీ చేయండి.</string>
     <string name="accept_result">ఫలితాన్ని అంగీకరించండి</string>
-    <string name="high_level_recommendation">కాలుష్యం స్థాయి ఎక్కువగా ఉన్నందున పలుచనతో తిరిగి పరీక్షించడం మంచిది.</string>
-    <string name="test_with_dilution">పలుచనతో పరీక్షించండి</string>
+    <string name="high_level_recommendation">అధిక స్థాయిలో కాలుష్యం</string>
+    <string name="test_with_dilution">పలుచనతో పరీక్షించడానికి ఇది సిఫార్సు చేయబడింది</string>
     <string name="storage_permission">నిల్వ అనుమతి అవసరం</string>
     <string name="camera_storage_permissions">కెమెరా &amp; నిల్వ అనుమతులు అవసరం</string>
     <string name="cannot_start_test">పరీక్షను ప్రారంభించలేరు</string>

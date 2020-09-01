@@ -94,8 +94,8 @@
     <string name="check_chamber_placement">Check that the chamber has been placed correctly.</string>
     <!-- Result Screen -->
     <string name="accept_result">Accept Result</string>
-    <string name="high_level_recommendation">Contamination is high. Retest with dilution</string>
-    <string name="test_with_dilution">Test with Dilution</string>
+    <string name="high_level_recommendation">High levels of contamination</string>
+    <string name="test_with_dilution">It is recommended to test with dilution</string>
 
     <!-- Permission -->
     <string name="storage_permission">Storage permission is required</string>
