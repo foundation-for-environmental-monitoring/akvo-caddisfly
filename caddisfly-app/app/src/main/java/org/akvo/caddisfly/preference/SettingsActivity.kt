@@ -26,9 +26,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import org.akvo.caddisfly.R
@@ -38,10 +38,9 @@ import org.akvo.caddisfly.util.PreferencesUtil
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 
 class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
-    private var mScrollView: ScrollView? = null
+    private var mScrollView: NestedScrollView? = null
     private var mScrollPosition = 0
     private fun removeAllFragments() {
-        findViewById<View>(R.id.layoutGeneral).visibility = View.GONE
         findViewById<View>(R.id.layoutDiagnostics).visibility = View.GONE
         findViewById<View>(R.id.layoutDiagnosticsOptions).visibility = View.GONE
         findViewById<View>(R.id.layoutDebugging).visibility = View.GONE
@@ -54,39 +53,31 @@ class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
         setupActivity()
     }
 
-//    public override fun onRestart() {
-//        super.onRestart()
-//        setupActivity()
-//    }
-
     override fun onResume() {
         super.onResume()
         PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
-                .registerOnSharedPreferenceChangeListener(this)
+            .registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun setupActivity() {
         setTitle(R.string.settings)
         setContentView(R.layout.activity_settings)
         supportFragmentManager.beginTransaction()
-                .replace(R.id.layoutOther, OtherPreferenceFragment())
-                .commit()
+            .replace(R.id.layoutOther, OtherPreferenceFragment())
+            .commit()
         if (AppPreferences.isDiagnosticMode()) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.layoutGeneral, GeneralPreferenceFragment())
-                    .commit()
+                .add(R.id.layoutDiagnostics, DiagnosticPreferenceFragment())
+                .commit()
             supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutDiagnostics, DiagnosticPreferenceFragment())
-                    .commit()
+                .add(R.id.layoutDiagnosticsOptions, DiagnosticOptionsPreferenceFragment())
+                .commit()
             supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutDiagnosticsOptions, DiagnosticOptionsPreferenceFragment())
-                    .commit()
+                .add(R.id.layoutDebugging, DebuggingPreferenceFragment())
+                .commit()
             supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutDebugging, DebuggingPreferenceFragment())
-                    .commit()
-            supportFragmentManager.beginTransaction()
-                    .add(R.id.layoutTesting, TestingPreferenceFragment())
-                    .commit()
+                .add(R.id.layoutTesting, TestingPreferenceFragment())
+                .commit()
             findViewById<View>(R.id.layoutDiagnosticsOptions).visibility = View.VISIBLE
             findViewById<View>(R.id.layoutDiagnostics).visibility = View.VISIBLE
             findViewById<View>(R.id.layoutDebugging).visibility = View.VISIBLE
@@ -116,8 +107,10 @@ class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
     }
 
     fun onDisableDiagnostics(@Suppress("UNUSED_PARAMETER") item: MenuItem?) {
-        Toast.makeText(this, getString(R.string.diagnosticModeDisabled),
-                Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this, getString(R.string.diagnosticModeDisabled),
+            Toast.LENGTH_SHORT
+        ).show()
         AppPreferences.disableDiagnosticMode()
         changeActionBarStyleBasedOnCurrentMode()
         invalidateOptionsMenu()
@@ -147,7 +140,7 @@ class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
         PreferencesUtil.setInt(this, "settingsScrollPosition", scrollbarPosition)
         super.onPause()
         PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
-                .unregisterOnSharedPreferenceChangeListener(this)
+            .unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPostResume() {

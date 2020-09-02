@@ -1,4 +1,5 @@
 @file:Suppress("DEPRECATION")
+
 package org.akvo.caddisfly.preference
 
 import android.Manifest
@@ -13,7 +14,6 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
@@ -34,12 +34,10 @@ import org.akvo.caddisfly.preference.OtherPreferenceFragment.GenerateMessageAsyn
 import org.akvo.caddisfly.ui.AboutActivity
 import org.akvo.caddisfly.ui.STORAGE_PERMISSION_SOIL
 import org.akvo.caddisfly.ui.STORAGE_PERMISSION_WATER
-import org.akvo.caddisfly.util.ListViewUtil
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 import java.lang.ref.WeakReference
 
 class OtherPreferenceFragment : PreferenceFragmentCompat() {
-    private var list: ListView? = null
     private lateinit var permissionsDelegate: PermissionsDelegate
     private val storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var navigationController: NavigationController? = null
@@ -51,7 +49,6 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        list = view.findViewById(android.R.id.list)
 
         permissionsDelegate = PermissionsDelegate(requireActivity())
 
@@ -62,9 +59,15 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                     startCalibrate()
                 } else {
                     if (BuildConfig.APPLICATION_ID.contains("soil")) {
-                        permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL)
+                        permissionsDelegate.requestPermissions(
+                            storagePermission,
+                            STORAGE_PERMISSION_SOIL
+                        )
                     } else {
-                        permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER)
+                        permissionsDelegate.requestPermissions(
+                            storagePermission,
+                            STORAGE_PERMISSION_WATER
+                        )
                     }
                 }
                 true
@@ -84,17 +87,23 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
         val emailSupportPreference = findPreference<Preference>("emailSupport")
         if (emailSupportPreference != null) {
             emailSupportPreference.setSummary(R.string.send_details_to_support)
-            emailSupportPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                message.setLength(0)
-                val builder = AlertDialog.Builder(requireContext())
-                builder.setTitle(R.string.email_support)
-                builder.setMessage(getString(R.string.if_you_need_assistance) + "\n\n" +
-                        getString(R.string.select_email_app))
+            emailSupportPreference.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    message.setLength(0)
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle(R.string.email_support)
+                    builder.setMessage(
+                        getString(R.string.if_you_need_assistance) + "\n\n" +
+                                getString(R.string.select_email_app)
+                    )
                         .setCancelable(false)
                         .setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
                         .setPositiveButton(R.string.create_support_email) { dialog: DialogInterface, _: Int ->
                             dialog.dismiss()
-                            val progressDialog = ProgressDialog(activity, android.R.style.Theme_DeviceDefault_Light_Dialog)
+                            val progressDialog = ProgressDialog(
+                                activity,
+                                android.R.style.Theme_DeviceDefault_Light_Dialog
+                            )
                             // START AsyncTask
                             val generateMessageAsyncTask = GenerateMessageAsyncTask(this)
                             val exampleAsyncTaskListener = object : ExampleAsyncTaskListener {
@@ -117,19 +126,14 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                             progressDialog.show()
                             generateMessageAsyncTask.execute()
                         }.show()
-                true
-            }
+                    true
+                }
         }
     }
 
     private fun startCalibrate() {
         FileHelper.migrateFolders()
         navigationController!!.navigateToTestType(TestType.CHAMBER_TEST, TestSampleType.ALL, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        ListViewUtil.setListViewHeightBasedOnChildren(list, 0)
     }
 
     private fun sendEmail(context: Context, message: String) {
@@ -145,9 +149,11 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
         }
     }
 
-    internal class GenerateMessageAsyncTask(fragment: OtherPreferenceFragment) : AsyncTask<Void?, Void?, Int?>() {
+    internal class GenerateMessageAsyncTask(fragment: OtherPreferenceFragment) :
+        AsyncTask<Void?, Void?, Int?>() {
         private var listener: ExampleAsyncTaskListener? = null
-        private val activityReference: WeakReference<OtherPreferenceFragment> = WeakReference(fragment)
+        private val activityReference: WeakReference<OtherPreferenceFragment> =
+            WeakReference(fragment)
         private lateinit var viewModel: TestListViewModel
         private lateinit var testList: List<TestInfo>
 
@@ -168,14 +174,19 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 if (testInfo1 != null) {
                     for (calibration in testInfo1.calibrations) {
                         if (calibration.color != Color.TRANSPARENT &&
-                                calibration.color != Color.BLACK) {
+                            calibration.color != Color.BLACK
+                        ) {
                             calibrated = true
                             break
                         }
                     }
                     if (calibrated) {
-                        message.append(generateCalibrationFile(activityReference.get()!!.activity,
-                                testInfo1, false))
+                        message.append(
+                            generateCalibrationFile(
+                                activityReference.get()!!.activity,
+                                testInfo1, false
+                            )
+                        )
                         message.append("\n")
                         message.append("-------------------------------------------------")
                         message.append("\n")
@@ -202,8 +213,6 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
         internal interface ExampleAsyncTaskListener {
             fun onExampleAsyncTaskFinished(value: Int?)
         }
-
-
     }
 
     companion object {

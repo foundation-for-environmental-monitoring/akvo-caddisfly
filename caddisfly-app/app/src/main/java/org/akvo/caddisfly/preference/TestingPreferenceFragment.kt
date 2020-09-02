@@ -20,21 +20,17 @@ package org.akvo.caddisfly.preference
 
 import android.graphics.Color
 import android.os.Bundle
-
 import android.text.format.DateFormat
 import android.view.View
-import android.widget.ListView
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.helper.ApkHelper.isNonStoreVersion
-import org.akvo.caddisfly.util.ListViewUtil
 import org.akvo.caddisfly.util.PreferencesUtil
 import java.util.*
 
 class TestingPreferenceFragment : PreferenceFragmentCompat() {
-    private var list: ListView? = null
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.pref_testing)
     }
@@ -49,7 +45,6 @@ class TestingPreferenceFragment : PreferenceFragmentCompat() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        list = view.findViewById(android.R.id.list)
         setBackgroundColor(view)
         val testModeOnPreference = findPreference<Preference>(getString(R.string.testModeOnKey))
         if (testModeOnPreference != null) {
@@ -58,20 +53,18 @@ class TestingPreferenceFragment : PreferenceFragmentCompat() {
                 true
             }
         }
-        val nextUpdateCheckPreference = findPreference<Preference>(getString(R.string.nextUpdateCheckKey))
+        val nextUpdateCheckPreference =
+            findPreference<Preference>(getString(R.string.nextUpdateCheckKey))
         if (nextUpdateCheckPreference != null) {
             if (!isNonStoreVersion(requireContext())) {
-                val nextUpdateTime = PreferencesUtil.getLong(activity, ConstantKey.NEXT_UPDATE_CHECK)
-                val dateString = DateFormat.format("dd/MMM/yyyy hh:mm", Date(nextUpdateTime)).toString()
+                val nextUpdateTime =
+                    PreferencesUtil.getLong(activity, ConstantKey.NEXT_UPDATE_CHECK)
+                val dateString =
+                    DateFormat.format("dd/MMM/yyyy hh:mm", Date(nextUpdateTime)).toString()
                 nextUpdateCheckPreference.summary = dateString
             } else {
                 nextUpdateCheckPreference.summary = "Not installed from Play store"
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        ListViewUtil.setListViewHeightBasedOnChildren(list, 40)
     }
 }
