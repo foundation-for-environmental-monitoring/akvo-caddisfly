@@ -51,13 +51,14 @@ class TestConfigRepository {
                 if (testInfoList[i].subtype !== testType) {
                     testInfoList.removeAt(i)
                 } else if (testSampleType !== TestSampleType.ALL
-                        && testInfoList[i].sampleType !== testSampleType) {
+                    && testInfoList[i].sampleType !== testSampleType
+                ) {
                     testInfoList.removeAt(i)
                 }
             }
-            testInfoList.sortWith(Comparator { object1: TestInfo, object2: TestInfo ->
+            testInfoList.sortWith { object1: TestInfo, object2: TestInfo ->
                 object1.name!!.compareTo(object2.name!!, ignoreCase = true)
-            })
+            }
             if (isDiagnosticMode()) {
                 addExperimentalTests(testType, testSampleType, testInfoList)
             }
@@ -68,14 +69,15 @@ class TestConfigRepository {
                     if (customList[i].subtype !== testType) {
                         customList.removeAt(i)
                     } else if (testSampleType !== TestSampleType.ALL
-                            && customList[i].sampleType !== testSampleType) {
+                        && customList[i].sampleType !== testSampleType
+                    ) {
                         customList.removeAt(i)
                     }
                 }
                 if (customList.size > 0) {
-                    customList.sortWith(Comparator { object1: TestInfo, object2: TestInfo ->
+                    customList.sortWith { object1: TestInfo, object2: TestInfo ->
                         object1.name!!.compareTo(object2.name!!, ignoreCase = true)
-                    })
+                    }
                     testInfoList.add(TestInfo("Custom"))
                     testInfoList.addAll(customList)
                 }
@@ -91,7 +93,11 @@ class TestConfigRepository {
         return testInfoList
     }
 
-    private fun addExperimentalTests(testType: TestType, testSampleType: TestSampleType, testInfoList: MutableList<TestInfo>) {
+    private fun addExperimentalTests(
+        testType: TestType,
+        testSampleType: TestSampleType,
+        testInfoList: MutableList<TestInfo>
+    ) {
         val testConfig = Gson().fromJson(assetsManager.experimentalJson, TestConfig::class.java)
         if (testConfig != null) {
             val experimentalList = testConfig.tests
@@ -99,14 +105,15 @@ class TestConfigRepository {
                 if (experimentalList[i].subtype !== testType) {
                     experimentalList.removeAt(i)
                 } else if (testSampleType !== TestSampleType.ALL
-                        && experimentalList[i].sampleType !== testSampleType) {
+                    && experimentalList[i].sampleType !== testSampleType
+                ) {
                     experimentalList.removeAt(i)
                 }
             }
             if (experimentalList.size > 0) {
-                experimentalList.sortWith(Comparator { object1: TestInfo, object2: TestInfo ->
+                experimentalList.sortWith { object1: TestInfo, object2: TestInfo ->
                     object1.name!!.compareTo(object2.name!!, ignoreCase = true)
-                })
+                }
                 testInfoList.add(TestInfo("Experimental"))
                 testInfoList.addAll(experimentalList)
             }
@@ -192,8 +199,10 @@ class TestConfigRepository {
         val context: Context? = app
         val colors = testInfo.results!![0].colors
         for (color in colors) {
-            val key = String.format(Locale.US, "%s-%.2f",
-                    testInfo.uuid, color.value)
+            val key = String.format(
+                Locale.US, "%s-%.2f",
+                testInfo.uuid, color.value
+            )
             val calibration = Calibration()
             calibration.uid = testInfo.uuid
             calibration.color = getInt(context, key, 0)
@@ -202,13 +211,17 @@ class TestConfigRepository {
         }
         val calibrationDetail = CalibrationDetail()
         calibrationDetail.uid = testInfo.uuid
-        val date = getLong(context!!,
-                testInfo.uuid, R.string.calibrationDateKey)
+        val date = getLong(
+            context!!,
+            testInfo.uuid, R.string.calibrationDateKey
+        )
         if (date > 0) {
             calibrationDetail.date = date
         }
-        val expiry = getLong(context,
-                testInfo.uuid, R.string.calibrationExpiryDateKey)
+        val expiry = getLong(
+            context,
+            testInfo.uuid, R.string.calibrationExpiryDateKey
+        )
         if (expiry > 0) {
             calibrationDetail.expiry = expiry
         }
@@ -243,7 +256,8 @@ class TestConfigRepository {
         // If colors are defined as comma delimited range values then create array
         try {
             if (testInfo.results!![0].colors.isEmpty()
-                    && testInfo.ranges!!.isNotEmpty()) {
+                && testInfo.ranges!!.isNotEmpty()
+            ) {
                 val values = testInfo.ranges!!.split(",").toTypedArray()
                 for (value in values) {
                     testInfo.results!![0].colors.add(ColorItem(value.toDouble()))

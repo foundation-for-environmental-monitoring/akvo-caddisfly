@@ -15,8 +15,8 @@ import java.util.Locale;
 public class ResultUtils {
     static final int INTERPOLATION_NUMBER = 10;
 
-    private static DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-    private static DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
+    private static final DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private static final DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
 
     public static float[] calculateResultSingle(@Nullable float[] colorValues, @NonNull List<ColorItem> colors) {
         double[][] interpolTable = createInterpolTable(colors);

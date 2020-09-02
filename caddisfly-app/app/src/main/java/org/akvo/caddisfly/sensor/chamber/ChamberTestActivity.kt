@@ -78,8 +78,8 @@ import java.io.File
 import java.util.*
 
 class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelectedListener,
-        OnCalibrationDetailsSavedListener, OnDilutionSelectedListener,
-        OnCustomDilutionListener, OnDismissed {
+    OnCalibrationDetailsSavedListener, OnDilutionSelectedListener,
+    OnCustomDilutionListener, OnDismissed {
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             finish()
@@ -97,8 +97,10 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chamber_test)
         fragmentManager = supportFragmentManager
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                IntentFilter("data-sent-to-dash"))
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mMessageReceiver,
+            IntentFilter("data-sent-to-dash")
+        )
         // Add list fragment if this is first creation
         if (savedInstanceState == null) {
             try {
@@ -123,11 +125,11 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
     private fun goToFragment(fragment: Fragment?) {
         if (fragmentManager!!.fragments.size > 0) {
             fragmentManager!!.beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.fragment_container, fragment!!).commit()
+                .addToBackStack(null)
+                .replace(R.id.fragment_container, fragment!!).commit()
         } else {
             fragmentManager!!.beginTransaction()
-                    .add(R.id.fragment_container, fragment!!).commit()
+                .add(R.id.fragment_container, fragment!!).commit()
         }
         if (fragment is SelectDilutionFragment) {
             testStarted = true
@@ -151,7 +153,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
     private fun runTest() {
         if (cameraIsOk) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                    && !BuildConfig.TEST_RUNNING) {
+                && !BuildConfig.TEST_RUNNING
+            ) {
                 startLockTask()
             }
             runTestFragment!!.setDilution(currentDilution)
@@ -226,7 +229,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
 
     private fun showEditCalibrationDetailsDialog(isEdit: Boolean) {
         val ft = supportFragmentManager.beginTransaction()
-        val saveCalibrationDialogFragment = SaveCalibrationDialogFragment.newInstance(testInfo, isEdit)
+        val saveCalibrationDialogFragment =
+            SaveCalibrationDialogFragment.newInstance(testInfo, isEdit)
         saveCalibrationDialogFragment.show(ft, "saveCalibrationDialog")
     }
 
@@ -236,7 +240,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         if (AppPreferences.isDiagnosticMode() && !testStarted
-                && calibrationItemFragment != null && calibrationItemFragment!!.isVisible) {
+            && calibrationItemFragment != null && calibrationItemFragment!!.isVisible
+        ) {
             menuInflater.inflate(R.menu.menu_calibrate_dev, menu)
         }
         return true
@@ -325,37 +330,50 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                 for (listFile in listFiles) {
                     arrayAdapter.add(listFile.name)
                 }
-                builder.setNegativeButton(R.string.cancel
+                builder.setNegativeButton(
+                    R.string.cancel
                 ) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
-                builder.setAdapter(arrayAdapter
+                builder.setAdapter(
+                    arrayAdapter
                 ) { _: DialogInterface?, which: Int ->
                     val fileName = listFiles[which].name
                     try {
                         loadCalibrationFromFile(testInfo, fileName)
                         loadDetails()
                     } catch (ex: Exception) {
-                        AlertUtil.showError(context, R.string.error, getString(R.string.errorLoadingFile),
-                                null, R.string.ok,
-                                DialogInterface.OnClickListener { dialog1: DialogInterface, _: Int -> dialog1.dismiss() }, null, null)
+                        AlertUtil.showError(
+                            context,
+                            R.string.error,
+                            getString(R.string.errorLoadingFile),
+                            null,
+                            R.string.ok,
+                            { dialog1: DialogInterface, _: Int -> dialog1.dismiss() },
+                            null,
+                            null
+                        )
                     }
                 }
                 val alertDialog = builder.create()
                 alertDialog.setOnShowListener {
                     val listView = alertDialog.listView
-                    listView.onItemLongClickListener = OnItemLongClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
-                        AlertUtil.askQuestion(context, R.string.delete,
+                    listView.onItemLongClickListener =
+                        OnItemLongClickListener { _: AdapterView<*>?, _: View?, i: Int, _: Long ->
+                            AlertUtil.askQuestion(
+                                context, R.string.delete,
                                 R.string.deleteConfirm, R.string.delete, R.string.cancel, true,
-                                DialogInterface.OnClickListener { _: DialogInterface?, _: Int ->
+                                { _: DialogInterface?, _: Int ->
                                     val fileName = listFiles[i].name
                                     FileUtil.deleteFile(path, fileName)
                                     @Suppress("UNCHECKED_CAST")
                                     val listAdapter = listView.adapter as ArrayAdapter<Any>
                                     listAdapter.remove(listAdapter.getItem(i))
                                     alertDialog.dismiss()
-                                    Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT).show()
-                                }, null)
-                        true
-                    }
+                                    Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT)
+                                        .show()
+                                }, null
+                            )
+                            true
+                        }
                 }
                 alertDialog.show()
             } else {
@@ -367,8 +385,10 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
 
     override fun onResult(resultDetails: ArrayList<ResultDetail>, calibration: Calibration?) {
         val colorInfo = ColorInfo(getAverageColor(resultDetails), 0)
-        val resultDetail = analyzeColor(testInfo.swatches.size,
-                colorInfo, testInfo.swatches)
+        val resultDetail = analyzeColor(
+            testInfo.swatches.size,
+            colorInfo, testInfo.swatches
+        )
         resultDetail.bitmap = resultDetails[resultDetails.size - 1].bitmap
         resultDetail.croppedBitmap = resultDetails[resultDetails.size - 1].croppedBitmap
         if (calibration == null) {
@@ -389,10 +409,12 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                 val isInternal = intent.getBooleanExtra(IS_INTERNAL, true)
                 fragmentManager!!.popBackStack()
                 fragmentManager!!
-                        .beginTransaction()
-                        .addToBackStack(null)
-                        .replace(R.id.fragment_container,
-                                ResultFragment.newInstance(testInfo, isInternal), null).commit()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(
+                        R.id.fragment_container,
+                        ResultFragment.newInstance(testInfo, isInternal), null
+                    ).commit()
                 testInfo.resultDetail = resultDetail
                 if (AppPreferences.showDebugInfo) {
                     showDiagnosticResultDialog(false, resultDetail, resultDetails, false)
@@ -415,7 +437,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                             TWO_SENTENCE_FORMAT, getString(R.string.error_test_failed),
                             getString(R.string.check_chamber_placement)
                         ),
-                            resultDetails[resultDetails.size - 1].croppedBitmap)
+                        resultDetails[resultDetails.size - 1].croppedBitmap
+                    )
                 }
             }
         } else {
@@ -429,7 +452,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                         TWO_SENTENCE_FORMAT, getString(R.string.could_not_calibrate),
                         getString(R.string.check_chamber_placement)
                     ),
-                        resultDetails[resultDetails.size - 1].croppedBitmap)
+                    resultDetails[resultDetails.size - 1].croppedBitmap
+                )
             } else {
                 val dao = db!!.calibrationDao()
                 calibration.color = color
@@ -437,12 +461,16 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                 if (AppPreferences.isDiagnosticMode()) {
                     calibration.image = UUID.randomUUID().toString() + ".png"
                     // Save photo taken during the test
-                    FileUtil.writeBitmapToExternalStorage(resultDetails[resultDetails.size - 1].bitmap,
-                            FileType.DIAGNOSTIC_IMAGE, calibration.image!!)
+                    FileUtil.writeBitmapToExternalStorage(
+                        resultDetails[resultDetails.size - 1].bitmap,
+                        FileType.DIAGNOSTIC_IMAGE, calibration.image!!
+                    )
                     calibration.croppedImage = UUID.randomUUID().toString() + ".png"
                     // Save photo taken during the test
-                    FileUtil.writeBitmapToExternalStorage(resultDetails[resultDetails.size - 1].croppedBitmap,
-                            FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage!!)
+                    FileUtil.writeBitmapToExternalStorage(
+                        resultDetails[resultDetails.size - 1].croppedBitmap,
+                        FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage!!
+                    )
                 }
                 dao!!.insert(calibration)
                 CalibrationFile.saveCalibratedData(this, testInfo, calibration, color)
@@ -476,10 +504,13 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
      * @param resultDetails the result details
      * @param isCalibration is this a calibration result
      */
-    private fun showDiagnosticResultDialog(testFailed: Boolean, resultDetail: ResultDetail,
-                                           resultDetails: ArrayList<ResultDetail>, isCalibration: Boolean) {
+    private fun showDiagnosticResultDialog(
+        testFailed: Boolean, resultDetail: ResultDetail,
+        resultDetails: ArrayList<ResultDetail>, isCalibration: Boolean
+    ) {
         val resultFragment = newInstance(
-                testFailed, resultDetail, resultDetails, isCalibration)
+            testFailed, resultDetail, resultDetails, isCalibration
+        )
         val ft = supportFragmentManager.beginTransaction()
         val prev = supportFragmentManager.findFragmentByTag("gridDialog")
         if (prev != null) {
@@ -497,7 +528,8 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
      */
     private fun showCalibrationDialog(calibration: Calibration) {
         val resultFragment = newInstance(
-                calibration, testInfo.decimalPlaces, testInfo.results!![0].unit)
+            calibration, testInfo.decimalPlaces, testInfo.results!![0].unit
+        )
         val ft = supportFragmentManager.beginTransaction()
         val prev = supportFragmentManager.findFragmentByTag("calibrationDialog")
         if (prev != null) {
@@ -520,15 +552,18 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
             if (testInfo.nameSuffix != null && testInfo.nameSuffix!!.isNotEmpty()) {
                 testName += "_" + testInfo.nameSuffix!!.replace(" ", "_")
             }
-            resultIntent.putExtra(testName
-                    + testInfo.resultSuffix, result.result)
-            resultIntent.putExtra(testName
-                    + "_" + SensorConstants.DILUTION
-                    + testInfo.resultSuffix, testInfo.dilution)
             resultIntent.putExtra(
-                    result.name?.replace(" ", "_")
-                            + "_" + SensorConstants.UNIT + testInfo.resultSuffix,
-                    testInfo.results!![0].unit)
+                testName + testInfo.resultSuffix, result.result
+            )
+            resultIntent.putExtra(
+                testName + "_" + SensorConstants.DILUTION
+                        + testInfo.resultSuffix, testInfo.dilution
+            )
+            resultIntent.putExtra(
+                result.name?.replace(" ", "_")
+                        + "_" + SensorConstants.UNIT + testInfo.resultSuffix,
+                testInfo.results!![0].unit
+            )
             if (i == 0) {
                 resultIntent.putExtra(SensorConstants.VALUE, result.result)
             }
@@ -551,22 +586,23 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
         stopScreenPinning()
         playShortResource(this, R.raw.err)
         releaseResources()
-        alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
-                DialogInterface.OnClickListener { _: DialogInterface?, _: Int ->
-                    stopScreenPinning()
-                    if (intent.getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                        start()
-                    } else {
-                        runTest()
-                    }
-                },
-                DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
-                    stopScreenPinning()
-                    dialogInterface.dismiss()
-                    releaseResources()
-                    setResult(Activity.RESULT_CANCELED)
-                    finish()
-                }, null
+        alertDialogToBeDestroyed = AlertUtil.showError(
+            this, R.string.error, message, bitmap, R.string.retry,
+            { _: DialogInterface?, _: Int ->
+                stopScreenPinning()
+                if (intent.getBooleanExtra(ConstantKey.RUN_TEST, false)) {
+                    start()
+                } else {
+                    runTest()
+                }
+            },
+            { dialogInterface: DialogInterface, _: Int ->
+                stopScreenPinning()
+                dialogInterface.dismiss()
+                releaseResources()
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }, null
         )
     }
 
@@ -606,20 +642,22 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                     val checkBoxView = View.inflate(this, R.layout.dialog_message, null)
                     val checkBox = checkBoxView.findViewById<CheckBox>(R.id.checkbox)
                     checkBox.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-                        PreferencesUtil.setBoolean(baseContext,
-                                R.string.showMinMegaPixelDialogKey, !isChecked)
+                        PreferencesUtil.setBoolean(
+                            baseContext,
+                            R.string.showMinMegaPixelDialogKey, !isChecked
+                        )
                     }
                     val builder = androidx.appcompat.app.AlertDialog.Builder(this)
                     builder.setTitle(R.string.warning)
                     builder.setMessage(R.string.camera_not_good)
-                            .setView(checkBoxView)
-                            .setCancelable(false)
-                            .setPositiveButton(R.string.continue_anyway) { _: DialogInterface?, _: Int -> runTest() }
-                            .setNegativeButton(R.string.stop_test) { dialog: DialogInterface, _: Int ->
-                                dialog.dismiss()
-                                cameraIsOk = false
-                                finish()
-                            }.show()
+                        .setView(checkBoxView)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.continue_anyway) { _: DialogInterface?, _: Int -> runTest() }
+                        .setNegativeButton(R.string.stop_test) { dialog: DialogInterface, _: Int ->
+                            dialog.dismiss()
+                            cameraIsOk = false
+                            finish()
+                        }.show()
                 } else {
                     runTest()
                 }
@@ -634,7 +672,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
     private val isAppInLockTaskMode: Boolean
         get() {
             val activityManager: ActivityManager =
-                    this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+                this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
             @Suppress("DEPRECATION")
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 (activityManager.lockTaskModeState

@@ -45,7 +45,7 @@ object FileUtil {
     }
 
     /**
-     * Get the root of the files storage directory, depending on the resource being app internalṇ
+     * Get the root of the files storage directory, depending on the resource being app internal
      * (not concerning the user) or not (users might need to pull the resource from the storage).
      *
      * @param internal true for app specific resources, false otherwise
@@ -188,7 +188,11 @@ object FileUtil {
      * @return absolute path name of saved file, or empty string on failure.
      */
     @JvmStatic
-    fun writeBitmapToExternalStorage(bitmap: Bitmap?, fileType: FileType?, fileName: String): String { // Find the root of the external storage
+    fun writeBitmapToExternalStorage(
+        bitmap: Bitmap?,
+        fileType: FileType?,
+        fileName: String
+    ): String { // Find the root of the external storage
 // See http://developer.android.com/guide/topics/data/data-  storage.html#filesExternal
 // See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
         val dir = FileHelper.getFilesDir(fileType)

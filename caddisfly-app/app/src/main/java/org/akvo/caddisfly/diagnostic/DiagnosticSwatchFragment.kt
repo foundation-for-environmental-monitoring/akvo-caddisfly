@@ -45,7 +45,7 @@ class DiagnosticSwatchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            activity!!.setTitle(R.string.swatches)
+            requireActivity().setTitle(R.string.swatches)
         }
         val recyclerView: RecyclerView = view.findViewById(R.id.swatchRecyclerView)
         if (testInfo!!.swatches.size > 0) {

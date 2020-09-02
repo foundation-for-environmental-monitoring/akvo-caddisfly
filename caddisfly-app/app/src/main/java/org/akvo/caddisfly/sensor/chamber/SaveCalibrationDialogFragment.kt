@@ -72,58 +72,67 @@ class SaveCalibrationDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val activity: Activity? = activity
         val i = activity?.layoutInflater
-        @SuppressLint("InflateParams") val view = i?.inflate(R.layout.fragment_save_calibration, null)
+        @SuppressLint("InflateParams") val view =
+            i?.inflate(R.layout.fragment_save_calibration, null)
         editExpiryDate = view?.findViewById(R.id.editExpiryDate)
         val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo!!.uuid)
         if (calibrationDetail!!.expiry > Date().time) {
             if (calibrationDetail.expiry >= 0) {
                 calendar.timeInMillis = calibrationDetail.expiry
-                editExpiryDate?.setText(SimpleDateFormat("dd-MMM-yyyy", Locale.US)
-                        .format(Date(calibrationDetail.expiry)))
+                editExpiryDate?.setText(
+                    SimpleDateFormat("dd-MMM-yyyy", Locale.US)
+                        .format(Date(calibrationDetail.expiry))
+                )
             }
         }
-        setupDatePicker(activity)
+        setupDatePicker()
         editName = view?.findViewById(R.id.editName)
         if (!isEditing && isDiagnosticMode()) {
             editName?.requestFocus()
-            showKeyboard(activity)
+            showKeyboard()
         } else {
             editName?.visibility = View.GONE
         }
         val b = AlertDialog.Builder(getActivity())
             .setTitle(R.string.calibration_details)
-                .setPositiveButton(R.string.save
-                ) { _: DialogInterface?, _: Int ->
-                    closeKeyboard(activity, editName)
-                    dismiss()
-                }
-                .setNegativeButton(R.string.cancel
-                ) { _: DialogInterface?, _: Int ->
-                    closeKeyboard(activity, editName)
-                    dismiss()
-                }
+            .setPositiveButton(
+                R.string.save
+            ) { _: DialogInterface?, _: Int ->
+                closeKeyboard(editName)
+                dismiss()
+            }
+            .setNegativeButton(
+                R.string.cancel
+            ) { _: DialogInterface?, _: Int ->
+                closeKeyboard(editName)
+                dismiss()
+            }
         b.setView(view)
         return b.create()
     }
 
-    private fun showKeyboard(context: Context?) {
-        val imm = context!!.getSystemService(
-                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    private fun showKeyboard() {
+        val imm = requireContext().getSystemService(
+            Context.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
-    private fun setupDatePicker(context: Context?) {
-        val onDateSetListener = OnDateSetListener { _: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-            calendar[Calendar.YEAR] = year
-            calendar[Calendar.MONTH] = monthOfYear
-            calendar[Calendar.DAY_OF_MONTH] = dayOfMonth
-            val date = SimpleDateFormat("dd MMM yyyy", Locale.US).format(calendar.time)
-            editExpiryDate!!.setText(date)
-        }
-        val datePickerDialog = DatePickerDialog(context!!, onDateSetListener,
-                calendar[Calendar.YEAR],
-                calendar[Calendar.MONTH],
-                calendar[Calendar.DAY_OF_MONTH])
+    private fun setupDatePicker() {
+        val onDateSetListener =
+            OnDateSetListener { _: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                calendar[Calendar.YEAR] = year
+                calendar[Calendar.MONTH] = monthOfYear
+                calendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+                val date = SimpleDateFormat("dd MMM yyyy", Locale.US).format(calendar.time)
+                editExpiryDate!!.setText(date)
+            }
+        val datePickerDialog = DatePickerDialog(
+            requireContext(), onDateSetListener,
+            calendar[Calendar.YEAR],
+            calendar[Calendar.MONTH],
+            calendar[Calendar.DAY_OF_MONTH]
+        )
         val date = Calendar.getInstance()
         date.add(Calendar.DATE, 1)
         date[Calendar.HOUR_OF_DAY] = date.getMinimum(Calendar.HOUR_OF_DAY)
@@ -141,19 +150,19 @@ class SaveCalibrationDialogFragment : DialogFragment() {
         }
         editExpiryDate!!.onFocusChangeListener = OnFocusChangeListener { _: View?, b: Boolean ->
             if (b) {
-                closeKeyboard(getContext(), editName)
+                closeKeyboard(editName)
                 datePickerDialog.show()
             }
         }
         editExpiryDate!!.setOnClickListener {
-            closeKeyboard(getContext(), editName)
+            closeKeyboard(editName)
             datePickerDialog.show()
         }
     }
 
     override fun onStart() {
         super.onStart()
-        val context: Context = activity!!
+        val context: Context = requireActivity()
         val d = dialog as AlertDialog?
         if (d != null) {
             val positiveButton = d.getButton(Dialog.BUTTON_POSITIVE)
@@ -164,24 +173,30 @@ class SaveCalibrationDialogFragment : DialogFragment() {
                             val path = getFilesDir(FileType.CALIBRATION, testInfo!!.uuid)
                             val file = File(path, editName!!.text.toString())
                             if (file.exists()) {
-                                AlertUtil.askQuestion(context, R.string.fileAlreadyExists,
-                                        R.string.doYouWantToOverwrite, R.string.overwrite, R.string.cancel, true,
-                                        DialogInterface.OnClickListener { _: DialogInterface?, _: Int ->
-                                            saveDetails(testInfo!!.uuid, file.name)
-                                            saveCalibrationDetails(path)
-                                            closeKeyboard(context, editName)
-                                            dismiss()
-                                        }, null
+                                AlertUtil.askQuestion(
+                                    context,
+                                    R.string.fileAlreadyExists,
+                                    R.string.doYouWantToOverwrite,
+                                    R.string.overwrite,
+                                    R.string.cancel,
+                                    true,
+                                    { _: DialogInterface?, _: Int ->
+                                        saveDetails(testInfo!!.uuid, file.name)
+                                        saveCalibrationDetails(path)
+                                        closeKeyboard(editName)
+                                        dismiss()
+                                    },
+                                    null
                                 )
                             } else {
                                 saveDetails(testInfo!!.uuid, file.name)
                                 saveCalibrationDetails(path)
-                                closeKeyboard(context, editName)
+                                closeKeyboard(editName)
                                 dismiss()
                             }
                         } else {
                             saveDetails(testInfo!!.uuid, "")
-                            closeKeyboard(context, editExpiryDate)
+                            closeKeyboard(editExpiryDate)
                             dismiss()
                         }
                     }
@@ -202,7 +217,8 @@ class SaveCalibrationDialogFragment : DialogFragment() {
 
                 private fun formEntryValid(): Boolean {
                     if (!isEditing && isDiagnosticMode()
-                            && editName!!.text.toString().trim { it <= ' ' }.isEmpty()) {
+                        && editName!!.text.toString().trim { it <= ' ' }.isEmpty()
+                    ) {
                         editName!!.error = getString(R.string.saveInvalidFileName)
                         return false
                     }
@@ -228,13 +244,14 @@ class SaveCalibrationDialogFragment : DialogFragment() {
      *
      * @param input the EditText for which the keyboard is open
      */
-    private fun closeKeyboard(context: Context?, input: EditText?) {
+    private fun closeKeyboard(input: EditText?) {
         try {
-            val imm = context!!.getSystemService(
-                    Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = requireContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE
+            ) as InputMethodManager
             imm.hideSoftInputFromWindow(input!!.windowToken, 0)
             if (activity != null) {
-                val view = activity!!.currentFocus
+                val view = requireActivity().currentFocus
                 if (view != null) {
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
@@ -246,12 +263,12 @@ class SaveCalibrationDialogFragment : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        closeKeyboard(activity, editName)
+        closeKeyboard(editName)
     }
 
     override fun onPause() {
         super.onPause()
-        closeKeyboard(activity, editName)
+        closeKeyboard(editName)
     }
 
     override fun onAttach(context: Context) {
@@ -259,8 +276,10 @@ class SaveCalibrationDialogFragment : DialogFragment() {
         mListener = if (context is OnCalibrationDetailsSavedListener) {
             context
         } else {
-            throw IllegalArgumentException(context.toString()
-                    + " must implement OnCalibrationDetailsSavedListener")
+            throw IllegalArgumentException(
+                context.toString()
+                        + " must implement OnCalibrationDetailsSavedListener"
+            )
         }
     }
 

@@ -359,14 +359,15 @@ open class BaseRunTest : Fragment(), RunTest {
         stopScreenPinning()
         releaseResources()
         playShortResource(requireActivity(), R.raw.err)
-        alertDialogToBeDestroyed = AlertUtil.showError(activity,
-                R.string.error, message, bitmap, R.string.ok,
-                DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.dismiss()
-                    activity.setResult(Activity.RESULT_CANCELED)
-                    stopScreenPinning()
-                    activity.finish()
-                }, null, null
+        alertDialogToBeDestroyed = AlertUtil.showError(
+            activity,
+            R.string.error, message, bitmap, R.string.ok,
+            { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+                activity.setResult(Activity.RESULT_CANCELED)
+                stopScreenPinning()
+                activity.finish()
+            }, null, null
         )
     }
 

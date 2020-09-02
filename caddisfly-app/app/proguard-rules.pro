@@ -28,6 +28,7 @@
 -keepattributes *Annotation*
 
 # Gson specific classes
+#noinspection ShrinkerUnresolvedReference
 -keep class sun.misc.Unsafe { *; }
 #-keep class com.google.gson.stream.** { *; }
 
@@ -47,6 +48,7 @@
 -dontwarn java.awt.**
 -dontwarn java.beans.Beans
 -dontwarn javax.security.**
+#noinspection ShrinkerUnresolvedReference
 -keep class javamail.** {*;}
 -keep class javax.mail.** {*;}
 -keep class javax.activation.** {*;}

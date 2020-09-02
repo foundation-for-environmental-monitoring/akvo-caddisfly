@@ -55,7 +55,7 @@ public class StripTestActivity extends BaseActivity {
     private ImageView imagePageRight;
     private ImageView imagePageLeft;
     private ResultFragment resultFragment;
-    private PageIndex pageIndex = new PageIndex();
+    private final PageIndex pageIndex = new PageIndex();
 
     private TestInfo testInfo;
     private CustomViewPager viewPager;
@@ -69,7 +69,7 @@ public class StripTestActivity extends BaseActivity {
     private int skipToPageNumber;
     private int currentStage = 1;
 
-    private ArrayList<Instruction> instructionList = new ArrayList<>();
+    private final ArrayList<Instruction> instructionList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

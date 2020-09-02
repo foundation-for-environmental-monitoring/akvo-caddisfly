@@ -430,11 +430,11 @@ class TestActivity : BaseActivity() {
         AlertUtil.showAlert(
             this, R.string.cannot_start_test, message,
             R.string.ok,
-            DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
+            { dialogInterface: DialogInterface, _: Int ->
                 dialogInterface.dismiss()
                 finish()
             }, null,
-            DialogInterface.OnCancelListener { dialogInterface: DialogInterface ->
+            { dialogInterface: DialogInterface ->
                 dialogInterface.dismiss()
                 finish()
             }
@@ -452,7 +452,7 @@ class TestActivity : BaseActivity() {
     /**
      * Handler to restart the app after language has been changed.
      */
-    private class WeakRefHandler internal constructor(ref: Activity) : Handler() {
+    private class WeakRefHandler(ref: Activity) : Handler() {
         private val ref: WeakReference<Activity> = WeakReference(ref)
         override fun handleMessage(msg: Message) {
             val f = ref.get()

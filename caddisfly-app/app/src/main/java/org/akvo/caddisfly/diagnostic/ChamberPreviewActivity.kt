@@ -70,11 +70,11 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
     private fun goToFragment(fragment: Fragment?) {
         if (fragmentManager!!.fragments.size > 0) {
             fragmentManager!!.beginTransaction()
-                    .addToBackStack(null)
-                    .replace(R.id.fragment_container, fragment!!).commit()
+                .addToBackStack(null)
+                .replace(R.id.fragment_container, fragment!!).commit()
         } else {
             fragmentManager!!.beginTransaction()
-                    .add(R.id.fragment_container, fragment!!).commit()
+                .add(R.id.fragment_container, fragment!!).commit()
         }
         invalidateOptionsMenu()
     }
@@ -102,10 +102,14 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
     }
 
     override fun onResult(resultDetails: ArrayList<ResultDetail>, calibration: Calibration?) {
-        val colorInfo = ColorInfo(getAverageColor(resultDetails),
-                resultDetails[resultDetails.size - 1].quality)
-        val resultDetail = analyzeColor(testInfo!!.swatches.size,
-                colorInfo, testInfo!!.swatches)
+        val colorInfo = ColorInfo(
+            getAverageColor(resultDetails),
+            resultDetails[resultDetails.size - 1].quality
+        )
+        val resultDetail = analyzeColor(
+            testInfo!!.swatches.size,
+            colorInfo, testInfo!!.swatches
+        )
         resultDetail.bitmap = resultDetails[resultDetails.size - 1].bitmap
         resultDetail.croppedBitmap = resultDetails[resultDetails.size - 1].croppedBitmap
         if (calibration == null) {
@@ -123,8 +127,8 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
                     playShortResource(this, R.raw.done)
                 }
                 fragmentManager!!.beginTransaction()
-                        .remove((runTestFragment as Fragment?)!!)
-                        .commit()
+                    .remove((runTestFragment as Fragment?)!!)
+                    .commit()
                 showDiagnosticResultDialog(false, resultDetail, resultDetails, false)
                 testInfo!!.resultDetail = resultDetail
             } else {
@@ -133,19 +137,20 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
                     releaseResources()
                     setResult(Activity.RESULT_CANCELED)
                     fragmentManager!!.beginTransaction()
-                            .remove((runTestFragment as Fragment?)!!)
-                            .commit()
+                        .remove((runTestFragment as Fragment?)!!)
+                        .commit()
                     showDiagnosticResultDialog(true, resultDetail, resultDetails, false)
                 } else {
                     fragmentManager!!.beginTransaction()
-                            .remove((runTestFragment as Fragment?)!!)
-                            .commit()
+                        .remove((runTestFragment as Fragment?)!!)
+                        .commit()
                     showError(
                         String.format(
                             TWO_SENTENCE_FORMAT, getString(R.string.error_test_failed),
                             getString(R.string.check_chamber_placement)
                         ),
-                            resultDetails[resultDetails.size - 1].croppedBitmap)
+                        resultDetails[resultDetails.size - 1].croppedBitmap
+                    )
                 }
             }
         }
@@ -159,11 +164,14 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
      * @param resultDetails the result details
      * @param isCalibration is this a calibration result
      */
-    private fun showDiagnosticResultDialog(testFailed: Boolean, resultDetail: ResultDetail,
-                                           resultDetails: ArrayList<ResultDetail>,
-                                           @Suppress("SameParameterValue") isCalibration: Boolean) {
+    private fun showDiagnosticResultDialog(
+        testFailed: Boolean, resultDetail: ResultDetail,
+        resultDetails: ArrayList<ResultDetail>,
+        @Suppress("SameParameterValue") isCalibration: Boolean
+    ) {
         val resultFragment: DialogFragment = DiagnosticResultDialog.newInstance(
-                testFailed, resultDetail, resultDetails, isCalibration)
+            testFailed, resultDetail, resultDetails, isCalibration
+        )
         val ft = supportFragmentManager.beginTransaction()
         val prev = supportFragmentManager.findFragmentByTag("gridDialog")
         if (prev != null) {
@@ -183,20 +191,21 @@ class ChamberPreviewActivity : BaseActivity(), OnResultListener, OnDismissed {
     private fun showError(message: String, bitmap: Bitmap?) {
         playShortResource(this, R.raw.err)
         releaseResources()
-        alertDialogToBeDestroyed = AlertUtil.showError(this, R.string.error, message, bitmap, R.string.retry,
-                DialogInterface.OnClickListener { _: DialogInterface?, _: Int ->
-                    if (intent.getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                        start()
-                    } else {
-                        runTest()
-                    }
-                },
-                DialogInterface.OnClickListener { dialogInterface: DialogInterface, _: Int ->
-                    dialogInterface.dismiss()
-                    releaseResources()
-                    setResult(Activity.RESULT_CANCELED)
-                    finish()
-                }, null
+        alertDialogToBeDestroyed = AlertUtil.showError(
+            this, R.string.error, message, bitmap, R.string.retry,
+            { _: DialogInterface?, _: Int ->
+                if (intent.getBooleanExtra(ConstantKey.RUN_TEST, false)) {
+                    start()
+                } else {
+                    runTest()
+                }
+            },
+            { dialogInterface: DialogInterface, _: Int ->
+                dialogInterface.dismiss()
+                releaseResources()
+                setResult(Activity.RESULT_CANCELED)
+                finish()
+            }, null
         )
     }
 

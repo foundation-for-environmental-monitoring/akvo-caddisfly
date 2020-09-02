@@ -149,7 +149,7 @@ class MainActivity : BaseActivity() {
     /**
      * Handler to restart the app after language has been changed.
      */
-    private class WeakRefHandler internal constructor(ref: Activity) : Handler() {
+    private class WeakRefHandler(ref: Activity) : Handler() {
         private val ref: WeakReference<Activity> = WeakReference(ref)
         override fun handleMessage(msg: Message) {
             val f = ref.get()

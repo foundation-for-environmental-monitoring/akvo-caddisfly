@@ -80,19 +80,18 @@ public class StripMeasureFragment extends Fragment {
 
         if (textSwitcher != null) {
             textSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
-                private TextView textView;
                 private boolean isFirst = true;
 
                 @Override
                 public View makeView() {
+                    TextView textView;
                     if (isFirst) {
                         isFirst = false;
                         textView = view.findViewById(R.id.textMessage1);
-                        ((ViewGroup) textView.getParent()).removeViewAt(0);
                     } else {
                         textView = view.findViewById(R.id.textMessage2);
-                        ((ViewGroup) textView.getParent()).removeViewAt(0);
                     }
+                    ((ViewGroup) textView.getParent()).removeViewAt(0);
                     return textView;
                 }
             });
