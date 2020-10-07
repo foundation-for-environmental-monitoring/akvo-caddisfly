@@ -93,8 +93,8 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setTitle(R.string.email_support)
                     builder.setMessage(
-                        getString(R.string.if_you_need_assistance) + "\n\n" +
-                                getString(R.string.select_email_app)
+                        getString(R.string.select_email_app) + "\n\n" +
+                                getString(R.string.if_you_need_assistance)
                     )
                         .setCancelable(false)
                         .setNegativeButton(R.string.cancel) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
@@ -138,7 +138,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
 
     private fun sendEmail(context: Context, message: String) {
         try {
-            val email = "devices@ternup.com"
+            val email = BuildConfig.SUPPORT_EMAIL
             val subject = "Support request"
             val intent = Intent(Intent.ACTION_VIEW)
             val data = Uri.parse("mailto:?to=$email&subject=$subject&body=$message")
@@ -181,6 +181,10 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                         }
                     }
                     if (calibrated) {
+                        message.append("\n\n\n\n")
+                        message.append("-------------------------------------------------")
+                        message.append("\n")
+
                         message.append(
                             generateCalibrationFile(
                                 activityReference.get()!!.activity,
@@ -194,7 +198,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 }
             }
             if (message.toString().isEmpty()) {
-                message.append("No calibrations found")
+                message.append("Please describe the issue below:\n\n\n")
             }
             return null
         }
