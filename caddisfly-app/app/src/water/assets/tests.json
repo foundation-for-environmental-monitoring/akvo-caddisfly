@@ -687,6 +687,22 @@
           "formula": "%1$f * 20"
         }
       ]
+    },
+    {
+      "name": "Chloride",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "561ed7c9-052d-4b4d-84bd-823ac4095ed7",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Chloride",
+          "unit": "mg/l",
+          "formula": "%1$f * 354.5"
+        }
+      ]
     }
   ]
 }

@@ -171,10 +171,14 @@ class TestActivity : BaseActivity() {
             return
         }
         val checkPermissions = permissions
-        if (permissionsDelegate.hasPermissions(checkPermissions)) {
+        if (testInfo!!.subtype == TestType.TITRATION) {
             startTest()
         } else {
-            permissionsDelegate.requestPermissions(checkPermissions)
+            if (permissionsDelegate.hasPermissions(checkPermissions)) {
+                startTest()
+            } else {
+                permissionsDelegate.requestPermissions(checkPermissions)
+            }
         }
     }
 
