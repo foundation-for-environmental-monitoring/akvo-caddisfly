@@ -198,7 +198,23 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
                 }
             }
             if (message.toString().isEmpty()) {
-                message.append("Please describe the issue below:\n\n\n")
+                message.append("Please describe the issue below:\n\n\n\n\n")
+                message.append("\n")
+                message.append("-------------------------------------------------")
+                message.append("\n")
+                message.append("Version: ")
+                message.append(getAppVersion(true))
+                message.append("\n")
+                message.append("Model: ")
+                message.append(Build.MODEL).append(" (")
+                    .append(Build.PRODUCT).append(")")
+                message.append("\n")
+                message.append("OS: ")
+                message.append(Build.VERSION.RELEASE).append(" (")
+                    .append(Build.VERSION.SDK_INT).append(")")
+                message.append("\n")
+                message.append("-------------------------------------------------")
+                message.append("\n")
             }
             return null
         }

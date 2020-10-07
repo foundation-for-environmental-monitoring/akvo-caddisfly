@@ -104,7 +104,7 @@
     <string name="cannot_start_test">Cannot start test</string>
     <string name="error_test_not_available">Requested test is not available</string>
     <string name="please_contact_support">Please contact technical support</string>
-    <string name="camera_not_good">The camera does not meet the minimum requirements.\n\nFor best results, at least 8 megapixel camera required.</string>
+    <string name="camera_not_good">The camera does not meet the minimum requirements.\n\nFor best results, at least 8 megapixel camera is required.</string>
     <string name="continue_anyway">Continue anyway</string>
     <string name="do_not_show_again">Do not show again</string>
     <string name="stop_test">Stop test</string>
