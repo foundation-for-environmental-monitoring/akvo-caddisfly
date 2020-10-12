@@ -17,7 +17,7 @@ class NavigationController(private val context: Context) {
     fun navigateToTestType(testType: TestType?, testSampleType: TestSampleType?, runTest: Boolean) {
         val viewModel = ViewModelProvider((context as FragmentActivity)).get(TestListViewModel::class.java)
         val intent: Intent
-        val tests = viewModel.getTests(testType, testSampleType)
+        val tests = viewModel.getTests(testSampleType)
         if (tests.size == 1) {
             intent = Intent(context, TestActivity::class.java)
             intent.putExtra(ConstantKey.TEST_INFO, tests[0])

@@ -107,9 +107,11 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
         if (testInfo!!.subtype === TestType.CHAMBER_TEST && !runTest) {
             startCalibration()
         } else {
-            if (!isSwatchListValid(testInfo)) {
-                alertCalibrationIncomplete(this, testInfo!!,
-                        isInternal = false, finishActivity = false)
+            if (testInfo!!.subtype === TestType.CHAMBER_TEST && !isSwatchListValid(testInfo)) {
+                alertCalibrationIncomplete(
+                    this, testInfo!!,
+                    isInternal = false, finishActivity = false
+                )
                 return
             }
             val intent = Intent(this, TestActivity::class.java)

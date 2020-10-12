@@ -21,17 +21,13 @@ package org.akvo.caddisfly.util
 import android.content.res.AssetManager
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
 import org.akvo.caddisfly.common.Constants
-import org.akvo.caddisfly.helper.FileHelper
-import org.akvo.caddisfly.helper.FileType
-import org.akvo.caddisfly.util.FileUtil.loadTextFromFile
 import timber.log.Timber
-import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
 
 class AssetsManager {
-    var customJson: String
+//    var customJson: String
     var json: String
     private val manager: AssetManager? = app!!.applicationContext.assets
     private fun loadJsonFromAsset(@Suppress("SameParameterValue") fileName: String): String {
@@ -61,12 +57,12 @@ class AssetsManager {
         return json
     }
 
-    val experimentalJson: String
-        get() {
-            val experimentalConfig = File(FileHelper.getFilesDir(FileType.EXP_CONFIG),
-                    Constants.TESTS_META_FILENAME)
-            return loadTextFromFile(experimentalConfig)
-        }
+//    val experimentalJson: String
+//        get() {
+//            val experimentalConfig = File(FileHelper.getFilesDir(FileType.EXP_CONFIG),
+//                    Constants.TESTS_META_FILENAME)
+//            return loadTextFromFile(experimentalConfig)
+//        }
 
     companion object {
         private var assetsManager: AssetsManager? = null
@@ -81,8 +77,8 @@ class AssetsManager {
 
     init {
         json = loadJsonFromAsset(Constants.TESTS_META_FILENAME)
-        val customConfig = File(FileHelper.getFilesDir(FileType.CUSTOM_CONFIG),
-                Constants.TESTS_META_FILENAME)
-        customJson = loadTextFromFile(customConfig)
+//        val customConfig = File(FileHelper.getFilesDir(FileType.CUSTOM_CONFIG),
+//                Constants.TESTS_META_FILENAME)
+//        customJson = loadTextFromFile(customConfig)
     }
 }

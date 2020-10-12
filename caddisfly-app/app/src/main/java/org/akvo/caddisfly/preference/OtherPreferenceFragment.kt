@@ -161,7 +161,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
             super.onPreExecute()
             val context = (activityReference.get()?.activity as FragmentActivity)
             viewModel = ViewModelProvider(context).get(TestListViewModel::class.java)
-            testList = viewModel.getTests(TestType.CHAMBER_TEST, TestSampleType.ALL)
+            testList = viewModel.getTests(TestSampleType.ALL)
         }
 
         override fun doInBackground(vararg params: Void?): Int? {

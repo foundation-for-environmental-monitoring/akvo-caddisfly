@@ -11,7 +11,6 @@ import org.akvo.caddisfly.entity.Calibration
 import org.akvo.caddisfly.entity.CalibrationDetail
 import org.akvo.caddisfly.helper.SwatchHelper.loadCalibrationFromFile
 import org.akvo.caddisfly.model.*
-import org.akvo.caddisfly.preference.AppPreferences.isDiagnosticMode
 import org.akvo.caddisfly.util.AssetsManager
 import org.akvo.caddisfly.util.PreferencesUtil.getInt
 import org.akvo.caddisfly.util.PreferencesUtil.getLong
@@ -24,33 +23,30 @@ class TestConfigRepository {
     private val assetsManager: AssetsManager = AssetsManager()
 
     @SuppressWarnings("unused")
-    fun getTests(testType: TestType): List<TestInfo> {
-        return getTests(testType, TestSampleType.ALL)
+    fun getTests(): List<TestInfo> {
+        return getTests(TestSampleType.ALL)
     }
 
     /**
      * Get list of tests by type of test.
      *
-     * @param testType the test type
      * @return the list of tests
      */
-    fun getTests(testType: TestType, testSampleType: TestSampleType): ArrayList<TestInfo> {
+    fun getTests(testSampleType: TestSampleType): ArrayList<TestInfo> {
         var testInfoList: ArrayList<TestInfo> = ArrayList()
         if (testSampleType === TestSampleType.ALL) {
-            if (testMap.containsKey(testType.toString())) {
-                return testMap[testType.toString()]!!
+            if (testMap.containsKey("tests")) {
+                return testMap["tests"]!!
             }
         } else {
-            if (testMap.containsKey(testType.toString() + testSampleType.toString())) {
-                return testMap[testType.toString() + testSampleType.toString()]!!
+            if (testMap.containsKey("tests$testSampleType")) {
+                return testMap["tests$testSampleType"]!!
             }
         }
         try {
             testInfoList = Gson().fromJson(assetsManager.json, TestConfig::class.java).tests
             for (i in testInfoList.indices.reversed()) {
-                if (testInfoList[i].subtype !== testType) {
-                    testInfoList.removeAt(i)
-                } else if (testSampleType !== TestSampleType.ALL
+                if (testSampleType !== TestSampleType.ALL
                     && testInfoList[i].sampleType !== testSampleType
                 ) {
                     testInfoList.removeAt(i)
@@ -59,66 +55,63 @@ class TestConfigRepository {
             testInfoList.sortWith { object1: TestInfo, object2: TestInfo ->
                 object1.name!!.compareTo(object2.name!!, ignoreCase = true)
             }
-            if (isDiagnosticMode()) {
-                addExperimentalTests(testType, testSampleType, testInfoList)
-            }
-            val testConfig = Gson().fromJson(assetsManager.customJson, TestConfig::class.java)
-            if (testConfig != null) {
-                val customList = testConfig.tests
-                for (i in customList.indices.reversed()) {
-                    if (customList[i].subtype !== testType) {
-                        customList.removeAt(i)
-                    } else if (testSampleType !== TestSampleType.ALL
-                        && customList[i].sampleType !== testSampleType
-                    ) {
-                        customList.removeAt(i)
-                    }
-                }
-                if (customList.size > 0) {
-                    customList.sortWith { object1: TestInfo, object2: TestInfo ->
-                        object1.name!!.compareTo(object2.name!!, ignoreCase = true)
-                    }
-                    testInfoList.add(TestInfo("Custom"))
-                    testInfoList.addAll(customList)
-                }
-            }
+//            if (isDiagnosticMode()) {
+//                addExperimentalTests(testSampleType, testInfoList)
+//            }
+//            val testConfig = Gson().fromJson(assetsManager.customJson, TestConfig::class.java)
+//            if (testConfig != null) {
+//                val customList = testConfig.tests
+//                for (i in customList.indices.reversed()) {
+//                    if (customList[i].subtype !== testType) {
+//                        customList.removeAt(i)
+//                    } else if (testSampleType !== TestSampleType.ALL
+//                        && customList[i].sampleType !== testSampleType
+//                    ) {
+//                        customList.removeAt(i)
+//                    }
+//                }
+//                if (customList.size > 0) {
+//                    customList.sortWith { object1: TestInfo, object2: TestInfo ->
+//                        object1.name!!.compareTo(object2.name!!, ignoreCase = true)
+//                    }
+//                    testInfoList.add(TestInfo("Custom"))
+//                    testInfoList.addAll(customList)
+//                }
+//            }
         } catch (e: Exception) {
             Timber.e(e)
         }
         if (testSampleType === TestSampleType.ALL) {
-            testMap[testType.toString()] = testInfoList
+            testMap["tests"] = testInfoList
         } else {
-            testMap[testType.toString() + testSampleType.toString()] = testInfoList
+            testMap["tests$testSampleType"] = testInfoList
         }
         return testInfoList
     }
 
-    private fun addExperimentalTests(
-        testType: TestType,
-        testSampleType: TestSampleType,
-        testInfoList: MutableList<TestInfo>
-    ) {
-        val testConfig = Gson().fromJson(assetsManager.experimentalJson, TestConfig::class.java)
-        if (testConfig != null) {
-            val experimentalList = testConfig.tests
-            for (i in experimentalList.indices.reversed()) {
-                if (experimentalList[i].subtype !== testType) {
-                    experimentalList.removeAt(i)
-                } else if (testSampleType !== TestSampleType.ALL
-                    && experimentalList[i].sampleType !== testSampleType
-                ) {
-                    experimentalList.removeAt(i)
-                }
-            }
-            if (experimentalList.size > 0) {
-                experimentalList.sortWith { object1: TestInfo, object2: TestInfo ->
-                    object1.name!!.compareTo(object2.name!!, ignoreCase = true)
-                }
-                testInfoList.add(TestInfo("Experimental"))
-                testInfoList.addAll(experimentalList)
-            }
-        }
-    }
+//    private fun addExperimentalTests(
+//        testSampleType: TestSampleType,
+//        testInfoList: MutableList<TestInfo>
+//    ) {
+//        val testConfig = Gson().fromJson(assetsManager.experimentalJson, TestConfig::class.java)
+//        if (testConfig != null) {
+//            val experimentalList = testConfig.tests
+//            for (i in experimentalList.indices.reversed()) {
+//                if (testSampleType !== TestSampleType.ALL
+//                    && experimentalList[i].sampleType !== testSampleType
+//                ) {
+//                    experimentalList.removeAt(i)
+//                }
+//            }
+//            if (experimentalList.size > 0) {
+//                experimentalList.sortWith { object1: TestInfo, object2: TestInfo ->
+//                    object1.name!!.compareTo(object2.name!!, ignoreCase = true)
+//                }
+//                testInfoList.add(TestInfo("Experimental"))
+//                testInfoList.addAll(experimentalList)
+//            }
+//        }
+//    }
 
     /**
      * Get the test details from json config.
@@ -127,17 +120,15 @@ class TestConfigRepository {
      * @return the test object
      */
     fun getTestInfo(id: String): TestInfo? {
-        var testInfo: TestInfo?
-        testInfo = getTestInfoItem(assetsManager.json, id)
-        if (testInfo == null) {
-            if (isDiagnosticMode()) {
-                testInfo = getTestInfoItem(assetsManager.experimentalJson, id)
-            }
-            if (testInfo == null) {
-                testInfo = getTestInfoItem(assetsManager.customJson, id)
-            }
-        }
-        return testInfo
+        //        if (testInfo == null) {
+//            if (isDiagnosticMode()) {
+//                testInfo = getTestInfoItem(assetsManager.experimentalJson, id)
+//            }
+//            if (testInfo == null) {
+//                testInfo = getTestInfoItem(assetsManager.customJson, id)
+//            }
+//        }
+        return getTestInfoItem(assetsManager.json, id)
     }
 
     private fun getTestInfoItem(json: String, id: String): TestInfo? {

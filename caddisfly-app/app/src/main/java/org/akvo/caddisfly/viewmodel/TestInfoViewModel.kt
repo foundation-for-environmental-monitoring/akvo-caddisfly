@@ -35,6 +35,7 @@ import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.Constants
 import org.akvo.caddisfly.model.Instruction
 import org.akvo.caddisfly.model.TestInfo
+import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.util.StringUtil.getStringResourceByName
 import org.akvo.caddisfly.util.StringUtil.toInstruction
 import org.akvo.caddisfly.widget.RowView
@@ -114,8 +115,10 @@ class TestInfoViewModel(application: Application) : AndroidViewModel(application
                                 rowView.append(SpannableString(" "))
                             }
 
-                            rowView.append(toInstruction((context as AppCompatActivity),
-                                    testInfo, sentences[j].trim { it <= ' ' }))
+                            rowView.append(
+                                toInstruction((context as AppCompatActivity),
+                                    testInfo, sentences[j].trim { it <= ' ' })
+                            )
                             val sentence = getStringResourceByName(context, sentences[j]).toString()
                             if (sentence.contains("[/a]")) {
                                 rowView.enableLinks()
@@ -134,25 +137,35 @@ class TestInfoViewModel(application: Application) : AndroidViewModel(application
         @JvmStatic
         @BindingAdapter("testSubtitle")
         fun setSubtitle(view: TextView, testInfo: TestInfo) {
-            var subTitle = testInfo.minMaxRange
-            //        if (testInfo.getBrand() != null) {
-//            subTitle = testInfo.getBrand() + ", ";
-//        }
-            if (testInfo.minMaxRange.isNotEmpty()) {
-                val matcher = Pattern.compile("<dilutionRange>(.*?)</dilutionRange>").matcher(subTitle)
-                if (matcher.find()) {
-                    subTitle = matcher.replaceAll(String.format(view.resources
-                            .getString(R.string.up_to_with_dilution), matcher.group(1)))
+            if (testInfo.subtype == TestType.TITRATION) {
+                view.text = view.context.getString(R.string.titration)
+            } else {
+                var subTitle = testInfo.minMaxRange
+                if (testInfo.minMaxRange.isNotEmpty()) {
+                    val matcher =
+                        Pattern.compile("<dilutionRange>(.*?)</dilutionRange>").matcher(subTitle)
+                    if (matcher.find()) {
+                        subTitle = matcher.replaceAll(
+                            String.format(
+                                view.resources
+                                    .getString(R.string.up_to_with_dilution), matcher.group(1)
+                            )
+                        )
+                    }
                 }
+                view.text = subTitle
             }
-            view.text = subTitle
         }
 
-        private fun insertImage(linearLayout: LinearLayout, context: Context, size: Point,
-                                displayMetrics: DisplayMetrics, i: Int, text: String) {
+        private fun insertImage(
+            linearLayout: LinearLayout, context: Context, size: Point,
+            displayMetrics: DisplayMetrics, i: Int, text: String
+        ) {
             val imageName = text.substring(text.indexOf(":") + 1)
-            val resourceId = context.resources.getIdentifier("drawable/in_$imageName",
-                    "id", BuildConfig.APPLICATION_ID)
+            val resourceId = context.resources.getIdentifier(
+                "drawable/in_$imageName",
+                "id", BuildConfig.APPLICATION_ID
+            )
             if (resourceId > 0) {
                 var divisor = 3.0
                 if (displayMetrics.densityDpi > 250) {
@@ -162,8 +175,9 @@ class TestInfoViewModel(application: Application) : AndroidViewModel(application
                     divisor += 0.3
                 }
                 val llp = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        (displayMetrics.heightPixels / divisor).toInt())
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    (displayMetrics.heightPixels / divisor).toInt()
+                )
                 llp.setMargins(0, 0, 0, 20)
                 val imageView = AppCompatImageView(context)
                 imageView.setImageResource(resourceId)
@@ -193,8 +207,9 @@ class TestInfoViewModel(application: Application) : AndroidViewModel(application
                         divisor += 0.3
                     }
                     val llp = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            (displayMetrics.heightPixels / divisor).toInt())
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        (displayMetrics.heightPixels / divisor).toInt()
+                    )
                     llp.setMargins(0, 0, 0, 20)
                     imageView.layoutParams = llp
                     imageView.contentDescription = imageName
@@ -216,7 +231,8 @@ class TestInfoViewModel(application: Application) : AndroidViewModel(application
         @BindingAdapter("imageScale")
         fun setImageScale(imageView: ImageView, scaleType: String?) {
             if (scaleType != null) {
-                imageView.scaleType = if ("fitCenter" == scaleType) ImageView.ScaleType.FIT_CENTER else ImageView.ScaleType.CENTER_CROP
+                imageView.scaleType =
+                    if ("fitCenter" == scaleType) ImageView.ScaleType.FIT_CENTER else ImageView.ScaleType.CENTER_CROP
             } else {
                 imageView.scaleType = ImageView.ScaleType.FIT_CENTER
             }

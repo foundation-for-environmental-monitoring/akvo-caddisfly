@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,MissingTranslation">
     <string name="launch">ప్రారంభం</string>
-    <string name="titration">టిట్రాషన్</string>
     <string name="water_tests_1">నీటి పరీక్షలు 1</string>
 </resources>

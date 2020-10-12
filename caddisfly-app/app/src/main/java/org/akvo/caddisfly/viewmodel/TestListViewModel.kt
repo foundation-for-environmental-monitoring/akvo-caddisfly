@@ -19,14 +19,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.model.TestSampleType
-import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.repository.TestConfigRepository
 
 class TestListViewModel(application: Application) : AndroidViewModel(application) {
     private val testConfigRepository: TestConfigRepository = TestConfigRepository()
 
-    fun getTests(testType: TestType?, testSampleType: TestSampleType?): ArrayList<TestInfo> {
-        return testConfigRepository.getTests(testType!!, testSampleType!!)
+    fun getTests(testSampleType: TestSampleType?): ArrayList<TestInfo> {
+        return testConfigRepository.getTests(testSampleType!!)
     }
 
     fun getTestInfo(uuid: String): TestInfo? {

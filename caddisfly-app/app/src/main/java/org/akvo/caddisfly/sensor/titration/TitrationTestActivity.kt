@@ -33,8 +33,10 @@ class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitRes
 
     private fun startManualTest() {
         val ft = fragmentManager!!.beginTransaction()
-        ft.add(R.id.fragment_container,
-                        TitrationInputFragment.newInstance(testInfo), "tubeFragment")
+        ft.add(
+            R.id.fragment_container,
+            TitrationInputFragment.newInstance(testInfo), "titrationFragment"
+        )
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .commit()
     }
@@ -44,8 +46,10 @@ class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitRes
         if (resultCode == Activity.RESULT_OK) {
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             if (requestCode == MANUAL_TEST) {
-                fragmentTransaction.replace(R.id.fragment_container,
-                                TitrationInputFragment.newInstance(testInfo), "manualFragment")
+                fragmentTransaction.replace(
+                    R.id.fragment_container,
+                    TitrationInputFragment.newInstance(testInfo), "titrationFragment"
+                )
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         .addToBackStack(null)
                         .commit()
