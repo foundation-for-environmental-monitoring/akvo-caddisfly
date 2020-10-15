@@ -151,7 +151,7 @@
       ]
     },
     {
-      "name": "Calcium and Magnesium",
+      "name": "Total Hardness",
       "type": "soil",
       "subtype": "titration",
       "uuid": "52ec4ca0-d691-4f2b-b17a-232c2966974a",
@@ -162,13 +162,22 @@
           "id": 1,
           "name": "Calcium",
           "unit": "mg/kg",
-          "formula": "(%1$f/3) * 125"
+          "formula": "(%1$f/3) * 125",
+          "display": 2
         },
         {
           "id": 2,
           "name": "Magnesium",
           "unit": "mg/kg",
-          "formula": "(%2$f-%1$f) * 25"
+          "formula": "(%2$f-%1$f) * 25",
+          "display": 3
+        },
+        {
+          "id": 3,
+          "name": "Total Hardness",
+          "unit": "mg/kg",
+          "formula": "((%1$f/3) * 125) + ((%2$f-%1$f) * 25)",
+          "display": 1
         }
       ]
     },

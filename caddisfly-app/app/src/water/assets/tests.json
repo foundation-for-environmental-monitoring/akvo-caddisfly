@@ -619,7 +619,7 @@
       ]
     },
     {
-      "name": "Calcium and Magnesium",
+      "name": "Total Hardness",
       "type": "water",
       "subtype": "titration",
       "uuid": "670d2d65-bb76-4d72-ae4f-867d031b7712",
@@ -630,18 +630,27 @@
           "id": 1,
           "name": "Calcium",
           "unit": "mg/l",
-          "formula": "(%1$f/3) * 25"
+          "formula": "(%1$f/3) * 25",
+          "display": 2
         },
         {
           "id": 2,
           "name": "Magnesium",
           "unit": "mg/l",
-          "formula": "(%2$f-%1$f) * 5"
+          "formula": "(%2$f-%1$f) * 5",
+          "display": 3
+        },
+        {
+          "id": 3,
+          "name": "Total Hardness",
+          "unit": "mg/l",
+          "formula": "((%1$f/3) * 25) + ((%2$f-%1$f) * 5)",
+          "display": 1
         }
       ]
     },
     {
-      "name": "Carbonate",
+      "name": "Total Alkalinity",
       "type": "water",
       "subtype": "titration",
       "uuid": "783c30ee-57c5-498e-aaaa-ed2904f7972a",
@@ -652,23 +661,22 @@
           "id": 1,
           "name": "Carbonate",
           "unit": "mg/l",
-          "formula": "(%1$f * 500) / 20"
-        }
-      ]
-    },
-    {
-      "name": "Bicarbonate",
-      "type": "water",
-      "subtype": "titration",
-      "uuid": "848be397-e55c-47ef-a786-f245435bb1c7",
-      "image": "ffem",
-      "imageScale": "centerCrop",
-      "results": [
+          "formula": "(%1$f * 500) / 20",
+          "display": 2
+        },
         {
-          "id": 1,
+          "id": 2,
           "name": "Bicarbonate",
           "unit": "mg/l",
-          "formula": "(%1$f * 500) / 20"
+          "formula": "(%1$f * 500) / 20",
+          "display": 3
+        },
+        {
+          "id": 3,
+          "name": "Total Hardness",
+          "unit": "mg/l",
+          "formula": "((%1$f * 500) / 20) + ((%1$f * 500) / 20)",
+          "display": 1
         }
       ]
     },

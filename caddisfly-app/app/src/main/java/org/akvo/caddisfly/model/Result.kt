@@ -99,6 +99,10 @@ class Result : Parcelable {
     @Expose
     var code: String? = null
 
+    @SerializedName("display")
+    @Expose
+    var display: Int? = 0
+
     @JvmField
     var result: String? = null
     private var highLevelsFound = false
@@ -133,6 +137,7 @@ class Result : Parcelable {
         val tmpGrayScale = `in`.readByte()
         grayScale = tmpGrayScale.toInt() == 1
         code = `in`.readString()
+        display = if (`in`.readByte().toInt() == 0x00) null else `in`.readInt()
         dilution = (if (`in`.readByte().toInt() == 0x00) null else `in`.readInt())!!
     }
 
@@ -181,6 +186,12 @@ class Result : Parcelable {
         }
         dest.writeByte((if (grayScale) 1 else 2).toByte())
         dest.writeString(code)
+        if (display == null) {
+            dest.writeByte(0x00.toByte())
+        } else {
+            dest.writeByte(0x01.toByte())
+            dest.writeInt(display!!)
+        }
         if (dilution == null) {
             dest.writeByte(0x00.toByte())
         } else {
