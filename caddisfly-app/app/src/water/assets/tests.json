@@ -348,7 +348,8 @@
         {
           "id": 1,
           "name": "Dissolved Oxygen",
-          "unit": "mg/l"
+          "unit": "mg/l",
+          "timeDelay": 300
         }
       ]
     },
