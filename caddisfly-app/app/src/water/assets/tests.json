@@ -622,7 +622,7 @@
       "name": "Total Hardness",
       "type": "water",
       "subtype": "titration",
-      "uuid": "670d2d65-bb76-4d72-ae4f-867d031b7712",
+      "uuid": "58b23c8d-d1b2-49b1-b530-1431be9133a4",
       "image": "ffem",
       "imageScale": "centerCrop",
       "results": [
@@ -653,7 +653,7 @@
       "name": "Total Alkalinity",
       "type": "water",
       "subtype": "titration",
-      "uuid": "783c30ee-57c5-498e-aaaa-ed2904f7972a",
+      "uuid": "020dccb1-9a35-4097-bf02-292a92d7ae5a",
       "image": "ffem",
       "imageScale": "centerCrop",
       "results": [
@@ -677,6 +677,60 @@
           "unit": "mg/l",
           "formula": "((%1$f * 500) / 20) + ((%1$f * 500) / 20)",
           "display": 1
+        }
+      ]
+    },
+    {
+      "name": "Calcium and Magnesium",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "670d2d65-bb76-4d72-ae4f-867d031b7712",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Calcium",
+          "unit": "mg/l",
+          "formula": "(%1$f/3) * 25"
+        },
+        {
+          "id": 2,
+          "name": "Magnesium",
+          "unit": "mg/l",
+          "formula": "(%2$f-%1$f) * 5"
+        }
+      ]
+    },
+    {
+      "name": "Carbonate",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "783c30ee-57c5-498e-aaaa-ed2904f7972a",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Carbonate",
+          "unit": "mg/l",
+          "formula": "(%1$f * 500) / 20"
+        }
+      ]
+    },
+    {
+      "name": "Bicarbonate",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "848be397-e55c-47ef-a786-f245435bb1c7",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Bicarbonate",
+          "unit": "mg/l",
+          "formula": "(%1$f * 500) / 20"
         }
       ]
     },
