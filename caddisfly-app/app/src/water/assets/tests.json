@@ -674,7 +674,7 @@
         },
         {
           "id": 3,
-          "name": "Total Hardness",
+          "name": "Total Alkalinity",
           "unit": "mg/l",
           "formula": "((%1$f * 500) / 20) + ((%1$f * 500) / 20)",
           "display": 1
