@@ -32,10 +32,14 @@ import org.akvo.caddisfly.model.TestInfo
 import org.akvo.caddisfly.util.toLocalString
 
 class ResultFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val b: FragmentResultBinding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_result, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val b: FragmentResultBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_result, container, false
+        )
         val view = b.root
         if (activity != null) {
             requireActivity().setTitle(R.string.result)
@@ -43,11 +47,29 @@ class ResultFragment : Fragment() {
         if (arguments != null) {
             val testInfo: TestInfo? = requireArguments().getParcelable(TEST_INFO)
             if (testInfo != null) {
-                val result = testInfo.results!![0]
+                var result = testInfo.results!![0]
+                for (r in testInfo.results!!) {
+                    if (r.display == 1) {
+                        result = r
+                        break
+                    } else if (r.display == 2) {
+                        val name = "${r.name}:"
+                        b.textTitle1.text = name
+                        b.textResult1.text = r.result
+                        b.textUnit1.text = r.unit
+                    } else if (r.display == 3) {
+                        val name = "${r.name}:"
+                        b.textTitle2.text = name
+                        b.textResult2.text = r.result
+                        b.textUnit2.text = r.unit
+                    }
+                }
                 b.textResult.text = result.result
                 b.textTitle.text = testInfo.name!!.toLocalString()
-                b.textDilution.text = resources.getQuantityString(R.plurals.dilutions,
-                        testInfo.dilution, testInfo.dilution)
+                b.textDilution.text = resources.getQuantityString(
+                    R.plurals.dilutions,
+                    testInfo.dilution, testInfo.dilution
+                )
                 b.textUnit.text = result.unit
                 when {
                     testInfo.dilution == testInfo.maxDilution -> {

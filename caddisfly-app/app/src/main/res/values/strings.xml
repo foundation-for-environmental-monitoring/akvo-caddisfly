@@ -247,4 +247,5 @@
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrite</string>
     <string name="zinc">Zinc</string>
+    <string name="titration">Titration</string>
 </resources>

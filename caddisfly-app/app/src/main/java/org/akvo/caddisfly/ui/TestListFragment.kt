@@ -78,7 +78,7 @@ class TestListFragment : Fragment() {
 
     private fun loadTests() {
         val viewModel = ViewModelProvider(this).get(TestListViewModel::class.java)
-        val tests = viewModel.getTests(mTestType, mSampleType)
+        val tests = viewModel.getTests(mSampleType)
         if (tests.size == 1) {
             mListener!!.onListFragmentInteraction(tests[0])
         } else {
