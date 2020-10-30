@@ -128,6 +128,12 @@ object TestUtil {
         }
     }
 
+    fun swipeUp() {
+        sleep(1000)
+        mDevice.waitForIdle()
+        mDevice.swipe(300, 750, 300, 400, 10)
+    }
+
     fun goBack(times: Int) {
         for (i in 0 until times) {
             mDevice.pressBack()

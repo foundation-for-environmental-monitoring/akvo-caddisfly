@@ -59,6 +59,7 @@ import org.akvo.caddisfly.util.TestUtil.clickListViewItem
 import org.akvo.caddisfly.util.TestUtil.getText
 import org.akvo.caddisfly.util.TestUtil.isEmulator
 import org.akvo.caddisfly.util.TestUtil.sleep
+import org.akvo.caddisfly.util.TestUtil.swipeUp
 import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertTrue
@@ -105,19 +106,10 @@ class ChamberRunTest {
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
         }
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+        sleep(1000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        sleep(1000)
+
         if (isEmulator) {
 //            onView(withText(string.error_camera_flash_required))
 //                    .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
@@ -139,19 +131,9 @@ class ChamberRunTest {
         } catch (e: Exception) {
             onView(withText(string.waterCalibrate)).perform(click())
         }
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+        sleep(1000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        sleep(1000)
         onView(withId(id.fabEditCalibration)).perform(click())
 
         onView(withId(id.editExpiryDate)).perform(click())
@@ -186,21 +168,15 @@ class ChamberRunTest {
         goToMainScreen()
 
         onView(withText(string.run_test)).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
 
         sleep(1000)
+        swipeUp()
+        sleep(2000)
+        swipeUp()
+        sleep(2000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        sleep(1000)
+
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
         onView(withId(id.buttonNoDilution)).perform(click())
         onView(allOf(withId(id.textDilution), withText(string.no_dilution)))
@@ -217,19 +193,14 @@ class ChamberRunTest {
 
         goToMainScreen()
         onView(withText(string.run_test)).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+
+        sleep(1000)
+        swipeUp()
+        sleep(2000)
+        swipeUp()
+        sleep(1000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        sleep(1000)
 
         onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
         onView(withId(id.buttonDilution1)).perform(click())
@@ -263,19 +234,14 @@ class ChamberRunTest {
 
         goToMainScreen()
         onView(withText(string.run_test)).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+
+        sleep(1000)
+        swipeUp()
+        sleep(2000)
+        swipeUp()
+        sleep(1000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        sleep(1000)
 
         onView(withId(id.buttonDilution2)).check(matches(isDisplayed()))
         onView(withId(id.buttonDilution2)).perform(click())
@@ -445,7 +411,7 @@ class ChamberRunTest {
     }
 
     companion object {
-        private const val TEST_START_DELAY = 24
+        private const val TEST_START_DELAY = 34
 
         @JvmStatic
         @BeforeClass

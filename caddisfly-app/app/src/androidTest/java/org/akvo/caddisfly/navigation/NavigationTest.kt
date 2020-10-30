@@ -37,6 +37,7 @@ import org.akvo.caddisfly.util.TestHelper.takeScreenshot
 import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
 import org.akvo.caddisfly.util.TestUtil.sleep
+import org.akvo.caddisfly.util.TestUtil.swipeUp
 import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.Matchers.*
 import org.hamcrest.`object`.HasToString.hasToString
@@ -107,29 +108,24 @@ class NavigationTest {
         onView(withText(string.settings)).perform(click())
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
-        sleep(4000)
-        onView(
-            allOf(
-                withId(id.list_types), childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+        sleep(2000)
+
+        swipeUp()
+        sleep(1000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+
         if (TestUtil.isEmulator) {
 //            onView(withText(string.error_camera_flash_required))
 //                    .inRoot(withDecorView(not(`is`(mActivityRule.activity.window
 //                            .decorView)))).check(matches(isDisplayed()))
             return
         }
+
+        sleep(1000)
         onView(withId(id.menuLoad)).perform(click())
-        sleep(2000)
+        sleep(1000)
         onData(hasToString(startsWith("TestInvalid"))).perform(click())
-        sleep(2000)
+        sleep(1000)
 
         onView(
             withText(
@@ -204,19 +200,9 @@ class NavigationTest {
         onView(withText(string.settings)).perform(click())
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
-        sleep(4000)
-        onView(
-            allOf(
-                withId(id.list_types), childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+
+        sleep(1000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
         onView(withId(id.menuLoad)).perform(click())
         sleep(2000)
         onData(hasToString(startsWith("TestValid"))).perform(click())

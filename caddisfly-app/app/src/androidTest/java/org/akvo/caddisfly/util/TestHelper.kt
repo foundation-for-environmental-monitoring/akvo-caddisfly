@@ -205,14 +205,14 @@ object TestHelper {
     fun clickExternalSourceButton(id: String?, screenshotName: String) {
         when (id) {
             TestConstant.WATER_FLUORIDE_ID -> {
-                nextSurveyPage(4, getString(string.water_tests_1))
+                nextSurveyPage(9, getString(string.water_tests_1))
                 if (screenshotName.isNotEmpty()) {
                     takeScreenshot(screenshotName)
                 }
                 clickExternalSourceButton(2)
             }
             TestConstant.SOIL_IRON_ID -> {
-                nextSurveyPage(3, "Soil Tests 2")
+                nextSurveyPage(7, "Soil Tests 2")
                 if (screenshotName.isNotEmpty()) {
                     takeScreenshot(screenshotName)
                 }

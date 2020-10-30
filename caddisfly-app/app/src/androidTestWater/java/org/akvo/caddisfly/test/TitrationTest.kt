@@ -89,6 +89,8 @@ class TitrationTest {
 
         sleep(1000)
 
+        onView(withId(id.buttonAccept)).perform(click())
+
         assertNotNull(mDevice.findObject(By.text(getString(string.carbonate) + ": ")))
         assertNotNull(mDevice.findObject(By.text("300.00")))
 
@@ -157,8 +159,86 @@ class TitrationTest {
             )
         ).perform(pressImeActionButton())
 
+        onView(withId(id.buttonAccept)).perform(click())
+
         sleep(1000)
 
+        assertNotNull(mDevice.findObject(By.text(getString(string.calcium) + ": ")))
+        assertNotNull(mDevice.findObject(By.text("100.00")))
+        assertNotNull(mDevice.findObject(By.text(getString(string.magnesium) + ": ")))
+        assertNotNull(mDevice.findObject(By.text("40.00")))
+
+        takeScreenshot(screenshotName)
+
+        mDevice.waitForIdle()
+
+        mDevice.pressBack()
+
+        mDevice.pressBack()
+    }
+
+    @Test
+    fun runTotalHardness() {
+        val testConfigRepository = TestConfigRepository()
+        val testList = testConfigRepository.getTests(TestType.TITRATION)
+        val uuid = testList[1].uuid
+        val screenshotName = uuid.substring(uuid.lastIndexOf("-") + 1)
+        mDevice.waitForIdle()
+
+        sleep(2000)
+        startSurveyApp()
+        sleep(2000)
+        takeScreenshot(screenshotName)
+        startSurveyForm()
+        sleep(2000)
+        nextSurveyPage(5, getString(string.titration) + " 2")
+
+        takeScreenshot(screenshotName)
+        clickExternalSourceButton(0)
+        sleep(2000)
+        takeScreenshot(screenshotName)
+        onView(withText(string.next)).perform(click())
+        takeScreenshot(screenshotName)
+
+        onView(withId(id.editTitration1)).check(matches(isDisplayed()))
+            .perform(replaceText("123"), closeSoftKeyboard())
+        onView(withId(id.editTitration2)).check(matches(isDisplayed()))
+            .perform(replaceText("12"), closeSoftKeyboard())
+        onView(
+            allOf(
+                withId(id.editTitration2), withText("12"),
+                childAtPosition(
+                    childAtPosition(withId(id.fragment_container), 0),
+                    4
+                ), isDisplayed()
+            )
+        ).perform(pressImeActionButton())
+
+        sleep(1000)
+
+        onView(withId(id.editTitration1)).check(matches(isDisplayed()))
+            .perform(replaceText("12"), closeSoftKeyboard())
+        onView(withId(id.editTitration2)).check(matches(isDisplayed()))
+            .perform(replaceText("20"), closeSoftKeyboard())
+
+        sleep(1000)
+        takeScreenshot(screenshotName)
+        onView(
+            allOf(
+                withId(id.editTitration2), withText("20"),
+                childAtPosition(
+                    childAtPosition(withId(id.fragment_container), 0),
+                    4
+                ), isDisplayed()
+            )
+        ).perform(pressImeActionButton())
+
+        onView(withId(id.buttonAccept)).perform(click())
+
+        sleep(1000)
+
+        assertNotNull(mDevice.findObject(By.text(getString(string.total_hardness) + ": ")))
+        assertNotNull(mDevice.findObject(By.text("140.00")))
         assertNotNull(mDevice.findObject(By.text(getString(string.calcium) + ": ")))
         assertNotNull(mDevice.findObject(By.text("100.00")))
         assertNotNull(mDevice.findObject(By.text(getString(string.magnesium) + ": ")))

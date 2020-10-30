@@ -27,9 +27,7 @@ class NavigationController(private val context: Context) {
             intent.putExtra(ConstantKey.TYPE, testType)
             intent.putExtra(ConstantKey.SAMPLE_TYPE_KEY, testSampleType)
         }
-        if (runTest) {
-            intent.putExtra(ConstantKey.RUN_TEST, true)
-        }
+        intent.putExtra(ConstantKey.RUN_TEST, runTest)
         intent.putExtra(ConstantKey.IS_INTERNAL, true)
         context.startActivity(intent)
     }

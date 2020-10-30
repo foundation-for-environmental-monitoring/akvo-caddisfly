@@ -200,5 +200,7 @@
     <string name="ammonia">అమ్మోనియా</string>
     <string name="nitrite">నైట్రైట్</string>
     <string name="zinc">జింక్</string>
+    <string name="total_hardness">మొత్తం కాఠిన్యం</string>
+    <string name="total_alkalinity">మొత్తం క్షారత</string>
     <string name="titration">టిట్రాషన్</string>
 </resources>

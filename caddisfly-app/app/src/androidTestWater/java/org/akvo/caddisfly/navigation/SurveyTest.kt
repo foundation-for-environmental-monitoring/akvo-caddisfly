@@ -157,19 +157,11 @@ class SurveyTest {
         onView(withText(string.settings)).perform(click())
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).check(matches(isDisplayed())).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+
+        sleep(1000)
+        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        sleep(1000)
+
         if (isEmulator) {
 //            onView(withText(string.error_camera_flash_required))
 //                    .inRoot(withDecorView(not(`is`(mActivityRule.activity.window

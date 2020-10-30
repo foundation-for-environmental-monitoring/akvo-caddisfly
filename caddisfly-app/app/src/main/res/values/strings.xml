@@ -247,5 +247,7 @@
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrite</string>
     <string name="zinc">Zinc</string>
+    <string name="total_hardness">Total Hardness</string>
+    <string name="total_alkalinity">Total Alkalinity</string>
     <string name="titration">Titration</string>
 </resources>

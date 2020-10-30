@@ -164,7 +164,8 @@ class ChamberTest {
         recyclerView.getChildAt(1).performClick()
         ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
         val nextIntent: Intent? = shadowOf(activity).nextStartedActivity
-        assertNull(nextIntent)
+        assertEquals(nextIntent!!.action, "android.content.pm.action.REQUEST_PERMISSIONS")
+//        assertNull(nextIntent)
         val application: ShadowApplication = shadowOf(activity.application)
         application.grantPermissions(*permissions)
         controller.resume()

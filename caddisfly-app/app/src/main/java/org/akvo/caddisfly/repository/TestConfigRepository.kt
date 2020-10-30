@@ -32,6 +32,74 @@ class TestConfigRepository {
      *
      * @return the list of tests
      */
+    fun getTests(sampleType: TestSampleType, testType: TestType): ArrayList<TestInfo> {
+        var testInfoList: ArrayList<TestInfo> = ArrayList()
+        if (testMap.containsKey("tests$testType$sampleType")) {
+            return testMap["tests$testType$sampleType"]!!
+        }
+        try {
+            testInfoList = Gson().fromJson(assetsManager.json, TestConfig::class.java).tests
+            if (testType != TestType.ALL) {
+                for (i in testInfoList.indices.reversed()) {
+                    if (testInfoList[i].subtype !== testType
+                    ) {
+                        testInfoList.removeAt(i)
+                    }
+                }
+            }
+            if (sampleType != TestSampleType.ALL) {
+                for (i in testInfoList.indices.reversed()) {
+                    if (testInfoList[i].sampleType !== sampleType
+                    ) {
+                        testInfoList.removeAt(i)
+                    }
+                }
+            }
+            testInfoList.sortWith { object1: TestInfo, object2: TestInfo ->
+                object1.name!!.compareTo(object2.name!!, ignoreCase = true)
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
+        testMap["tests$testType$sampleType"] = testInfoList
+        return testInfoList
+    }
+
+
+    /**
+     * Get list of tests by type of test.
+     *
+     * @return the list of tests
+     */
+    fun getTests(testType: TestType): ArrayList<TestInfo> {
+        var testInfoList: ArrayList<TestInfo> = ArrayList()
+        if (testMap.containsKey("tests$testType")) {
+            return testMap["tests$testType"]!!
+        }
+        try {
+            testInfoList = Gson().fromJson(assetsManager.json, TestConfig::class.java).tests
+            for (i in testInfoList.indices.reversed()) {
+                if (testInfoList[i].subtype !== testType
+                ) {
+                    testInfoList.removeAt(i)
+                }
+            }
+            testInfoList.sortWith { object1: TestInfo, object2: TestInfo ->
+                object1.name!!.compareTo(object2.name!!, ignoreCase = true)
+            }
+        } catch (e: Exception) {
+            Timber.e(e)
+        }
+        testMap["tests$testType"] = testInfoList
+        return testInfoList
+    }
+
+
+    /**
+     * Get list of tests by type of test.
+     *
+     * @return the list of tests
+     */
     fun getTests(testSampleType: TestSampleType): ArrayList<TestInfo> {
         var testInfoList: ArrayList<TestInfo> = ArrayList()
         if (testSampleType === TestSampleType.ALL) {

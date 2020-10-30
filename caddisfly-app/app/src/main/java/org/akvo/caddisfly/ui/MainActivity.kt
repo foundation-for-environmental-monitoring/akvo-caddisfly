@@ -143,7 +143,7 @@ class MainActivity : BaseActivity() {
 
     private fun startTest(testSampleType: TestSampleType) {
         FileHelper.migrateFolders()
-        navigationController!!.navigateToTestType(TestType.CHAMBER_TEST, testSampleType, runTest)
+        navigationController!!.navigateToTestType(TestType.ALL, testSampleType, runTest)
     }
 
     /**

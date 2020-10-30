@@ -10,16 +10,23 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
+import androidx.test.uiautomator.UiDevice
 import org.akvo.caddisfly.R
+import org.akvo.caddisfly.common.TestConstants.CALIBRATION_TEST_INDEX
 import org.akvo.caddisfly.common.TestConstants.TEST_INDEX
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
+import org.akvo.caddisfly.util.TestUtil.sleep
+import org.akvo.caddisfly.util.TestUtil.swipeUp
+import org.akvo.caddisfly.util.mDevice
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -75,7 +82,7 @@ class RunTestNavigation {
                             withClassName(`is`("android.widget.LinearLayout")),
                             0
                         )
-                    ), TEST_INDEX
+                    ), CALIBRATION_TEST_INDEX
                 ),
                 isDisplayed()
             )
@@ -83,17 +90,6 @@ class RunTestNavigation {
         relativeLayout3.perform(click())
 
         if (TestUtil.isEmulator) {
-//            onView(withText(R.string.error_camera_flash_required))
-//                .inRoot(
-//                    RootMatchers.withDecorView(
-//                        Matchers.not(
-//                            `is`(
-//                                mActivityTestRule.activity.window
-//                                    .decorView
-//                            )
-//                        )
-//                    )
-//                ).check(matches(isDisplayed()))
             return
         }
 
@@ -203,21 +199,11 @@ class RunTestNavigation {
         onView(allOf(withId(R.id.buttonRunTest), withText(R.string.run_test), isDisplayed()))
             .perform(click())
 
-        val relativeLayout4 = onView(
-            allOf(
-                childAtPosition(
-                    allOf(
-                        withId(R.id.list_types),
-                        childAtPosition(
-                            withClassName(`is`("android.widget.LinearLayout")),
-                            0
-                        )
-                    ), TEST_INDEX
-                ),
-                isDisplayed()
-            )
-        )
-        relativeLayout4.perform(click())
+        swipeUp()
+
+        sleep(2000)
+
+        onView(allOf(withText(R.string.fluoride), isDisplayed())).perform(click())
 
         val appCompatButton8 = onView(
             allOf(
@@ -290,5 +276,15 @@ class RunTestNavigation {
             )
         )
         appCompatImageButton6.perform(click())
+    }
+
+    companion object {
+        @JvmStatic
+        @BeforeClass
+        fun initialize() {
+            if (!TestHelper.isDeviceInitialized()) {
+                mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+            }
+        }
     }
 }

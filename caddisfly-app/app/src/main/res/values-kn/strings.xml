@@ -200,5 +200,7 @@
     <string name="ammonia">ಅಮೋನಿಯಾ</string>
     <string name="nitrite">ನೈಟ್ರೈಟ್</string>
     <string name="zinc">ಜಿಂಕ್</string>
+    <string name="total_hardness">ಒಟ್ಟು ಗಡಸುತನ</string>
+    <string name="total_alkalinity">ಒಟ್ಟು ಕ್ಷಾರತೆ</string>
     <string name="titration">ಟೈಟರೇಶನ್</string>
 </resources>
