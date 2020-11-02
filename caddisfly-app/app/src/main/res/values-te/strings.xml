@@ -174,6 +174,8 @@
     <string name="carbonate">కార్బోనేట్</string>
     <string name="bicarbonate">బైకార్బోనేట్</string>
     <string name="calcium_and_magnesium">కాల్షియం మరియు మెగ్నీషియం</string>
+    <string name="hardness">కాఠిన్యం</string>
+    <string name="chloride">క్లోరైడ్</string>
     <string name="total_arsenic">మొత్తం ఆర్సెనిక్</string>
     <string name="chromium">క్రోమియం</string>
     <string name="copper">కాపర్</string>

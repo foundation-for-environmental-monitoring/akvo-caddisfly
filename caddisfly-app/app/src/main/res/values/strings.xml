@@ -218,6 +218,7 @@
     <string name="bicarbonate">Bicarbonate</string>
     <string name="calcium_and_magnesium">Calcium and Magnesium</string>
     <string name="hardness">Hardness</string>
+    <string name="chloride">Chloride</string>
     <string name="arsenic">Arsenic</string>
     <string name="total_arsenic">Total Arsenic</string>
     <string name="arsenic_0_500">Arsenic (0 – 500)</string>

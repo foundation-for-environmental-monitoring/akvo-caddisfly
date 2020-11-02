@@ -175,6 +175,8 @@
     <string name="bicarbonate">ಬೈಕಾರ್ಬನೇಟ್</string>
     <string name="calcium_and_magnesium">ಕ್ಯಾಲ್ಸಿಯಂ ಮತ್ತು ಮೆಗ್ನೀಸಿಯಮ್</string>
     <string name="total_arsenic">ಒಟ್ಟು ಆರ್ಸೆನಿಕ್</string>
+    <string name="hardness">ಗಡಸುತನ</string>
+    <string name="chloride">ಕ್ಲೋರೈಡ್</string>
     <string name="chromium">ಕ್ರೋಮಿಯಂ</string>
     <string name="copper">ಕಾಪೆರ್</string>
     <string name="dissolved_oxygen">ಕರಗಿದ ಆಕ್ಸಿಜನ್</string>
