@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.provider.Settings
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import java.util.*
@@ -78,7 +79,8 @@ object ApkHelper {
     @JvmStatic
     fun isNonStoreVersion(context: Context): Boolean { // Valid installer package names
         val validInstallers: List<String> = ArrayList(
-                listOf("com.android.vending", "com.google.android.feedback"))
+            listOf("com.android.vending", "com.google.android.feedback")
+        )
         try { // The package name of the app that has installed the app
             val installer = context.packageManager.getInstallerPackageName(context.packageName)
             // true if the app has been downloaded from Play Store
@@ -86,5 +88,16 @@ object ApkHelper {
         } catch (ignored: Exception) { // do nothing
         }
         return true
+    }
+
+    fun isTestDevice(context: Context): Boolean {
+        try {
+            val testLabSetting: String =
+                Settings.System.getString(context.contentResolver, "firebase.test.lab")
+            return "true" == testLabSetting
+        } catch (ignored: Exception) {
+            // do nothing
+        }
+        return false
     }
 }

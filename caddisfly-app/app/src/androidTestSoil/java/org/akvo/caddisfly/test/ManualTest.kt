@@ -83,6 +83,10 @@ class ManualTest {
 
         SystemClock.sleep(1000)
 
+        onView(withId(id.buttonAccept)).perform(click())
+
+        SystemClock.sleep(1000)
+
         assertNotNull(mDevice.findObject(By.text(getString(string.calcium) + ": ")))
         assertNotNull(mDevice.findObject(By.text("500.00")))
         assertNotNull(mDevice.findObject(By.text(getString(string.magnesium) + ": ")))

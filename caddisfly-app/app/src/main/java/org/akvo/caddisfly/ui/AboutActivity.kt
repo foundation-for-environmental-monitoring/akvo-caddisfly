@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_about.*
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp
+import org.akvo.caddisfly.helper.ApkHelper.isTestDevice
 import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 
@@ -45,8 +46,10 @@ class AboutActivity : BaseActivity() {
      * Displays legal information.
      */
     fun onSoftwareNoticesClick(@Suppress("UNUSED_PARAMETER") view: View?) {
-        dialog = NoticesDialogFragment.newInstance()
-        dialog?.show(supportFragmentManager, "NoticesDialog")
+        if (!isTestDevice(this)) {
+            dialog = NoticesDialogFragment.newInstance()
+            dialog?.show(supportFragmentManager, "NoticesDialog")
+        }
     }
 
     /**

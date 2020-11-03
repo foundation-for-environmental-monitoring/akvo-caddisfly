@@ -108,11 +108,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layoutTitleBar"
             android:background="@color/error_background"
-            android:drawableStart="@drawable/ic_warning_black_24dp"
             android:gravity="center_vertical"
             android:padding="6dp"
             android:textSize="16sp"
-            app:checkValidity="@{testInfoViewModel.test}" />
+            app:checkValidity="@{testInfoViewModel.test}"
+            app:drawableStartCompat="@drawable/ic_warning_black_24dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
