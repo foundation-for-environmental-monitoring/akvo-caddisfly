@@ -763,7 +763,7 @@
           "id": 1,
           "name": "Chloride",
           "unit": "mg/l",
-          "formula": "%1$f * 354.5"
+          "formula": "%1$f * 14.18"
         }
       ]
     }
