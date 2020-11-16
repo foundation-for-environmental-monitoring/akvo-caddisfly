@@ -244,6 +244,9 @@
     <string name="available_nitrogen">Available Nitrogen</string>
     <string name="available_phosphorous">Available Phosphorous</string>
     <string name="available_potassium">Available Potassium</string>
+    <string name="new_available_nitrogen">New Available Nitrogen</string>
+    <string name="new_available_phosphorous">New Available Phosphorous</string>
+    <string name="new_available_potassium">New Available Potassium</string>
     <string name="alkalinity">Alkalinity</string>
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrite</string>

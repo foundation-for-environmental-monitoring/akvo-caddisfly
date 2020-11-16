@@ -28,7 +28,7 @@
       ]
     },
     {
-      "name": "New Available Phosphorus",
+      "name": "New Available Phosphorous",
       "type": "soil",
       "subtype": "cuvette",
       "uuid": "d8fdd8cb-de6a-46ee-9ff6-f046e0f2afa0",
@@ -46,7 +46,7 @@
       "results": [
         {
           "id": 1,
-          "name": "Available Phosphorus",
+          "name": "Available Phosphorous",
           "unit": "mg/kg",
           "timeDelay": 300,
           "formula": "(%1$f * 5)"

@@ -199,6 +199,9 @@
     <string name="available_nitrogen">उपलब्ध नाइट्रोजन</string>
     <string name="available_phosphorous">उपलब्ध फ़ास्फ़रोस</string>
     <string name="available_potassium">उपलब्ध पोटासियम</string>
+    <string name="new_available_nitrogen">नया उपलब्ध नाइट्रोजन</string>
+    <string name="new_available_phosphorous">नया उपलब्ध फ़ास्फ़रोस</string>
+    <string name="new_available_potassium">नया उपलब्ध पोटासियम</string>
     <string name="alkalinity">आल्कलिनिटी</string>
     <string name="ammonia">आम्मोनिय</string>
     <string name="nitrite">नाइट्र्य्ट</string>

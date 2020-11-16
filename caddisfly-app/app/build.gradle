@@ -20,7 +20,7 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 29
         versionCode 258
-        versionName "Beta 1.7"
+        versionName "Beta 1.6"
         resConfigs "en", "en_US", "hi", "kn", "te"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
