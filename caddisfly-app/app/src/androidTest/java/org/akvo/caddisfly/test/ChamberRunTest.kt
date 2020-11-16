@@ -44,6 +44,8 @@ import org.akvo.caddisfly.common.ChamberTestConfig.DELAY_BETWEEN_SAMPLING
 import org.akvo.caddisfly.common.ChamberTestConfig.SKIP_SAMPLING_COUNT
 import org.akvo.caddisfly.common.Constants
 import org.akvo.caddisfly.common.TestConstants
+import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_ID_1
+import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_NAME_1
 import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_TIME_DELAY
 import org.akvo.caddisfly.common.TestConstants.DELAY_EXTRA
 import org.akvo.caddisfly.ui.MainActivity
@@ -92,7 +94,7 @@ class ChamberRunTest {
 
     @Test
     fun testStartHighLevelTest() {
-        saveCalibration("HighLevelTest", TestConstants.CUVETTE_TEST_ID_1)
+        saveCalibration("HighLevelTest", CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         val version: String? = CaddisflyApp.getAppVersion(false)
@@ -107,7 +109,7 @@ class ChamberRunTest {
             onView(withText(string.waterCalibrate)).perform(click())
         }
         sleep(1000)
-        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
         sleep(1000)
 
         if (isEmulator) {
@@ -132,7 +134,7 @@ class ChamberRunTest {
             onView(withText(string.waterCalibrate)).perform(click())
         }
         sleep(1000)
-        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
         sleep(1000)
         onView(withId(id.fabEditCalibration)).perform(click())
 
@@ -170,11 +172,16 @@ class ChamberRunTest {
         onView(withText(string.run_test)).perform(click())
 
         sleep(1000)
-        swipeUp()
-        sleep(2000)
-        swipeUp()
-        sleep(2000)
-        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+
+        try {
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        } catch (e: Exception) {
+            swipeUp()
+            sleep(2000)
+            swipeUp()
+            sleep(2000)
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        }
         sleep(1000)
 
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
@@ -195,11 +202,15 @@ class ChamberRunTest {
         onView(withText(string.run_test)).perform(click())
 
         sleep(1000)
-        swipeUp()
-        sleep(2000)
-        swipeUp()
-        sleep(1000)
-        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        try {
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        } catch (e: Exception) {
+            swipeUp()
+            sleep(2000)
+            swipeUp()
+            sleep(2000)
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        }
         sleep(1000)
 
         onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
@@ -236,11 +247,15 @@ class ChamberRunTest {
         onView(withText(string.run_test)).perform(click())
 
         sleep(1000)
-        swipeUp()
-        sleep(2000)
-        swipeUp()
-        sleep(1000)
-        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        try {
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        } catch (e: Exception) {
+            swipeUp()
+            sleep(2000)
+            swipeUp()
+            sleep(2000)
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        }
         sleep(1000)
 
         onView(withId(id.buttonDilution2)).check(matches(isDisplayed()))
@@ -283,7 +298,7 @@ class ChamberRunTest {
 
     @Test
     fun testStartNoDilutionTest() {
-        saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
+        saveCalibration("TestValid", CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         val version: String? = CaddisflyApp.getAppVersion(false)

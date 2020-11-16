@@ -22,6 +22,7 @@ import androidx.test.uiautomator.UiDevice
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
+import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_NAME_1
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clearPreferences
@@ -110,9 +111,13 @@ class NavigationTest {
         onView(withText(string.calibrate)).perform(click())
         sleep(2000)
 
-        swipeUp()
-        sleep(1000)
-        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        try {
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        } catch (e: Exception) {
+            swipeUp()
+            sleep(1000)
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        }
 
         if (TestUtil.isEmulator) {
 //            onView(withText(string.error_camera_flash_required))
@@ -202,7 +207,7 @@ class NavigationTest {
         onView(withText(string.calibrate)).perform(click())
 
         sleep(1000)
-        onView(allOf(withText(string.fluoride), isDisplayed())).perform(click())
+        onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
         onView(withId(id.menuLoad)).perform(click())
         sleep(2000)
         onData(hasToString(startsWith("TestValid"))).perform(click())
@@ -231,7 +236,7 @@ class NavigationTest {
         takeScreenshot()
         gotoSurveyForm()
         clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
-        onView(withText(TestConstants.CUVETTE_TEST_NAME_1)).check(matches(isDisplayed()))
+        onView(withText(CUVETTE_TEST_NAME_1)).check(matches(isDisplayed()))
 
 //        //Calibration incomplete
         takeScreenshot()
