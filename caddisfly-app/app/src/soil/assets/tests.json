@@ -2,6 +2,84 @@
   "comment": "This file contains the metadata for tests. IMPORTANT: *DO NOT* change the uuid values",
   "tests": [
     {
+      "name": "New Available Nitrogen",
+      "type": "soil",
+      "subtype": "cuvette",
+      "uuid": "09dd29db-7330-4c10-bdbc-e278e073a51a",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0, 10, 20, 40, 60",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Available Nitrogen",
+          "unit": "mg/kg",
+          "timeDelay": 300,
+          "formula": "(%1$f * 5)"
+        }
+      ]
+    },
+    {
+      "name": "New Available Phosphorus",
+      "type": "soil",
+      "subtype": "cuvette",
+      "uuid": "d8fdd8cb-de6a-46ee-9ff6-f046e0f2afa0",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0, 2.5, 5, 7.5, 10",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Available Phosphorus",
+          "unit": "mg/kg",
+          "timeDelay": 300,
+          "formula": "(%1$f * 5)"
+        }
+      ]
+    },
+    {
+      "name": "New Available Potassium",
+      "type": "soil",
+      "subtype": "cuvette",
+      "uuid": "fc4e4e96-4f49-48a3-85fd-d0a2c7975654",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0, 10, 20, 30, 40",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Available Potassium",
+          "unit": "mg/kg",
+          "timeDelay": 300,
+          "formula": "(%1$f * 5)"
+        }
+      ]
+    },
+    {
       "name": "Available Boron",
       "type": "soil",
       "subtype": "cuvette",
