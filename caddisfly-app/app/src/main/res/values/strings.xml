@@ -232,6 +232,7 @@
     <string name="hydrogen_peroxide">Hydrogen Peroxide</string>
     <string name="nitrate">Nitrate</string>
     <string name="ph">pH</string>
+    <string name="new_ph">New pH</string>
     <string name="phosphate">Phosphate</string>
     <string name="sulphate">Sulphate</string>
     <string name="total_iron">Total Iron</string>

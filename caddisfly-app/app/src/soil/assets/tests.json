@@ -80,6 +80,24 @@
       ]
     },
     {
+      "name": "New pH",
+      "type": "soil",
+      "subtype": "cuvette",
+      "uuid": "a3e0e480-858a-455a-bfa4-2636348f3ef2",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "5,6,7,8,9",
+      "monthsValid": 6,
+      "results": [
+        {
+          "id": 1,
+          "name": "pH",
+          "timeDelay": 30
+        }
+      ]
+    },
+    {
       "name": "Available Boron",
       "type": "soil",
       "subtype": "cuvette",
