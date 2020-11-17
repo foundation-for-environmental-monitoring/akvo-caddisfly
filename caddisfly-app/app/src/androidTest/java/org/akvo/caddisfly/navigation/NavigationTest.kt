@@ -94,15 +94,6 @@ class NavigationTest {
         takeScreenshot()
         Espresso.pressBack()
 
-//        onView(withText(R.string.language)).perform(click());
-
-//        mDevice.waitForWindowUpdate("", 1000);
-
-        //Language Dialog
-//        takeScreenshot();
-
-//        onView(withId(android.R.id.button2)).perform(click());
-
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
         enterDiagnosticMode()
         goToMainScreen()

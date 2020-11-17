@@ -1,11 +1,8 @@
 package org.akvo.caddisfly.ui
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import org.akvo.caddisfly.BuildConfig
@@ -21,7 +18,6 @@ import org.akvo.caddisfly.preference.AppPreferences
 import org.akvo.caddisfly.preference.SettingsActivity
 import org.akvo.caddisfly.util.AlertUtil
 import org.akvo.caddisfly.util.PreferencesUtil
-import java.lang.ref.WeakReference
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,25 +26,25 @@ const val STORAGE_PERMISSION_WATER = 1
 const val STORAGE_PERMISSION_SOIL = 2
 
 class MainActivity : BaseActivity() {
-    private val refreshHandler = WeakRefHandler(this)
     private val permissionsDelegate = PermissionsDelegate(this)
     private val storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var navigationController: NavigationController? = null
     private var runTest = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CaddisflyApp.app?.setAppLanguage(null, false, null)
         navigationController = NavigationController(this)
         setContentView(R.layout.activity_main)
         setTitle(R.string.app_name)
         try {
             if (BuildConfig.BUILD_TYPE.equals("release", ignoreCase = true) &&
-                    ApkHelper.isNonStoreVersion(this)) {
+                ApkHelper.isNonStoreVersion(this)
+            ) {
                 val appExpiryDate = GregorianCalendar.getInstance()
                 appExpiryDate.time = BuildConfig.BUILD_TIME
                 appExpiryDate.add(Calendar.DAY_OF_YEAR, 15)
                 val df: DateFormat = SimpleDateFormat("dd-MMM-yyyy", Locale.US)
-                textVersionExpiry?.text = String.format("Version expiry: %s", df.format(appExpiryDate.time))
+                textVersionExpiry?.text =
+                    String.format("Version expiry: %s", df.format(appExpiryDate.time))
                 textVersionExpiry?.visibility = View.VISIBLE
             } else {
                 if (ApkHelper.isNonStoreVersion(this)) {
@@ -89,16 +85,13 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         switchLayoutForDiagnosticOrUserMode()
-        CaddisflyApp.app?.setAppLanguage(null, false, refreshHandler)
-        if (PreferencesUtil.getBoolean(this, R.string.themeChangedKey, false)) {
-            PreferencesUtil.setBoolean(this, R.string.themeChangedKey, false)
-            refreshHandler.sendEmptyMessage(0)
-        }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (permissionsDelegate.resultGranted(grantResults)) {
             when (requestCode) {
@@ -115,8 +108,10 @@ class MainActivity : BaseActivity() {
                 STORAGE_PERMISSION_WATER, STORAGE_PERMISSION_SOIL -> {
                 }
             }
-            AlertUtil.showSettingsSnackbar(this,
-                    window.decorView.rootView, message)
+            AlertUtil.showSettingsSnackbar(
+                this,
+                window.decorView.rootView, message
+            )
         }
     }
 
@@ -144,16 +139,5 @@ class MainActivity : BaseActivity() {
     private fun startTest(testSampleType: TestSampleType) {
         FileHelper.migrateFolders()
         navigationController!!.navigateToTestType(TestType.ALL, testSampleType, runTest)
-    }
-
-    /**
-     * Handler to restart the app after language has been changed.
-     */
-    private class WeakRefHandler(ref: Activity) : Handler() {
-        private val ref: WeakReference<Activity> = WeakReference(ref)
-        override fun handleMessage(msg: Message) {
-            val f = ref.get()
-            f?.recreate()
-        }
     }
 }

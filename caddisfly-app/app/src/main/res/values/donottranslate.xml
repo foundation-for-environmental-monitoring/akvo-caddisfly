@@ -3,21 +3,12 @@
 
     <string name="graph">Graph</string>
 
-    <string-array name="language_codes">
-        <item>en</item>
-        <item>hi</item>
-        <item>kn</item>
-        <item>te</item>
-    </string-array>
-
     <string name="number_1">1.</string>
     <string name="number_2">2.</string>
     <string name="number_3">3.</string>
     <string name="number_4">4.</string>
 
     <!--Keys-->
-    <string name="languageKey">language</string>
-    <string name="systemLanguageKey">systemLanguage</string>
     <string name="diagnosticModeKey">diagnosticMode</string>
     <string name="showDebugMessagesKey">showDebugMessages</string>
     <string name="soundOnKey">soundOn</string>
@@ -27,7 +18,6 @@
     <string name="hasCameraFlashKey">hasCameraFlash</string>
     <string name="calibrationDateKey">calibrationDateTime</string>
     <string name="calibrationExpiryDateKey">calibrationExpiryDate</string>
-    <string name="themeChangedKey">themeChanged</string>
     <string name="totalSuccessfulCalibrationsKey">totalSuccessfulCalibrations</string>
     <string name="totalFailedCalibrationsKey">totalFailedCalibrations</string>
     <string name="totalSuccessfulTestsKey">totalSuccessfulTests</string>

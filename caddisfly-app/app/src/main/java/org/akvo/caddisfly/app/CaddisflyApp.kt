@@ -20,17 +20,14 @@ package org.akvo.caddisfly.app
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.os.Handler
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.updater.UpdateCheck
-import org.akvo.caddisfly.util.PreferencesUtil
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import java.util.*
 
 @Suppress("DEPRECATION")
 class CaddisflyApp : BaseApplication() {
@@ -42,70 +39,12 @@ class CaddisflyApp : BaseApplication() {
         }
         app = this
         UpdateCheck.setNextUpdateCheck(this, -1)
-        db = Room.databaseBuilder(applicationContext,
-                CalibrationDatabase::class.java, DATABASE_NAME)
-                .allowMainThreadQueries()
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
-                .build()
-    }
-
-    /**
-     * Sets the language of the app on start. The language can be one of system language, language
-     * set in the app preferences or language requested via the languageCode parameter
-     *
-     * @param languageCode If null uses language from app preferences else uses this value
-     */
-    fun setAppLanguage(languageCode: String?, isExternal: Boolean, handler: Handler?) {
-        try {
-            val locale: Locale
-            var code = languageCode
-            //the languages supported by the app
-            val supportedLanguages = resources.getStringArray(R.array.language_codes)
-            //the current system language set in the device settings
-            val currentSystemLanguage = Locale.getDefault().language.substring(0, 2)
-            //the language the system was set to the last time the app was run
-            val previousSystemLanguage = PreferencesUtil.getString(this, R.string.systemLanguageKey, "")
-            //if the system language was changed in the device settings then set that as the app language
-            if (previousSystemLanguage != currentSystemLanguage
-                    && listOf(*supportedLanguages).contains(currentSystemLanguage)) {
-                PreferencesUtil.setString(this, R.string.systemLanguageKey, currentSystemLanguage)
-                PreferencesUtil.setString(this, R.string.languageKey, currentSystemLanguage)
-            }
-            if (code == null || !listOf(*supportedLanguages).contains(code)) { //if requested language code is not supported then use language from preferences
-                code = PreferencesUtil.getString(this, R.string.languageKey, "")
-                if (!listOf(*supportedLanguages).contains(code)) { //no language was selected in the app settings so use the system language
-                    val currentLanguage = resources.configuration.locale.language
-                    code = when {
-                        currentLanguage == currentSystemLanguage -> { //app is already set to correct language
-                            return
-                        }
-                        listOf(*supportedLanguages).contains(currentSystemLanguage) -> { //set to system language
-                            currentSystemLanguage
-                        }
-                        else -> { //no supported languages found just default to English
-                            "en"
-                        }
-                    }
-                }
-            }
-            val res = resources
-            val dm = res.displayMetrics
-            val config = res.configuration
-            locale = Locale(code!!, Locale.getDefault().country)
-            //if the app language is not already set to languageCode then set it now
-            if (!config.locale.language.substring(0, 2).equals(code, ignoreCase = true)
-                    || !config.locale.country.equals(Locale.getDefault().country, ignoreCase = true)) {
-                config.locale = locale
-                config.setLayoutDirection(locale)
-                res.updateConfiguration(config, dm)
-                //if this session was launched from an external app then do not restart this app
-                if (!isExternal && handler != null) {
-                    val msg = handler.obtainMessage()
-                    handler.sendMessage(msg)
-                }
-            }
-        } catch (ignored: Exception) { // do nothing
-        }
+        db = Room.databaseBuilder(
+            applicationContext,
+            CalibrationDatabase::class.java, DATABASE_NAME
+        ).allowMainThreadQueries()
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+            .build()
     }
 
     companion object {
@@ -139,6 +78,7 @@ class CaddisflyApp : BaseApplication() {
         @JvmStatic
         var db: CalibrationDatabase? = null
             private set
+
         /**
          * Gets the singleton app object.
          *
@@ -164,8 +104,10 @@ class CaddisflyApp : BaseApplication() {
                 version = if (isDiagnostic) {
                     String.format("%s (Build %s)", packageInfo.versionName, packageInfo.versionCode)
                 } else {
-                    String.format("%s %s", context.getString(R.string.version),
-                            packageInfo.versionName)
+                    String.format(
+                        "%s %s", context.getString(R.string.version),
+                        packageInfo.versionName
+                    )
                 }
             } catch (ignored: PackageManager.NameNotFoundException) { // do nothing
             }

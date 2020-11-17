@@ -18,10 +18,6 @@
  */
 package org.akvo.caddisfly.preference
 
-import android.app.Activity
-import android.content.Intent
-import android.content.SharedPreferences
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -30,14 +26,12 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import org.akvo.caddisfly.R
-import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
 import org.akvo.caddisfly.ui.BaseActivity
 import org.akvo.caddisfly.util.PreferencesUtil
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 
-class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
+class SettingsActivity : BaseActivity() {
     private var mScrollView: NestedScrollView? = null
     private var mScrollPosition = 0
     private fun removeAllFragments() {
@@ -51,12 +45,6 @@ class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupActivity()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
-            .registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun setupActivity() {
@@ -123,24 +111,10 @@ class SettingsActivity : BaseActivity(), OnSharedPreferenceChangeListener {
         viewModel.clearTests()
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, s: String) {
-        if (applicationContext.getString(R.string.languageKey) == s) {
-            app!!.setAppLanguage(null, false, null)
-            val resultIntent = Intent(intent)
-            resultIntent.getBooleanExtra("refresh", true)
-            setResult(Activity.RESULT_OK, resultIntent)
-            clearTests()
-            PreferencesUtil.setBoolean(this, R.string.refreshKey, true)
-            recreate()
-        }
-    }
-
     public override fun onPause() {
         val scrollbarPosition = mScrollView!!.scrollY
         PreferencesUtil.setInt(this, "settingsScrollPosition", scrollbarPosition)
         super.onPause()
-        PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
-            .unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onPostResume() {

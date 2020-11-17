@@ -28,7 +28,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.util.SparseArray
 import android.view.MenuItem
 import android.view.View
@@ -41,7 +40,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
-import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.db
 import org.akvo.caddisfly.common.ConstantKey
 import org.akvo.caddisfly.common.Constants
@@ -64,7 +62,6 @@ import org.akvo.caddisfly.util.PreferencesUtil
 import org.akvo.caddisfly.util.toLocalString
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 import timber.log.Timber
-import java.lang.ref.WeakReference
 import java.util.*
 import java.util.regex.Pattern
 
@@ -78,7 +75,6 @@ class TestActivity : BaseActivity() {
         }
     }
 
-    private val handler = WeakRefHandler(this)
     private val permissionsDelegate = PermissionsDelegate(this)
     private val storagePermissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private val permissions =
@@ -112,9 +108,6 @@ class TestActivity : BaseActivity() {
     }
 
     private fun getTestSelectedByExternalApp(fragmentManager: FragmentManager, intent: Intent) {
-        app!!.setAppLanguage(
-            intent.getStringExtra(SensorConstants.LANGUAGE), true, handler
-        )
         val uuid = intent.getStringExtra(SensorConstants.TEST_ID)
         if (uuid != null) {
             val viewModel = ViewModelProvider(this).get(TestListViewModel::class.java)
@@ -451,17 +444,5 @@ class TestActivity : BaseActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    /**
-     * Handler to restart the app after language has been changed.
-     */
-    private class WeakRefHandler(ref: Activity) : Handler() {
-        private val ref: WeakReference<Activity> = WeakReference(ref)
-        override fun handleMessage(msg: Message) {
-            val f = ref.get()
-            f?.recreate()
-        }
-
     }
 }

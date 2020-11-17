@@ -29,7 +29,6 @@ object SensorConstants {
     const val DILUTION = "Dilution"
     const val TEST_ID = "testId"
     const val VALUE = "value"
-    const val LANGUAGE = "language"
     const val UNIT = "Unit"
     const val DEBUG_MODE = "debugMode"
     const val RESULT_JSON = "resultJson"
