@@ -171,7 +171,7 @@ class CalibrationTest {
             )
         ).perform(
             actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
+                TestConstants.CALIBRATION_TEST_INDEX, click()
             )
         )
         if (isEmulator) {
@@ -207,7 +207,7 @@ class CalibrationTest {
             )
         ).perform(
             actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
+                TestConstants.CALIBRATION_TEST_INDEX, click()
             )
         )
         onView(withId(id.fabEditCalibration)).perform(click())
@@ -285,7 +285,7 @@ class CalibrationTest {
             )
         ).perform(
             actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
+                TestConstants.CALIBRATION_TEST_INDEX, click()
             )
         )
         onView(withId(id.fabEditCalibration)).perform(click())

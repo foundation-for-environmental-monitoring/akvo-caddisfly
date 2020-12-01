@@ -104,7 +104,7 @@ class ChamberTest {
 
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
-        val version: String? = CaddisflyApp.getAppVersion(false)
+        val version: String = CaddisflyApp.getAppVersion(false)
         onView(withText(version)).check(matches(isDisplayed()))
         enterDiagnosticMode()
         goToMainScreen()
@@ -327,7 +327,7 @@ class ChamberTest {
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
-        val version: String? = CaddisflyApp.getAppVersion(false)
+        val version: String = CaddisflyApp.getAppVersion(false)
         onView(withText(version)).check(matches(isDisplayed()))
         enterDiagnosticMode()
         goToMainScreen()
