@@ -300,7 +300,7 @@
       "uuid": "5eb9929f-54d1-41fe-b9f0-6c216ca0e693",
       "image": "ffem",
       "calibrate": true,
-      "ranges": " 0.1,0.5,1,2,3,5",
+      "ranges": "0.1,0.5,1,2,3,5",
       "monthsValid": 12,
       "dilutions": [
         1,
