@@ -138,6 +138,10 @@ class TestInfo : Parcelable {
     @Expose
     private var calibrate: Boolean? = false
 
+    @SerializedName("extrapolate")
+    @Expose
+    private var extrapolate: Boolean? = true
+
     @SerializedName("ranges")
     @Expose
     var ranges: String? = null
@@ -236,7 +240,7 @@ class TestInfo : Parcelable {
                     newCalibrations.add(newCalibration)
                 }
                 field = newCalibrations
-                swatches = generateGradient(swatches)
+                swatches = generateGradient(swatches, extrapolate!!)
             }
         }
 
@@ -297,6 +301,8 @@ class TestInfo : Parcelable {
         cameraAbove = tmpCameraAbove.toInt() == 1
         val tmpCalibrate = `in`.readByte()
         calibrate = tmpCalibrate.toInt() == 1
+        val tmpExtrapolate = `in`.readByte()
+        extrapolate = tmpExtrapolate.toInt() == 1
         ranges = `in`.readString()
         `in`.readList(dilutions, Int::class.java.classLoader)
         monthsValid = if (`in`.readByte().toInt() == 0) {
@@ -446,6 +452,7 @@ class TestInfo : Parcelable {
         parcel.writeByte((if (hasImage == null) 0 else if (hasImage!!) 1 else 2).toByte())
         parcel.writeByte((if (cameraAbove == null) 0 else if (cameraAbove!!) 1 else 2).toByte())
         parcel.writeByte((if (calibrate == null) 0 else if (calibrate!!) 1 else 2).toByte())
+        parcel.writeByte((if (extrapolate == null) 0 else if (extrapolate!!) 1 else 2).toByte())
         parcel.writeString(ranges)
         parcel.writeList(dilutions)
         if (monthsValid == null) {

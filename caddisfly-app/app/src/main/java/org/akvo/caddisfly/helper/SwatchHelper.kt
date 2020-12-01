@@ -271,16 +271,19 @@ object SwatchHelper {
      * @return The list of generated color swatches
      */
     @JvmStatic
-    fun generateGradient(swatches: MutableList<Swatch>): MutableList<Swatch> {
+    fun generateGradient(swatches: MutableList<Swatch>, extrapolate: Boolean): MutableList<Swatch> {
         val list: MutableList<Swatch> = ArrayList()
         if (swatches.size < 2) {
             return list
         }
         // Predict 2 more points in the calibration list to account for high levels of contamination
-        val swatch1 = swatches[swatches.size - 2]
-        val swatch2 = swatches[swatches.size - 1]
-        swatches.add(predictNextColor(swatch1, swatch2))
-        swatches.add(predictNextColor(swatch2, swatches[swatches.size - 1]))
+        if (extrapolate) {
+            val swatch1 = swatches[swatches.size - 2]
+            val swatch2 = swatches[swatches.size - 1]
+            swatches.add(predictNextColor(swatch1, swatch2))
+            swatches.add(predictNextColor(swatch2, swatches[swatches.size - 1]))
+        }
+
         for (i in 0 until swatches.size - 1) {
             val startColor = swatches[i].color
             val endColor = swatches[i + 1].color

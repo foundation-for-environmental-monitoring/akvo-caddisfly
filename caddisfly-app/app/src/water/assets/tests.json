@@ -337,6 +337,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
+      "extrapolate": false,
       "ranges": "0,8",
       "monthsValid": 12,
       "dilutions": [
