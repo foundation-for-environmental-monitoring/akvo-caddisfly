@@ -36,13 +36,6 @@ enum class TestType {
     CHAMBER_TEST,
 
     /**
-     * Strip paper is dipped into the sample and color is analysed from the resulting
-     * color change on the strip paper.
-     */
-    @SerializedName("striptest")
-    STRIP_TEST,
-
-    /**
      * Titration counting.
      */
     @SerializedName("titration")

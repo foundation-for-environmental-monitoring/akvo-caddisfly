@@ -57,7 +57,7 @@ class Reagent : Parcelable {
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Reagent?> = object : Parcelable.Creator<Reagent?> {
-            override fun createFromParcel(`in`: Parcel): Reagent? {
+            override fun createFromParcel(`in`: Parcel): Reagent {
                 return Reagent(`in`)
             }
 

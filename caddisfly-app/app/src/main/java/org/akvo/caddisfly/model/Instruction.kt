@@ -64,7 +64,7 @@ class Instruction : Parcelable, Cloneable {
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Instruction?> = object : Parcelable.Creator<Instruction?> {
-            override fun createFromParcel(`in`: Parcel): Instruction? {
+            override fun createFromParcel(`in`: Parcel): Instruction {
                 return Instruction(`in`)
             }
 

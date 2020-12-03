@@ -13,7 +13,4 @@
 
     <dimen name="text_margin_bottom">15dp</dimen>
 
-    <!-- StripTest -->
-    <dimen name="quality_check_view_height">36dp</dimen>
-
 </resources>

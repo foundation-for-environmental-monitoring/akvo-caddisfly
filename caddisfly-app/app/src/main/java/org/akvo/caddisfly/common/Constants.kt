@@ -28,4 +28,5 @@ object Constants {
     const val DEGREES_90 = 90
     const val DEGREES_270 = 270
     const val DEGREES_180 = 180
+    const val GET_READY_SECONDS = 12
 }

@@ -48,13 +48,17 @@ class InstructionFragment : Fragment() {
     private val pageIndex = PageIndex()
     private val instructionList = ArrayList<Instruction>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         b = DataBindingUtil.inflate(inflater, R.layout.fragment_instructions, container, false)
 
         b!!.callback = this
-        mSectionsPagerAdapter = SectionsPagerAdapter(childFragmentManager,
-                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
+        mSectionsPagerAdapter = SectionsPagerAdapter(
+            childFragmentManager,
+            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        )
 
         return b!!.root
     }
@@ -112,10 +116,14 @@ class InstructionFragment : Fragment() {
     class PlaceholderFragment : Fragment() {
         private var fragmentInstructionBinding: FragmentInstructionBinding? = null
         var instruction: Instruction? = null
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                                  savedInstanceState: Bundle?): View? {
-            fragmentInstructionBinding = DataBindingUtil.inflate(inflater,
-                    R.layout.fragment_instruction, container, false)
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View {
+            fragmentInstructionBinding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.fragment_instruction, container, false
+            )
             if (arguments != null) {
                 instruction = requireArguments().getParcelable(ARG_SECTION_NUMBER)
                 fragmentInstructionBinding!!.instruction = instruction

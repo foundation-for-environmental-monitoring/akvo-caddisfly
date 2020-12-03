@@ -61,10 +61,14 @@ class CalibrationItemFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater,
-                R.layout.fragment_calibration_list, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_calibration_list, container, false
+        )
         val model = ViewModelProvider(this).get(TestInfoViewModel::class.java)
         model.setTest(testInfo)
         binding!!.testInfoViewModel = model

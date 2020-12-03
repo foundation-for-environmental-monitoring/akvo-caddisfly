@@ -27,8 +27,8 @@ import android.util.AttributeSet
 import android.view.View
 import org.akvo.caddisfly.model.GroupType
 import org.akvo.caddisfly.model.TestInfo
-import org.akvo.caddisfly.sensor.striptest.utils.ColorUtils
-import org.akvo.caddisfly.sensor.striptest.utils.ResultUtils
+import org.akvo.caddisfly.util.ColorUtils
+import org.akvo.caddisfly.util.ResultUtils
 
 /**
  * Displays the swatches for the calibrated colors of the test.

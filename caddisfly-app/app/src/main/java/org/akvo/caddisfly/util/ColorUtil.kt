@@ -191,8 +191,11 @@ object ColorUtil {
      */
     @JvmStatic
     fun getColorFromRgb(rgbValue: String): Int {
-        var rgb = rgbValue
-        rgb = rgb.replace(",", " ")
+        var rgb = rgbValue.trim()
+        rgb = rgb.replace(",", " ").trim()
+        if (rgb.isEmpty()) {
+            return 0
+        }
         val rgbArray = rgb.split("\\s+".toPattern()).toTypedArray()
         return Color.rgb(rgbArray[0].toInt(), rgbArray[1].toInt(), rgbArray[2].toInt())
     }

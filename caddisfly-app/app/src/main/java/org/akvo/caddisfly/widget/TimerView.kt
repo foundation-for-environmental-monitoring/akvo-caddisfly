@@ -23,7 +23,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import org.akvo.caddisfly.R
-import org.akvo.caddisfly.sensor.striptest.utils.Constants
+import org.akvo.caddisfly.common.Constants
 import kotlin.math.abs
 
 /**

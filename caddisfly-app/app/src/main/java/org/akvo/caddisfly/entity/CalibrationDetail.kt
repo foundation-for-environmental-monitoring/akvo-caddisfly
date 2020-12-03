@@ -76,7 +76,7 @@ class CalibrationDetail : Parcelable {
         @JvmField
         @Suppress("unused")
         val CREATOR: Parcelable.Creator<CalibrationDetail?> = object : Parcelable.Creator<CalibrationDetail?> {
-            override fun createFromParcel(`in`: Parcel): CalibrationDetail? {
+            override fun createFromParcel(`in`: Parcel): CalibrationDetail {
                 return CalibrationDetail(`in`)
             }
 

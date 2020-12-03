@@ -94,7 +94,7 @@ class Calibration : Parcelable {
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Calibration?> = object : Parcelable.Creator<Calibration?> {
-            override fun createFromParcel(`in`: Parcel): Calibration? {
+            override fun createFromParcel(`in`: Parcel): Calibration {
                 return Calibration(`in`)
             }
 

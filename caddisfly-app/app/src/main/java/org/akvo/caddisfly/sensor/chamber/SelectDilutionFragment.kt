@@ -43,15 +43,20 @@ class SelectDilutionFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val binding: FragmentSelectDilutionBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_select_dilution,
-                container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val binding: FragmentSelectDilutionBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_select_dilution,
+            container, false
+        )
         val dilutions = testInfo!!.dilutions
         binding.buttonNoDilution.setOnClickListener { mListener!!.onDilutionSelected(1) }
         if (dilutions.size > 1) {
             val dilution = dilutions[1]
-            binding.buttonDilution1.text = String.format(Locale.getDefault(),
+            binding.buttonDilution1.text = String.format(
+                Locale.getDefault(),
                 getString(R.string.times_dilution), dilution
             )
             binding.buttonDilution1.setOnClickListener { mListener!!.onDilutionSelected(dilution) }

@@ -56,7 +56,7 @@ class Swatch : Cloneable, Parcelable {
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Swatch> = object : Parcelable.Creator<Swatch> {
-            override fun createFromParcel(`in`: Parcel): Swatch? {
+            override fun createFromParcel(`in`: Parcel): Swatch {
                 return Swatch(`in`)
             }
 

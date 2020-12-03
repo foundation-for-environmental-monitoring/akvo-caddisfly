@@ -51,7 +51,7 @@ class TestInfoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? { // Inflate this data b layout
+    ): View { // Inflate this data b layout
         val b: FragmentTestDetailBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_test_detail, container, false

@@ -249,7 +249,7 @@ class Result : Parcelable {
     companion object {
         @JvmField
         val CREATOR: Parcelable.Creator<Result?> = object : Parcelable.Creator<Result?> {
-            override fun createFromParcel(`in`: Parcel): Result? {
+            override fun createFromParcel(`in`: Parcel): Result {
                 return Result(`in`)
             }
 
