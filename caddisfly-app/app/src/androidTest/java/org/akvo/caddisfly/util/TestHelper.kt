@@ -194,7 +194,7 @@ object TestHelper {
     fun activateTestMode() {
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
-        val version: String? = CaddisflyApp.getAppVersion(false)
+        val version: String = CaddisflyApp.getAppVersion(false)
         onView(withText(version)).check(matches(isDisplayed()))
         enterDiagnosticMode()
         goToMainScreen()
@@ -242,7 +242,7 @@ object TestHelper {
     }
 
     fun saveCalibration(name: String, id: String) {
-        val path: File? = FileHelper.getFilesDir(FileType.CALIBRATION, id)
+        val path: File = FileHelper.getFilesDir(FileType.CALIBRATION, id)
         FileUtil.saveToFile(path, name, CALIBRATION_HASH_MAP[name])
     }
 

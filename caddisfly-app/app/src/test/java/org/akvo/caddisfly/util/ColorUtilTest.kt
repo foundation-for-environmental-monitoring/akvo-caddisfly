@@ -39,7 +39,7 @@ class ColorUtilTest {
 
     @Test
     fun testGetColorRgbString() {
-        val rgb: String? = ColorUtil.getColorRgbString(-13850285)
+        val rgb: String = ColorUtil.getColorRgbString(-13850285)
         assertEquals("44  169  83", rgb)
     }
 

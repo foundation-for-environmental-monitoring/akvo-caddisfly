@@ -128,14 +128,7 @@ class MiscTest {
         onView(withText(string.settings)).perform(click())
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types), childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
+        onView(withId(id.list_types)).perform(
             actionOnItemAtPosition<ViewHolder?>(
                 TestConstants.TEST_INDEX, click()
             )
