@@ -61,6 +61,10 @@ class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitRes
                 testInfo!!.results!![0].unit
             )
             resultsValues.append(result.id, result.result)
+
+            if (result.display == 1 || testInfo!!.results!!.size == 1) {
+                resultIntent.putExtra(SensorConstants.VALUE, result.result)
+            }
         }
         val resultJson = getJsonResult(testInfo!!, resultsValues, null, -1, null)
         resultIntent.putExtra(SensorConstants.RESULT_JSON, resultJson.toString())

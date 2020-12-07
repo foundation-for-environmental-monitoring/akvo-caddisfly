@@ -24,8 +24,10 @@ import java.util.*
 
 class TitrationInputFragment : BaseFragment() {
     private var mListener: OnSubmitResultListener? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_titration_input, container, false)
     }
@@ -76,7 +78,11 @@ class TitrationInputFragment : BaseFragment() {
                                     } else {
                                         val n2 = n2String.toFloat()
                                         if (n1 > n2) {
-                                            editTitration1.error = getString(R.string.titration_entry_error)
+                                            editTitration1.error = getString(
+                                                R.string.titration_entry_error,
+                                                textInput1.text.toString(),
+                                                textInput2.text.toString()
+                                            )
                                             editTitration1.requestFocus()
                                         } else {
                                             closeKeyboard(editTitration2)
@@ -84,7 +90,14 @@ class TitrationInputFragment : BaseFragment() {
                                             for (i in testInfo.results!!.indices) {
                                                 val formula = testInfo.results!![i].formula
                                                 if (formula!!.isNotEmpty()) {
-                                                    results[i] = MathUtil.eval(String.format(Locale.US, formula, n1, n2)).toFloat()
+                                                    results[i] = MathUtil.eval(
+                                                        String.format(
+                                                            Locale.US,
+                                                            formula,
+                                                            n1,
+                                                            n2
+                                                        )
+                                                    ).toFloat()
                                                 }
                                             }
                                             mListener!!.onSubmitResult(results)
@@ -113,7 +126,9 @@ class TitrationInputFragment : BaseFragment() {
                                     val results = FloatArray(testInfo.results!!.size)
                                     val n1 = n1String.toFloat()
                                     val formula = testInfo.results!![0].formula
-                                    results[0] = MathUtil.eval(String.format(Locale.US, formula!!, n1)).toFloat()
+                                    results[0] =
+                                        MathUtil.eval(String.format(Locale.US, formula!!, n1))
+                                            .toFloat()
                                     mListener!!.onSubmitResult(results)
                                 }
                             }
@@ -129,7 +144,8 @@ class TitrationInputFragment : BaseFragment() {
     private fun closeKeyboard(input: EditText?) {
         try {
             val imm = requireContext().getSystemService(
-                    Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                Context.INPUT_METHOD_SERVICE
+            ) as InputMethodManager
             imm.hideSoftInputFromWindow(input!!.windowToken, 0)
             if (activity != null) {
                 val view = requireActivity().currentFocus
@@ -166,8 +182,10 @@ class TitrationInputFragment : BaseFragment() {
         mListener = if (context is OnSubmitResultListener) {
             context
         } else {
-            throw IllegalArgumentException(context.toString()
-                    + " must implement OnSubmitResultListener")
+            throw IllegalArgumentException(
+                context.toString()
+                        + " must implement OnSubmitResultListener"
+            )
         }
     }
 
