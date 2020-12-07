@@ -51,6 +51,7 @@ import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.leaveDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.saveCalibration
+import org.akvo.caddisfly.util.TestUtil
 import org.akvo.caddisfly.util.TestUtil.childAtPosition
 import org.akvo.caddisfly.util.TestUtil.isEmulator
 import org.akvo.caddisfly.util.TestUtil.sleep
@@ -161,19 +162,31 @@ class CalibrationTest {
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         sleep(500)
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
+
+        try {
+            onView(
+                allOf(
+                    withText(TestConstants.CUVETTE_TEST_NAME_1),
+                    isDisplayed()
                 )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.CALIBRATION_TEST_INDEX, click()
-            )
-        )
+            ).perform(click())
+        } catch (e: Exception) {
+            TestUtil.swipeUp()
+            sleep(2000)
+            try {
+                onView(allOf(withText(TestConstants.CUVETTE_TEST_NAME_1), isDisplayed())).perform(
+                    click()
+                )
+            } catch (e: Exception) {
+                TestUtil.swipeUp()
+                sleep(2000)
+                onView(allOf(withText(TestConstants.CUVETTE_TEST_NAME_1), isDisplayed())).perform(
+                    click()
+                )
+            }
+        }
+        sleep(1000)
+
         if (isEmulator) {
 //            onView(withText(string.error_camera_flash_required))
 //                .inRoot(
@@ -197,19 +210,29 @@ class CalibrationTest {
         onView(withText(string.settings)).perform(click())
         onView(withId(id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
+        try {
+            onView(
+                allOf(
+                    withText(TestConstants.CUVETTE_TEST_NAME_1),
+                    isDisplayed()
                 )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.CALIBRATION_TEST_INDEX, click()
-            )
-        )
+            ).perform(click())
+        } catch (e: Exception) {
+            TestUtil.swipeUp()
+            sleep(2000)
+            try {
+                onView(allOf(withText(TestConstants.CUVETTE_TEST_NAME_1), isDisplayed())).perform(
+                    click()
+                )
+            } catch (e: Exception) {
+                TestUtil.swipeUp()
+                sleep(2000)
+                onView(allOf(withText(TestConstants.CUVETTE_TEST_NAME_1), isDisplayed())).perform(
+                    click()
+                )
+            }
+        }
+        sleep(1000)
         onView(withId(id.fabEditCalibration)).perform(click())
 
 //        onView(withId(R.id.editBatchCode))
@@ -275,19 +298,29 @@ class CalibrationTest {
         onView(withText(string.calibrate)).perform(click())
 //        onView(withText(currentHashMap.get(TestConstant.FLUORIDE))).perform(click());
 
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
+        try {
+            onView(
+                allOf(
+                    withText(TestConstants.CUVETTE_TEST_NAME_1),
+                    isDisplayed()
                 )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.CALIBRATION_TEST_INDEX, click()
-            )
-        )
+            ).perform(click())
+        } catch (e: Exception) {
+            TestUtil.swipeUp()
+            sleep(2000)
+            try {
+                onView(allOf(withText(TestConstants.CUVETTE_TEST_NAME_1), isDisplayed())).perform(
+                    click()
+                )
+            } catch (e: Exception) {
+                TestUtil.swipeUp()
+                sleep(2000)
+                onView(allOf(withText(TestConstants.CUVETTE_TEST_NAME_1), isDisplayed())).perform(
+                    click()
+                )
+            }
+        }
+        sleep(1000)
         onView(withId(id.fabEditCalibration)).perform(click())
 
 //        onView(withId(R.id.editBatchCode))

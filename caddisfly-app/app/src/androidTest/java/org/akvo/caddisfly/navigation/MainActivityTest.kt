@@ -32,9 +32,6 @@ class MainActivityTest {
         onView(ViewMatchers.withId(R.id.scrollViewSettings)).perform(ViewActions.swipeUp())
         onView(withText(string.calibrate)).perform(click())
         pressBack()
-
-//        onView(withText("Strip Test")).perform(click());
-//        pressBack();
     }
 
     companion object {

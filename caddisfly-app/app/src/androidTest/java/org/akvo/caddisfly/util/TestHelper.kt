@@ -43,12 +43,6 @@ import java.util.*
 lateinit var mDevice: UiDevice
 
 @Suppress("unused")
-fun isStripPatchAvailable(name: String = "."): Boolean {
-    val file = File(FileHelper.getFilesDir(FileType.TEST_IMAGE, ""), "$name.yuv")
-    return file.exists()
-}
-
-@Suppress("unused")
 fun clickStartButton() {
     onView(
         Matchers.allOf(

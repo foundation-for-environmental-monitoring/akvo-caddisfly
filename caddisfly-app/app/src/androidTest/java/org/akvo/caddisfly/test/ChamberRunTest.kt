@@ -178,9 +178,13 @@ class ChamberRunTest {
         } catch (e: Exception) {
             swipeUp()
             sleep(2000)
-            swipeUp()
-            sleep(2000)
-            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            try {
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            } catch (e: Exception) {
+                swipeUp()
+                sleep(2000)
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            }
         }
         sleep(1000)
 
@@ -207,9 +211,13 @@ class ChamberRunTest {
         } catch (e: Exception) {
             swipeUp()
             sleep(2000)
-            swipeUp()
-            sleep(2000)
-            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            try {
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            } catch (e: Exception) {
+                swipeUp()
+                sleep(2000)
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            }
         }
         sleep(1000)
 
@@ -252,9 +260,13 @@ class ChamberRunTest {
         } catch (e: Exception) {
             swipeUp()
             sleep(2000)
-            swipeUp()
-            sleep(2000)
-            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            try {
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            } catch (e: Exception) {
+                swipeUp()
+                sleep(2000)
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            }
         }
         sleep(1000)
 
@@ -394,19 +406,20 @@ class ChamberRunTest {
 
         goToMainScreen()
         onView(withText(string.run_test)).perform(click())
-        onView(
-            allOf(
-                withId(id.list_types),
-                childAtPosition(
-                    withClassName(`is`("android.widget.LinearLayout")),
-                    0
-                )
-            )
-        ).perform(
-            actionOnItemAtPosition<ViewHolder?>(
-                TestConstants.TEST_INDEX, click()
-            )
-        )
+
+        try {
+            onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+        } catch (e: Exception) {
+            swipeUp()
+            sleep(2000)
+            try {
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            } catch (e: Exception) {
+                swipeUp()
+                sleep(2000)
+                onView(allOf(withText(CUVETTE_TEST_NAME_1), isDisplayed())).perform(click())
+            }
+        }
 
         sleep(1000)
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))

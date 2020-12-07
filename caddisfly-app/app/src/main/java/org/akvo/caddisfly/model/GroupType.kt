@@ -25,17 +25,9 @@ import com.google.gson.annotations.SerializedName
  * The different types of testing methods.
  */
 enum class GroupType {
-    /**
-     * Liquid reagent is mixed with sample and color is analysed from the resulting
-     * color change in the solution.
-     */
     @SerializedName("INDIVIDUAL")
     INDIVIDUAL,
 
-    /**
-     * Strip paper is dipped into the sample and color is analysed from the resulting
-     * color change on the strip paper.
-     */
     @SerializedName("GROUP")
     GROUP
 }

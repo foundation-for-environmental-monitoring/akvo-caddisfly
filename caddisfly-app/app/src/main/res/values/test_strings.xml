@@ -4,5 +4,6 @@
     <string name="freeChlorine">Free Chlorine</string>
     <string name="launch">Launch</string>
     <string name="water_tests_1">Water Tests 1</string>
+    <string name="water_tests">Water Tests</string>
     <string name="unit">Unit</string>
 </resources>

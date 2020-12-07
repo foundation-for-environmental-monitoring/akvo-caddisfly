@@ -3,7 +3,6 @@ package org.akvo.caddisfly.common
 import org.akvo.caddisfly.R
 
 object TestConstants {
-    const val STRIP_TESTS_COUNT = 2
     const val CUVETTE_TEST_ID_1 = "f0f3c1dd-89af-49f1-83e7-bcc31c3006cf"
     const val CUVETTE_TEST_NAME_1 = R.string.fluoride
     const val CUVETTE_TEST_NAME_2 = R.string.aluminum

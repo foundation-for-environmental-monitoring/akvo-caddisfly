@@ -491,10 +491,6 @@ class TestInfo : Parcelable {
         }
     }
 
-    fun getStripLength(): Double {
-        return length!!
-    }
-
     val maxDilution: Int
         get() {
             return if (dilutions.isNotEmpty()) {
