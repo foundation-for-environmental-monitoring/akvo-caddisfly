@@ -105,10 +105,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.exifinterface:exifinterface:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.exifinterface:exifinterface:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.preference:preference:1.1.1'
 
     implementation 'com.simplecityapps:recyclerview-fastscroll:2.0.0'
@@ -143,7 +143,7 @@ dependencies {
     implementation files('libs/mail.jar')
 
     // Testing
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.assertj:assertj-core:3.8.0'
 
     // AndroidJUnitRunner and JUnit Rules
@@ -159,7 +159,7 @@ dependencies {
     }
 
     // Robolectric
-    testImplementation 'org.robolectric:robolectric:4.3.1'
+    testImplementation 'org.robolectric:robolectric:4.4'
 
     // UIAutomator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
@@ -169,10 +169,10 @@ dependencies {
 
     // Firebase (Experiment Flavor)
     tryoutImplementation 'androidx.multidex:multidex:2.0.1'
-    tryoutImplementation 'com.google.firebase:firebase-core:17.5.0'
-    tryoutImplementation 'com.google.firebase:firebase-database:19.4.0'
-    tryoutImplementation 'com.google.firebase:firebase-firestore:21.6.0'
+    tryoutImplementation 'com.google.firebase:firebase-core:18.0.0'
+    tryoutImplementation 'com.google.firebase:firebase-database:19.5.1'
+    tryoutImplementation 'com.google.firebase:firebase-firestore:22.0.0'
     tryoutImplementation 'com.google.firebase:firebase-storage:19.2.0'
-    tryoutImplementation 'com.google.firebase:firebase-auth:19.3.2'
+    tryoutImplementation 'com.google.firebase:firebase-auth:20.0.1'
 }
 //apply plugin: 'com.google.gms.google-services'
