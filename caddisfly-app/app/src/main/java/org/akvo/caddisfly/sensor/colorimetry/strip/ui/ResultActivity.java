@@ -25,8 +25,6 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -36,6 +34,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -599,7 +600,7 @@ public class ResultActivity extends BaseActivity implements DetectStripListener 
                     resultJson += String.format(Locale.getDefault(), "\"phone\" : \"%s\",", Build.MODEL);
 
                     resultJson += String.format(Locale.getDefault(), "\"colorCard\" : \"%s\",",
-                            String.valueOf(CalibrationCard.getMostFrequentVersionNumber()));
+                            CalibrationCard.getMostFrequentVersionNumber());
 
                     diagnosticInfo = diagnosticInfo.replace("{Result}", resultJson);
 
@@ -607,7 +608,7 @@ public class ResultActivity extends BaseActivity implements DetectStripListener 
                     FileUtil.saveToFile(path, new SimpleDateFormat("yyyy-MM-dd HH-mm", Locale.US)
                                     .format(Calendar.getInstance().getTimeInMillis())
                                     + "_" + id + "_" + Build.MODEL.replace("_", "-") + "_CC"
-                                    + String.valueOf(CalibrationCard.getMostFrequentVersionNumber()) + ".json",
+                                    + CalibrationCard.getMostFrequentVersionNumber() + ".json",
                             diagnosticInfo);
                 }
 

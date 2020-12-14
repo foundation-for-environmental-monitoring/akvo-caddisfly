@@ -1,18 +1,18 @@
 package org.akvo.caddisfly.sensor.turbidity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -20,9 +20,6 @@ import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.ui.BaseActivity;
 import org.akvo.caddisfly.util.ApiUtil;
 import org.akvo.caddisfly.util.FileUtil;
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -69,27 +66,27 @@ public class AnalyseActivity extends BaseActivity {
     String path;
     AnalyseActivity.PagerAdapter pagerAdapter;
     Activity mActivity;
-    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-
-                    String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-                    if (!ApiUtil.hasPermissions(getBaseContext(), permissions)) {
-                        ActivityCompat.requestPermissions(mActivity, permissions, PERMISSION_ALL);
-                    } else {
-                        startAnalysis();
-                    }
-
-                    break;
-                default:
-                    super.onManagerConnected(status);
-                    break;
-            }
-        }
-    };
+//    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+//        @Override
+//        public void onManagerConnected(int status) {
+//            switch (status) {
+//                case LoaderCallbackInterface.SUCCESS:
+//
+//                    String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//
+//                    if (!ApiUtil.hasPermissions(getBaseContext(), permissions)) {
+//                        ActivityCompat.requestPermissions(mActivity, permissions, PERMISSION_ALL);
+//                    } else {
+//                        startAnalysis();
+//                    }
+//
+//                    break;
+//                default:
+//                    super.onManagerConnected(status);
+//                    break;
+//            }
+//        }
+//    };
     boolean isTurbid;
 
     private static Integer getColor(String filename, Point centerPoint) throws IOException {
@@ -169,14 +166,11 @@ public class AnalyseActivity extends BaseActivity {
             float deg = hsb[0] * 360;
             //if (deg >=  25 && deg < 70) return true;
             if (media.equalsIgnoreCase("himedia")) {
-                if ((deg >= 25 && deg < 70) && getColorDistanceRgb(color, compareColor) > 70)
-                    return true;
+                return (deg >= 25 && deg < 70) && getColorDistanceRgb(color, compareColor) > 70;
             } else {
-                if ((deg >= 10 && deg < 40) && getColorDistanceRgb(color, compareColor) > 50)
-                    return true;
+                return (deg >= 10 && deg < 40) && getColorDistanceRgb(color, compareColor) > 50;
             }
         }
-        return false;
     }
 
 //    private static int[] getRGBArr(int pixel) {
@@ -233,7 +227,7 @@ public class AnalyseActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
+//        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
     }
 
     @Override
@@ -340,10 +334,10 @@ public class AnalyseActivity extends BaseActivity {
             }
         }
 
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        ViewPager mViewPager = findViewById(R.id.pager);
         mViewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -366,7 +360,7 @@ public class AnalyseActivity extends BaseActivity {
 
         try {
             if (folder.exists()) {
-                String details[] = folder.getName().split("_");
+                String[] details = folder.getName().split("_");
 
                 if (details.length < 7) {
                     return null;

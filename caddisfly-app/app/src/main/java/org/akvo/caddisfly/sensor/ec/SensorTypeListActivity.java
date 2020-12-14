@@ -23,8 +23,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +31,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.helper.TestConfigHelper;
@@ -52,7 +53,7 @@ public class SensorTypeListActivity extends BaseActivity {
 
         setTitle(R.string.selectTest);
 
-        ListView listTypes = (ListView) findViewById(R.id.list_types);
+        ListView listTypes = findViewById(R.id.list_types);
 
         final List<TestInfo> mTests = TestConfigHelper.loadTestsList();
 
@@ -168,7 +169,7 @@ public class SensorTypeListActivity extends BaseActivity {
             private final TextView textView;
 
             ViewHolder(@NonNull View v) {
-                textView = (TextView) v.findViewById(R.id.text_title);
+                textView = v.findViewById(R.id.text_title);
             }
         }
     }

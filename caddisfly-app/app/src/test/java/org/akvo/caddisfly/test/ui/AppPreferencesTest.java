@@ -19,7 +19,7 @@
 
 package org.akvo.caddisfly.test.ui;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;

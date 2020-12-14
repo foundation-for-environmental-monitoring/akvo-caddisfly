@@ -21,7 +21,8 @@ package org.akvo.caddisfly.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -82,7 +83,7 @@ public final class ImageHelper {
 
         // find the circle in the image
         Imgproc.HoughCircles(grayMat, circles,
-                Imgproc.CV_HOUGH_GRADIENT, RESOLUTION_INVERSE_RATIO, (double) MIN_CIRCLE_CENTER_DISTANCE, param1,
+                Imgproc.CV_HOUGH_GRADIENT, RESOLUTION_INVERSE_RATIO, MIN_CIRCLE_CENTER_DISTANCE, param1,
                 param2, MIN_RADIUS, MAX_RADIUS);
 
         int numberOfCircles = (circles.rows() == 0) ? 0 : circles.cols();

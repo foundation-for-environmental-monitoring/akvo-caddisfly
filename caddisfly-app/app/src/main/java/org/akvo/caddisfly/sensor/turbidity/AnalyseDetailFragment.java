@@ -22,7 +22,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.net.ParseException;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -33,6 +32,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import org.akvo.caddisfly.R;
 
@@ -60,7 +61,7 @@ public class AnalyseDetailFragment extends Fragment {
     public static String toTitleCase(String input) {
         input = input.toLowerCase();
         char c = input.charAt(0);
-        String s = new String("" + c);
+        String s = "" + c;
         String f = s.toUpperCase();
         return f + input.substring(1);
     }

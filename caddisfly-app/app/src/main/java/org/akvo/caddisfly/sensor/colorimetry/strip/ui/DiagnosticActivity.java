@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.InputType;
 import android.view.MenuItem;
@@ -31,6 +30,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.colorimetry.strip.model.StripTest;
@@ -51,7 +52,7 @@ public class DiagnosticActivity extends BaseActivity {
     private static final int CODE_DECIMAL = 46;
     private KeyboardView mKeyboardView;
     private EditText editColor;
-    private boolean decimalStarted = false;
+    private final boolean decimalStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +60,11 @@ public class DiagnosticActivity extends BaseActivity {
         setContentView(R.layout.activity_diagnostic);
 
         Keyboard mKeyboard = new Keyboard(this, R.xml.digit_keyboard);
-        mKeyboardView = (KeyboardView) findViewById(R.id.keyboard_view);
+        mKeyboardView = findViewById(R.id.keyboard_view);
         mKeyboardView.setPreviewEnabled(false);
         mKeyboardView.setKeyboard(mKeyboard);
 
-        editColor = (EditText) findViewById(R.id.edit_color);
+        editColor = findViewById(R.id.edit_color);
 
         editColor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

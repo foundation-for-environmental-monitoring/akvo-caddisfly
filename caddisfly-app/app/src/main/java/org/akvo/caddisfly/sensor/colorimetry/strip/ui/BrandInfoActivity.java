@@ -22,14 +22,8 @@ package org.akvo.caddisfly.sensor.colorimetry.strip.ui;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,7 +31,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.helper.CameraHelper;
@@ -191,11 +191,6 @@ public class BrandInfoActivity extends BaseActivity {
                 getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
 
                 snackbar.setActionTextColor(typedValue.data);
-                View snackView = snackbar.getView();
-                TextView textView = snackView.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setHeight(getResources().getDimensionPixelSize(R.dimen.snackBarHeight));
-                textView.setLineSpacing(0, SNACK_BAR_LINE_SPACING);
-                textView.setTextColor(Color.WHITE);
                 snackbar.show();
             }
         }

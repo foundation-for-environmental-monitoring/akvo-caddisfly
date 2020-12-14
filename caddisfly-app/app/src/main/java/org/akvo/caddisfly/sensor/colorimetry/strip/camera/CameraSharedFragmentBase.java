@@ -21,10 +21,6 @@ package org.akvo.caddisfly.sensor.colorimetry.strip.camera;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -34,6 +30,11 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.model.TestStatus;
@@ -65,13 +66,13 @@ public abstract class CameraSharedFragmentBase extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar = view.findViewById(R.id.progressBar);
         if (progressBar != null) {
             progressBar.setMax(Constant.COUNT_QUALITY_CHECK_LIMIT);
             progressBar.setProgress(0);
         }
 
-        textSwitcher = (TextSwitcher) view.findViewById(R.id.textSwitcher);
+        textSwitcher = view.findViewById(R.id.textSwitcher);
 
         if (textSwitcher != null) {
 
@@ -84,10 +85,10 @@ public abstract class CameraSharedFragmentBase extends Fragment {
 
                     if (isFirst) {
                         isFirst = false;
-                        textView = (TextView) view.findViewById(R.id.textMessage1);
+                        textView = view.findViewById(R.id.textMessage1);
                         ((ViewGroup) textView.getParent()).removeViewAt(0);
                     } else {
-                        textView = (TextView) view.findViewById(R.id.textMessage2);
+                        textView = view.findViewById(R.id.textMessage2);
                         ((ViewGroup) textView.getParent()).removeViewAt(0);
                     }
                     return textView;

@@ -20,7 +20,8 @@
 package org.akvo.caddisfly.model;
 
 import android.graphics.Color;
-import android.support.annotation.StringRes;
+
+import androidx.annotation.StringRes;
 
 import org.akvo.caddisfly.sensor.SensorConstants;
 import org.json.JSONArray;

@@ -23,21 +23,21 @@ import android.Manifest;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -236,11 +236,6 @@ public class DiagnosticPreferenceFragment extends PreferenceFragment {
                 getActivity().getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
 
                 snackbar.setActionTextColor(typedValue.data);
-                View snackView = snackbar.getView();
-                TextView textView = snackView.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setHeight(getResources().getDimensionPixelSize(R.dimen.snackBarHeight));
-                textView.setLineSpacing(0, SNACK_BAR_LINE_SPACING);
-                textView.setTextColor(Color.WHITE);
                 snackbar.show();
             }
         }

@@ -20,13 +20,14 @@
 package org.akvo.caddisfly.sensor.colorimetry.strip.instructions;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.colorimetry.strip.model.StripTest;
@@ -54,9 +55,9 @@ public class InstructionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instruction);
 
-        final PageIndicatorView pageIndicatorView = (PageIndicatorView) findViewById(R.id.pager_indicator);
-        final ImageView imagePageLeft = (ImageView) findViewById(R.id.image_pageLeft);
-        final ImageView imagePageRight = (ImageView) findViewById(R.id.image_pageRight);
+        final PageIndicatorView pageIndicatorView = findViewById(R.id.pager_indicator);
+        final ImageView imagePageLeft = findViewById(R.id.image_pageLeft);
+        final ImageView imagePageRight = findViewById(R.id.image_pageRight);
 
         StripTest.Brand brand = (new StripTest()).getBrand(getIntent().getStringExtra(Constant.UUID));
 
@@ -90,7 +91,7 @@ public class InstructionActivity extends BaseActivity {
             pageIndicatorView.setPageCount(instructions.length());
         }
 
-        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager = findViewById(R.id.pager);
 
         final PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(pagerAdapter);

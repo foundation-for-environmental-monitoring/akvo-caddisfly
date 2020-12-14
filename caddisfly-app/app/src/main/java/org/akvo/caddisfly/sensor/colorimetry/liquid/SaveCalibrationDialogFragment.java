@@ -27,8 +27,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -36,6 +34,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -109,11 +110,11 @@ public class SaveCalibrationDialogFragment extends DialogFragment {
             }
         };
 
-        editExpiryDate = (EditText) view.findViewById(R.id.editExpiryDate);
+        editExpiryDate = view.findViewById(R.id.editExpiryDate);
 
-        editBatchCode = (EditText) view.findViewById(R.id.editBatchCode);
+        editBatchCode = view.findViewById(R.id.editBatchCode);
 
-        editRgb = (EditText) view.findViewById(R.id.editRgb);
+        editRgb = view.findViewById(R.id.editRgb);
 
         long milliseconds = PreferencesUtil.getLong(getActivity(),
                 CaddisflyApp.getApp().getCurrentTestInfo().getId(),
@@ -175,7 +176,7 @@ public class SaveCalibrationDialogFragment extends DialogFragment {
             }
         });
 
-        editName = (EditText) view.findViewById(R.id.editName);
+        editName = view.findViewById(R.id.editName);
         if (!isEditing && AppPreferences.isDiagnosticMode()) {
             editName.requestFocus();
         } else {

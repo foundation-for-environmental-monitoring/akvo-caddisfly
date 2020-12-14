@@ -22,8 +22,9 @@ package org.akvo.caddisfly.helper;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.support.annotation.RawRes;
 import android.util.SparseIntArray;
+
+import androidx.annotation.RawRes;
 
 import org.akvo.caddisfly.AppConfig;
 import org.akvo.caddisfly.R;

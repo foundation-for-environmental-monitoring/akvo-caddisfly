@@ -26,9 +26,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.colorimetry.stripv2.decode.DecodeProcessor;
@@ -56,10 +57,10 @@ public class FinderPatternIndicatorView extends View {
     private final Bitmap closerBitmap;
     //    PerspectiveTransform cardToImageTransform;
     //    CalibrationCardData calCardData;
-    private Matrix matrix = new Matrix();
+    private final Matrix matrix = new Matrix();
     //    private Paint paint4;
     private List<FinderPattern> patterns;
-    private boolean shadowGrid[][];
+    private boolean[][] shadowGrid;
     //    private Map<String, int[]> calibratedPatchRGB;
 //    private Map<String, int[]> calibrationPatchRGB;
     private int decodeHeight;

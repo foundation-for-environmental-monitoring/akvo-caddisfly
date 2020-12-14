@@ -23,11 +23,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.model.TestStatus;
@@ -145,8 +146,8 @@ public class CameraStartTestFragment extends CameraSharedFragmentBase {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_camera_start, container, false);
 
-        exposureView = (PercentageMeterView) rootView.findViewById(R.id.quality_brightness);
-        contrastView = (PercentageMeterView) rootView.findViewById(R.id.quality_shadows);
+        exposureView = rootView.findViewById(R.id.quality_brightness);
+        contrastView = rootView.findViewById(R.id.quality_shadows);
 
         //************ HACK FOR TESTING ON EMULATOR ONLY *********************
 //        TextView finishTextView = (TextView) rootView.findViewById(R.id.activity_cameraFinishText);
@@ -249,7 +250,7 @@ public class CameraStartTestFragment extends CameraSharedFragmentBase {
     public void onResume() {
         super.onResume();
         if (secondPhase && mListener != null) {
-            mListener.takeNextPicture((long) 1000);
+            mListener.takeNextPicture(1000);
         }
     }
 

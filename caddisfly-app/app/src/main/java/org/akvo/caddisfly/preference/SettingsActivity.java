@@ -23,8 +23,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.Toolbar;
 import android.widget.ScrollView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -106,9 +107,9 @@ public class SettingsActivity extends BaseActivity
                     .commit();
         }
 
-        mScrollView = (ScrollView) findViewById(R.id.scrollViewSettings);
+        mScrollView = findViewById(R.id.scrollViewSettings);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         try {
             setSupportActionBar(toolbar);
         } catch (Exception ignored) {

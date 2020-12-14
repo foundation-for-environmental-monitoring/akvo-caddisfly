@@ -22,13 +22,14 @@ package org.akvo.caddisfly.ui;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.preference.AppPreferences;
@@ -89,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             try {
                 setSupportActionBar(toolbar);
@@ -116,7 +117,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setTitle(CharSequence title) {
-        TextView textTitle = (TextView) findViewById(R.id.textToolbarTitle);
+        TextView textTitle = findViewById(R.id.textToolbarTitle);
         if (textTitle != null && title != null) {
             mTitle = title.toString();
             textTitle.setText(title);
@@ -125,7 +126,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setTitle(int titleId) {
-        TextView textTitle = (TextView) findViewById(R.id.textToolbarTitle);
+        TextView textTitle = findViewById(R.id.textToolbarTitle);
         if (textTitle != null && titleId != 0) {
             mTitle = getString(titleId);
             textTitle.setText(titleId);
@@ -145,7 +146,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.diagnostic_status));
             }
-            LinearLayout layoutTitle = (LinearLayout) findViewById(R.id.layoutTitleBar);
+            LinearLayout layoutTitle = findViewById(R.id.layoutTitleBar);
             if (layoutTitle != null) {
                 layoutTitle.setBackgroundColor(ContextCompat.getColor(this, R.color.diagnostic));
             }
@@ -160,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
             }
 
-            LinearLayout layoutTitle = (LinearLayout) findViewById(R.id.layoutTitleBar);
+            LinearLayout layoutTitle = findViewById(R.id.layoutTitleBar);
             if (layoutTitle != null) {
                 layoutTitle.setBackgroundColor(color);
             }

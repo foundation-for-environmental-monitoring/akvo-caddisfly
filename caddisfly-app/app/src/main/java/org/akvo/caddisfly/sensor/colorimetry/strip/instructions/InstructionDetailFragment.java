@@ -23,7 +23,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Spanned;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -32,6 +31,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.colorimetry.strip.util.AssetsManager;
@@ -94,7 +95,7 @@ public class InstructionDetailFragment extends Fragment {
         ArrayList<String> instructionText = getArguments().getStringArrayList(ARG_ITEM_TEXT);
         if (instructionText != null) {
 
-            LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.layout_instructions);
+            LinearLayout linearLayout = rootView.findViewById(R.id.layout_instructions);
             for (String instruction : instructionText) {
                 TextView textView = new TextView(getActivity());
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,

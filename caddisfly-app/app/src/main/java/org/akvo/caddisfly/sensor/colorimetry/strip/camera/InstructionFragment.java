@@ -24,7 +24,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.text.Spanned;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -34,6 +33,8 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.colorimetry.strip.model.StripTest;
@@ -87,12 +88,12 @@ public class InstructionFragment extends CameraSharedFragmentBase {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_instruction, container, false);
-        final Button buttonStart = (Button) rootView.findViewById(R.id.button_start);
+        final Button buttonStart = rootView.findViewById(R.id.button_start);
         buttonStart.setEnabled(false);
         buttonStart.setAlpha(BUTTON_START_ALPHA);
-        LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.layout_information);
+        LinearLayout linearLayout = rootView.findViewById(R.id.layout_information);
 
-        TextView textTitle = (TextView) rootView.findViewById(R.id.textToolbarTitle);
+        TextView textTitle = rootView.findViewById(R.id.textToolbarTitle);
         if (textTitle != null) {
             textTitle.setText(R.string.instructions);
         }

@@ -24,15 +24,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.MenuItem;
@@ -41,6 +35,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -55,9 +56,6 @@ import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ApiUtil;
 import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -72,20 +70,20 @@ public class TimeLapseActivity extends BaseActivity {
 
     private static final int PERMISSION_ALL = 1;
     private static final int INITIAL_DELAY = 25000;
-    private static final float SNACK_BAR_LINE_SPACING = 1.4f;
-
-    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                    break;
-                default:
-                    super.onManagerConnected(status);
-                    break;
-            }
-        }
-    };
+//    private static final float SNACK_BAR_LINE_SPACING = 1.4f;
+//
+//    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+//        @Override
+//        public void onManagerConnected(int status) {
+//            switch (status) {
+//                case LoaderCallbackInterface.SUCCESS:
+//                    break;
+//                default:
+//                    super.onManagerConnected(status);
+//                    break;
+//            }
+//        }
+//    };
     private CoordinatorLayout coordinatorLayout;
     private SoundPoolPlayer sound;
     private View layoutWait;
@@ -178,13 +176,13 @@ public class TimeLapseActivity extends BaseActivity {
         sound = new SoundPoolPlayer(this);
 
         layoutWait = findViewById(R.id.layoutWait);
-        layoutDetails = (LinearLayout) findViewById(R.id.layoutDetails);
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        layoutDetails = findViewById(R.id.layoutDetails);
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
 
         Fragment fragment;
         Bundle bundle = new Bundle();
 
-        final TextView textTitle = (TextView) findViewById(R.id.textTitle);
+        final TextView textTitle = findViewById(R.id.textTitle);
 
         CaddisflyApp.getApp().loadTestConfigurationByUuid(mUuid);
         final TestInfo testInfo = CaddisflyApp.getApp().getCurrentTestInfo();
@@ -208,7 +206,7 @@ public class TimeLapseActivity extends BaseActivity {
                 .add(R.id.layoutContent4, fragment)
                 .commit();
 
-        LinearLayout layoutTitleBar = (LinearLayout) findViewById(R.id.layoutTitleBar);
+        LinearLayout layoutTitleBar = findViewById(R.id.layoutTitleBar);
         layoutTitleBar.setVisibility(View.GONE);
 
         layoutWait.setVisibility(View.VISIBLE);
@@ -221,11 +219,11 @@ public class TimeLapseActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("custom-event-name"));
 
-        textSampleCount = (TextView) findViewById(R.id.textSampleCount);
+        textSampleCount = findViewById(R.id.textSampleCount);
 
         final Activity activity = this;
 
-        Button buttonStart = (Button) findViewById(R.id.buttonStart);
+        Button buttonStart = findViewById(R.id.buttonStart);
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,7 +240,7 @@ public class TimeLapseActivity extends BaseActivity {
                 }
             }
         });
-        textCountdown = (TextView) findViewById(R.id.textCountdown);
+        textCountdown = findViewById(R.id.textCountdown);
     }
 
     private void startTest() {
@@ -301,7 +299,7 @@ public class TimeLapseActivity extends BaseActivity {
         futureDate = Calendar.getInstance();
         futureDate.add(Calendar.MILLISECOND, INITIAL_DELAY);
 
-        TextView textInterval = (TextView) findViewById(R.id.textInterval);
+        TextView textInterval = findViewById(R.id.textInterval);
         int interval = Integer.parseInt(PreferencesUtil.getString(CaddisflyApp.getApp(),
                 testInfo.getShortCode() + "_IntervalMinutes", "1"));
 
@@ -347,11 +345,6 @@ public class TimeLapseActivity extends BaseActivity {
                 getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
 
                 snackbar.setActionTextColor(typedValue.data);
-                View snackView = snackbar.getView();
-                TextView textView = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setHeight(getResources().getDimensionPixelSize(R.dimen.snackBarHeight));
-                textView.setLineSpacing(0, SNACK_BAR_LINE_SPACING);
-                textView.setTextColor(Color.WHITE);
                 snackbar.show();
             }
         }
@@ -367,7 +360,7 @@ public class TimeLapseActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
+//        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
         startCountdownTimer();
     }
 

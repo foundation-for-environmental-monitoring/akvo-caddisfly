@@ -23,11 +23,12 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.util.ListViewUtil;
@@ -70,7 +71,7 @@ public class DiagnosticUserPreferenceFragment extends PreferenceFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        list = (ListView) view.findViewById(android.R.id.list);
+        list = view.findViewById(android.R.id.list);
     }
 
     @Override

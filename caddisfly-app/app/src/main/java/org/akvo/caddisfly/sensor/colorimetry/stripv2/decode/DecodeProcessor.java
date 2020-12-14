@@ -2,8 +2,9 @@ package org.akvo.caddisfly.sensor.colorimetry.stripv2.decode;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.sensor.colorimetry.stripv2.models.CalibrationCardData;
 import org.akvo.caddisfly.sensor.colorimetry.stripv2.models.DecodeData;
@@ -40,14 +41,14 @@ public class DecodeProcessor {
     private static final int DEGREES_0 = 0;
     private static final String TAG = "Caddisfly-DecodeProc";
     // holds reference to the striptestHandler, which we need to pass messages
-    private StriptestHandler striptestHandler;
+    private final StriptestHandler striptestHandler;
     private HandlerThread mDecodeThread;
     private Handler mDecodeHandler;
     // instance of BitMatrixCreator
     private BitMatrixCreator mBitMatrixCreator;
     private int mCurrentDelay;
     /******************************************* find possible centers **************************/
-    private Runnable runFindPossibleCenters = () -> {
+    private final Runnable runFindPossibleCenters = () -> {
         try {
             findPossibleCenters();
         } catch (Exception e) {
@@ -55,7 +56,7 @@ public class DecodeProcessor {
             //throw new RuntimeException("Can't start finding centers");
         }
     };
-    private Runnable runExposureQualityCheck = () -> {
+    private final Runnable runExposureQualityCheck = () -> {
         try {
             checkExposureQuality();
         } catch (Exception e) {
@@ -63,7 +64,7 @@ public class DecodeProcessor {
         }
     };
     /*********************************** check shadow quality ***********************************/
-    private Runnable runShadowQualityCheck = () -> {
+    private final Runnable runShadowQualityCheck = () -> {
         try {
             checkShadowQuality();
         } catch (Exception e) {
@@ -72,7 +73,7 @@ public class DecodeProcessor {
     };
     /*********************************** store data ***********************************************/
 
-    private Runnable runStoreData = () -> {
+    private final Runnable runStoreData = () -> {
         try {
             storeData();
         } catch (Exception e) {
@@ -84,7 +85,7 @@ public class DecodeProcessor {
 
     /* ********************************* check exposure *****************************************/
     /********************************** calibration ***********************************************/
-    private Runnable runCalibration = () -> {
+    private final Runnable runCalibration = () -> {
         try {
             calibrateCard();
         } catch (Exception e) {

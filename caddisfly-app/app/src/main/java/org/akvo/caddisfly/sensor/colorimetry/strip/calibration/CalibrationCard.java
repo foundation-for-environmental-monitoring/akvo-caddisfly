@@ -19,11 +19,12 @@
 
 package org.akvo.caddisfly.sensor.colorimetry.strip.calibration;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.preference.AppPreferences;
@@ -97,7 +98,7 @@ public final class CalibrationCard {
             }
         }
 
-        Log.d(TAG, String.format("%s : %s", versionNumberMap.size(), String.valueOf(mostFrequent)));
+        Log.d(TAG, String.format("%s : %s", versionNumberMap.size(), mostFrequent));
 
         return value;
     }

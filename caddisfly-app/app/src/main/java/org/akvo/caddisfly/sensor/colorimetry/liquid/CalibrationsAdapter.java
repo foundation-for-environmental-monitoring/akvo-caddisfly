@@ -22,7 +22,6 @@ package org.akvo.caddisfly.sensor.colorimetry.liquid;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -32,6 +31,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -70,8 +71,8 @@ class CalibrationsAdapter extends ArrayAdapter<Swatch> {
         List<Swatch> swatches = CaddisflyApp.getApp().getCurrentTestInfo().getSwatches();
         Swatch swatch = swatches.get(position);
 
-        TextView textName = (TextView) rowView.findViewById(R.id.textName);
-        TextView textSwatch = (TextView) rowView.findViewById(R.id.textSwatch);
+        TextView textName = rowView.findViewById(R.id.textName);
+        TextView textSwatch = rowView.findViewById(R.id.textSwatch);
 
         int color = swatch.getColor();
 
@@ -105,9 +106,9 @@ class CalibrationsAdapter extends ArrayAdapter<Swatch> {
             //display additional information if we are in diagnostic mode
             if (AppPreferences.isDiagnosticMode()) {
 
-                TextView textRgb = (TextView) rowView.findViewById(R.id.textRgb);
-                TextView textHsv = (TextView) rowView.findViewById(R.id.textHsv);
-                TextView textBrightness = (TextView) rowView.findViewById(R.id.textBrightness);
+                TextView textRgb = rowView.findViewById(R.id.textRgb);
+                TextView textHsv = rowView.findViewById(R.id.textHsv);
+                TextView textBrightness = rowView.findViewById(R.id.textBrightness);
 
                 double distance = 0;
                 if (position > 0) {

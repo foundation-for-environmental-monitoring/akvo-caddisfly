@@ -23,8 +23,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.ImageFormat;
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.CalibrationException;

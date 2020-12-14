@@ -1,8 +1,9 @@
 package org.akvo.caddisfly.sensor.colorimetry.stripv2.utils;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.sensor.colorimetry.stripv2.models.CalibrationCardData;
 import org.akvo.caddisfly.sensor.colorimetry.stripv2.models.CalibrationCardException;

@@ -20,9 +20,10 @@
 package org.akvo.caddisfly.sensor.colorimetry.strip.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.colorimetry.strip.util.Constant;
@@ -37,7 +38,7 @@ public class UncaughtExceptionActivity extends AppCompatActivity {
         String error = getIntent().getStringExtra(Constant.ERROR);
 
         if (error != null) {
-            LinearLayout layout = (LinearLayout) findViewById(R.id.activity_uncaught_exceptionLinearLayout);
+            LinearLayout layout = findViewById(R.id.activity_uncaught_exceptionLinearLayout);
             TextView view = new TextView(this);
             view.setText(error);
             layout.addView(view);

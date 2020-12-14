@@ -22,8 +22,6 @@ package org.akvo.caddisfly.sensor.colorimetry.strip.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -33,6 +31,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -60,7 +61,7 @@ public class TestTypeListActivity extends BaseActivity {
 
         setTitle(R.string.selectTest);
 
-        ListView listTypes = (ListView) findViewById(R.id.list_types);
+        ListView listTypes = findViewById(R.id.list_types);
 
         if (stripTest == null) {
             stripTest = new StripTest();
@@ -226,8 +227,8 @@ public class TestTypeListActivity extends BaseActivity {
 
             ViewHolder(@NonNull View v) {
 
-                textView = (TextView) v.findViewById(R.id.text_title);
-                textSubtitle = (TextView) v.findViewById(R.id.text_subtitle);
+                textView = v.findViewById(R.id.text_title);
+                textSubtitle = v.findViewById(R.id.text_subtitle);
 //                imageIcon = (ImageView) v.findViewById(R.id.imageIcon);
             }
         }

@@ -32,10 +32,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Spanned;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +39,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -218,13 +220,13 @@ public class CalibrateSensorActivity extends BaseActivity implements EditSensorI
 
         mHandler = new UsbDataHandler(this);
 
-        viewAnimator = (ViewAnimator) findViewById(R.id.viewAnimator);
+        viewAnimator = findViewById(R.id.viewAnimator);
 
-        Button buttonStartCalibrate = (Button) findViewById(R.id.buttonStartCalibrate);
-        Button buttonFinishCalibrate = (Button) findViewById(R.id.buttonFinishCalibrate);
-        Button buttonNext = (Button) findViewById(R.id.buttonNext);
+        Button buttonStartCalibrate = findViewById(R.id.buttonStartCalibrate);
+        Button buttonFinishCalibrate = findViewById(R.id.buttonFinishCalibrate);
+        Button buttonNext = findViewById(R.id.buttonNext);
 
-        fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
+        fabEdit = findViewById(R.id.fabEdit);
 
         if (!mCurrentTestInfo.getName().isEmpty()) {
             ((TextView) findViewById(R.id.textTitle)).setText(
@@ -232,10 +234,10 @@ public class CalibrateSensorActivity extends BaseActivity implements EditSensorI
         }
 
         calibrationPoints = mCurrentTestInfo.getRangeValues();
-        textHeading = (TextView) findViewById(R.id.textHeading);
-        textSubtitle = (TextView) findViewById(R.id.textSubtitle);
-        textInformation = (TextView) findViewById(R.id.textInformation);
-        textId = (TextView) findViewById(R.id.textId);
+        textHeading = findViewById(R.id.textHeading);
+        textSubtitle = findViewById(R.id.textSubtitle);
+        textInformation = findViewById(R.id.textInformation);
+        textId = findViewById(R.id.textId);
 
         fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override

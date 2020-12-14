@@ -22,12 +22,13 @@ package org.akvo.caddisfly.sensor.colorimetry.strip.camera;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.preference.AppPreferences;
@@ -94,8 +95,8 @@ public class CameraPrepareFragment extends CameraSharedFragmentBase {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_camera_prepare, container, false);
 
-        PercentageMeterView exposureView = (PercentageMeterView) rootView.findViewById(R.id.quality_brightness);
-        PercentageMeterView contrastView = (PercentageMeterView) rootView.findViewById(R.id.quality_shadows);
+        PercentageMeterView exposureView = rootView.findViewById(R.id.quality_brightness);
+        PercentageMeterView contrastView = rootView.findViewById(R.id.quality_shadows);
 
         wrExposureView = new WeakReference<>(exposureView);
         wrContrastView = new WeakReference<>(contrastView);

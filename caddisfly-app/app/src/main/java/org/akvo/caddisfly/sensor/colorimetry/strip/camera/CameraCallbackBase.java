@@ -21,7 +21,8 @@ package org.akvo.caddisfly.sensor.colorimetry.strip.camera;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.sensor.CalibrationException;
@@ -66,11 +67,11 @@ abstract class CameraCallbackBase implements Camera.PreviewCallback {
     private final List<double[]> luminanceList = new ArrayList<>();
     private final Mat grayMat = new Mat();
     private boolean stopped;
-    private CameraViewListener listener;
-    private Camera.Size previewSize;
+    private final CameraViewListener listener;
+    private final Camera.Size previewSize;
     //private int count;
     private List<FinderPattern> possibleCenters;
-    private int finderPatternColor;
+    private final int finderPatternColor;
     private CalibrationData calibrationData;
     private Mat bgr = null;
     private Mat previewMat = null;
