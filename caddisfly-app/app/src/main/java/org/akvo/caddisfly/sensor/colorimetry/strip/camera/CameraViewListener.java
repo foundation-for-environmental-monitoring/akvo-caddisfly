@@ -20,7 +20,8 @@
 package org.akvo.caddisfly.sensor.colorimetry.strip.camera;
 
 import android.hardware.Camera;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.model.TestStatus;
 import org.akvo.caddisfly.util.detector.FinderPattern;

@@ -22,14 +22,10 @@ package org.akvo.caddisfly.sensor.colorimetry.strip.camera;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,8 +34,12 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.helper.SoundPoolPlayer;
@@ -56,9 +56,6 @@ import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.detector.FinderPattern;
 import org.akvo.caddisfly.util.detector.FinderPatternInfo;
 import org.akvo.caddisfly.widget.TimerView;
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -94,19 +91,19 @@ public class CameraActivity extends BaseActivity implements CameraViewListener {
     private String uuid;
     private CameraSharedFragmentBase currentFragment;
     //OpenCV Manager
-    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                    init();
-                    break;
-                default:
-                    super.onManagerConnected(status);
-                    break;
-            }
-        }
-    };
+//    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+//        @Override
+//        public void onManagerConnected(int status) {
+//            switch (status) {
+//                case LoaderCallbackInterface.SUCCESS:
+//                    init();
+//                    break;
+//                default:
+//                    super.onManagerConnected(status);
+//                    break;
+//            }
+//        }
+//    };
     private int previewFormat = -1;
     private int previewWidth = 0;
     private int previewHeight = 0;
@@ -289,7 +286,7 @@ public class CameraActivity extends BaseActivity implements CameraViewListener {
             StripTest stripTest = new StripTest();
             setTitle(stripTest.getBrand(uuid).getName());
 
-            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
+//            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mLoaderCallback);
 
             //Delete all finder pattern info and image data from internal storage
             new DeleteTask().execute();
@@ -606,12 +603,6 @@ public class CameraActivity extends BaseActivity implements CameraViewListener {
                         getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
 
                         snackbar.setActionTextColor(typedValue.data);
-                        View snackView = snackbar.getView();
-                        TextView textView = (TextView) snackView.findViewById(android.support.design.R.id.snackbar_text);
-                        textView.setHeight(getResources().getDimensionPixelSize(R.dimen.snackBarHeight));
-                        textView.setLineSpacing(0, SNACK_BAR_LINE_SPACING);
-                        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        textView.setTextColor(Color.WHITE);
                         snackbar.show();
                     }
 

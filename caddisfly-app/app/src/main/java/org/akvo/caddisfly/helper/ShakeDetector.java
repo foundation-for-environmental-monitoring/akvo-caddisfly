@@ -22,7 +22,8 @@ package org.akvo.caddisfly.helper;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * Implements SensorEventListener for receiving notifications from the SensorManager when

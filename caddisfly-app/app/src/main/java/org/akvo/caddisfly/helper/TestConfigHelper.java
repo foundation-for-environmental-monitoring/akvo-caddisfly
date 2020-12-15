@@ -20,9 +20,10 @@
 package org.akvo.caddisfly.helper;
 
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.util.SparseArray;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;

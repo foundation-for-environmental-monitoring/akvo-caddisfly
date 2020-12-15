@@ -82,7 +82,7 @@
         tools:context="org.akvo.caddisfly.sensor.colorimetry.liquid.CalibrateListActivity"
         tools:layout="@layout/fragment_calibrate_list" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabEditCalibration"
         style="@style/floating_action_button_middle"
         android:layout_width="wrap_content"

@@ -24,7 +24,6 @@ import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.model.Result;

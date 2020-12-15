@@ -78,9 +78,6 @@ import org.akvo.caddisfly.util.FileUtil;
 import org.akvo.caddisfly.util.ImageUtil;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.json.JSONObject;
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 
 import java.lang.ref.WeakReference;
 import java.nio.charset.StandardCharsets;
@@ -113,18 +110,18 @@ public class ColorimetryLiquidExternalActivity extends BaseActivity
     private static final int RESULT_RESTART_TEST = 3;
     private static final String RESULT_DIALOG_TAG = "resultDialog";
     private final Handler delayHandler = new Handler();
-    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS:
-                    break;
-                default:
-                    super.onManagerConnected(status);
-                    break;
-            }
-        }
-    };
+//    private final BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
+//        @Override
+//        public void onManagerConnected(int status) {
+//            switch (status) {
+//                case LoaderCallbackInterface.SUCCESS:
+//                    break;
+//                default:
+//                    super.onManagerConnected(status);
+//                    break;
+//            }
+//        }
+//    };
     private final Handler handler = new Handler();
     /*
        * Notifications from UsbService will be received here.
@@ -349,7 +346,7 @@ public class ColorimetryLiquidExternalActivity extends BaseActivity
 
         acquireWakeLock();
 
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
+//        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
 
         setFilters();  // Start listening notifications from UsbService
 
@@ -1087,7 +1084,7 @@ public class ColorimetryLiquidExternalActivity extends BaseActivity
     @Override
     public void dialogCancelled() {
         Intent intent = new Intent(getIntent());
-        intent.putExtra(SensorConstants.RESPONSE, String.valueOf(""));
+        intent.putExtra(SensorConstants.RESPONSE, "");
         setResult(Activity.RESULT_CANCELED, intent);
         releaseResources();
         finish();

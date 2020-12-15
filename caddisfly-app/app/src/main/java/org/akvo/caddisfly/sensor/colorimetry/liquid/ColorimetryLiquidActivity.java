@@ -36,14 +36,15 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.app.CaddisflyApp;
@@ -71,7 +72,6 @@ import org.akvo.caddisfly.util.PreferencesUtil;
 import org.json.JSONObject;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -142,7 +142,7 @@ public class ColorimetryLiquidActivity extends BaseActivity
     @Override
     protected void onResume() {
         super.onResume();
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
+//        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
     }
 
     @Override
@@ -904,7 +904,7 @@ public class ColorimetryLiquidActivity extends BaseActivity
     @Override
     public void dialogCancelled() {
         Intent intent = new Intent(getIntent());
-        intent.putExtra(SensorConstants.RESPONSE, String.valueOf(EMPTY_STRING));
+        intent.putExtra(SensorConstants.RESPONSE, EMPTY_STRING);
         this.setResult(Activity.RESULT_CANCELED, intent);
         releaseResources();
         finish();

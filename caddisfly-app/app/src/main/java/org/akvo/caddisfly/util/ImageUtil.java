@@ -29,8 +29,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.helper.ImageHelper;

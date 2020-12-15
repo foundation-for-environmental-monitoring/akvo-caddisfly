@@ -17,7 +17,7 @@
   ~ along with Akvo Caddisfly. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinatorLayout"
@@ -39,30 +39,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingTop="1dp">
-
-            <Button
-                style="@style/ListButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"
-                android:minHeight="80dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:textAlignment="viewStart"
-                android:textColor="?longButtonText"
-                android:theme="?longButtonStyle" />
-
-            <Button
-                style="@style/ListButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|start"
-                android:minHeight="80dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:textAlignment="viewStart"
-                android:textColor="?longButtonText"
-                android:theme="?longButtonStyle" />
 
             <Button
                 android:id="@+id/buttonCalibrate"
@@ -123,7 +99,7 @@
             android:textSize="46dp"
             tools:ignore="SpUsage" />
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabDisableDiagnostics"
             style="@style/floating_action_button"
             android:layout_width="wrap_content"
@@ -134,5 +110,5 @@
             app:backgroundTint="@color/diagnostic"
             tools:ignore="RelativeOverlap" />
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

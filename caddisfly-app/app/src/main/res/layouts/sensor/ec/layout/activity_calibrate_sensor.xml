@@ -247,7 +247,7 @@
         </LinearLayout>
     </ViewAnimator>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabEdit"
         style="@style/floating_action_button_middle"
         android:layout_width="wrap_content"

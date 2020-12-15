@@ -21,7 +21,8 @@ package org.akvo.caddisfly.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
