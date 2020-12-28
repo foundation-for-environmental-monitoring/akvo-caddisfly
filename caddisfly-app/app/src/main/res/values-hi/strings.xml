@@ -137,7 +137,7 @@
     <string name="copper">कॉपर</string>
     <string name="dissolved_oxygen">विघटित ऑक्सीजन</string>
     <string name="fluoride">फ्लोराइड</string>
-    <string name="fluoride_high_range">फ्लोराइड - High Range</string>
+    <string name="fluoride_high_range">फ्लोराइड - उच्च श्रेणी</string>
     <string name="free_chlorine">अवशिष्ट क्लोरीन</string>
     <string name="hydrogen_peroxide">हाइड्रोजन पेरोक्साइड</string>
     <string name="nitrate">नाइट्रेट</string>
@@ -161,6 +161,8 @@
     <string name="alkalinity">आल्कलिनिटी</string>
     <string name="ammonia">आम्मोनिय</string>
     <string name="nitrite">नाइट्र्य्ट</string>
+    <string name="ammonia_low_range">आम्मोनिय - कम श्रेणी</string>
+    <string name="nitrite_high_range">नाइट्र्य्ट - उच्च श्रेणी</string>
     <string name="zinc">ज़िंक</string>
     <string name="total_hardness">कुल कठोरता</string>
     <string name="total_alkalinity">कुल क्षारीयता</string>

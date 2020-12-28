@@ -136,7 +136,7 @@
     <string name="copper">కాపర్</string>
     <string name="dissolved_oxygen">కరిగిన ఆక్సిజన్</string>
     <string name="fluoride">ఫ్లోరైడ్</string>
-    <string name="fluoride_high_range">ఫ్లోరైడ్ హై రేంజ్</string>
+    <string name="fluoride_high_range">ఫ్లోరైడ్ - అధిక శ్రేణి</string>
     <string name="free_chlorine">అవశేష క్లోరిన్</string>
     <string name="hydrogen_peroxide">హైడ్రోజన్ పెరాక్సైడ్</string>
     <string name="nitrate">నైట్రేట్</string>
@@ -160,6 +160,8 @@
     <string name="alkalinity">క్షారత్వం</string>
     <string name="ammonia">అమ్మోనియా</string>
     <string name="nitrite">నైట్రైట్</string>
+    <string name="ammonia_low_range">అమ్మోనియా - తక్కువ శ్రేణి</string>
+    <string name="nitrite_high_range">నైట్రైట్ - అధిక శ్రేణి</string>
     <string name="zinc">జింక్</string>
     <string name="total_hardness">మొత్తం కాఠిన్యం</string>
     <string name="total_alkalinity">మొత్తం క్షారత</string>

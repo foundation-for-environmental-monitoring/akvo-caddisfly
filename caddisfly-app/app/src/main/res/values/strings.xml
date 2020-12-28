@@ -181,7 +181,7 @@
     <string name="copper">Copper</string>
     <string name="dissolved_oxygen">Dissolved Oxygen</string>
     <string name="fluoride">Fluoride</string>
-    <string name="fluoride_high_range">Fluoride High Range</string>
+    <string name="fluoride_high_range">Fluoride - High Range</string>
     <string name="free_chlorine">Residual Chlorine</string>
     <string name="hydrogen_peroxide">Hydrogen Peroxide</string>
     <string name="nitrate">Nitrate</string>
@@ -205,6 +205,8 @@
     <string name="alkalinity">Alkalinity</string>
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrite</string>
+    <string name="ammonia_low_range">Ammonia - Low Range</string>
+    <string name="nitrite_high_range">Nitrite - High Range</string>
     <string name="zinc">Zinc</string>
     <string name="total_hardness">Total Hardness</string>
     <string name="total_alkalinity">Total Alkalinity</string>

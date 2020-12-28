@@ -136,7 +136,7 @@
     <string name="copper">ಕಾಪೆರ್</string>
     <string name="dissolved_oxygen">ಕರಗಿದ ಆಕ್ಸಿಜನ್</string>
     <string name="fluoride">ಫ್ಲೋರೈಡ್</string>
-    <string name="fluoride_high_range">ಫ್ಲೋರೈಡ್ ಹೈ ರೇಂಜ್</string>
+    <string name="fluoride_high_range">ಫ್ಲೋರೈಡ್ - ಹೆಚ್ಚು ಶ್ರೇಣಿ</string>
     <string name="free_chlorine">ಉಳಿದ ಕ್ಲೋರಿನ್</string>
     <string name="hydrogen_peroxide">ಹೈಡ್ರೋಜನ್ ಪೆರಾಕ್ಸೈಡ್</string>
     <string name="nitrate">ನೈಟ್ರೇಟ್</string>
@@ -160,6 +160,8 @@
     <string name="alkalinity">ಅಲ್ಕಲೈನಿಟಿ</string>
     <string name="ammonia">ಅಮೋನಿಯಾ</string>
     <string name="nitrite">ನೈಟ್ರೈಟ್</string>
+    <string name="ammonia_low_range">ಅಮೋನಿಯಾ - ಕಡಿಮೆ ಶ್ರೇಣಿ</string>
+    <string name="nitrite_high_range">ನೈಟ್ರೈಟ್ - ಹೆಚ್ಚು ಶ್ರೇಣಿ</string>
     <string name="zinc">ಜಿಂಕ್</string>
     <string name="total_hardness">ಒಟ್ಟು ಗಡಸುತನ</string>
     <string name="total_alkalinity">ಒಟ್ಟು ಕ್ಷಾರತೆ</string>
