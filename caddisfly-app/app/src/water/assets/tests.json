@@ -21,14 +21,14 @@
       ]
     },
     {
-      "name": "Nitrite - High Range",
+      "name": "Nitrite - Low Range",
       "type": "water",
       "subtype": "cuvette",
       "uuid": "32aca12b-9831-4a70-b606-3afcb19e8d28",
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
-      "ranges": "0, 0.25, 0.5, 1, 2, 5",
+      "ranges": "0,0.05,0.1,0.2,0.3",
       "monthsValid": 6,
       "results": [
         {

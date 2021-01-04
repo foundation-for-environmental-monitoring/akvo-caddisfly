@@ -206,7 +206,7 @@
     <string name="ammonia">Ammonia</string>
     <string name="nitrite">Nitrite</string>
     <string name="ammonia_low_range">Ammonia - Low Range</string>
-    <string name="nitrite_high_range">Nitrite - High Range</string>
+    <string name="nitrite_high_range">Nitrite - Low Range</string>
     <string name="zinc">Zinc</string>
     <string name="total_hardness">Total Hardness</string>
     <string name="total_alkalinity">Total Alkalinity</string>

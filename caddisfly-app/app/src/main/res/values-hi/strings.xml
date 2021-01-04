@@ -162,7 +162,7 @@
     <string name="ammonia">आम्मोनिय</string>
     <string name="nitrite">नाइट्र्य्ट</string>
     <string name="ammonia_low_range">आम्मोनिय - कम श्रेणी</string>
-    <string name="nitrite_high_range">नाइट्र्य्ट - उच्च श्रेणी</string>
+    <string name="nitrite_high_range">नाइट्र्य्ट - कम श्रेणी</string>
     <string name="zinc">ज़िंक</string>
     <string name="total_hardness">कुल कठोरता</string>
     <string name="total_alkalinity">कुल क्षारीयता</string>
