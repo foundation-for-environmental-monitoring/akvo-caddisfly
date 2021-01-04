@@ -161,7 +161,7 @@
     <string name="ammonia">ಅಮೋನಿಯಾ</string>
     <string name="nitrite">ನೈಟ್ರೈಟ್</string>
     <string name="ammonia_low_range">ಅಮೋನಿಯಾ - ಕಡಿಮೆ ಶ್ರೇಣಿ</string>
-    <string name="nitrite_high_range">ನೈಟ್ರೈಟ್ - ಕಡಿಮೆ ಶ್ರೇಣಿ</string>
+    <string name="nitrite_low_range">ನೈಟ್ರೈಟ್ - ಕಡಿಮೆ ಶ್ರೇಣಿ</string>
     <string name="zinc">ಜಿಂಕ್</string>
     <string name="total_hardness">ಒಟ್ಟು ಗಡಸುತನ</string>
     <string name="total_alkalinity">ಒಟ್ಟು ಕ್ಷಾರತೆ</string>
