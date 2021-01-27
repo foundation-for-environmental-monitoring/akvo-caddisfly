@@ -406,6 +406,25 @@
       ]
     },
     {
+      "name": "Silica",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "877db547-57f6-4387-87a7-e3717dc7c75d",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0, 0.5, 1.0, 1.5, 2.0",
+      "monthsValid": 12,
+      "results": [
+        {
+          "id": 1,
+          "name": "Silica",
+          "unit": "mg/l",
+          "timeDelay": 480
+        }
+      ]
+    },
+    {
       "name": "Sulphate",
       "type": "water",
       "subtype": "cuvette",
