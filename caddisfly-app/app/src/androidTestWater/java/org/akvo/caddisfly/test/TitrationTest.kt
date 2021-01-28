@@ -202,47 +202,18 @@ class TitrationTest {
 
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
             .perform(replaceText("123"), closeSoftKeyboard())
-        onView(withId(id.editTitration2)).check(matches(isDisplayed()))
-            .perform(replaceText("12"), closeSoftKeyboard())
-        onView(
-            allOf(
-                withId(id.editTitration2), withText("12"),
-                childAtPosition(
-                    childAtPosition(withId(id.fragment_container), 0),
-                    4
-                ), isDisplayed()
-            )
-        ).perform(pressImeActionButton())
+        onView(withId(id.editTitration1)).perform(pressImeActionButton())
 
         sleep(1000)
 
-        onView(withId(id.editTitration1)).check(matches(isDisplayed()))
-            .perform(replaceText("12"), closeSoftKeyboard())
-        onView(withId(id.editTitration2)).check(matches(isDisplayed()))
-            .perform(replaceText("20"), closeSoftKeyboard())
-
-        sleep(1000)
         takeScreenshot(screenshotName)
-        onView(
-            allOf(
-                withId(id.editTitration2), withText("20"),
-                childAtPosition(
-                    childAtPosition(withId(id.fragment_container), 0),
-                    4
-                ), isDisplayed()
-            )
-        ).perform(pressImeActionButton())
 
         onView(withId(id.buttonAccept)).perform(click())
 
         sleep(1000)
 
         assertNotNull(mDevice.findObject(By.text(getString(string.total_hardness) + ": ")))
-        assertNotNull(mDevice.findObject(By.text("140.00")))
-        assertNotNull(mDevice.findObject(By.text(getString(string.calcium) + ": ")))
-        assertNotNull(mDevice.findObject(By.text("100.00")))
-        assertNotNull(mDevice.findObject(By.text(getString(string.magnesium) + ": ")))
-        assertNotNull(mDevice.findObject(By.text("40.00")))
+        assertNotNull(mDevice.findObject(By.text("3075.00")))
 
         takeScreenshot(screenshotName)
 
@@ -296,8 +267,8 @@ class TitrationTest {
 
         val error = String.format(
             getString(string.titration_entry_error),
-            getString(string.carbonate),
-            getString(string.bicarbonate),
+            "Titration 1 drops",
+            "Titration 2 drops",
         )
         onView(withId(id.editTitration1)).check(matches(hasErrorText(error)))
 
@@ -331,7 +302,7 @@ class TitrationTest {
                 )
             )
         )
-        assertNotNull(mDevice.findObject(By.text("600.00")))
+        assertNotNull(mDevice.findObject(By.text("3200.00")))
 
         takeScreenshot(screenshotName)
 
