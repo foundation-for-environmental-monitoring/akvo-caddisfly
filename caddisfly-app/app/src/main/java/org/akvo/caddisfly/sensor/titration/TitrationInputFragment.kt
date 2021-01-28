@@ -110,6 +110,7 @@ class TitrationInputFragment : BaseFragment() {
                         false
                     }
                 } else {
+                    input_title_txt.text = getString(R.string.enter_titration_result)
                     textInput1.visibility = View.GONE
                     textInput2.visibility = View.GONE
                     editTitration2.visibility = View.GONE

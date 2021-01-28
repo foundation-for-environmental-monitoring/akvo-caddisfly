@@ -518,24 +518,9 @@
       "results": [
         {
           "id": 1,
-          "name": "Calcium",
-          "unit": "mg/l",
-          "formula": "(%1$f/3) * 25",
-          "display": 2
-        },
-        {
-          "id": 2,
-          "name": "Magnesium",
-          "unit": "mg/l",
-          "formula": "(%2$f-%1$f) * 5",
-          "display": 3
-        },
-        {
-          "id": 3,
           "name": "Total Hardness",
           "unit": "mg/l",
-          "formula": "((%1$f/3) * 25) + ((%2$f-%1$f) * 5)",
-          "display": 1
+          "formula": "%1$f * 25"
         }
       ]
     },
@@ -549,23 +534,19 @@
       "results": [
         {
           "id": 1,
-          "name": "Carbonate",
-          "unit": "mg/l",
-          "formula": "(%1$f * 500) / 20",
-          "display": 2
+          "name": "Titration 1 drops",
+          "unit": "mg/l"
         },
         {
           "id": 2,
-          "name": "Bicarbonate",
-          "unit": "mg/l",
-          "formula": "(%1$f * 500) / 20",
-          "display": 3
+          "name": "Titration 2 drops",
+          "unit": "mg/l"
         },
         {
           "id": 3,
           "name": "Total Alkalinity",
           "unit": "mg/l",
-          "formula": "((%1$f * 500) / 20) + ((%1$f * 500) / 20)",
+          "formula": "(%1$f + %2$f) * 100",
           "display": 1
         }
       ]

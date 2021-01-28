@@ -62,6 +62,7 @@
     <string name="enter_dilution_factor">Enter Dilution Factor</string>
     <string name="error_loading_config">Could not load configuration information</string>
     <string name="value_is_required">Value is required</string>
+    <string name="enter_titration_result">Enter titration result</string>
     <string name="enter_titration_results">Enter titration results</string>
     <string name="submit_result">Submit Result</string>
 
