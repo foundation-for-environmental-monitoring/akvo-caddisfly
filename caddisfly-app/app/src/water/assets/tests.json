@@ -580,13 +580,15 @@
           "id": 1,
           "name": "Calcium",
           "unit": "mg/l",
-          "formula": "(%1$f/3) * 25"
+          "formula": "(%1$f/3) * 25",
+          "display": 2
         },
         {
           "id": 2,
           "name": "Magnesium",
           "unit": "mg/l",
-          "formula": "(%2$f-%1$f) * 5"
+          "formula": "(%2$f-%1$f) * 5",
+          "display": 3
         }
       ]
     },
@@ -651,6 +653,22 @@
           "name": "Chloride",
           "unit": "mg/l",
           "formula": "%1$f * 14.18"
+        }
+      ]
+    },
+    {
+      "name": "Sulfite",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "6391e9d3-1ab5-4bdf-8ad2-648869f99a2c",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Sulfite",
+          "unit": "mg/l",
+          "formula": "%1$f * 300"
         }
       ]
     }

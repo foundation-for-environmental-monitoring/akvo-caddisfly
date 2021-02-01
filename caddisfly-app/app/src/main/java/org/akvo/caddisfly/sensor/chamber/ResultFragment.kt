@@ -21,6 +21,7 @@ package org.akvo.caddisfly.sensor.chamber
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -48,9 +49,13 @@ class ResultFragment : Fragment() {
             val testInfo: TestInfo? = requireArguments().getParcelable(TEST_INFO)
             if (testInfo != null) {
                 var result = testInfo.results!![0]
+                if (testInfo.results!!.size == 1) {
+                    b.resultLayout.visibility = VISIBLE
+                }
                 for (r in testInfo.results!!) {
                     if (r.display == 1) {
                         result = r
+                        b.resultLayout.visibility = VISIBLE
                         break
                     } else if (r.display == 2) {
                         val name = "${r.name}:"
