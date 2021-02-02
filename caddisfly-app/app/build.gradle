@@ -19,8 +19,8 @@ android {
         minSdkVersion 19
         //noinspection OldTargetApi
         targetSdkVersion 29
-        versionCode 268
-        versionName "Beta 2.2"
+        versionCode 270
+        versionName "Beta 2.4"
         resConfigs "en", "en_US", "hi", "kn", "te"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

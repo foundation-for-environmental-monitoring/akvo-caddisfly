@@ -668,7 +668,7 @@
           "id": 1,
           "name": "Sulfite",
           "unit": "mg/l",
-          "formula": "%1$f * 300"
+          "formula": "%1$f * 13.63636363636364"
         }
       ]
     }
