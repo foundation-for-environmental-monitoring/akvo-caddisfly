@@ -42,8 +42,7 @@ object SoundUtil {
         //play sound if the sound is not turned off in the preference
         if (AppPreferences.isSoundOn) {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-            val originalVolume: Int
-            originalVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+            val originalVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
                     if (BuildConfig.TEST_RUNNING) 1 else audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
                     0)

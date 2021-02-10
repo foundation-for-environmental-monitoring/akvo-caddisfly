@@ -25,7 +25,7 @@ import java.util.*
 const val STORAGE_PERMISSION_WATER = 1
 const val STORAGE_PERMISSION_SOIL = 2
 
-class MainActivity : BaseActivity() {
+class MainActivity : AppUpdateActivity() {
     private val permissionsDelegate = PermissionsDelegate(this)
     private val storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var navigationController: NavigationController? = null

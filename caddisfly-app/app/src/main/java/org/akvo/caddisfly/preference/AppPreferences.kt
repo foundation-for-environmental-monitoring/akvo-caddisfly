@@ -22,10 +22,13 @@ package org.akvo.caddisfly.preference
 
 import android.hardware.Camera
 import android.util.Pair
+import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
 import org.akvo.caddisfly.common.ChamberTestConfig
 import org.akvo.caddisfly.util.PreferencesUtil
+import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.math.max
 import kotlin.math.min
 
@@ -36,7 +39,11 @@ object AppPreferences {
 
     @JvmStatic
     fun isDiagnosticMode(): Boolean {
-        return PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.diagnosticModeKey, false)
+        return PreferencesUtil.getBoolean(
+            app?.applicationContext!!,
+            R.string.diagnosticModeKey,
+            false
+        )
     }
 
     fun enableDiagnosticMode() {
@@ -57,9 +64,11 @@ object AppPreferences {
     val samplingTimes: Int
         get() {
             val samplingTimes: Int = if (isDiagnosticMode()) {
-                PreferencesUtil.getString(app?.applicationContext!!,
-                        R.string.samplingsTimeKey,
-                        java.lang.String.valueOf(ChamberTestConfig.SAMPLING_COUNT_DEFAULT))!!.toInt()
+                PreferencesUtil.getString(
+                    app?.applicationContext!!,
+                    R.string.samplingsTimeKey,
+                    java.lang.String.valueOf(ChamberTestConfig.SAMPLING_COUNT_DEFAULT)
+                )!!.toInt()
             } else {
                 ChamberTestConfig.SAMPLING_COUNT_DEFAULT
             }
@@ -75,9 +84,11 @@ object AppPreferences {
     @JvmStatic
     val colorDistanceTolerance: Int
         get() = if (isDiagnosticMode()) {
-            PreferencesUtil.getString(app?.applicationContext!!,
-                    R.string.colorDistanceToleranceKey,
-                    java.lang.String.valueOf(ChamberTestConfig.MAX_COLOR_DISTANCE_RGB))!!.toInt()
+            PreferencesUtil.getString(
+                app?.applicationContext!!,
+                R.string.colorDistanceToleranceKey,
+                java.lang.String.valueOf(ChamberTestConfig.MAX_COLOR_DISTANCE_RGB)
+            )!!.toInt()
         } else {
             ChamberTestConfig.MAX_COLOR_DISTANCE_RGB
         }
@@ -90,9 +101,11 @@ object AppPreferences {
     val averagingColorDistanceTolerance: Int
         get() = try {
             if (isDiagnosticMode()) {
-                PreferencesUtil.getString(app?.applicationContext!!,
-                        R.string.colorAverageDistanceToleranceKey,
-                        java.lang.String.valueOf(ChamberTestConfig.MAX_COLOR_DISTANCE_CALIBRATION))!!.toInt()
+                PreferencesUtil.getString(
+                    app?.applicationContext!!,
+                    R.string.colorAverageDistanceToleranceKey,
+                    java.lang.String.valueOf(ChamberTestConfig.MAX_COLOR_DISTANCE_CALIBRATION)
+                )!!.toInt()
             } else {
                 ChamberTestConfig.MAX_COLOR_DISTANCE_CALIBRATION
             }
@@ -102,32 +115,56 @@ object AppPreferences {
 
     @JvmStatic
     val isSoundOn: Boolean
-        get() = !isDiagnosticMode() || PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.soundOnKey, true)
+        get() = !isDiagnosticMode() || PreferencesUtil.getBoolean(
+            app?.applicationContext!!,
+            R.string.soundOnKey,
+            true
+        )
 
     @JvmStatic
     val showDebugInfo: Boolean
         get() = (isDiagnosticMode()
-                && PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.showDebugMessagesKey, false))
+                && PreferencesUtil.getBoolean(
+            app?.applicationContext!!,
+            R.string.showDebugMessagesKey,
+            false
+        ))
 
     @JvmStatic
     val isTestMode: Boolean
         get() = (isDiagnosticMode()
-                && PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.testModeOnKey, false))
+                && PreferencesUtil.getBoolean(
+            app?.applicationContext!!,
+            R.string.testModeOnKey,
+            false
+        ))
 
     fun returnDummyResults(): Boolean {
         return (isDiagnosticMode()
-                && PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.dummyResultKey, false))
+                && PreferencesUtil.getBoolean(
+            app?.applicationContext!!,
+            R.string.dummyResultKey,
+            false
+        ))
     }
 
     @JvmStatic
     fun useExternalCamera(): Boolean {
-        return PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.useExternalCameraKey, false)
+        return PreferencesUtil.getBoolean(
+            app?.applicationContext!!,
+            R.string.useExternalCameraKey,
+            false
+        )
     }
 
     @JvmStatic
     fun ignoreTimeDelays(): Boolean {
         return (isDiagnosticMode()
-                && PreferencesUtil.getBoolean(app?.applicationContext!!, R.string.ignoreTimeDelaysKey, false))
+                && PreferencesUtil.getBoolean(
+            app?.applicationContext!!,
+            R.string.ignoreTimeDelaysKey,
+            false
+        ))
     }
 
 //    fun useMaxZoom(): Boolean {
@@ -138,8 +175,10 @@ object AppPreferences {
     @JvmStatic
     val cameraZoom: Int
         get() = if (isDiagnosticMode()) {
-            PreferencesUtil.getInt(app?.applicationContext!!,
-                    R.string.cameraZoomPercentKey, 0)
+            PreferencesUtil.getInt(
+                app?.applicationContext!!,
+                R.string.cameraZoomPercentKey, 0
+            )
         } else {
             0
         }
@@ -150,8 +189,10 @@ object AppPreferences {
             val res = Pair(640, 480)
             return try {
                 if (isDiagnosticMode()) {
-                    val resolution = PreferencesUtil.getString(app?.applicationContext!!,
-                            R.string.cameraResolutionKey, "640-480")
+                    val resolution = PreferencesUtil.getString(
+                        app?.applicationContext!!,
+                        R.string.cameraResolutionKey, "640-480"
+                    )
                     val resolutions = resolution?.split("-")!!.toTypedArray()
                     val widthTemp = resolutions[0].toInt()
                     val heightTemp = resolutions[1].toInt()
@@ -169,8 +210,10 @@ object AppPreferences {
     @JvmStatic
     val cameraCenterOffset: Int
         get() = if (isDiagnosticMode()) {
-            PreferencesUtil.getInt(app?.applicationContext!!,
-                    R.string.cameraCenterOffsetKey, 0)
+            PreferencesUtil.getInt(
+                app?.applicationContext!!,
+                R.string.cameraCenterOffsetKey, 0
+            )
         } else {
             0
         }
@@ -179,8 +222,10 @@ object AppPreferences {
     fun getCameraFocusMode(focusModes: List<String?>): String {
         var focusMode = ""
         if (isDiagnosticMode()) {
-            focusMode = PreferencesUtil.getString(app?.applicationContext!!,
-                    R.string.cameraFocusKey, Camera.Parameters.FOCUS_MODE_INFINITY)!!
+            focusMode = PreferencesUtil.getString(
+                app?.applicationContext!!,
+                R.string.cameraFocusKey, Camera.Parameters.FOCUS_MODE_INFINITY
+            )!!
         }
         return when {
             focusModes.contains(focusMode) -> {
@@ -202,5 +247,13 @@ object AppPreferences {
                 ""
             }
         }
+    }
+
+    fun isAppUpdateCheckRequired(): Boolean {
+        if (BuildConfig.TEST_RUNNING) {
+            return true
+        }
+        val lastCheck = PreferencesUtil.getLong(app, "lastUpdateCheck")
+        return TimeUnit.MILLISECONDS.toDays(Calendar.getInstance().timeInMillis - lastCheck) > 0
     }
 }

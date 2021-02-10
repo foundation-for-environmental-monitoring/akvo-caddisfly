@@ -25,7 +25,6 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
-import org.akvo.caddisfly.updater.UpdateCheck
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
@@ -37,8 +36,7 @@ class CaddisflyApp : BaseApplication() {
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }
-        app = this
-        UpdateCheck.setNextUpdateCheck(this, -1)
+//        UpdateCheck.setNextUpdateCheck(this, -1)
         db = Room.databaseBuilder(
             applicationContext,
             CalibrationDatabase::class.java, DATABASE_NAME

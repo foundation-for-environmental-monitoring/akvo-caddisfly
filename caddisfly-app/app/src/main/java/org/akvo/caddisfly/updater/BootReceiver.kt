@@ -8,7 +8,7 @@ import java.util.*
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (Objects.requireNonNull(intent.action) == "android.intent.action.BOOT_COMPLETED") {
-            UpdateCheck.setNextUpdateCheck(context, -1)
+//            UpdateCheck.setNextUpdateCheck(context, -1)
         }
     }
 }

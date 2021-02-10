@@ -64,7 +64,7 @@ import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
 
-class TestActivity : BaseActivity() {
+class TestActivity : AppUpdateActivity() {
     companion object {
         private const val REQUEST_TEST = 1
         private const val MESSAGE_TWO_LINE_FORMAT = "%s%n%n%s"

@@ -57,6 +57,9 @@
     <string name="version_expired">Version expired</string>
     <string name="version_has_expired">This version of the app has expired.</string>
     <string name="uninstall_install_from_store">Please uninstall and then install the latest version from Play Store.</string>
+    <string name="update_ready">Update is ready to install</string>
+    <string name="update_download_fail">Unable to download update</string>
+    <string name="restart">Restart</string>
 
     <string name="custom_dilution">Custom Dilution</string>
     <string name="enter_dilution_factor">Enter Dilution Factor</string>
