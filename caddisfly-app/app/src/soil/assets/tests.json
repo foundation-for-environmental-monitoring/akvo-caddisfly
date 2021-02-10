@@ -258,13 +258,15 @@
           "id": 1,
           "name": "Calcium",
           "unit": "mg/kg",
-          "formula": "(%1$f/3) * 125"
+          "formula": "(%1$f/3) * 125",
+          "display": 2
         },
         {
           "id": 2,
           "name": "Magnesium",
           "unit": "mg/kg",
-          "formula": "(%2$f-%1$f) * 25"
+          "formula": "(%2$f-%1$f) * 25",
+          "display": 3
         }
       ]
     },
