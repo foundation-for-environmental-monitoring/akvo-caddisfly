@@ -19,7 +19,6 @@ import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.repository.TestConfigRepository
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.loadData
 import org.akvo.caddisfly.util.TestHelper.startSurveyApp
@@ -67,7 +66,7 @@ class TitrationTest {
 
         takeScreenshot(screenshotName)
 
-        clickExternalSourceButton(0)
+        mDevice.findObject(By.text("Carbonate")).click()
 
         takeScreenshot(screenshotName)
 
@@ -120,7 +119,8 @@ class TitrationTest {
         nextSurveyPage(5, getString(string.titration))
 
         takeScreenshot(screenshotName)
-        clickExternalSourceButton(1)
+        mDevice.findObject(By.text("Calcium & Magnesium")).click()
+
         sleep(2000)
         takeScreenshot(screenshotName)
         onView(withText(string.next)).perform(click())
@@ -194,7 +194,7 @@ class TitrationTest {
         nextSurveyPage(5, getString(string.titration) + " 2")
 
         takeScreenshot(screenshotName)
-        clickExternalSourceButton(0)
+        mDevice.findObject(By.text("Total Hardness")).click()
         sleep(2000)
         takeScreenshot(screenshotName)
         onView(withText(string.next)).perform(click())
@@ -245,7 +245,7 @@ class TitrationTest {
         )
 
         takeScreenshot(screenshotName)
-        clickExternalSourceButton(1)
+        mDevice.findObject(By.text("Total Alkalinity")).click()
         sleep(2000)
         takeScreenshot(screenshotName)
         onView(withText(string.next)).perform(click())

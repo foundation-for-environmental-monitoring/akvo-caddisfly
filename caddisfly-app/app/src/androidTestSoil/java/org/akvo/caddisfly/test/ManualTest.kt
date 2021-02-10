@@ -17,7 +17,6 @@ import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
 import org.akvo.caddisfly.util.TestHelper.loadData
@@ -48,7 +47,7 @@ class ManualTest {
     fun runTitrationTest() {
         gotoSurveyForm()
         nextSurveyPage(2, "Soil Tests 3")
-        clickExternalSourceButton(0)
+        mDevice.findObject(By.text("Calcium & Magnesium")).click()
         onView(withText(string.next)).perform(click())
 
         onView(withId(id.editTitration1)).check(matches(isDisplayed()))
