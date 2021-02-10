@@ -212,7 +212,7 @@ class Result : Parcelable {
                 resultValue = applyFormula(resultDouble * dilution, formula)
 
                 // if no more dilution can be performed then set result to highest value
-                if (highLevelsFound && dilution >= maxDilution) {
+                if (highLevelsFound) {
                     resultValue = applyFormula(maxResult * dilution, formula)
                 }
                 result = String.format(Locale.getDefault(), "%.2f", resultValue)
