@@ -355,6 +355,25 @@
           "unit": "mg/l"
         }
       ]
+    },
+    {
+      "name": "Available Sulfur",
+      "type": "soil",
+      "subtype": "cuvette",
+      "uuid": "eb9f3039-1ef9-4f53-a8e6-6c680f3878b3",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,5,10,15",
+      "monthsValid": 12,
+      "results": [
+        {
+          "id": 1,
+          "name": "Available Sulfur",
+          "unit": "mg/l",
+          "formula": "(%1$f * 5)"
+        }
+      ]
     }
   ]
 }
