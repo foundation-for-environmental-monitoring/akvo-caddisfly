@@ -337,6 +337,24 @@
           "unit": "%"
         }
       ]
+    },
+    {
+      "name": "Manganese",
+      "type": "soil",
+      "subtype": "cuvette",
+      "uuid": "420d1caf-aff8-4eb9-8062-10307285d9a3",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,0.5,1.0,1.5,2.0",
+      "monthsValid": 6,
+      "results": [
+        {
+          "id": 1,
+          "name": "Manganese",
+          "unit": "mg/l"
+        }
+      ]
     }
   ]
 }
