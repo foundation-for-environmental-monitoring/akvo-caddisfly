@@ -49,7 +49,7 @@ import org.akvo.caddisfly.common.TestConstants.DELAY_EXTRA
 import org.akvo.caddisfly.common.TestConstants.TEST_INDEX
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.clickExternalAppButton
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
@@ -214,7 +214,7 @@ class ChamberTest {
 
         startSurveyForm()
         sleep(2000)
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, screenshotName)
         sleep(1000)
 
         takeScreenshot(screenshotName)
@@ -237,7 +237,7 @@ class ChamberTest {
         )
         onView(withId(id.buttonAccept)).perform(click())
 
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, "")
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonDilution1)).check(matches(isDisplayed()))
@@ -272,7 +272,7 @@ class ChamberTest {
         //High levels found dialog
         takeScreenshot(screenshotName)
         onView(withId(id.buttonAccept)).perform(click())
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, "")
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonDilution2)).check(matches(isDisplayed()))
@@ -428,7 +428,7 @@ class ChamberTest {
         goToMainScreen()
         gotoSurveyForm()
         sleep(1000)
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, "")
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, "")
         sleep(1000)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())

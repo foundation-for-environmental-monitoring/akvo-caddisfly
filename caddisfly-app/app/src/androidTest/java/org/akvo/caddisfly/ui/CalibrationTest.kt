@@ -43,7 +43,7 @@ import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clearPreferences
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.clickExternalAppButton
 import org.akvo.caddisfly.util.TestHelper.currentHashMap
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
@@ -150,8 +150,8 @@ class CalibrationTest {
 
     @Test
     fun testExpiryDate() {
-        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
-            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
+//        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
+//            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
 
         onView(withText(string.settings)).perform(click())
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
@@ -276,7 +276,7 @@ class CalibrationTest {
         mDevice.pressBack()
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, "")
         sleep(500)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
@@ -340,7 +340,7 @@ class CalibrationTest {
         onView(withId(id.textCalibrationError)).check(matches(not(isDisplayed())))
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, "")
         sleep(500)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
@@ -350,7 +350,7 @@ class CalibrationTest {
     //@Test
     fun testIncompleteCalibration() {
         gotoSurveyForm()
-        clickExternalSourceButton(0)
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, "")
         mDevice.waitForWindowUpdate("", 2000)
         onView(withText(string.cannot_start_test)).check(matches(isDisplayed()))
         var message = getInstrumentation().targetContext.getString(

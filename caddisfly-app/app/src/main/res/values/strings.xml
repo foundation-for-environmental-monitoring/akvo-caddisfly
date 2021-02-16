@@ -215,4 +215,6 @@
     <string name="total_hardness">Total Hardness</string>
     <string name="total_alkalinity">Total Alkalinity</string>
     <string name="titration">Titration</string>
+    <string name="redo">Redo</string>
+    <string name="remove_response">Remove response</string>
 </resources>

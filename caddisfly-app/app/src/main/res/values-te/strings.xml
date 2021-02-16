@@ -166,4 +166,5 @@
     <string name="total_hardness">మొత్తం కాఠిన్యం</string>
     <string name="total_alkalinity">మొత్తం క్షారత</string>
     <string name="titration">టిట్రాషన్</string>
+    <string name="remove_response">ప్రతిస్పందనను  తొలగించు</string>
 </resources>

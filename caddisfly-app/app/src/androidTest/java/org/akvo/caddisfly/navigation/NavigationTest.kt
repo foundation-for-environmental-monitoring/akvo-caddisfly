@@ -26,7 +26,7 @@ import org.akvo.caddisfly.common.TestConstants.CUVETTE_TEST_NAME_1
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
 import org.akvo.caddisfly.util.TestHelper.clearPreferences
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.clickExternalAppButton
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
@@ -214,7 +214,7 @@ class NavigationTest {
         startSurveyApp()
         takeScreenshot()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
+        clickExternalAppButton(CUVETTE_TEST_NAME_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
@@ -226,7 +226,7 @@ class NavigationTest {
         startSurveyApp()
         takeScreenshot()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
+        clickExternalAppButton(CUVETTE_TEST_NAME_1, screenshotName)
         onView(withText(CUVETTE_TEST_NAME_1)).check(matches(isDisplayed()))
 
 //        //Calibration incomplete

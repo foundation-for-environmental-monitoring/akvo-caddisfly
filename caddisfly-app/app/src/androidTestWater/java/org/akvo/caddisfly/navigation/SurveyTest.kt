@@ -40,7 +40,7 @@ import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
+import org.akvo.caddisfly.util.TestHelper.clickExternalAppButton
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
 import org.akvo.caddisfly.util.TestHelper.gotoSurveyForm
@@ -173,7 +173,7 @@ class SurveyTest {
         onData(hasToString(startsWith("TestValid"))).perform(click())
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
+        clickExternalAppButton(TestConstants.CUVETTE_TEST_NAME_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))

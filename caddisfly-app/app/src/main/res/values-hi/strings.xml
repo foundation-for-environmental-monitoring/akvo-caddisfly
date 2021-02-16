@@ -167,4 +167,5 @@
     <string name="total_hardness">कुल कठोरता</string>
     <string name="total_alkalinity">कुल क्षारीयता</string>
     <string name="titration">अनुमापन</string>
+    <string name="remove_response">प्रतिउत्तर हटायें</string>
 </resources>

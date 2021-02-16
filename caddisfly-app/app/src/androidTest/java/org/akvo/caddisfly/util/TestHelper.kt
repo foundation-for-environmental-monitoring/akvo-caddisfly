@@ -32,7 +32,6 @@ import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.FileType
 import org.akvo.caddisfly.util.TestConstant.EXTERNAL_SURVEY_PACKAGE_NAME
 import org.akvo.caddisfly.util.TestUtil.clickListViewItem
-import org.akvo.caddisfly.util.TestUtil.findButtonInScrollable
 import org.akvo.caddisfly.util.TestUtil.nextSurveyPage
 import org.akvo.caddisfly.util.TestUtil.sleep
 import org.hamcrest.Matchers
@@ -196,43 +195,48 @@ object TestHelper {
         clickListViewItem(getString(string.testModeOn))
     }
 
-    fun clickExternalSourceButton(id: String?, screenshotName: String) {
-        when (id) {
-            TestConstant.WATER_FLUORIDE_ID -> {
+    fun clickExternalAppButton(@StringRes stringId: Int, screenshotName: String) {
+        when (BuildConfig.FLAVOR) {
+            "water" -> {
                 nextSurveyPage(9, getString(string.water_tests_1))
-                if (screenshotName.isNotEmpty()) {
-                    takeScreenshot(screenshotName)
-                }
-                clickExternalSourceButton(2)
             }
-            TestConstant.SOIL_IRON_ID -> {
-                nextSurveyPage(7, "Soil Tests 2")
-                if (screenshotName.isNotEmpty()) {
-                    takeScreenshot(screenshotName)
-                }
-                clickExternalSourceButton(2)
+            "soil" -> {
+                nextSurveyPage(9, "Soil Tests 2")
             }
         }
-    }
 
-    fun clickExternalSourceButton(index: Int) {
-        clickExternalSourceButton(
-            index,
-            getInstrumentation().targetContext.getString(string.launch)
-        )
-    }
-
-    fun clickExternalSourceButton(index: Int, text: String?) {
-        var buttonText = text
-        findButtonInScrollable(buttonText)
-        var buttons: List<UiObject2?>? = mDevice.findObjects(By.text(buttonText))
-        if (buttons?.size == 0) {
-            buttonText = buttonText!!.toUpperCase()
+        try {
+            if (mDevice.findObject(
+                    By.text(
+                        getInstrumentation().targetContext.getString(
+                            string.redo
+                        )
+                    )
+                ) != null
+            ) {
+                mDevice.findObject(
+                    By.text(getInstrumentation().targetContext.getString(stringId))
+                ).longClick()
+                sleep(500)
+                val removeText =
+                    getInstrumentation().targetContext.getString(string.remove_response)
+                mDevice.findObject(By.text(removeText)).click()
+                sleep(1000)
+                try {
+                    mDevice.findObject(By.text(removeText)).click()
+                } catch (e: Exception) {
+                    mDevice.findObject(By.text(removeText.toUpperCase())).click()
+                }
+                sleep(500)
+            }
+        } catch (e: Exception) {
         }
-        buttons = mDevice.findObjects(By.text(buttonText))
-        buttons!![index]!!.click()
-        mDevice.waitForWindowUpdate("", 2000)
-        sleep(4000)
+
+        if (screenshotName.isNotEmpty()) {
+            takeScreenshot(screenshotName)
+        }
+        mDevice.findObject(By.text(getInstrumentation().targetContext.getString(stringId)))
+            .click()
     }
 
     fun saveCalibration(name: String, id: String) {
