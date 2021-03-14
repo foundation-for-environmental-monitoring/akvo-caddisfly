@@ -41,7 +41,6 @@ import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
 import org.akvo.caddisfly.ui.MainActivity
 import org.akvo.caddisfly.util.TestHelper
-import org.akvo.caddisfly.util.TestHelper.clickExternalSourceButton
 import org.akvo.caddisfly.util.TestHelper.enterDiagnosticMode
 import org.akvo.caddisfly.util.TestHelper.getString
 import org.akvo.caddisfly.util.TestHelper.goToMainScreen
@@ -144,8 +143,8 @@ class SurveyTest {
 
     @Test
     fun testStartASurvey() {
-        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
-            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
+//        val screenshotName = TestConstants.CUVETTE_TEST_ID_1
+//            .substring(TestConstants.CUVETTE_TEST_ID_1.lastIndexOf("-") + 1)
 
         saveCalibration("TestValid", TestConstants.CUVETTE_TEST_ID_1)
         onView(withText(string.settings)).perform(click())
@@ -179,7 +178,7 @@ class SurveyTest {
         onData(hasToString(startsWith("TestValid"))).perform(click())
         goToMainScreen()
         gotoSurveyForm()
-        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
+//        clickExternalSourceButton(TestConstants.CUVETTE_TEST_ID_1, screenshotName)
         onView(withId(id.button_prepare)).check(matches(isDisplayed()))
         onView(withId(id.button_prepare)).perform(click())
         onView(withId(id.buttonNoDilution)).check(matches(isDisplayed()))
