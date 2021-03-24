@@ -340,7 +340,7 @@ public final class TestHelper {
                     && (text.equals(TestConstant.USE_EXTERNAL_SOURCE)
                     || text.equals(TestConstant.GO_TO_TEST))) {
                 sleep(1000);
-                mDevice.findObject(By.text(context.getString(R.string.appName))).click();
+                mDevice.findObject(By.text(context.getString(R.string.app_name))).click();
                 sleep(1000);
             }
 

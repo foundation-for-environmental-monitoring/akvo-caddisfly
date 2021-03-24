@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity {
             AppPreferences.enableDiagnosticMode();
         }
 
-        setTitle(R.string.appName);
+        setTitle(R.string.app_name);
 
         try {
             if (AppConfig.APP_EXPIRY && ApkHelper.isNonStoreVersion(this)) {

@@ -120,7 +120,7 @@ public class UpdateCheckTask extends AsyncTask<String, String, String> {
             if (serverVersion > versionCode) {
 
                 NotificationScheduler.showNotification(context,
-                        context.getString(R.string.appName),
+                        context.getString(R.string.app_name),
                         context.getString(R.string.updateAvailable));
             }
         } catch (NumberFormatException e) {

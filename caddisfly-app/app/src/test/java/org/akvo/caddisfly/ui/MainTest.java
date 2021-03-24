@@ -50,10 +50,10 @@ public class MainTest {
     @Test
     public void titleIsCorrect() {
         Activity activity = Robolectric.setupActivity(MainActivity.class);
-        assertEquals(activity.getTitle(), activity.getString(R.string.appName));
+        assertEquals(activity.getTitle(), activity.getString(R.string.app_name));
 
         TextView textView = activity.findViewById(R.id.textToolbarTitle);
-        assertEquals(textView.getText(), activity.getString(R.string.appName));
+        assertEquals(textView.getText(), activity.getString(R.string.app_name));
 
     }
 

@@ -48,7 +48,7 @@ public class UsbConnectionActivity extends Activity {
 
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
-        progressDialog.setTitle(R.string.appName);
+        progressDialog.setTitle(R.string.app_name);
         progressDialog.setMessage(getString(R.string.deviceConnecting));
         progressDialog.setCancelable(false);
 

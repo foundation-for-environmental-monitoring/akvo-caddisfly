@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="appName">"ffem Experiment"</string>
+    <string name="app_name">"ffem Experiment"</string>
 
     <string-array name="focusModes">
         <item>Auto</item>
