@@ -125,16 +125,6 @@ class RunTestNavigation {
         val appCompatButton5 = onView(
             allOf(
                 withId(android.R.id.button1), withText(R.string.ok),
-                childAtPosition(
-                    allOf(
-                        withClassName(`is`("com.android.internal.widget.ButtonBarLayout")),
-                        childAtPosition(
-                            withClassName(`is`("android.widget.LinearLayout")),
-                            3
-                        )
-                    ),
-                    3
-                ),
                 isDisplayed()
             )
         )
@@ -143,16 +133,6 @@ class RunTestNavigation {
         val appCompatButton6 = onView(
             allOf(
                 withId(android.R.id.button1), withText(R.string.save),
-                childAtPosition(
-                    allOf(
-                        withClassName(`is`("com.android.internal.widget.ButtonBarLayout")),
-                        childAtPosition(
-                            withClassName(`is`("android.widget.LinearLayout")),
-                            3
-                        )
-                    ),
-                    3
-                ),
                 isDisplayed()
             )
         )
