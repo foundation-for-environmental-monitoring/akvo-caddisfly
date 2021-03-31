@@ -568,6 +568,72 @@
       ]
     },
     {
+      "name": "ffem P-Alkalinity",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "c203fe07-243b-4dcc-a016-b0662b69f7fd",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Titration drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 2,
+          "name": "Alkalinity",
+          "unit": "mg/l",
+          "formula": "%1$f * 100",
+          "display": 1
+        }
+      ]
+    },
+    {
+      "name": "ffem T-Alkalinity",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "351aabe9-ddf4-4434-a301-fa379886a6a0",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Titration drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 2,
+          "name": "Alkalinity",
+          "unit": "mg/l",
+          "formula": "(%1$f + 2) * 100",
+          "display": 1
+        }
+      ]
+    },
+    {
+      "name": "ffem Hardness",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "0db7721e-c6b1-41cc-9a3e-db62cc90c06b",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Titration drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 2,
+          "name": "Hardness",
+          "unit": "mg/l",
+          "formula": "%1$f * 40",
+          "display": 1
+        }
+      ]
+    },
+    {
       "name": "Calcium and Magnesium",
       "type": "water",
       "subtype": "titration",

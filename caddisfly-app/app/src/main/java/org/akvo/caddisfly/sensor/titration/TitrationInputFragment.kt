@@ -58,7 +58,35 @@ class TitrationInputFragment : BaseFragment() {
         if (arguments != null) {
             val testInfo: TestInfo? = requireArguments().getParcelable(ARG_PARAM1)
             if (testInfo != null) {
-                if (testInfo.results!!.size > 1) {
+                if (testInfo.results!!.size > 1 && testInfo.results!![1].display == 1) {
+                    input_title_txt.text = getString(R.string.enter_titration_result)
+                    textInput1.visibility = View.GONE
+                    textInput2.visibility = View.GONE
+                    editTitration2.visibility = View.GONE
+                    editTitration1.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->
+                        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                            if (mListener != null) {
+                                val n1String = editTitration1.text.toString()
+                                if (n1String.isEmpty()) {
+                                    editTitration1.error = getString(R.string.value_is_required)
+                                    editTitration1.requestFocus()
+                                } else {
+                                    closeKeyboard(editTitration2)
+                                    closeKeyboard(editTitration1)
+                                    val results = FloatArray(testInfo.results!!.size)
+                                    val n1 = n1String.toFloat()
+                                    val formula = testInfo.results!![1].formula
+                                    results[1] =
+                                        MathUtil.eval(String.format(Locale.US, formula!!, n1))
+                                            .toFloat()
+                                    mListener!!.onSubmitResult(results)
+                                }
+                            }
+                            return@setOnEditorActionListener true
+                        }
+                        false
+                    }
+                } else if (testInfo.results!!.size > 1) {
                     textInput1.text = testInfo.results!![0].name!!.toLocalString()
                     textInput2.text = testInfo.results!![1].name!!.toLocalString()
                     editTitration2.setOnEditorActionListener { _: TextView?, actionId: Int, _: KeyEvent? ->

@@ -90,4 +90,11 @@ class TitrationTestActivity : BaseActivity(), TitrationInputFragment.OnSubmitRes
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (testInfo != null) {
+            title = testInfo!!.name!!.toLocalString()
+        }
+    }
 }
