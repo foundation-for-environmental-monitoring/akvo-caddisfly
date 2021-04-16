@@ -2,6 +2,70 @@
   "comment": "This file contains the metadata for tests. IMPORTANT: *DO NOT* change the uuid values",
   "tests": [
     {
+      "name": "Ammonia - Low Range",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "f47cb441-0f85-4f67-b229-1d7df5bf7eb2",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0, 0.25,0.5, 0.75, 1, 2",
+      "monthsValid": 6,
+      "results": [
+        {
+          "id": 1,
+          "name": "Ammonia",
+          "unit": "mg/l",
+          "timeDelay": 300
+        }
+      ]
+    },
+    {
+      "name": "Nitrite - Low Range",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "32aca12b-9831-4a70-b606-3afcb19e8d28",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,0.05,0.1,0.2,0.3",
+      "monthsValid": 6,
+      "results": [
+        {
+          "id": 1,
+          "name": "Nitrite",
+          "unit": "mg/l",
+          "timeDelay": 300
+        }
+      ]
+    },
+    {
+      "name": "Alkalinity",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "222ca914-3036-4a2e-a59d-d85948d69461",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,15,30,45,60",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Alkalinity",
+          "unit": "mg/l",
+          "timeDelay": 120,
+          "formula": "(%1$f * 1)"
+        }
+      ]
+    },
+    {
       "name": "Aluminum",
       "type": "water",
       "subtype": "cuvette",
@@ -20,14 +84,40 @@
       ]
     },
     {
-      "name": "Arsenic (III)",
+      "name": "Ammonia",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "9cf6106a-8ae5-4044-8967-a34fa87ff140",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,1,2,3,4",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Ammonia",
+          "unit": "mg/l",
+          "timeDelay": 300,
+          "formula": "(%1$f * 1)"
+        }
+      ]
+    },
+    {
+      "name": "Total Arsenic",
       "type": "water",
       "subtype": "cuvette",
       "uuid": "93c259c5-f8b5-4317-828b-adfa324a2918",
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
-      "ranges": "0,0.05,0.1,0.2,0.3,0.4,0.5",
+      "ranges": "0,0.05,0.1,0.3,0.5",
       "monthsValid": 2,
       "dilutions": [
         1,
@@ -37,193 +127,9 @@
       "results": [
         {
           "id": 1,
-          "name": "Arsenic (III)",
+          "name": "Total Arsenic",
           "unit": "mg/l",
           "timeDelay": 600
-        }
-      ]
-    },
-    {
-      "name": "Arsenic (0 - 4000)",
-      "type": "water",
-      "subtype": "striptest",
-      "uuid": "beca9731-63f4-434f-a3c2-ac33b44f9992",
-      "brand": "EZ Arsenic High Range, HACH 2822800",
-      "image": "HACH-2822800-4000",
-      "imageScale": "centerCrop",
-      "groupingType": "INDIVIDUAL",
-      "hasImage": true,
-      "length": 82.3,
-      "height": 12.8,
-      "instructions": [
-        {
-          "section": [
-            "as_safety"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_1",
-            "image:as_1"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_7",
-            "image:as_5"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_3",
-            "image:as_3"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_4",
-            "image:as_4"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_5"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_6",
-            "image:place_clr"
-          ]
-        }
-      ],
-      "results": [
-        {
-          "id": 1,
-          "name": "Arsenic",
-          "unit": "ug/l",
-          "patchPos": 6.2,
-          "patchWidth": 12,
-          "colors": [
-            {
-              "value": 0,
-              "lab": [95.22,-0.43,3.03]
-            },
-            {
-              "value": 75,
-              "lab": [92.32,-9.65,47.36]
-            },
-            {
-              "value": 175,
-              "lab": [90.24,-7.83,49.23]
-            },
-            {
-              "value": 500,
-              "lab": [72.07,15.98,61.50]
-            },
-            {
-              "value": 1500,
-              "lab": [67.78,23.69,54.87]
-            },
-            {
-              "value": 4000,
-              "lab": [49.37,26.81,42.77]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Arsenic (0 - 500)",
-      "type": "water",
-      "subtype": "striptest",
-      "uuid": "32b6d11b-c7f3-475f-adf9-32d9b8f4aecf",
-      "brand": "EZ Arsenic High Range, HACH 2822800",
-      "image": "HACH-2822800-500",
-      "imageScale": "centerCrop",
-      "groupingType": "INDIVIDUAL",
-      "hasImage": true,
-      "length": 82.3,
-      "height": 12.8,
-      "instructions": [
-        {
-          "section": [
-            "as_safety"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_1",
-            "image:as_1"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_2",
-            "image:as_2"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_3",
-            "image:as_3"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_4",
-            "image:as_4"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_5"
-          ]
-        },
-        {
-          "section": [
-            "as_ins_6",
-            "image:place_clr"
-          ]
-        }
-      ],
-      "results": [
-        {
-          "id": 1,
-          "name": "Arsenic",
-          "unit": "ug/l",
-          "patchPos": 6.2,
-          "patchWidth": 12,
-          "colors": [
-            {
-              "value": 0,
-              "lab": [94.45,-0.95,2.34]
-            },
-            {
-              "value": 10,
-              "lab": [94.16,-4.79,12.38]
-            },
-            {
-              "value": 25,
-              "lab": [92.70,-6.26,27.52]
-            },
-            {
-              "value": 50,
-              "lab": [88.65,-0.68,39.10]
-            },
-            {
-              "value": 100,
-              "lab": [86.11,3.35,40.58]
-            },
-            {
-              "value": 250,
-              "lab": [76.95,12.24,39.62]
-            },
-            {
-              "value": 500,
-              "lab": [69.81,13.51,33.62]
-            }
-          ]
         }
       ]
     },
@@ -284,10 +190,16 @@
       "calibrate": true,
       "ranges": "0,8",
       "monthsValid": 12,
+      "dilutions": [
+        1,
+        2,
+        5
+      ],
       "results": [
         {
           "id": 1,
           "name": "Dissolved Oxygen",
+          "timeDelay": 300,
           "unit": "mg/l"
         }
       ]
@@ -300,7 +212,6 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
-      "sampleQuantity": 10,
       "ranges": "0,0.5,1,1.5,2",
       "monthsValid": 12,
       "dilutions": [
@@ -308,88 +219,28 @@
         2,
         5
       ],
-      "instructions": [
+      "results": [
         {
-          "section": [
-            "<dilution>"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_1",
-            "image:c_rinse"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_2",
-            "image:c_measure_sample"
-          ]
-        },
-        {
-          "section": [
-            "c_dilution_3",
-            "image:c_measure_sample"
-          ]
-        },
-        {
-          "section": [
-            "c_normal_rinse",
-            "image:c_rinse"
-          ]
-        },
-        {
-          "section": [
-            "c_normal_measure",
-            "image:c_measure_sample"
-          ]
-        },
-        {
-          "section": [
-            "c_open_reagent",
-            "image:c_open_reagent"
-          ]
-        },
-        {
-          "section": [
-            "c_add_reagent_a",
-            "image:c_add_reagent"
-          ]
-        },
-        {
-          "section": [
-            "c_shake",
-            "image:c_shake"
-          ]
-        },
-        {
-          "section": [
-            "c_pour",
-            "image:c_pour"
-          ]
-        },
-        {
-          "section": [
-            "c_close",
-            "image:c_close"
-          ]
-        },
-        {
-          "section": [
-            "<test>"
-          ]
-        },
-        {
-          "section": [
-            "<result>"
-          ]
-        },
-        {
-          "section": [
-            "c_empty",
-            "image:c_empty"
-          ]
+          "id": 1,
+          "name": "Fluoride",
+          "unit": "mg/l"
         }
+      ]
+    },
+    {
+      "name": "Fluoride - High Range",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "5920816a-21f1-47d3-9976-8f34e73f101c",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,1,2,4,6",
+      "monthsValid": 12,
+      "dilutions": [
+        1,
+        2,
+        5
       ],
       "results": [
         {
@@ -460,6 +311,33 @@
       ]
     },
     {
+      "name": "Nitrite",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "7ed862c5-4946-4245-b501-beed0292dca6",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0,0.1,0.2,0.3,0.4",
+      "monthsValid": 6,
+      "dilutions": [
+        1,
+        2,
+        5,
+        -1
+      ],
+      "results": [
+        {
+          "id": 1,
+          "name": "Nitrite",
+          "unit": "mg/l",
+          "timeDelay": 600,
+          "formula": "(%1$f * 1)",
+          "grayScale": false
+        }
+      ]
+    },
+    {
       "name": "pH",
       "type": "water",
       "subtype": "cuvette",
@@ -485,7 +363,7 @@
       "image": "ffem",
       "imageScale": "centerCrop",
       "calibrate": true,
-      "ranges": "0,10,20,30,40",
+      "ranges": "0,10,20,30",
       "monthsValid": 6,
       "dilutions": [
         1,
@@ -498,7 +376,7 @@
           "name": "Potassium",
           "unit": "mg/l",
           "timeDelay": 300,
-          "grayScale": true
+          "grayScale": false
         }
       ]
     },
@@ -523,6 +401,25 @@
           "name": "Phosphate",
           "unit": "mg/l",
           "timeDelay": 600
+        }
+      ]
+    },
+    {
+      "name": "Silica",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "877db547-57f6-4387-87a7-e3717dc7c75d",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "calibrate": true,
+      "ranges": "0, 0.5, 1.0, 1.5, 2.0",
+      "monthsValid": 12,
+      "results": [
+        {
+          "id": 1,
+          "name": "Silica",
+          "unit": "mg/l",
+          "timeDelay": 480
         }
       ]
     },
@@ -589,6 +486,254 @@
           "name": "Chlorophyll A",
           "unit": "mg/l",
           "timeDelay": 30
+        }
+      ]
+    },
+    {
+      "name": "Turbidity",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "c9fbaf09-e316-45dd-90d5-134295bbd289",
+      "image": "ffem",
+      "calibrate": true,
+      "ranges": "0, 2, 4, 6, 8",
+      "monthsValid": 12,
+      "results": [
+        {
+          "id": 1,
+          "name": "Turbidity",
+          "unit": "NTU"
+        }
+      ]
+    },
+    {
+      "name": "Zinc",
+      "type": "water",
+      "subtype": "cuvette",
+      "uuid": "80a0850c-9acc-4507-aa99-8b6ec3bde53d",
+      "image": "ffem",
+      "calibrate": true,
+      "ranges": "0.1,0.25,0.5,1.0,2.5,5",
+      "monthsValid": 12,
+      "results": [
+        {
+          "id": 1,
+          "name": "Zinc",
+          "unit": "mg/l",
+          "timeDelay": 600
+        }
+      ]
+    },
+    {
+      "name": "Total Hardness",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "58b23c8d-d1b2-49b1-b530-1431be9133a4",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Total Hardness",
+          "unit": "mg/l",
+          "formula": "%1$f * 25"
+        }
+      ]
+    },
+    {
+      "name": "Total Alkalinity",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "020dccb1-9a35-4097-bf02-292a92d7ae5a",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Titration 1 drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 2,
+          "name": "Titration 2 drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 3,
+          "name": "Total Alkalinity",
+          "unit": "mg/l",
+          "formula": "(%1$f + %2$f) * 100",
+          "display": 1
+        }
+      ]
+    },
+    {
+      "name": "ffem P-Alkalinity",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "c203fe07-243b-4dcc-a016-b0662b69f7fd",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Titration drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 2,
+          "name": "Alkalinity",
+          "unit": "mg/l",
+          "formula": "%1$f * 100",
+          "display": 1
+        }
+      ]
+    },
+    {
+      "name": "ffem T-Alkalinity",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "351aabe9-ddf4-4434-a301-fa379886a6a0",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Titration drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 2,
+          "name": "Alkalinity",
+          "unit": "mg/l",
+          "formula": "(%1$f + 2) * 100",
+          "display": 1
+        }
+      ]
+    },
+    {
+      "name": "ffem Hardness",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "0db7721e-c6b1-41cc-9a3e-db62cc90c06b",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Titration drops",
+          "unit": "mg/l"
+        },
+        {
+          "id": 2,
+          "name": "Hardness",
+          "unit": "mg/l",
+          "formula": "%1$f * 40",
+          "display": 1
+        }
+      ]
+    },
+    {
+      "name": "Calcium and Magnesium",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "670d2d65-bb76-4d72-ae4f-867d031b7712",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Calcium",
+          "unit": "mg/l",
+          "formula": "(%1$f/3) * 25",
+          "display": 2
+        },
+        {
+          "id": 2,
+          "name": "Magnesium",
+          "unit": "mg/l",
+          "formula": "(%2$f-%1$f) * 5",
+          "display": 3
+        }
+      ]
+    },
+    {
+      "name": "Carbonate",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "783c30ee-57c5-498e-aaaa-ed2904f7972a",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Carbonate",
+          "unit": "mg/l",
+          "formula": "(%1$f * 500) / 20"
+        }
+      ]
+    },
+    {
+      "name": "Bicarbonate",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "848be397-e55c-47ef-a786-f245435bb1c7",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Bicarbonate",
+          "unit": "mg/l",
+          "formula": "(%1$f * 500) / 20"
+        }
+      ]
+    },
+    {
+      "name": "Hardness",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "2f030fa0-f33b-4474-8de0-0fcdc6d56836",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Hardness",
+          "unit": "mg/l",
+          "formula": "%1$f * 20"
+        }
+      ]
+    },
+    {
+      "name": "Chloride",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "561ed7c9-052d-4b4d-84bd-823ac4095ed7",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Chloride",
+          "unit": "mg/l",
+          "formula": "%1$f * 14.18"
+        }
+      ]
+    },
+    {
+      "name": "Sulfite",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "6391e9d3-1ab5-4bdf-8ad2-648869f99a2c",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Sulfite",
+          "unit": "mg/l",
+          "formula": "%1$f * 13.63636363636364"
         }
       ]
     }
