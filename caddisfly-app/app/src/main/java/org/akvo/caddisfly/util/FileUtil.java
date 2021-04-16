@@ -74,25 +74,26 @@ public final class FileUtil {
      * Get the root of the files storage directory, depending on the resource being app internal
      * (not concerning the user) or not (users might need to pull the resource from the storage).
      *
-     * @param internal true for app specific resources, false otherwise
+     * @param external false for app specific resources, false otherwise
      * @return The root directory for this kind of resources
      */
     @SuppressWarnings("SameParameterValue")
-    public static String getFilesStorageDir(Context context, boolean internal) {
-        if (internal) {
+    public static String getFilesStorageDir(Context context, boolean external) {
+        if (external) {
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
+        } else {
             String state = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state)) {
                 File path = context.getExternalFilesDir(null);
                 if (path == null) {
-                    return context.getFilesDir().getAbsolutePath();
+                    return context.getFilesDir().getAbsolutePath() + File.separator;
                 } else {
-                    return path.getAbsolutePath();
+                    return path.getAbsolutePath() + File.separator;
                 }
             } else {
-                return CaddisflyApp.getApp().getFilesDir().getAbsolutePath();
+                return CaddisflyApp.getApp().getFilesDir().getAbsolutePath() + File.separator;
             }
         }
-        return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     public static void saveToFile(File folder, String name, String data) {
@@ -426,9 +427,9 @@ public final class FileUtil {
         }
     }
 
-    public static void deleteRecursive(File file) {
-        if (file.isDirectory()) {
-            File[] files = file.listFiles();
+    public static void deleteRecursive(File folder) {
+        if (folder.isDirectory()) {
+            File[] files = folder.listFiles();
             if (files != null) {
                 for (File child : files) {
                     deleteRecursive(child);
@@ -437,7 +438,7 @@ public final class FileUtil {
         }
 
         //noinspection ResultOfMethodCallIgnored
-        file.delete();
+        folder.delete();
     }
 
     public static String readText(File file) {

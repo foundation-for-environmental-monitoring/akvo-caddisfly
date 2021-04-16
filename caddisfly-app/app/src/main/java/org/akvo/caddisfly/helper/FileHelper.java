@@ -37,35 +37,27 @@ public final class FileHelper {
     // Folders
     private static final String ROOT_DIRECTORY = File.separator + AppConstants.APP_FOLDER;
 
-    private static final String DIR_CALIBRATION = ROOT_DIRECTORY
-            + File.separator + "calibration"; // Calibration files
+    private static final String DIR_CALIBRATION = "calibration"; // Calibration files
 
-    private static final String DIR_CONFIG = ROOT_DIRECTORY
-            + File.separator + "custom-config"; // Custom config json folder
+    private static final String DIR_CONFIG = "custom-config"; // Custom config json folder
 
-    private static final String DIR_EXP_CONFIG = ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "experiment-config"; // Experimental config json folder
+    private static final String DIR_EXP_CONFIG = "qa" + File.separator + "experiment-config"; // Experimental config json folder
 
-    private static final String DIR_TEST_IMAGE = ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "test-image"; // Images saved for testing
+    private static final String DIR_TEST_IMAGE = "qa" + File.separator + "test-image"; // Images saved for testing
 
-    private static final String DIR_CARD = ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "color-card"; // Color card for debugging
+    private static final String DIR_CARD = "qa" + File.separator + "color-card"; // Color card for debugging
 
-    private static final String DIR_RESULT_IMAGES = ROOT_DIRECTORY
-            + File.separator + "result-images"; // Images to be sent with result to dashboard
+    private static final String DIR_RESULT_IMAGES = "result-images"; // Images to be sent with result to dashboard
 
-    private static final String DIR_DIAGNOSTIC_IMAGE = ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "diagnostic-images"; // Images saved for testing
+    private static final String DIR_DIAGNOSTIC_IMAGE = "qa" + File.separator + "diagnostic-images"; // Images saved for testing
 
-    private static final String DIR_TEMP_IMAGES = ROOT_DIRECTORY
-            + File.separator + "test" + File.separator + "images"; // Images saved for testing
+    private static final String DIR_TEMP_IMAGES = "test" + File.separator + "images"; // Images saved for testing
 
     private FileHelper() {
     }
 
     public static String getAppFolder() {
-        return FileUtil.getFilesStorageDir(CaddisflyApp.getApp(), false) + ROOT_DIRECTORY;
+        return FileUtil.getFilesStorageDir(CaddisflyApp.getApp(), false);
     }
 
     /**
@@ -118,7 +110,7 @@ public final class FileHelper {
                 path = FileUtil.getFilesStorageDir(CaddisflyApp.getApp(), false) + DIR_TEMP_IMAGES;
                 break;
             default:
-                path = FileUtil.getFilesStorageDir(CaddisflyApp.getApp(), true);
+                path = FileUtil.getFilesStorageDir(CaddisflyApp.getApp(), false);
                 break;
         }
 
@@ -143,14 +135,14 @@ public final class FileHelper {
 
     //TODO remove migration at some point in future
     public static void migrateFolders() {
-        File appFolder = new File(FileUtil.getFilesStorageDir(CaddisflyApp.getApp(),
-                false) + ROOT_DIRECTORY);
-        if (!appFolder.exists()) {
-            File oldAppFolder = new File(FileUtil.getFilesStorageDir(CaddisflyApp.getApp(),
-                    false) + File.separator + AppConstants.APP_FOLDER_DEPRECATED);
+        File appFolder = new File(FileUtil.getFilesStorageDir(CaddisflyApp.getApp(), false));
+        File oldAppFolder = new File(FileUtil.getFilesStorageDir(CaddisflyApp.getApp(),
+                true) + File.separator + ROOT_DIRECTORY);
+        if (appFolder.exists()) {
             if (oldAppFolder.exists() && oldAppFolder.isDirectory()) {
                 try {
                     FileUtil.copyFolder(oldAppFolder, appFolder);
+                    FileUtil.deleteRecursive(oldAppFolder);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
