@@ -240,11 +240,7 @@ class TimeLapseCameraHandler implements Camera.PictureCallback {
             parameters.setMeteringAreas(meteringAreas);
         }
 
-        String flashMode = Camera.Parameters.FLASH_MODE_TORCH;
-        if (AppPreferences.useFlashMode()) {
-            flashMode = Camera.Parameters.FLASH_MODE_ON;
-        }
-        parameters.setFlashMode(flashMode);
+        parameters.setFlashMode(AppPreferences.getFlashMode());
 
         parameters.setExposureCompensation(EXPOSURE_COMPENSATION);
 

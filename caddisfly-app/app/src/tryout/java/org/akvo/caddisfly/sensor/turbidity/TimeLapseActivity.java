@@ -446,7 +446,7 @@ public class TimeLapseActivity extends BaseActivity {
         startCountdownTimer();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                && AppConfig.USE_SCREEN_PINNING) {
+                && AppConfig.USE_SCREEN_PINNING && !AppPreferences.useCameraAboveMode()) {
             startLockTask();
         }
     }

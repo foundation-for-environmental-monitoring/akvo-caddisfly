@@ -70,7 +70,8 @@
 
     <string name="ledRgbKey">ledRgb</string>
     <string name="useExternalCameraKey">useExternalCamera</string>
-    <string name="useFlashModeKey">useFlashMode</string>
+    <string name="flashModeKey">flashMode</string>
+    <string name="useCameraAboveModeKey">cameraAboveMode</string>
 
     <string name="ignoreTimeDelaysKey">ignoreTimeDelays</string>
     <string name="cameraMegaPixelsKey">cameraMegaPixels</string>
@@ -145,5 +146,6 @@
     <string name="openAppFolder">Show app folder</string>
     <string name="showFolderKey">showFolderKey</string>
     <string name="cameraFocusMode">Camera Focus Mode</string>
+    <string name="flashMode">Camera Flash Mode</string>
 
 </resources>

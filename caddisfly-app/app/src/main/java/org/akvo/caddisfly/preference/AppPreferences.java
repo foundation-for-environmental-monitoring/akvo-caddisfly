@@ -20,7 +20,6 @@
 package org.akvo.caddisfly.preference;
 
 import android.hardware.Camera;
-import android.os.Build;
 import android.util.Pair;
 import android.util.Patterns;
 
@@ -37,7 +36,7 @@ import java.util.List;
 public final class AppPreferences {
 
     // Phone models where the camera does not work in torch mode
-    private static String[] phoneModels = {"M1803E6I", "REDMI NOTE 3"};
+    private static final String[] phoneModels = {"M1803E6I", "REDMI NOTE 3"};
 
     private AppPreferences() {
     }
@@ -135,6 +134,11 @@ public final class AppPreferences {
                 && PreferencesUtil.getBoolean(CaddisflyApp.getApp(), R.string.ignoreTimeDelaysKey, false);
     }
 
+    public static boolean useCameraAboveMode() {
+        return isDiagnosticMode()
+                && PreferencesUtil.getBoolean(CaddisflyApp.getApp(), R.string.useCameraAboveModeKey, false);
+    }
+
     public static boolean useMaxZoom() {
         return isDiagnosticMode()
                 && PreferencesUtil.getBoolean(CaddisflyApp.getApp(), R.string.maxZoomKey, false);
@@ -203,18 +207,6 @@ public final class AppPreferences {
 //        }
     }
 
-    public static boolean useFlashMode() {
-
-        for (String model : phoneModels) {
-            if (Build.MODEL.toUpperCase().contains(model)) {
-                return true;
-            }
-        }
-
-        return isDiagnosticMode() &&
-                PreferencesUtil.getBoolean(CaddisflyApp.getApp(), R.string.useFlashModeKey, false);
-    }
-
     public static String getCameraFocusMode(List<String> focusModes) {
         String focusMode = "";
         if (isDiagnosticMode()) {
@@ -235,5 +227,19 @@ public final class AppPreferences {
         } else {
             return "";
         }
+    }
+
+    public static String getFlashMode() {
+        //        if (flashMode.equals(Camera.Parameters.FLASH_MODE_TORCH)) {
+//            for (String model : phoneModels) {
+//                if (Build.MODEL.toUpperCase().contains(model)) {
+//                    return Camera.Parameters.FLASH_MODE_ON;
+//                }
+//            }
+//        } else {
+//            return flashMode;
+//        }
+        return PreferencesUtil.getString(CaddisflyApp.getApp(),
+                R.string.flashModeKey, Camera.Parameters.FLASH_MODE_TORCH);
     }
 }

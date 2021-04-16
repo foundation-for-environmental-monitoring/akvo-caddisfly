@@ -26,11 +26,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+
 import org.akvo.caddisfly.BuildConfig;
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.databinding.ActivityTestListBinding;
-import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.ErrorMessages;
 import org.akvo.caddisfly.helper.PermissionsDelegate;
 import org.akvo.caddisfly.model.TestInfo;
@@ -43,9 +45,6 @@ import org.akvo.caddisfly.util.AlertUtil;
 import org.akvo.caddisfly.util.ConfigDownloader;
 import org.akvo.caddisfly.util.PreferencesUtil;
 import org.akvo.caddisfly.util.StringUtil;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 
 import static org.akvo.caddisfly.common.ConstantKey.IS_INTERNAL;
 
@@ -158,25 +157,27 @@ public class TestListActivity extends BaseActivity
 
     private void startCalibration() {
         //Only start the colorimetry calibration if the device has a camera flash
-        if (AppPreferences.useExternalCamera()
-                || CameraHelper.hasFeatureCameraFlash(this,
-                R.string.cannotCalibrate, R.string.ok, null)) {
+//        if (AppPreferences.useExternalCamera()
+//                || CameraHelper.hasFeatureCameraFlash(this,
+//                R.string.cannotCalibrate, R.string.ok, null)) {
 
-            final Intent intent;
-            if (testInfo.getResults().get(0).getColors().size() > 0) {
-                intent = new Intent(this, ChamberTestActivity.class);
-            } else {
-                ErrorMessages.alertCouldNotLoadConfig(this);
-                return;
-            }
-            intent.putExtra(ConstantKey.TEST_INFO, testInfo);
-            startActivity(intent);
+        final Intent intent;
+        if (testInfo.getResults().get(0).getColors().size() > 0) {
+            intent = new Intent(this, ChamberTestActivity.class);
+        } else {
+            ErrorMessages.alertCouldNotLoadConfig(this);
+            return;
         }
+        intent.putExtra(ConstantKey.TEST_INFO, testInfo);
+        startActivity(intent);
+//        }
     }
 
     @Override
     public void onListFragmentInteraction(TestInfo testInfo) {
         this.testInfo = testInfo;
+        PreferencesUtil.setString(this, "lastSelectedTestId", testInfo.getUuid());
+        PreferencesUtil.setString(this, "lastSelectedTestName", testInfo.getName());
         navigateToTestDetails();
     }
 

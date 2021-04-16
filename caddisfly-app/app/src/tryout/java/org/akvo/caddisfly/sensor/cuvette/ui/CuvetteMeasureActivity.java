@@ -84,7 +84,7 @@ public class CuvetteMeasureActivity extends BaseActivity
      * Member object for the chat services
      */
     private BluetoothChatService mChatService = null;
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             sendMessage(intent.getStringExtra("cuvette_result"));
@@ -200,11 +200,7 @@ public class CuvetteMeasureActivity extends BaseActivity
         }
         Camera.Parameters parameters = mCamera.getParameters();
 
-        String flashMode = Camera.Parameters.FLASH_MODE_TORCH;
-        if (AppPreferences.useFlashMode()) {
-            flashMode = Camera.Parameters.FLASH_MODE_ON;
-        }
-        parameters.setFlashMode(flashMode);
+        parameters.setFlashMode(AppPreferences.getFlashMode());
 
         mCamera.setParameters(parameters);
     }

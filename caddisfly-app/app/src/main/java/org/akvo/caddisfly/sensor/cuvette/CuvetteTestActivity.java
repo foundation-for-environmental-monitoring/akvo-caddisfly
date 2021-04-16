@@ -157,7 +157,7 @@ public class CuvetteTestActivity extends BaseActivity implements
     private int testPageNumber;
     private int startTimerPageNumber = -1;
     private int totalPageCount;
-    private ArrayList<Instruction> instructions = new ArrayList<>();
+    private final ArrayList<Instruction> instructions = new ArrayList<>();
     private CustomViewPager viewPager;
     private PageIndicatorView pagerIndicator;
     private RelativeLayout footerLayout;
@@ -251,7 +251,7 @@ public class CuvetteTestActivity extends BaseActivity implements
 
         viewPager.setAdapter(mSectionsPagerAdapter);
 
-        if (testInfo.getCameraAbove()) {
+        if (AppPreferences.useCameraAboveMode()) {
             runTestFragment = ChamberBelowFragment.newInstance(testInfo);
         } else {
             runTestFragment = ChamberAboveFragment.newInstance(testInfo);
@@ -277,7 +277,7 @@ public class CuvetteTestActivity extends BaseActivity implements
             runTestFragment.start();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                    && AppConfig.USE_SCREEN_PINNING) {
+                    && AppConfig.USE_SCREEN_PINNING && !AppPreferences.useCameraAboveMode()) {
                 startLockTask();
             }
 
@@ -831,7 +831,7 @@ public class CuvetteTestActivity extends BaseActivity implements
         final TestInfoViewModel model =
                 ViewModelProviders.of(this).get(TestInfoViewModel.class);
         model.setTest(testInfo);
-        if (testInfo.getCameraAbove()) {
+        if (AppPreferences.useCameraAboveMode()) {
             runTestFragment = ChamberBelowFragment.newInstance(testInfo);
         } else {
             runTestFragment = ChamberAboveFragment.newInstance(testInfo);

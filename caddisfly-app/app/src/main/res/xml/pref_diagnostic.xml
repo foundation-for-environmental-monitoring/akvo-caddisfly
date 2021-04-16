@@ -4,11 +4,6 @@
         android:key="preferenceCategoryDiagnostics"
         android:title="@string/diagnostics"
         app:iconSpaceReserved="false">
-        <Preference
-            android:key="cameraPreview"
-            android:summary="Test cuvette centering &amp; image quality"
-            android:title="@string/cameraPreview"
-            app:iconSpaceReserved="false" />
         <CheckBoxPreference
             android:key="@string/ignoreTimeDelaysKey"
             android:title="@string/ignoreTimeDelays"

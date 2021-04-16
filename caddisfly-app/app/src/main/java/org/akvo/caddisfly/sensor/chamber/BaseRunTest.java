@@ -49,6 +49,7 @@ import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.databinding.FragmentRunTestBinding;
 import org.akvo.caddisfly.entity.Calibration;
+import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.SoundUtil;
 import org.akvo.caddisfly.helper.SwatchHelper;
 import org.akvo.caddisfly.model.ColorInfo;
@@ -64,7 +65,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 import static org.akvo.caddisfly.common.AppConfig.STOP_ANIMATIONS;
 
@@ -82,7 +82,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     private boolean timeDelayEnabled = true;
     private int timeDelay = 0;
     private final Runnable mCountdown = this::setCountDown;
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
     private AlertDialog alertDialogToBeDestroyed;
     private TestInfo mTestInfo;
     private Calibration mCalibration;
@@ -205,12 +205,13 @@ public class BaseRunTest extends Fragment implements RunTest {
                     public void onGlobalLayout() {
                         binding.cameraView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         int parentHeight = ((FrameLayout) binding.cameraView.getParent()).getMeasuredHeight();
+                        mCamera = mCameraPreview.getCamera();
                         int offset = (parentHeight * AppPreferences.getCameraCenterOffset())
-                                / mCamera.getParameters().getPictureSize().width;
+                                / mCameraPreview.getCamera().getParameters().getPictureSize().width;
 
                         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) binding.circleView.getLayoutParams();
 
-                        Resources r = Objects.requireNonNull(getContext()).getResources();
+                        Resources r = requireContext().getResources();
                         int offsetPixels = (int) TypedValue.applyDimension(
                                 TypedValue.COMPLEX_UNIT_DIP,
                                 offset,
@@ -237,7 +238,7 @@ public class BaseRunTest extends Fragment implements RunTest {
                 container, false);
 
         binding.waitingProgressBar.getIndeterminateDrawable()
-                .setColorFilter(ContextCompat.getColor(Objects.requireNonNull(getActivity()),
+                .setColorFilter(ContextCompat.getColor(requireActivity(),
                         R.color.white), PorterDuff.Mode.SRC_IN);
 
         if (STOP_ANIMATIONS) {
@@ -311,7 +312,7 @@ public class BaseRunTest extends Fragment implements RunTest {
      */
     private void getAnalyzedResult(@NonNull Bitmap bitmap) {
 
-        bitmap = ImageUtil.rotateImage(Objects.requireNonNull(getActivity()), bitmap);
+        bitmap = ImageUtil.rotateImage(requireActivity(), bitmap);
 
         Bitmap croppedBitmap = ImageUtil.getCroppedBitmap(bitmap,
                 ChamberTestConfig.SAMPLE_CROP_LENGTH_DEFAULT);
@@ -465,13 +466,11 @@ public class BaseRunTest extends Fragment implements RunTest {
             return;
         }
         Camera.Parameters parameters = mCamera.getParameters();
-
-        String flashMode = Camera.Parameters.FLASH_MODE_TORCH;
-        if (AppPreferences.useFlashMode()) {
-            flashMode = Camera.Parameters.FLASH_MODE_ON;
+        if (CameraHelper.hasFeatureCameraFlash(requireContext(),
+                R.string.cannotStartTest, R.string.ok, null)) {
+            parameters.setFlashMode(AppPreferences.getFlashMode());
+            isFlashOn = true;
         }
-        parameters.setFlashMode(flashMode);
-        isFlashOn = true;
         mCamera.setParameters(parameters);
     }
 

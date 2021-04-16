@@ -76,8 +76,6 @@ public class ChamberPreviewActivity extends BaseActivity implements
                 return;
             }
 
-            testInfo.setCameraAbove(true);
-
             runTestFragment = ChamberPreviewFragment.newInstance(testInfo);
 
             start();

@@ -26,11 +26,13 @@
 
     <include layout="@layout/toolbar" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollViewSettings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingBottom="80dp"
         tools:ignore="UselessParent">
 
         <LinearLayout
@@ -39,13 +41,7 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/layoutGeneral"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
-            <FrameLayout
-                android:id="@+id/layoutOther"
+                android:id="@+id/layoutCamera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
@@ -53,7 +49,7 @@
             <FrameLayout
                 android:id="@+id/layoutDiagnostics"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
             <FrameLayout
@@ -64,12 +60,6 @@
 
             <FrameLayout
                 android:id="@+id/layoutDebugging"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-
-            <FrameLayout
-                android:id="@+id/layoutCamera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
@@ -92,6 +82,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <FrameLayout
+                android:id="@+id/layoutOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

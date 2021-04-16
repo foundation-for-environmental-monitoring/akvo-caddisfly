@@ -48,8 +48,8 @@ public class TestInfo implements Parcelable {
             return new TestInfo[size];
         }
     };
-    private transient DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-    private transient DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
+    private final transient DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private final transient DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
     @SerializedName("reagents")
     @Expose
     private List<Reagent> reagents = null;
@@ -107,9 +107,6 @@ public class TestInfo implements Parcelable {
     @SerializedName("hasImage")
     @Expose
     private Boolean hasImage = false;
-    @SerializedName("cameraAbove")
-    @Expose
-    private Boolean cameraAbove = false;
     @SerializedName("results")
     @Expose
     private List<Result> results = new ArrayList<>();
@@ -127,7 +124,7 @@ public class TestInfo implements Parcelable {
     private Integer hueTrend = 0;
     @SerializedName("dilutions")
     @Expose
-    private List<Integer> dilutions = new ArrayList<>();
+    private final List<Integer> dilutions = new ArrayList<>();
     @SerializedName("monthsValid")
     @Expose
     private Integer monthsValid;
@@ -231,8 +228,6 @@ public class TestInfo implements Parcelable {
         unit = in.readString();
         byte tmpHasImage = in.readByte();
         hasImage = tmpHasImage != 0 && tmpHasImage == 1;
-        byte tmpCameraAbove = in.readByte();
-        cameraAbove = tmpCameraAbove != 0 && tmpCameraAbove == 1;
         byte tmpCalibrate = in.readByte();
         calibrate = tmpCalibrate != 0 && tmpCalibrate == 1;
         ranges = in.readString();
@@ -276,14 +271,6 @@ public class TestInfo implements Parcelable {
             decimalPlaces = in.readInt();
         }
         resultSuffix = in.readString();
-    }
-
-    public boolean getCameraAbove() {
-        return cameraAbove == null ? false : cameraAbove;
-    }
-
-    public void setCameraAbove(boolean value) {
-        cameraAbove = value;
     }
 
     public boolean getIsGroup() {
@@ -501,7 +488,6 @@ public class TestInfo implements Parcelable {
         }
         parcel.writeString(unit);
         parcel.writeByte((byte) (hasImage == null ? 0 : hasImage ? 1 : 2));
-        parcel.writeByte((byte) (cameraAbove == null ? 0 : cameraAbove ? 1 : 2));
         parcel.writeByte((byte) (calibrate == null ? 0 : calibrate ? 1 : 2));
         parcel.writeString(ranges);
         parcel.writeString(defaultColors);

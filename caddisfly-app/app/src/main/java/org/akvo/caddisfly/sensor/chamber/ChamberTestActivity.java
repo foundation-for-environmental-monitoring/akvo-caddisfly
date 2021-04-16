@@ -147,7 +147,7 @@ public class ChamberTestActivity extends BaseActivity implements
                 return;
             }
 
-            if (testInfo.getCameraAbove()) {
+            if (AppPreferences.useCameraAboveMode()) {
                 runTestFragment = ChamberBelowFragment.newInstance(testInfo);
             } else {
                 runTestFragment = ChamberAboveFragment.newInstance(testInfo);
@@ -204,7 +204,7 @@ public class ChamberTestActivity extends BaseActivity implements
         if (cameraIsOk) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                    && AppConfig.USE_SCREEN_PINNING) {
+                    && AppConfig.USE_SCREEN_PINNING && !AppPreferences.useCameraAboveMode()) {
                 startLockTask();
             }
 
@@ -218,7 +218,7 @@ public class ChamberTestActivity extends BaseActivity implements
 //                    fragmentManager.beginTransaction().remove(fragment).commit();
 //                }
 
-                if (testInfo.getCameraAbove()) {
+                if (AppPreferences.useCameraAboveMode()) {
                     runTestFragment = ChamberBelowFragment.newInstance(testInfo);
                 } else {
                     runTestFragment = ChamberAboveFragment.newInstance(testInfo);

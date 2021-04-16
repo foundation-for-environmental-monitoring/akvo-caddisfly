@@ -9,6 +9,10 @@
             name="vm"
             type="org.akvo.caddisfly.viewmodel.TestInfoViewModel" />
 
+        <variable
+            name="pref"
+            type="org.akvo.caddisfly.preference.AppPreferences" />
+
         <import type="android.view.View" />
 
     </data>
@@ -66,7 +70,7 @@
                 android:id="@+id/circleView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{vm.test.cameraAbove ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{pref.useCameraAboveMode() ? View.VISIBLE : View.GONE}" />
         </FrameLayout>
     </LinearLayout>
 </layout>

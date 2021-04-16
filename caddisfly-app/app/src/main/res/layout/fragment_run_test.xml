@@ -26,6 +26,10 @@
             name="vm"
             type="org.akvo.caddisfly.viewmodel.TestInfoViewModel" />
 
+        <variable
+            name="pref"
+            type="org.akvo.caddisfly.preference.AppPreferences" />
+
         <import type="android.view.View" />
 
     </data>
@@ -89,21 +93,21 @@
                     android:adjustViewBounds="true"
                     android:contentDescription="@null"
                     android:src="@drawable/in_c_place"
-                    android:visibility="@{vm.test.cameraAbove ? View.GONE : View.VISIBLE}" />
+                    android:visibility="@{pref.useCameraAboveMode() ? View.GONE : View.VISIBLE}" />
 
                 <FrameLayout
                     android:id="@+id/camera_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/black"
-                    android:visibility="@{vm.test.cameraAbove ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{pref.useCameraAboveMode() ? View.VISIBLE : View.GONE}"
                     tools:visibility="gone" />
 
                 <org.akvo.caddisfly.widget.CircleView
                     android:id="@+id/circleView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="@{vm.test.cameraAbove ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{pref.useCameraAboveMode() ? View.VISIBLE : View.GONE}"
                     tools:visibility="visible" />
 
                 <Button
@@ -120,7 +124,7 @@
                     android:onClick="onStartTestClick"
                     android:text="@string/start"
                     android:theme="?primaryButtonStyle"
-                    android:visibility="gone" />
+                    android:visibility="@{pref.useCameraAboveMode() ? View.VISIBLE : View.GONE}" />
             </FrameLayout>
         </RelativeLayout>
 

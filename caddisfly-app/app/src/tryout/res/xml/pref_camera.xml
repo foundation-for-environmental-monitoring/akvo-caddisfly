@@ -24,8 +24,23 @@
         <!--            android:summary="640-480"-->
         <!--            android:title="Camera Resolution" />-->
         <CheckBoxPreference
-            android:key="@string/useFlashModeKey"
-            android:title="Use flash mode"
+            android:key="@string/useCameraAboveModeKey"
+            android:title="Use camera above mode"
+            app:iconSpaceReserved="false" />
+        <Preference
+            android:dependency="@string/useCameraAboveModeKey"
+            android:key="cameraPreview"
+            android:summary="Test cuvette centering &amp; image quality"
+            android:title="@string/cameraPreview"
+            app:iconSpaceReserved="false" />
+        <ListPreference
+            android:defaultValue="torch"
+            android:dialogTitle="@string/flashMode"
+            android:entries="@array/flashModes"
+            android:entryValues="@array/flashMode_codes"
+            android:key="@string/flashModeKey"
+            android:summary="%s"
+            android:title="Flash mode"
             app:iconSpaceReserved="false" />
         <ListPreference
             android:defaultValue="fixed"
