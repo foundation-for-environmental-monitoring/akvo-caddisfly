@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'de.mobilej.unmock'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -10,7 +12,7 @@ android {
         minSdkVersion 20
         //noinspection OldTargetApi
         targetSdkVersion 29
-        versionCode 244
+        versionCode 256
         versionName "Experiment"
         resConfigs "en", "en_US", "hi"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,7 +31,6 @@ android {
         }
         tryout {
             applicationIdSuffix ".experiment"
-            versionCode 255
             versionName "Experiment"
             buildConfigField 'boolean', 'showExperimentalTests', 'true'
         }
@@ -125,6 +126,11 @@ dependencies {
     // Room
     implementation 'androidx.room:room-runtime:2.2.6'
     annotationProcessor 'androidx.room:room-compiler:2.2.6'
+
+    // Firebase
+    implementation platform('com.google.firebase:firebase-bom:27.0.0')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     // Volley
     implementation 'com.android.volley:volley:1.2.0'

@@ -38,7 +38,7 @@
             android:dialogTitle="@string/flashMode"
             android:entries="@array/flashModes"
             android:entryValues="@array/flashMode_codes"
-            android:key="@string/flashModeKey"
+            android:key="@string/flashModePrefKey"
             android:summary="%s"
             android:title="Flash mode"
             app:iconSpaceReserved="false" />
@@ -47,7 +47,7 @@
             android:dialogTitle="@string/cameraFocusMode"
             android:entries="@array/focusModes"
             android:entryValues="@array/focusModes_codes"
-            android:key="cameraFocusKey"
+            android:key="@string/cameraFocusKey"
             android:summary="%s"
             android:title="@string/cameraFocusMode"
             app:iconSpaceReserved="false" />

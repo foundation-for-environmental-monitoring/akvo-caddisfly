@@ -240,6 +240,6 @@ public final class AppPreferences {
 //            return flashMode;
 //        }
         return PreferencesUtil.getString(CaddisflyApp.getApp(),
-                R.string.flashModeKey, Camera.Parameters.FLASH_MODE_TORCH);
+                R.string.flashModePrefKey, Camera.Parameters.FLASH_MODE_TORCH);
     }
 }

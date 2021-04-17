@@ -49,7 +49,6 @@ import org.akvo.caddisfly.common.ChamberTestConfig;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.databinding.FragmentRunTestBinding;
 import org.akvo.caddisfly.entity.Calibration;
-import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.SoundUtil;
 import org.akvo.caddisfly.helper.SwatchHelper;
 import org.akvo.caddisfly.model.ColorInfo;
@@ -91,7 +90,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     private Camera mCamera;
     private OnResultListener mListener;
     private ChamberCameraPreview mCameraPreview;
-    private boolean isFlashOn;
+    private boolean isFlashSet;
     private final Runnable mRunnableCode = () -> {
         if (pictureCount < AppPreferences.getSamplingTimes()) {
             turnFlashOn();
@@ -207,7 +206,7 @@ public class BaseRunTest extends Fragment implements RunTest {
                         int parentHeight = ((FrameLayout) binding.cameraView.getParent()).getMeasuredHeight();
                         mCamera = mCameraPreview.getCamera();
                         int offset = (parentHeight * AppPreferences.getCameraCenterOffset())
-                                / mCameraPreview.getCamera().getParameters().getPictureSize().width;
+                                / mCamera.getParameters().getPictureSize().width;
 
                         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) binding.circleView.getLayoutParams();
 
@@ -226,7 +225,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     protected void stopPreview() {
         if (mCamera != null) {
             mCamera.stopPreview();
-            isFlashOn = false;
+            isFlashSet = false;
         }
     }
 
@@ -445,33 +444,35 @@ public class BaseRunTest extends Fragment implements RunTest {
      * Turn flash off.
      */
     protected void turnFlashOff() {
-        if (!isFlashOn) return;
+        if (!isFlashSet) return;
         if (mCamera == null) {
             return;
         }
-        Camera.Parameters parameters = mCamera.getParameters();
-
-        String flashMode = Camera.Parameters.FLASH_MODE_OFF;
-        parameters.setFlashMode(flashMode);
-        isFlashOn = false;
-        mCamera.setParameters(parameters);
+        try {
+            Camera.Parameters parameters = mCamera.getParameters();
+            String flashMode = Camera.Parameters.FLASH_MODE_OFF;
+            parameters.setFlashMode(flashMode);
+            mCamera.setParameters(parameters);
+        } catch (Exception ignored) {
+        }
+        isFlashSet = false;
     }
 
     /**
      * Turn flash on.
      */
     protected void turnFlashOn() {
-        if (isFlashOn) return;
+        if (isFlashSet) return;
         if (mCamera == null) {
             return;
         }
-        Camera.Parameters parameters = mCamera.getParameters();
-        if (CameraHelper.hasFeatureCameraFlash(requireContext(),
-                R.string.cannotStartTest, R.string.ok, null)) {
+        try {
+            Camera.Parameters parameters = mCamera.getParameters();
             parameters.setFlashMode(AppPreferences.getFlashMode());
-            isFlashOn = true;
+            mCamera.setParameters(parameters);
+        } catch (Exception ignored) {
         }
-        mCamera.setParameters(parameters);
+        isFlashSet = true;
     }
 
     protected void releaseResources() {

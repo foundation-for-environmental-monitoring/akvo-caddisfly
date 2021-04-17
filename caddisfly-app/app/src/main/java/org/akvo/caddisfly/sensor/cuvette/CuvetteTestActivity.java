@@ -328,7 +328,9 @@ public class CuvetteTestActivity extends BaseActivity implements
                     super.onBackPressed();
                 }
             } else {
-                if (viewPager.getCurrentItem() != resultPageNumber) {
+                if (viewPager.getCurrentItem() == testPageNumber) {
+                    finish();
+                } else if (viewPager.getCurrentItem() != resultPageNumber) {
                     pageBack();
                 }
             }
