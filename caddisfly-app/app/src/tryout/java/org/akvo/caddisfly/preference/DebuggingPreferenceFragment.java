@@ -44,10 +44,13 @@ public class DebuggingPreferenceFragment extends PreferenceFragmentCompat {
                         startActivity(intent);
                     }
                 } else {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setDataAndType(Uri.parse("file:/" + FileHelper.getAppFolder()), "*/*");
-                    if (intent.resolveActivityInfo(getActivity().getPackageManager(), 0) != null) {
-                        startActivity(intent);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(Uri.parse("file:/" + FileHelper.getAppFolder()), "*/*");
+                        if (intent.resolveActivityInfo(getActivity().getPackageManager(), 0) != null) {
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
                     }
                 }
                 return true;

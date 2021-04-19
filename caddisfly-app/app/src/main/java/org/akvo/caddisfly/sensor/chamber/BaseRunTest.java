@@ -137,7 +137,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     }
 
     private void setCountDown() {
-        if (timeDelayEnabled && countdown[0] < timeDelay) {
+        if (!AppPreferences.useCameraAboveMode() && timeDelayEnabled && countdown[0] < timeDelay) {
             binding.timeLayout.setVisibility(View.VISIBLE);
 
             countdown[0]++;
@@ -381,7 +381,7 @@ public class BaseRunTest extends Fragment implements RunTest {
     @Override
     public void start() {
         // If the test has a time delay config then use that otherwise use standard delay
-        if (mTestInfo.getResults().get(0).getTimeDelay() > 10 && retryCount < 1) {
+        if (timeDelayEnabled && mTestInfo.getResults().get(0).getTimeDelay() > 10 && retryCount < 1) {
             timeDelay = (int) Math.max(SHORT_DELAY, mTestInfo.getResults().get(0).getTimeDelay());
 
             binding.timeLayout.setVisibility(View.VISIBLE);

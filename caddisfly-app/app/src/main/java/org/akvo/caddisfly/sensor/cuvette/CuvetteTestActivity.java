@@ -171,6 +171,7 @@ public class CuvetteTestActivity extends BaseActivity implements
         setContentView(R.layout.activity_cuvette_test);
 
         viewPager = findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(1);
         pagerIndicator = findViewById(R.id.pager_indicator);
         footerLayout = findViewById(R.id.layout_footer);
 
@@ -189,9 +190,10 @@ public class CuvetteTestActivity extends BaseActivity implements
             }
 
             if (getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
+                setTitle(testInfo.getName());
                 start();
             } else {
-                setTitle(R.string.calibration);
+                setTitle(testInfo.getName());
                 isInternal = getIntent().getBooleanExtra(IS_INTERNAL, true);
             }
         }
@@ -324,7 +326,6 @@ public class CuvetteTestActivity extends BaseActivity implements
             }
         } else {
             if (viewPager.getCurrentItem() == 0) {
-                runTestFragment.stop();
                 finish();
 //                if (!fragmentManager.popBackStackImmediate()) {
 //                    super.onBackPressed();
@@ -342,10 +343,18 @@ public class CuvetteTestActivity extends BaseActivity implements
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (runTestFragment != null) {
+            runTestFragment.stop();
+        }
+    }
+
     private void refreshTitle() {
         if (fragmentManager.getBackStackEntryCount() == 0) {
             if (!getIntent().getBooleanExtra(ConstantKey.RUN_TEST, false)) {
-                setTitle(R.string.calibration);
+                setTitle(testInfo.getName());
             }
         }
     }
@@ -980,7 +989,7 @@ public class CuvetteTestActivity extends BaseActivity implements
             testPageNumber = dilutionPageNumber + 1;
             resultPageNumber = testPageNumber + 1;
 
-            if (testInfo.getResults().get(0).getTimeDelay() > 0) {
+            if (!AppPreferences.useCameraAboveMode() && testInfo.getResults().get(0).getTimeDelay() > 0) {
                 instructions.add(new Instruction("c_start_timer,<start_timer>", ""));
                 startTimerPageNumber = dilutionPageNumber + 1;
                 testPageNumber += 1;
@@ -997,31 +1006,29 @@ public class CuvetteTestActivity extends BaseActivity implements
                 String text1 = "";
                 try {
                     instruction = testInfo.getInstructions().get(i).clone();
-                    if (instruction != null) {
-                        String text = instruction.section.get(0);
-                        if (instruction.section.size() > 1) {
-                            text1 = instruction.section.get(1);
+                    String text = instruction.section.get(0);
+                    if (instruction.section.size() > 1) {
+                        text1 = instruction.section.get(1);
+                    }
+                    if (text1.contains("<start_timer>")) {
+                        startTimerPageNumber = instructionIndex;
+                    } else if (text.contains("<test>")) {
+                        testPageNumber = instructionIndex;
+                    } else if (text.contains("<result>")) {
+                        resultPageNumber = instructionIndex;
+                    } else if (text.contains("<dilution>")) {
+                        dilutionPageNumber = instructionIndex;
+                        instructionFirstIndex = 0;
+                    } else if (currentDilution == 1 && text.contains("dilution")) {
+                        continue;
+                    } else if (currentDilution != 1 && text.contains("normal")) {
+                        continue;
+                    } else if (resultPageNumber < 1) {
+                        if (instructionIndex == 0) {
+                            instructionFirstIndex = 1;
                         }
-                        if (text1.contains("<start_timer>")) {
-                            startTimerPageNumber = instructionIndex;
-                        } else if (text.contains("<test>")) {
-                            testPageNumber = instructionIndex;
-                        } else if (text.contains("<result>")) {
-                            resultPageNumber = instructionIndex;
-                        } else if (text.contains("<dilution>")) {
-                            dilutionPageNumber = instructionIndex;
-                            instructionFirstIndex = 0;
-                        } else if (currentDilution == 1 && text.contains("dilution")) {
-                            continue;
-                        } else if (currentDilution != 1 && text.contains("normal")) {
-                            continue;
-                        } else if (resultPageNumber < 1) {
-                            if (instructionIndex == 0) {
-                                instructionFirstIndex = 1;
-                            }
-                            instruction.section.set(0, (instructionIndex + instructionFirstIndex)
-                                    + ". " + instruction.section.get(0));
-                        }
+                        instruction.section.set(0, (instructionIndex + instructionFirstIndex)
+                                + ". " + instruction.section.get(0));
                     }
                     instructions.add(instruction);
 

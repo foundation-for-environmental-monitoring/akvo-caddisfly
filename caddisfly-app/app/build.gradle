@@ -12,7 +12,7 @@ android {
         minSdkVersion 20
         //noinspection OldTargetApi
         targetSdkVersion 29
-        versionCode 256
+        versionCode 257
         versionName "Experiment"
         resConfigs "en", "en_US", "hi"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
