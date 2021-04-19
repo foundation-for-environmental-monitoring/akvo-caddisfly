@@ -22,7 +22,7 @@ import android.widget.Toast
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
 import org.akvo.caddisfly.common.AppConstants
 import org.akvo.caddisfly.preference.AppPreferences.showDebugInfo
-import org.akvo.caddisfly.util.FileUtil.copyFolder
+import org.akvo.caddisfly.util.FileUtil
 import org.akvo.caddisfly.util.FileUtil.getFilesStorageDir
 import java.io.File
 import java.io.IOException
@@ -41,22 +41,17 @@ object FileHelper {
      */
     // Folders
     private val ROOT_DIRECTORY = File.separator + AppConstants.APP_FOLDER
-    private val DIR_CALIBRATION = (ROOT_DIRECTORY
-            + File.separator + "calibration") // Calibration files
-    private val DIR_CONFIG = (ROOT_DIRECTORY
-            + File.separator + "custom-config") // Custom config json folder
-    private val DIR_EXP_CONFIG = (ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "experiment-config") // Experimental config json folder
-    private val DIR_TEST_IMAGE = (ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "test-image") // Images saved for testing
-    private val DIR_CARD = (ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "color-card") // Color card for debugging
-    private val DIR_RESULT_IMAGES = (ROOT_DIRECTORY
-            + File.separator + "result-images") // Images to be sent with result to dashboard
-    private val DIR_DIAGNOSTIC_IMAGE = (ROOT_DIRECTORY
-            + File.separator + "qa" + File.separator + "diagnostic-images") // Images saved for testing
-    private val DIR_TEMP_IMAGES = (ROOT_DIRECTORY
-            + File.separator + "test" + File.separator + "images") // Images saved for testing
+    private const val DIR_CALIBRATION = "calibration" // Calibration files
+    private const val DIR_CONFIG = "custom-config" // Custom config json folder
+    private val DIR_EXP_CONFIG =
+        "qa" + File.separator + "experiment-config" // Experimental config json folder
+    private val DIR_TEST_IMAGE = "qa" + File.separator + "test-image" // Images saved for testing
+    private val DIR_CARD = "qa" + File.separator + "color-card" // Color card for debugging
+    private const val DIR_RESULT_IMAGES =
+        "result-images" // Images to be sent with result to dashboard
+    private val DIR_DIAGNOSTIC_IMAGE =
+        "qa" + File.separator + "diagnostic-images" // Images saved for testing
+    private val DIR_TEMP_IMAGES = "test" + File.separator + "images" // Images saved for testing
 
     /**
      * Get the appropriate files directory for the given FileType. The directory may or may
@@ -91,7 +86,7 @@ object FileHelper {
             FileType.TEST_IMAGE -> getFilesStorageDir(app!!, false) + DIR_TEST_IMAGE
             FileType.DIAGNOSTIC_IMAGE -> getFilesStorageDir(app!!, false) + DIR_DIAGNOSTIC_IMAGE
             FileType.TEMP_IMAGE -> getFilesStorageDir(app!!, false) + DIR_TEMP_IMAGES
-            else -> getFilesStorageDir(app!!, true)
+            else -> getFilesStorageDir(app!!, false)
         }
         var dir = File(path)
         if (subPath.isNotEmpty()) {
@@ -104,26 +99,35 @@ object FileHelper {
 
         // create folder if it does not exist
         if (!dir.exists() && !dir.mkdirs() && showDebugInfo) {
-            Toast.makeText(app,
-                    "Error creating folder: " + dir.absolutePath, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                app,
+                "Error creating folder: " + dir.absolutePath, Toast.LENGTH_SHORT
+            ).show()
         }
         return dir
     }
 
     //TODO remove migration at some point in future
     fun migrateFolders() {
-        val appFolder = File(getFilesStorageDir(app!!,
-                false) + ROOT_DIRECTORY)
-        if (!appFolder.exists()) {
-            val oldAppFolder = File(getFilesStorageDir(app!!,
-                    false) + File.separator + AppConstants.APP_FOLDER_DEPRECATED)
-            if (oldAppFolder.exists() && oldAppFolder.isDirectory) {
-                try {
-                    copyFolder(oldAppFolder, appFolder)
-                } catch (e: IOException) {
-                    e.printStackTrace()
+        try {
+            val appFolder = File(getFilesStorageDir(app!!.applicationContext, false))
+            val oldAppFolder = File(
+                getFilesStorageDir(
+                    app!!.applicationContext,
+                    true
+                ) + File.separator + ROOT_DIRECTORY
+            )
+            if (appFolder.exists()) {
+                if (oldAppFolder.exists() && oldAppFolder.isDirectory) {
+                    try {
+                        FileUtil.copyFolder(oldAppFolder, appFolder)
+                        FileUtil.deleteRecursive(oldAppFolder)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
                 }
             }
+        } catch (e: Exception) {
         }
     }
 }

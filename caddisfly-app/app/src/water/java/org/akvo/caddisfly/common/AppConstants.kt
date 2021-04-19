@@ -5,5 +5,4 @@ package org.akvo.caddisfly.common
  */
 object AppConstants {
     const val APP_FOLDER = "ffem Water"
-    const val APP_FOLDER_DEPRECATED = "ffem Caddisfly"
 }

@@ -29,6 +29,7 @@ import java.io.*
 import java.nio.charset.StandardCharsets
 import java.util.*
 
+
 /**
  * Utility functions to file and folder manipulation.
  */
@@ -48,26 +49,26 @@ object FileUtil {
      * Get the root of the files storage directory, depending on the resource being app internal
      * (not concerning the user) or not (users might need to pull the resource from the storage).
      *
-     * @param internal true for app specific resources, false otherwise
+     * @param external false for app specific resources, false otherwise
      * @return The root directory for this kind of resources
      */
     @JvmStatic
-    fun getFilesStorageDir(context: Context, internal: Boolean): String {
-        if (internal) {
+    fun getFilesStorageDir(context: Context, external: Boolean): String {
+        return if (external) {
+            Environment.getExternalStorageDirectory().absolutePath
+        } else {
             val state = Environment.getExternalStorageState()
-            return if (Environment.MEDIA_MOUNTED == state) {
+            if (Environment.MEDIA_MOUNTED == state) {
                 val path = context.getExternalFilesDir(null)
                 if (path == null) {
-                    context.filesDir.absolutePath
+                    context.filesDir.absolutePath + File.separator
                 } else {
-                    path.absolutePath
+                    path.absolutePath + File.separator
                 }
             } else {
-                app!!.filesDir.absolutePath
+                app!!.filesDir.absolutePath + File.separator
             }
         }
-        @Suppress("DEPRECATION")
-        return Environment.getExternalStorageDirectory().absolutePath
     }
 
     @JvmStatic
@@ -376,17 +377,17 @@ object FileUtil {
             `in`.close()
             out.close()
         }
-    } //    private static void deleteRecursive(File file) {
-//        if (file.isDirectory()) {
-//            File[] files = file.listFiles();
-//            if (files != null) {
-//                for (File child : files) {
-//                    deleteRecursive(child);
-//                }
-//            }
-//        }
-//
-//        //noinspection ResultOfMethodCallIgnored
-//        file.delete();
-//    }
+    }
+
+    fun deleteRecursive(folder: File) {
+        if (folder.isDirectory) {
+            val files = folder.listFiles()
+            if (files != null) {
+                for (child in files) {
+                    deleteRecursive(child)
+                }
+            }
+        }
+        folder.delete()
+    }
 }
