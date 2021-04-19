@@ -205,19 +205,24 @@ public class BaseRunTest extends Fragment implements RunTest {
                         binding.cameraView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         int parentHeight = ((FrameLayout) binding.cameraView.getParent()).getMeasuredHeight();
                         mCamera = mCameraPreview.getCamera();
-                        int offset = (parentHeight * AppPreferences.getCameraCenterOffset())
-                                / mCamera.getParameters().getPictureSize().width;
+                        try {
+                            FrameLayout.LayoutParams layoutParams = null;
+                            int offset = (parentHeight * AppPreferences.getCameraCenterOffset())
+                                    / mCamera.getParameters().getPictureSize().width;
 
-                        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) binding.circleView.getLayoutParams();
+                            layoutParams = (FrameLayout.LayoutParams) binding.circleView.getLayoutParams();
 
-                        Resources r = requireContext().getResources();
-                        int offsetPixels = (int) TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP,
-                                offset,
-                                r.getDisplayMetrics()
-                        );
-                        layoutParams.setMargins(0, 0, 0, offsetPixels);
-                        binding.circleView.setLayoutParams(layoutParams);
+                            Resources r = requireContext().getResources();
+                            int offsetPixels = (int) TypedValue.applyDimension(
+                                    TypedValue.COMPLEX_UNIT_DIP,
+                                    offset,
+                                    r.getDisplayMetrics()
+                            );
+                            layoutParams.setMargins(0, 0, 0, offsetPixels);
+                            binding.circleView.setLayoutParams(layoutParams);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
@@ -480,6 +485,7 @@ public class BaseRunTest extends Fragment implements RunTest {
         stopRepeatingTask();
 
         if (mCamera != null) {
+            turnFlashOff();
             stopPreview();
             mCamera.setPreviewCallback(null);
             mCameraPreview.getHolder().removeCallback(mCameraPreview);

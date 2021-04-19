@@ -324,9 +324,11 @@ public class CuvetteTestActivity extends BaseActivity implements
             }
         } else {
             if (viewPager.getCurrentItem() == 0) {
-                if (!fragmentManager.popBackStackImmediate()) {
-                    super.onBackPressed();
-                }
+                runTestFragment.stop();
+                finish();
+//                if (!fragmentManager.popBackStackImmediate()) {
+//                    super.onBackPressed();
+//                }
             } else {
                 if (viewPager.getCurrentItem() == testPageNumber) {
                     finish();
