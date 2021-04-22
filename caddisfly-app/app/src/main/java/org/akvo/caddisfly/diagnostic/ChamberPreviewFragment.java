@@ -28,7 +28,6 @@ import androidx.annotation.NonNull;
 
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.model.TestInfo;
-import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.sensor.chamber.BaseRunTest;
 import org.akvo.caddisfly.sensor.chamber.RunTest;
 
@@ -68,10 +67,10 @@ public class ChamberPreviewFragment extends BaseRunTest implements RunTest {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         binding.startCaptureButton.setOnClickListener(view -> {
-            stopPreview();
-            turnFlashOff();
+//            stopPreview();
+//            turnFlashOff();
             binding.startCaptureButton.setVisibility(View.GONE);
-            pictureCount = AppPreferences.getSamplingTimes() - 1;
+//            pictureCount = AppPreferences.getSamplingTimes() - 1;
             startRepeatingTask();
         });
         return binding.getRoot();

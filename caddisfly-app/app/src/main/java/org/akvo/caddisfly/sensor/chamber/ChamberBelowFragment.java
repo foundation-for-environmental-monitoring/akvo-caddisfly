@@ -72,8 +72,8 @@ public class ChamberBelowFragment extends BaseRunTest implements RunTest {
         super.onCreateView(inflater, container, savedInstanceState);
 
         binding.startCaptureButton.setOnClickListener(view -> {
-            stopPreview();
-            turnFlashOff();
+//            stopPreview();
+//            turnFlashOff();
             binding.startCaptureButton.setVisibility(View.GONE);
             startRepeatingTask();
         });

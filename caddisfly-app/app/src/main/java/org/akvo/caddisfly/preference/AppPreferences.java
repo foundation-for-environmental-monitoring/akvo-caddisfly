@@ -211,7 +211,7 @@ public final class AppPreferences {
         String focusMode = "";
         if (isDiagnosticMode()) {
             focusMode = PreferencesUtil.getString(CaddisflyApp.getApp(),
-                    R.string.cameraFocusKey, Camera.Parameters.FOCUS_MODE_INFINITY);
+                    R.string.cameraFocusKey, Camera.Parameters.FOCUS_MODE_FIXED);
         }
 
         if (focusModes.contains(focusMode)) {
