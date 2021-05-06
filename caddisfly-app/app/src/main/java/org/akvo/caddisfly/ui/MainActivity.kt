@@ -1,6 +1,5 @@
 package org.akvo.caddisfly.ui
 
-import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -10,7 +9,6 @@ import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp
 import org.akvo.caddisfly.common.NavigationController
 import org.akvo.caddisfly.helper.ApkHelper
-import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.PermissionsDelegate
 import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
@@ -22,12 +20,11 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val STORAGE_PERMISSION_WATER = 1
-const val STORAGE_PERMISSION_SOIL = 2
+const val PERMISSION_WATER = 1
+const val PERMISSION_SOIL = 2
 
 class MainActivity : AppUpdateActivity() {
     private val permissionsDelegate = PermissionsDelegate(this)
-    private val storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var navigationController: NavigationController? = null
     private var runTest = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,19 +92,15 @@ class MainActivity : AppUpdateActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (permissionsDelegate.resultGranted(grantResults)) {
             when (requestCode) {
-                STORAGE_PERMISSION_WATER -> if (runTest) {
+                PERMISSION_WATER -> if (runTest) {
                     startTest(TestSampleType.WATER)
                 }
-                STORAGE_PERMISSION_SOIL -> if (runTest) {
+                PERMISSION_SOIL -> if (runTest) {
                     startTest(TestSampleType.SOIL)
                 }
             }
         } else {
             val message = ""
-            when (requestCode) {
-                STORAGE_PERMISSION_WATER, STORAGE_PERMISSION_SOIL -> {
-                }
-            }
             AlertUtil.showSettingsSnackbar(
                 this,
                 window.decorView.rootView, message
@@ -125,19 +118,10 @@ class MainActivity : AppUpdateActivity() {
 
     fun onRunTestClick(@Suppress("UNUSED_PARAMETER") view: View?) {
         runTest = true
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startTest(TestSampleType.ALL)
-        } else {
-            if (BuildConfig.APPLICATION_ID.contains("soil")) {
-                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL)
-            } else {
-                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER)
-            }
-        }
+        startTest(TestSampleType.ALL)
     }
 
     private fun startTest(testSampleType: TestSampleType) {
-        FileHelper.migrateFolders()
         navigationController!!.navigateToTestType(TestType.ALL, testSampleType, runTest)
     }
 }

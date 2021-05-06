@@ -144,7 +144,7 @@ class ChamberTest {
 
     @Test
     fun clickTest() {
-        val permissions = arrayOf(permission.CAMERA, permission.WRITE_EXTERNAL_STORAGE)
+        val permissions = arrayOf(permission.CAMERA)
         val intent = Intent()
         intent.putExtra(ConstantKey.TYPE, TestType.CHAMBER_TEST)
         intent.putExtra(SAMPLE_TYPE_KEY, SAMPLE_TYPE)
@@ -228,7 +228,7 @@ class ChamberTest {
 
     @Test
     fun testExternalWithPermission() {
-        val permissions = arrayOf(permission.CAMERA, permission.WRITE_EXTERNAL_STORAGE)
+        val permissions = arrayOf(permission.CAMERA)
         val intent = Intent(BuildConfig.APPLICATION_ID)
         val data = Bundle()
         data.putString(SensorConstants.TEST_ID, CUVETTE_TEST_ID_1)

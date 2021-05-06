@@ -44,22 +44,21 @@ import org.akvo.caddisfly.util.AlertUtil
 
 class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
     private val permissionsDelegate = PermissionsDelegate(this)
-    private val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val permissions = arrayOf(Manifest.permission.CAMERA)
     private var testInfo: TestInfo? = null
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (permissionsDelegate.resultGranted(grantResults)) {
             startTest()
         } else {
-            val message: String = if (requestCode == REQUEST_SYNC_PERMISSION) {
-                getString(R.string.storage_permission)
-            } else {
-                getString(R.string.camera_storage_permissions)
-            }
-            AlertUtil.showSettingsSnackbar(this,
-                    window.decorView.rootView, message)
+            AlertUtil.showSettingsSnackbar(
+                this,
+                window.decorView.rootView, getString(R.string.camera_permission)
+            )
         }
     }
 
@@ -75,7 +74,7 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
                 .getSerializableExtra(ConstantKey.SAMPLE_TYPE_KEY) as TestSampleType
             val fragment = newInstance(testType, sampleType)
             supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, fragment, TestListFragment.TAG).commit()
+                .add(R.id.fragment_container, fragment, TestListFragment.TAG).commit()
         }
     }
 
@@ -127,7 +126,8 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
     private fun startCalibration() {
         //Only start the colorimetry calibration if the device has a camera flash
         if (useExternalCamera()
-                || CameraHelper.hasFeatureCameraFlash(this,
+            || CameraHelper.hasFeatureCameraFlash(
+                this,
                 R.string.cannot_calibrate, R.string.ok, null
             )
         ) {
@@ -153,9 +153,5 @@ class TestListActivity : BaseActivity(), OnListFragmentInteractionListener {
             return true
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    companion object {
-        private const val REQUEST_SYNC_PERMISSION = 101
     }
 }

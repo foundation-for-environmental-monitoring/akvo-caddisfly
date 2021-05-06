@@ -457,20 +457,20 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
                 val dao = db!!.calibrationDao()
                 calibration.color = color
                 calibration.date = Date().time
-                if (AppPreferences.isDiagnosticMode()) {
-                    calibration.image = UUID.randomUUID().toString() + ".png"
-                    // Save photo taken during the test
-                    FileUtil.writeBitmapToExternalStorage(
-                        resultDetails[resultDetails.size - 1].bitmap,
-                        FileType.DIAGNOSTIC_IMAGE, calibration.image!!
-                    )
-                    calibration.croppedImage = UUID.randomUUID().toString() + ".png"
-                    // Save photo taken during the test
-                    FileUtil.writeBitmapToExternalStorage(
-                        resultDetails[resultDetails.size - 1].croppedBitmap,
-                        FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage!!
-                    )
-                }
+//                if (AppPreferences.isDiagnosticMode()) {
+//                    calibration.image = UUID.randomUUID().toString() + ".png"
+//                    // Save photo taken during the test
+//                    FileUtil.writeBitmapToExternalStorage(
+//                        resultDetails[resultDetails.size - 1].bitmap,
+//                        FileType.DIAGNOSTIC_IMAGE, calibration.image!!
+//                    )
+//                    calibration.croppedImage = UUID.randomUUID().toString() + ".png"
+//                    // Save photo taken during the test
+//                    FileUtil.writeBitmapToExternalStorage(
+//                        resultDetails[resultDetails.size - 1].croppedBitmap,
+//                        FileType.DIAGNOSTIC_IMAGE, calibration.croppedImage!!
+//                    )
+//                }
                 dao!!.insert(calibration)
                 CalibrationFile.saveCalibratedData(this, testInfo, calibration, color)
                 loadDetails()

@@ -2,7 +2,6 @@
 
 package org.akvo.caddisfly.preference
 
-import android.Manifest
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -24,7 +23,6 @@ import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.getAppVersion
 import org.akvo.caddisfly.common.NavigationController
-import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.PermissionsDelegate
 import org.akvo.caddisfly.helper.SwatchHelper.generateCalibrationFile
 import org.akvo.caddisfly.model.TestInfo
@@ -32,14 +30,11 @@ import org.akvo.caddisfly.model.TestSampleType
 import org.akvo.caddisfly.model.TestType
 import org.akvo.caddisfly.preference.OtherPreferenceFragment.GenerateMessageAsyncTask.ExampleAsyncTaskListener
 import org.akvo.caddisfly.ui.AboutActivity
-import org.akvo.caddisfly.ui.STORAGE_PERMISSION_SOIL
-import org.akvo.caddisfly.ui.STORAGE_PERMISSION_WATER
 import org.akvo.caddisfly.viewmodel.TestListViewModel
 import java.lang.ref.WeakReference
 
 class OtherPreferenceFragment : PreferenceFragmentCompat() {
     private lateinit var permissionsDelegate: PermissionsDelegate
-    private val storagePermission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     private var navigationController: NavigationController? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -55,21 +50,7 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
         val calibratePreference = findPreference<Preference>("calibrate")
         if (calibratePreference != null) {
             calibratePreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-                if (permissionsDelegate.hasPermissions(storagePermission)) {
-                    startCalibrate()
-                } else {
-                    if (BuildConfig.APPLICATION_ID.contains("soil")) {
-                        permissionsDelegate.requestPermissions(
-                            storagePermission,
-                            STORAGE_PERMISSION_SOIL
-                        )
-                    } else {
-                        permissionsDelegate.requestPermissions(
-                            storagePermission,
-                            STORAGE_PERMISSION_WATER
-                        )
-                    }
-                }
+                startCalibrate()
                 true
             }
         }
@@ -132,7 +113,6 @@ class OtherPreferenceFragment : PreferenceFragmentCompat() {
     }
 
     private fun startCalibrate() {
-        FileHelper.migrateFolders()
         navigationController!!.navigateToTestType(TestType.CHAMBER_TEST, TestSampleType.ALL, false)
     }
 

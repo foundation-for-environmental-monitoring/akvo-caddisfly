@@ -3,7 +3,7 @@ package org.akvo.caddisfly.common
 import org.akvo.caddisfly.model.TestSampleType
 
 object UnitTestConstants {
-    const val CUVETTE_TESTS_COUNT = 13
+    const val CUVETTE_TESTS_COUNT = 15
     val SAMPLE_TYPE: TestSampleType = TestSampleType.SOIL
     const val CUVETTE_TEST_ID_1 = "29e609a0-0f57-4365-a4eb-4eb84c61c9ab"
     const val CUVETTE_TEST_NAME_1 = "Available Boron"

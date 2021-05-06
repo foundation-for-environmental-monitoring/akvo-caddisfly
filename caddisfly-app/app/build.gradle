@@ -11,16 +11,15 @@ if (propertyFile.exists()) {
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     testOptions.unitTests.includeAndroidResources = true
 
     defaultConfig {
         applicationId "io.ffem"
         minSdkVersion 19
-        //noinspection OldTargetApi
-        targetSdkVersion 29
-        versionCode 273
-        versionName "Beta 2.6"
+        targetSdkVersion 30
+        versionCode 274
+        versionName "Beta 2.7"
         resConfigs "en", "en_US", "hi", "kn", "te"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -143,8 +142,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // Room
-    implementation 'androidx.room:room-runtime:2.2.6'
-    kapt 'androidx.room:room-compiler:2.2.6'
+    implementation 'androidx.room:room-runtime:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
     kapt 'android.arch.persistence.room:compiler:1.1.1'
 
     // Gson

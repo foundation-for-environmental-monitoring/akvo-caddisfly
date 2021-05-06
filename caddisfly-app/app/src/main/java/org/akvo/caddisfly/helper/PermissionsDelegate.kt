@@ -26,9 +26,6 @@ import androidx.core.content.ContextCompat
 class PermissionsDelegate(private val activity: Activity) {
     fun hasPermissions(permissions: Array<String>): Boolean {
         for (permission in permissions) {
-//            if (permission == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
-//                continue
-//            }
             val permissionCheckResult = ContextCompat.checkSelfPermission(
                 activity, permission
             )

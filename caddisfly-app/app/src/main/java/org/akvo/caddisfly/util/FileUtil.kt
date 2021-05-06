@@ -19,11 +19,8 @@
 package org.akvo.caddisfly.util
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Environment
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
-import org.akvo.caddisfly.helper.FileHelper
-import org.akvo.caddisfly.helper.FileType
 import timber.log.Timber
 import java.io.*
 import java.nio.charset.StandardCharsets
@@ -46,28 +43,23 @@ object FileUtil {
     }
 
     /**
-     * Get the root of the files storage directory, depending on the resource being app internal
-     * (not concerning the user) or not (users might need to pull the resource from the storage).
+     * Get the root of the files directory, depending on the resource being app internal
+     * (not concerning the user) or not.
      *
-     * @param external false for app specific resources, false otherwise
      * @return The root directory for this kind of resources
      */
     @JvmStatic
-    fun getFilesStorageDir(context: Context, external: Boolean): String {
-        return if (external) {
-            Environment.getExternalStorageDirectory().absolutePath
-        } else {
-            val state = Environment.getExternalStorageState()
-            if (Environment.MEDIA_MOUNTED == state) {
-                val path = context.getExternalFilesDir(null)
-                if (path == null) {
-                    context.filesDir.absolutePath + File.separator
-                } else {
-                    path.absolutePath + File.separator
-                }
+    fun getFilesStorageDir(context: Context): String {
+        val state = Environment.getExternalStorageState()
+        return if (Environment.MEDIA_MOUNTED == state) {
+            val path = context.getExternalFilesDir(null)
+            if (path == null) {
+                context.filesDir.absolutePath + File.separator
             } else {
-                app!!.filesDir.absolutePath + File.separator
+                path.absolutePath + File.separator
             }
+        } else {
+            app!!.filesDir.absolutePath + File.separator
         }
     }
 
@@ -181,178 +173,57 @@ object FileUtil {
         return null
     }
 
-    /**
-     * Method to write characters to file on SD card. Note that you must add a
-     * WRITE_EXTERNAL_STORAGE permission to the manifest file or this method will throw
-     * a FileNotFound Exception because you won't have write permission.
-     *
-     * @return absolute path name of saved file, or empty string on failure.
-     */
-    @JvmStatic
-    fun writeBitmapToExternalStorage(
-        bitmap: Bitmap?,
-        fileType: FileType?,
-        fileName: String
-    ): String { // Find the root of the external storage
-// See http://developer.android.com/guide/topics/data/data-  storage.html#filesExternal
-// See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
-        val dir = FileHelper.getFilesDir(fileType)
-        val file = File(dir, fileName)
-        // check if directory exists and if not, create it
-        var success = true
-        if (!dir.exists()) {
-            success = dir.mkdirs()
-        }
-        if (success && bitmap != null) {
-            try {
-                val f = FileOutputStream(file)
-                val bos = BufferedOutputStream(f)
-                val byteArrayOutputStream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos)
-                for (s in byteArrayOutputStream.toByteArray()) {
-                    bos.write(s.toInt())
-                }
-                bos.close()
-                byteArrayOutputStream.close()
-                f.close()
-                // Create a no media file in the folder to prevent images showing up in Gallery app
-                val noMediaFile = File(dir, ".nomedia")
-                if (!noMediaFile.exists()) {
-                    try {
-                        noMediaFile.createNewFile()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-                return file.absolutePath
-            } catch (e: IOException) {
-                Timber.e(e)
-            }
-        }
-        // on failure, return empty string
-        return ""
-    }
+//    /**
+//     * Method to write characters to file on SD card.
+//     *
+//     * @return absolute path name of saved file, or empty string on failure.
+//     */
+//    @JvmStatic
+//    fun writeBitmapToExternalStorage(
+//        bitmap: Bitmap?,
+//        fileType: FileType?,
+//        fileName: String
+//    ): String { // Find the root of the directory
+//// See http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
+//// See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
+//        val dir = FileHelper.getFilesDir(fileType)
+//        val file = File(dir, fileName)
+//        // check if directory exists and if not, create it
+//        var success = true
+//        if (!dir.exists()) {
+//            success = dir.mkdirs()
+//        }
+//        if (success && bitmap != null) {
+//            try {
+//                val f = FileOutputStream(file)
+//                val bos = BufferedOutputStream(f)
+//                val byteArrayOutputStream = ByteArrayOutputStream()
+//                bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos)
+//                for (s in byteArrayOutputStream.toByteArray()) {
+//                    bos.write(s.toInt())
+//                }
+//                bos.close()
+//                byteArrayOutputStream.close()
+//                f.close()
+//                // Create a no media file in the folder to prevent images showing up in Gallery app
+//                val noMediaFile = File(dir, ".nomedia")
+//                if (!noMediaFile.exists()) {
+//                    try {
+//                        noMediaFile.createNewFile()
+//                    } catch (e: IOException) {
+//                        e.printStackTrace()
+//                    }
+//                }
+//                return file.absolutePath
+//            } catch (e: IOException) {
+//                Timber.e(e)
+//            }
+//        }
+//        // on failure, return empty string
+//        return ""
+//    }
 
-    //    public static void writeByteArray(Context context, byte[] data, String fileName) {
-//
-//        FileOutputStream outputStream;
-//
-//        try {
-//            outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-//            BufferedOutputStream bos = new BufferedOutputStream(outputStream);
-//            for (byte s : data) {
-//                bos.write(s);
-//            }
-//            bos.close();
-//            outputStream.close();
-//
-//        } catch (Exception e) {
-//            Timber.e(e);
-//        }
-//    }
-//
-//    public static byte[] readByteArray(Context context, String fileName) throws IOException {
-//
-//        byte[] data;
-//        int c;
-//
-//        FileInputStream fis = context.openFileInput(fileName);
-//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//        BufferedInputStream bos = new BufferedInputStream(fis);
-//
-//        while ((c = bos.read()) != -1) {
-//            byteArrayOutputStream.write(c);
-//        }
-//
-//        data = byteArrayOutputStream.toByteArray();
-//
-//        bos.close();
-//        byteArrayOutputStream.close();
-//        fis.close();
-//
-//        return data;
-//    }
-//
-//    public static void writeToInternalStorage(Context context, String fileName, String json) {
-//
-//        FileOutputStream outputStream = null;
-//        try {
-//            outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-//            for (byte s : json.getBytes(StandardCharsets.UTF_8)) {
-//                outputStream.write(s);
-//            }
-//        } catch (Exception e) {
-//            Timber.e(e);
-//        } finally {
-//            if (outputStream != null) {
-//                try {
-//                    outputStream.close();
-//                } catch (IOException e) {
-//                    Timber.e(e);
-//                }
-//            }
-//        }
-//    }
-//
-//    public static String readFromInternalStorage(Context context, String fileName) {
-//
-//        File file = new File(context.getFilesDir(), fileName);
-//
-//        try {
-//            FileInputStream fis = new FileInputStream(file);
-//            DataInputStream in = new DataInputStream(fis);
-//            BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-//            String line;
-//
-//            StringBuilder stringBuilder = new StringBuilder();
-//            while ((line = br.readLine()) != null) {
-//                stringBuilder.append(line);
-//            }
-//
-//            br.close();
-//            in.close();
-//            fis.close();
-//
-//            return stringBuilder.toString();
-//
-//        } catch (IOException e) {
-//            Timber.e(e);
-//        }
-//
-//        return null;
-//    }
-//
-//    public static void deleteFromInternalStorage(Context context, final String contains) throws IOException {
-//        File file = context.getFilesDir();
-//        FilenameFilter filter = (dir, filename) -> filename.contains(contains);
-//        File[] files = file.listFiles(filter);
-//        if (files != null) {
-//            for (File f : files) {
-//                //noinspection ResultOfMethodCallIgnored
-//                if (!f.delete()) {
-//                    throw new IOException("Error while deleting files");
-//                }
-//            }
-//        }
-//    }
-//
-//    public static boolean fileExists(Context context, String fileName) {
-//        return new File(context.getFilesDir() + File.separator + fileName).exists();
-//    }
-//
-//    public static int byteArrayToLeInt(byte[] b) {
-//        final ByteBuffer bb = ByteBuffer.wrap(b);
-//        bb.order(ByteOrder.LITTLE_ENDIAN);
-//        return bb.getInt();
-//    }
-//
-//    public static byte[] leIntToByteArray(int i) {
-//        final ByteBuffer bb = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE);
-//        bb.order(ByteOrder.LITTLE_ENDIAN);
-//        bb.putInt(i);
-//        return bb.array();
-//    }
-// https://www.mkyong.com/java/how-to-copy-directory-in-java/
+    // https://www.mkyong.com/java/how-to-copy-directory-in-java/
     @JvmStatic
     @Throws(IOException::class)
     fun copyFolder(source: File, destination: File) {

@@ -19,7 +19,6 @@
 
 package org.akvo.caddisfly.ui
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
@@ -35,7 +34,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
-import org.robolectric.shadows.ShadowApplication
 import org.robolectric.shadows.ShadowLooper
 
 
@@ -45,7 +43,7 @@ class MainTest {
     @Test
     fun titleIsCorrect() {
         val controller =
-                Robolectric.buildActivity(MainActivity::class.java).create()
+            Robolectric.buildActivity(MainActivity::class.java).create()
 
         controller.start()
         val activity: Activity = controller.get()
@@ -71,38 +69,42 @@ class MainTest {
     @Test
     fun onClickSettings() {
         val controller =
-                Robolectric.buildActivity(MainActivity::class.java).create()
+            Robolectric.buildActivity(MainActivity::class.java).create()
         controller.start()
         val activity: Activity = controller.get()
         val button: Button = activity.findViewById(R.id.buttonSettings)
         button.performClick()
         val intent: Intent = shadowOf(activity).nextStartedActivity
         if (intent.component != null) {
-            assertEquals(SettingsActivity::class.java.canonicalName,
-                    intent.component!!.className)
+            assertEquals(
+                SettingsActivity::class.java.canonicalName,
+                intent.component!!.className
+            )
         }
     }
 
     @Test
     fun clickingCalibrate() {
-        val permissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        val controller: ActivityController<*> = Robolectric.buildActivity(MainActivity::class.java).create().start()
+        val controller: ActivityController<*> =
+            Robolectric.buildActivity(MainActivity::class.java).create().start()
         val activity = controller.get() as Activity
         val button: Button = activity.findViewById(R.id.buttonSettings)
         button.performClick()
         val nextIntent: Intent? = shadowOf(activity).nextStartedActivity
-        assertEquals(SettingsActivity::class.java.canonicalName,
-                nextIntent!!.component!!.className)
-        val application: ShadowApplication = shadowOf(activity.application)
-        application.grantPermissions(*permissions)
+        assertEquals(
+            SettingsActivity::class.java.canonicalName,
+            nextIntent!!.component!!.className
+        )
         controller.resume()
         button.performClick()
         ShadowLooper.runUiThreadTasksIncludingDelayedTasks()
         button.performClick()
         val intent: Intent = shadowOf(activity).nextStartedActivity
         if (intent.component != null) {
-            assertEquals(SettingsActivity::class.java.canonicalName,
-                    intent.component!!.className)
+            assertEquals(
+                SettingsActivity::class.java.canonicalName,
+                intent.component!!.className
+            )
         }
     }
 }

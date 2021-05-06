@@ -31,8 +31,7 @@ class AppTest {
             "android.permission.INTERNET",
             "android.permission.FOREGROUND_SERVICE",
             "android.permission.MODIFY_AUDIO_SETTINGS",
-            "android.permission.WAKE_LOCK",
-            "android.permission.WRITE_EXTERNAL_STORAGE"
+            "android.permission.WAKE_LOCK"
         )
         private const val MERGED_MANIFEST =
             "build/intermediates/merged_manifests/waterDebug/AndroidManifest.xml"

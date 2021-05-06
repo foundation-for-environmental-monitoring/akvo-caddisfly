@@ -47,7 +47,6 @@ import org.akvo.caddisfly.common.SensorConstants
 import org.akvo.caddisfly.helper.ApkHelper.isAppVersionExpired
 import org.akvo.caddisfly.helper.CameraHelper
 import org.akvo.caddisfly.helper.ErrorMessages
-import org.akvo.caddisfly.helper.FileHelper
 import org.akvo.caddisfly.helper.PermissionsDelegate
 import org.akvo.caddisfly.helper.SwatchHelper.isSwatchListValid
 import org.akvo.caddisfly.helper.TestConfigHelper.getJsonResult
@@ -75,9 +74,7 @@ class TestActivity : AppUpdateActivity() {
     }
 
     private val permissionsDelegate = PermissionsDelegate(this)
-    private val storagePermissions = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    private val permissions =
-        arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private val permissions = arrayOf(Manifest.permission.CAMERA)
     private var testInfo: TestInfo? = null
     private var cameraIsOk = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -236,9 +233,6 @@ class TestActivity : AppUpdateActivity() {
     }
 
     private fun startTest() {
-        if (permissionsDelegate.hasPermissions(storagePermissions)) {
-            FileHelper.migrateFolders()
-        }
         if (testInfo != null) {
             if (testInfo!!.subtype == TestType.CHAMBER_TEST) {
                 if (!isSwatchListValid(testInfo)) {
@@ -391,13 +385,11 @@ class TestActivity : AppUpdateActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (permissionsDelegate.resultGranted(grantResults)) {
-            FileHelper.migrateFolders()
             startTest()
         } else {
-            val message = getString(R.string.camera_storage_permissions)
             AlertUtil.showSettingsSnackbar(
                 this,
-                window.decorView.rootView, message
+                window.decorView.rootView, getString(R.string.camera_permission)
             )
         }
     }

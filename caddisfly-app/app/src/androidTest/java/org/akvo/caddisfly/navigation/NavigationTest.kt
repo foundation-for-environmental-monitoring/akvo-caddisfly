@@ -59,8 +59,7 @@ class NavigationTest {
     @JvmField
     var mGrantPermissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(
-            "android.permission.CAMERA",
-            "android.permission.WRITE_EXTERNAL_STORAGE"
+            "android.permission.CAMERA"
         )
 
     @Before
@@ -95,6 +94,7 @@ class NavigationTest {
         Espresso.pressBack()
 
         onView(withText(string.about)).check(matches(isDisplayed())).perform(click())
+        sleep(500)
         enterDiagnosticMode()
         goToMainScreen()
         onView(withText(string.settings)).perform(click())

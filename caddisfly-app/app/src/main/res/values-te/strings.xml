@@ -63,8 +63,7 @@
     <string name="accept_result">ఫలితాన్ని అంగీకరించండి</string>
     <string name="high_level_recommendation">కాలుష్యం స్థాయి ఎక్కువగా ఉన్నందున పలుచనతో తిరిగి పరీక్షించడం మంచిది.</string>
     <string name="test_with_dilution">పలుచనతో పరీక్షించండి</string>
-    <string name="storage_permission">నిల్వ అనుమతి అవసరం</string>
-    <string name="camera_storage_permissions">కెమెరా &amp; నిల్వ అనుమతులు అవసరం</string>
+    <string name="camera_permission">కెమెరా అనుమతి అవసరం</string>
     <string name="cannot_start_test">పరీక్షను ప్రారంభించలేరు</string>
     <string name="error_test_not_available">అభ్యర్థించిన పరీక్ష అందుబాటులో లేదు</string>
     <string name="please_contact_support">దయచేసి సాంకేతిక మద్దతును సంప్రదించండి</string>

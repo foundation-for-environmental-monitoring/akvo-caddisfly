@@ -20,12 +20,9 @@ package org.akvo.caddisfly.helper
 
 import android.widget.Toast
 import org.akvo.caddisfly.app.CaddisflyApp.Companion.app
-import org.akvo.caddisfly.common.AppConstants
 import org.akvo.caddisfly.preference.AppPreferences.showDebugInfo
-import org.akvo.caddisfly.util.FileUtil
 import org.akvo.caddisfly.util.FileUtil.getFilesStorageDir
 import java.io.File
-import java.io.IOException
 
 /**
  * The different types of files.
@@ -40,7 +37,6 @@ object FileHelper {
      * The user created configuration file name.
      */
     // Folders
-    private val ROOT_DIRECTORY = File.separator + AppConstants.APP_FOLDER
     private const val DIR_CALIBRATION = "calibration" // Calibration files
     private const val DIR_CONFIG = "custom-config" // Custom config json folder
     private val DIR_EXP_CONFIG =
@@ -54,9 +50,8 @@ object FileHelper {
     private val DIR_TEMP_IMAGES = "test" + File.separator + "images" // Images saved for testing
 
     /**
-     * Get the appropriate files directory for the given FileType. The directory may or may
-     * not be in the app-specific External Storage. The caller cannot assume anything about
-     * the location.
+     * Get the appropriate files directory for the given FileType.
+     * The caller cannot assume anything about the location.
      *
      * @param type FileType to determine the type of resource attempting to use.
      * @return File representing the root directory for the given FileType.
@@ -67,9 +62,8 @@ object FileHelper {
     }
 
     /**
-     * Get the appropriate files directory for the given FileType. The directory may or may
-     * not be in the app-specific External Storage. The caller cannot assume anything about
-     * the location.
+     * Get the appropriate files directory for the given FileType.
+     * The caller cannot assume anything about the location.
      *
      * @param type    FileType to determine the type of resource attempting to use.
      * @param subPath a sub directory to be created
@@ -78,23 +72,19 @@ object FileHelper {
     @JvmStatic
     fun getFilesDir(type: FileType?, subPath: String): File {
         val path: String = when (type) {
-            FileType.CALIBRATION -> getFilesStorageDir(app!!, false) + DIR_CALIBRATION
-            FileType.CUSTOM_CONFIG -> getFilesStorageDir(app!!, false) + DIR_CONFIG
-            FileType.EXP_CONFIG -> getFilesStorageDir(app!!, false) + DIR_EXP_CONFIG
-            FileType.CARD -> getFilesStorageDir(app!!, false) + DIR_CARD
-            FileType.RESULT_IMAGE -> getFilesStorageDir(app!!, false) + DIR_RESULT_IMAGES
-            FileType.TEST_IMAGE -> getFilesStorageDir(app!!, false) + DIR_TEST_IMAGE
-            FileType.DIAGNOSTIC_IMAGE -> getFilesStorageDir(app!!, false) + DIR_DIAGNOSTIC_IMAGE
-            FileType.TEMP_IMAGE -> getFilesStorageDir(app!!, false) + DIR_TEMP_IMAGES
-            else -> getFilesStorageDir(app!!, false)
+            FileType.CALIBRATION -> getFilesStorageDir(app!!) + DIR_CALIBRATION
+            FileType.CUSTOM_CONFIG -> getFilesStorageDir(app!!) + DIR_CONFIG
+            FileType.EXP_CONFIG -> getFilesStorageDir(app!!) + DIR_EXP_CONFIG
+            FileType.CARD -> getFilesStorageDir(app!!) + DIR_CARD
+            FileType.RESULT_IMAGE -> getFilesStorageDir(app!!) + DIR_RESULT_IMAGES
+            FileType.TEST_IMAGE -> getFilesStorageDir(app!!) + DIR_TEST_IMAGE
+            FileType.DIAGNOSTIC_IMAGE -> getFilesStorageDir(app!!) + DIR_DIAGNOSTIC_IMAGE
+            FileType.TEMP_IMAGE -> getFilesStorageDir(app!!) + DIR_TEMP_IMAGES
+            else -> getFilesStorageDir(app!!)
         }
         var dir = File(path)
         if (subPath.isNotEmpty()) {
             dir = File(dir, subPath)
-        }
-        try {
-            migrateFolders()
-        } catch (ignored: Exception) {
         }
 
         // create folder if it does not exist
@@ -105,29 +95,5 @@ object FileHelper {
             ).show()
         }
         return dir
-    }
-
-    //TODO remove migration at some point in future
-    fun migrateFolders() {
-        try {
-            val appFolder = File(getFilesStorageDir(app!!.applicationContext, false))
-            val oldAppFolder = File(
-                getFilesStorageDir(
-                    app!!.applicationContext,
-                    true
-                ) + File.separator + ROOT_DIRECTORY
-            )
-            if (appFolder.exists()) {
-                if (oldAppFolder.exists() && oldAppFolder.isDirectory) {
-                    try {
-                        FileUtil.copyFolder(oldAppFolder, appFolder)
-                        FileUtil.deleteRecursive(oldAppFolder)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-            }
-        } catch (e: Exception) {
-        }
     }
 }
