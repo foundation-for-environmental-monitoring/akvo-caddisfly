@@ -27,6 +27,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.viewpager.widget.ViewPager;
+
 import org.akvo.caddisfly.R;
 import org.akvo.caddisfly.common.ConstantKey;
 import org.akvo.caddisfly.common.Constants;
@@ -41,8 +43,6 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.shadows.ShadowApplication;
 import org.robolectric.shadows.ShadowLooper;
-
-import androidx.viewpager.widget.ViewPager;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -101,7 +101,7 @@ public class CbtTest {
     @Test
     public void clickingNext() throws Exception {
 
-        String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] permissions = new String[]{Manifest.permission.CAMERA};
 
         TestConfigRepository testConfigRepository = new TestConfigRepository();
         TestInfo testInfo = testConfigRepository.getTestInfo(Constants.CBT_ID);

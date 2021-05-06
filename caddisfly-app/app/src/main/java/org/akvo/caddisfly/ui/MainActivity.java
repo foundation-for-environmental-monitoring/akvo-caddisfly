@@ -48,7 +48,6 @@ import org.akvo.caddisfly.entity.Calibration;
 import org.akvo.caddisfly.helper.ApkHelper;
 import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.ErrorMessages;
-import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.helper.PermissionsDelegate;
 import org.akvo.caddisfly.helper.SwatchHelper;
 import org.akvo.caddisfly.model.TestInfo;
@@ -77,21 +76,20 @@ import static org.akvo.caddisfly.model.TestType.CHAMBER_TEST;
 
 public class MainActivity extends BaseActivity {
 
-    private final int STORAGE_PERMISSION_WATER = 1;
-    private final int STORAGE_PERMISSION_SOIL = 2;
+    private final int PERMISSION_WATER = 1;
+    private final int PERMISSION_SOIL = 2;
     private final int BLUETOOTH_PERMISSION_SEND = 3;
     private final int BLUETOOTH_PERMISSION_RECEIVE = 4;
-    private final int BLUETOOTH_STORAGE_PERMISSION = 5;
+    private final int BLUETOOTH_PERMISSION = 5;
     private final int CAMERA_PERMISSION = 6;
 
     private final WeakRefHandler refreshHandler = new WeakRefHandler(this);
     private final PermissionsDelegate permissionsDelegate = new PermissionsDelegate(this);
-    private final String[] storagePermission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private final String[] cameraPermission = {Manifest.permission.CAMERA};
     private final String[] cameraLocationPermissions = {Manifest.permission.CAMERA,
             Manifest.permission.ACCESS_COARSE_LOCATION};
-    private final String[] cameraLocationStoragePermissions = {Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION};
+    //    private final String[] cameraLocationStoragePermissions = {Manifest.permission.CAMERA,
+//            Manifest.permission.ACCESS_COARSE_LOCATION};
     private NavigationController navigationController;
 
     @Override
@@ -227,13 +225,13 @@ public class MainActivity extends BaseActivity {
                 case CAMERA_PERMISSION:
                     startTitration();
                     break;
-                case STORAGE_PERMISSION_WATER:
+                case PERMISSION_WATER:
                     startCalibrate(TestSampleType.WATER);
                     break;
-                case STORAGE_PERMISSION_SOIL:
+                case PERMISSION_SOIL:
                     startCalibrate(TestSampleType.SOIL);
                     break;
-                case BLUETOOTH_STORAGE_PERMISSION:
+                case BLUETOOTH_PERMISSION:
                     showCalibrationError();
                     break;
             }
@@ -244,10 +242,10 @@ public class MainActivity extends BaseActivity {
                 case BLUETOOTH_PERMISSION_RECEIVE:
                     message = getString(R.string.cameraAndLocationPermissions);
                     break;
-                case STORAGE_PERMISSION_WATER:
-                case STORAGE_PERMISSION_SOIL:
-                case BLUETOOTH_STORAGE_PERMISSION:
-                    message = getString(R.string.storagePermission);
+                case PERMISSION_WATER:
+                case PERMISSION_SOIL:
+                case BLUETOOTH_PERMISSION:
+                    message = "";
                     break;
             }
             AlertUtil.showSettingsSnackbar(this,
@@ -261,12 +259,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void startCalibrate(TestSampleType testSampleType) {
-        FileHelper.migrateFolders();
         navigationController.navigateToTestType(CHAMBER_TEST, testSampleType);
-    }
-
-    public void onCbtClick(View view) {
-        navigationController.navigateToTestType(TestType.CBT, TestSampleType.ALL);
     }
 
     public void onSettingsClick(MenuItem item) {
@@ -316,12 +309,7 @@ public class MainActivity extends BaseActivity {
                 testInfo.setCalibrations(calibrations);
 
                 if (!SwatchHelper.isSwatchListValid(testInfo)) {
-                    if (permissionsDelegate.hasPermissions(storagePermission)) {
-                        showCalibrationError();
-                    } else {
-                        permissionsDelegate.requestPermissions(storagePermission,
-                                BLUETOOTH_STORAGE_PERMISSION);
-                    }
+                    showCalibrationError();
                 } else {
                     final Intent intent = new Intent(this, CuvetteMeasureActivity.class);
                     intent.putExtra(ConstantKey.TEST_INFO, testInfo);
@@ -349,14 +337,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    public void onReceiveResult(MenuItem item) {
-        if (permissionsDelegate.hasPermissions(cameraLocationStoragePermissions)) {
-            startBluetoothReceive();
-        } else {
-            permissionsDelegate.requestPermissions(cameraLocationStoragePermissions,
-                    BLUETOOTH_PERMISSION_RECEIVE);
-        }
-    }
+//    public void onReceiveResult(MenuItem item) {
+//        if (permissionsDelegate.hasPermissions(cameraLocationStoragePermissions)) {
+//            startBluetoothReceive();
+//        } else {
+//            permissionsDelegate.requestPermissions(cameraLocationStoragePermissions,
+//                    BLUETOOTH_PERMISSION_RECEIVE);
+//        }
+//    }
 
     public void onColiformsClick(View view) {
         final TestListViewModel viewModel =
@@ -401,31 +389,11 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onCalibrateSoilClick(View view) {
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startCalibrate(TestSampleType.SOIL);
-        } else {
-            permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL);
-        }
+        startCalibrate(TestSampleType.SOIL);
     }
 
     public void onCalibrateWaterClick(View view) {
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startCalibrate(TestSampleType.WATER);
-        } else {
-            permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
-        }
-    }
-
-    public void onCalibrateClick(View view) {
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startCalibrate(TestSampleType.ALL);
-        } else {
-            if (BuildConfig.APPLICATION_ID.contains("soil")) {
-                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_SOIL);
-            } else {
-                permissionsDelegate.requestPermissions(storagePermission, STORAGE_PERMISSION_WATER);
-            }
-        }
+        startCalibrate(TestSampleType.WATER);
     }
 
     public void onGetStartedClicked(View view) {

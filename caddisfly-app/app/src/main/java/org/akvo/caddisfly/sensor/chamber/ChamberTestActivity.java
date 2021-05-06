@@ -555,10 +555,12 @@ public class ChamberTestActivity extends BaseActivity implements
         ResultDetail oneStepResultDetail = SwatchHelper.analyzeColor(testInfo.getOneStepSwatches().size(),
                 colorInfo, testInfo.getOneStepSwatches());
 
-        ResultDetail lastResult = resultDetails.get(resultDetails.size() - 1);
-        resultDetail.setBitmap(lastResult.getBitmap());
-        resultDetail.setCroppedBitmap(lastResult.getCroppedBitmap());
-        resultDetail.setQuality(lastResult.getQuality());
+        if (resultDetails.size() > 0) {
+            ResultDetail lastResult = resultDetails.get(resultDetails.size() - 1);
+            resultDetail.setBitmap(lastResult.getBitmap());
+            resultDetail.setCroppedBitmap(lastResult.getCroppedBitmap());
+            resultDetail.setQuality(lastResult.getQuality());
+        }
 
         testStarted = false;
 
@@ -633,15 +635,17 @@ public class ChamberTestActivity extends BaseActivity implements
 
             int color = SwatchHelper.getAverageColor(resultDetails);
 
-            if (color == Color.TRANSPARENT) {
+            if (color == Color.TRANSPARENT || resultDetails.size() < 1) {
 
-                if (AppPreferences.getShowDebugInfo()) {
-                    showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail, resultDetails, true);
+                if (resultDetails.size() > 0) {
+                    if (AppPreferences.getShowDebugInfo()) {
+                        showDiagnosticResultDialog(true, resultDetail, oneStepResultDetail, resultDetails, true);
+                    }
+
+                    showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.couldNotCalibrate),
+                            getString(R.string.checkChamberPlacement)),
+                            resultDetails.get(resultDetails.size() - 1).getCroppedBitmap());
                 }
-
-                showError(String.format(TWO_SENTENCE_FORMAT, getString(R.string.couldNotCalibrate),
-                        getString(R.string.checkChamberPlacement)),
-                        resultDetails.get(resultDetails.size() - 1).getCroppedBitmap());
             } else {
 
                 CalibrationDao dao = CaddisflyApp.getApp().getDb().calibrationDao();

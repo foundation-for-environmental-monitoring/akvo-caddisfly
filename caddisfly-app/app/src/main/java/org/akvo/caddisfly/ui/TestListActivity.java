@@ -54,8 +54,7 @@ public class TestListActivity extends BaseActivity
     private static final int REQUEST_SYNC_PERMISSION = 101;
 
     private final PermissionsDelegate permissionsDelegate = new PermissionsDelegate(this);
-    private final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private final String[] storagePermission = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private final String[] permissions = {Manifest.permission.CAMERA};
     private TestListFragment fragment;
     private TestInfo testInfo;
 
@@ -74,9 +73,9 @@ public class TestListActivity extends BaseActivity
         } else {
             String message;
             if (requestCode == REQUEST_SYNC_PERMISSION) {
-                message = getString(R.string.storagePermission);
+                message = "";
             } else {
-                message = getString(R.string.cameraAndStoragePermissions);
+                message = getString(R.string.cameraPermissions);
             }
 
             AlertUtil.showSettingsSnackbar(this,
@@ -206,11 +205,7 @@ public class TestListActivity extends BaseActivity
      */
     @SuppressWarnings("unused")
     public void onDownloadTests(MenuItem item) {
-        if (permissionsDelegate.hasPermissions(storagePermission)) {
-            startSync();
-        } else {
-            permissionsDelegate.requestPermissions(storagePermission, REQUEST_SYNC_PERMISSION);
-        }
+        startSync();
     }
 
     private void startSync() {

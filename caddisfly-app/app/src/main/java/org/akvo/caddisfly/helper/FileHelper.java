@@ -22,12 +22,10 @@ package org.akvo.caddisfly.helper;
 import android.widget.Toast;
 
 import org.akvo.caddisfly.app.CaddisflyApp;
-import org.akvo.caddisfly.common.AppConstants;
 import org.akvo.caddisfly.preference.AppPreferences;
 import org.akvo.caddisfly.util.FileUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 public final class FileHelper {
 
@@ -35,8 +33,6 @@ public final class FileHelper {
      * The user created configuration file name.
      */
     // Folders
-    private static final String ROOT_DIRECTORY = File.separator + AppConstants.APP_FOLDER;
-
     private static final String DIR_CALIBRATION = "calibration"; // Calibration files
 
     private static final String DIR_CONFIG = "custom-config"; // Custom config json folder
@@ -61,9 +57,8 @@ public final class FileHelper {
     }
 
     /**
-     * Get the appropriate files directory for the given FileType. The directory may or may
-     * not be in the app-specific External Storage. The caller cannot assume anything about
-     * the location.
+     * Get the appropriate files directory for the given FileType.
+     * The caller cannot assume anything about the location.
      *
      * @param type FileType to determine the type of resource attempting to use.
      * @return File representing the root directory for the given FileType.
@@ -74,9 +69,8 @@ public final class FileHelper {
     }
 
     /**
-     * Get the appropriate files directory for the given FileType. The directory may or may
-     * not be in the app-specific External Storage. The caller cannot assume anything about
-     * the location.
+     * Get the appropriate files directory for the given FileType.
+     * The caller cannot assume anything about the location.
      *
      * @param type    FileType to determine the type of resource attempting to use.
      * @param subPath a sub directory to be created
@@ -119,11 +113,6 @@ public final class FileHelper {
             dir = new File(dir, subPath);
         }
 
-        try {
-            migrateFolders();
-        } catch (Exception ignored) {
-        }
-
         // create folder if it does not exist
         if (!dir.exists() && !dir.mkdirs() && AppPreferences.getShowDebugInfo()) {
             Toast.makeText(CaddisflyApp.getApp(),
@@ -131,23 +120,6 @@ public final class FileHelper {
         }
 
         return dir;
-    }
-
-    //TODO remove migration at some point in future
-    public static void migrateFolders() {
-        File appFolder = new File(FileUtil.getFilesStorageDir(CaddisflyApp.getApp(), false));
-        File oldAppFolder = new File(FileUtil.getFilesStorageDir(CaddisflyApp.getApp(),
-                true) + File.separator + ROOT_DIRECTORY);
-        if (appFolder.exists()) {
-            if (oldAppFolder.exists() && oldAppFolder.isDirectory()) {
-                try {
-                    FileUtil.copyFolder(oldAppFolder, appFolder);
-                    FileUtil.deleteRecursive(oldAppFolder);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     /**

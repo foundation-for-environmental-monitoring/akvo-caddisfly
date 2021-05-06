@@ -61,7 +61,7 @@ public class TimeLapseActivity extends BaseActivity {
     private static final int INITIAL_DELAY = 25000;
 
     private final PermissionsDelegate permissionsDelegate = new PermissionsDelegate(this);
-    String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    String[] permissions = {Manifest.permission.CAMERA};
     TextView textInterval;
     int interval = 0;
     int numberOfSamples;
@@ -342,10 +342,8 @@ public class TimeLapseActivity extends BaseActivity {
                     R.string.colif_numberOfSamplesKey, "1"));
 
             if (AppPreferences.useExternalCamera()) {
-                permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            }
-
-            if (permissionsDelegate.hasPermissions(permissions)) {
+                startTest();
+            } else if (permissionsDelegate.hasPermissions(permissions)) {
                 startTest();
             } else {
                 permissionsDelegate.requestPermissions(permissions);
@@ -524,7 +522,7 @@ public class TimeLapseActivity extends BaseActivity {
         if (permissionsDelegate.resultGranted(requestCode, grantResults)) {
             startTest();
         } else {
-            String message = getString(R.string.cameraAndStoragePermissions);
+            String message = getString(R.string.cameraPermissions);
 
             AlertUtil.showSettingsSnackbar(this,
                     getWindow().getDecorView().getRootView(), message);

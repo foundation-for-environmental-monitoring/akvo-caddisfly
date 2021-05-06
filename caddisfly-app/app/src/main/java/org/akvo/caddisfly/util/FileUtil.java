@@ -26,15 +26,12 @@ import android.os.Environment;
 import org.akvo.caddisfly.app.CaddisflyApp;
 import org.akvo.caddisfly.helper.FileHelper;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -71,8 +68,8 @@ public final class FileUtil {
     }
 
     /**
-     * Get the root of the files storage directory, depending on the resource being app internal
-     * (not concerning the user) or not (users might need to pull the resource from the storage).
+     * Get the root of the files directory, depending on the resource being app internal
+     * (not concerning the user) or not.
      *
      * @param external false for app specific resources, false otherwise
      * @return The root directory for this kind of resources
@@ -223,16 +220,11 @@ public final class FileUtil {
     }
 
     /**
-     * Method to write characters to file on SD card. Note that you must add a
-     * WRITE_EXTERNAL_STORAGE permission to the manifest file or this method will throw
-     * a FileNotFound Exception because you won't have write permission.
-     *
-     * @return absolute path name of saved file, or empty string on failure.
+     * Method to write characters to file on SD card.
      */
-    @SuppressWarnings("SameParameterValue")
-    public static String writeBitmapToExternalStorage(Bitmap bitmap, FileHelper.FileType fileType, String fileName) {
+    public static void writeBitmapToExternalStorage(Bitmap bitmap, FileHelper.FileType fileType, String fileName) {
         // Find the root of the external storage
-        // See http://developer.android.com/guide/topics/data/data-  storage.html#filesExternal
+        // See http://developer.android.com/guide/topics/data/data-storage.html#filesExternal
         // See http://stackoverflow.com/questions/3551821/android-write-to-sd-card-folder
 
         File dir = FileHelper.getFilesDir(fileType);
@@ -268,134 +260,17 @@ public final class FileUtil {
                         e.printStackTrace();
                     }
                 }
-
-                return file.getAbsolutePath();
             } catch (IOException e) {
                 Timber.e(e);
             }
         }
         // on failure, return empty string
-        return "";
-    }
-
-    public static void writeByteArray(Context context, byte[] data, String fileName) {
-
-        FileOutputStream outputStream;
-
-        try {
-            outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            BufferedOutputStream bos = new BufferedOutputStream(outputStream);
-            for (byte s : data) {
-                bos.write(s);
-            }
-            bos.close();
-            outputStream.close();
-
-        } catch (Exception e) {
-            Timber.e(e);
-        }
-    }
-
-    public static byte[] readByteArray(Context context, String fileName) throws IOException {
-
-        byte[] data;
-        int c;
-
-        FileInputStream fis = context.openFileInput(fileName);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        BufferedInputStream bos = new BufferedInputStream(fis);
-
-        while ((c = bos.read()) != -1) {
-            byteArrayOutputStream.write(c);
-        }
-
-        data = byteArrayOutputStream.toByteArray();
-
-        bos.close();
-        byteArrayOutputStream.close();
-        fis.close();
-
-        return data;
-    }
-
-    public static void writeToInternalStorage(Context context, String fileName, String json) {
-
-        FileOutputStream outputStream = null;
-        try {
-            outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            for (byte s : json.getBytes(StandardCharsets.UTF_8)) {
-                outputStream.write(s);
-            }
-        } catch (Exception e) {
-            Timber.e(e);
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    Timber.e(e);
-                }
-            }
-        }
-    }
-
-    public static String readFromInternalStorage(Context context, String fileName) {
-
-        File file = new File(context.getFilesDir(), fileName);
-
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            DataInputStream in = new DataInputStream(fis);
-            BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            String line;
-
-            StringBuilder stringBuilder = new StringBuilder();
-            while ((line = br.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-
-            br.close();
-            in.close();
-            fis.close();
-
-            return stringBuilder.toString();
-
-        } catch (IOException e) {
-            Timber.e(e);
-        }
-
-        return null;
-    }
-
-    public static void deleteFromInternalStorage(Context context, final String contains) throws IOException {
-        File file = context.getFilesDir();
-        FilenameFilter filter = (dir, filename) -> filename.contains(contains);
-        File[] files = file.listFiles(filter);
-        if (files != null) {
-            for (File f : files) {
-                //noinspection ResultOfMethodCallIgnored
-                if (!f.delete()) {
-                    throw new IOException("Error while deleting files");
-                }
-            }
-        }
-    }
-
-    public static boolean fileExists(Context context, String fileName) {
-        return new File(context.getFilesDir() + File.separator + fileName).exists();
     }
 
     public static int byteArrayToLeInt(byte[] b) {
         final ByteBuffer bb = ByteBuffer.wrap(b);
         bb.order(ByteOrder.LITTLE_ENDIAN);
         return bb.getInt();
-    }
-
-    public static byte[] leIntToByteArray(int i) {
-        final ByteBuffer bb = ByteBuffer.allocate(Integer.SIZE / Byte.SIZE);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
-        bb.putInt(i);
-        return bb.array();
     }
 
     // https://www.mkyong.com/java/how-to-copy-directory-in-java/

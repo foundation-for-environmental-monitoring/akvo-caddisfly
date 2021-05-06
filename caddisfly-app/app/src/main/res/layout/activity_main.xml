@@ -62,7 +62,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|start"
                     android:minHeight="80dp"
-                    android:onClick="onCalibrateClick"
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
                     android:text="@string/calibrate"

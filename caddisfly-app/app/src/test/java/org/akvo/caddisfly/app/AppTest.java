@@ -21,8 +21,7 @@ public final class AppTest {
             "android.permission.DISABLE_KEYGUARD",
             "android.permission.INTERNET",
             "android.permission.MODIFY_AUDIO_SETTINGS",
-            "android.permission.WAKE_LOCK",
-            "android.permission.WRITE_EXTERNAL_STORAGE"
+            "android.permission.WAKE_LOCK"
     };
 
     private static final String MERGED_MANIFEST =

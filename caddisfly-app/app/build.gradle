@@ -4,15 +4,14 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     testOptions.unitTests.includeAndroidResources = true
 
     defaultConfig {
         applicationId "io.ffem"
         minSdkVersion 20
-        //noinspection OldTargetApi
-        targetSdkVersion 29
-        versionCode 260
+        targetSdkVersion 30
+        versionCode 261
         versionName "Experiment"
         resConfigs "en", "en_US", "hi"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

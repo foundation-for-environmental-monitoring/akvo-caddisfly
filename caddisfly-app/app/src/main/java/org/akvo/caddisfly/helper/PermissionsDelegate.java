@@ -37,9 +37,6 @@ public class PermissionsDelegate {
     public boolean hasPermissions(String[] permissions) {
 
         for (String permission : permissions) {
-//            if (permission.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-//                continue;
-//            }
             int permissionCheckResult = ContextCompat.checkSelfPermission(
                     activity, permission
             );

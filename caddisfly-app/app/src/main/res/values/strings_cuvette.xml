@@ -88,8 +88,7 @@
     <string name="pleaseContactSupport">Please contact technical support</string>
 
     <!--Permission-->
-    <string name="storagePermission">Storage permission is required</string>
-    <string name="cameraAndStoragePermissions">Camera &amp; storage permissions are required</string>
+    <string name="cameraPermissions">Camera permissions are required</string>
     <string name="cameraAndLocationPermissions">Camera &amp; location permissions are required</string>
 
     <string name="bc_dilution_1">Rinse the mixing chamber with deionised water.</string>

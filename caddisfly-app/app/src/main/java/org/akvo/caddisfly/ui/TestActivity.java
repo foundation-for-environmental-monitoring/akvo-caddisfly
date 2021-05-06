@@ -54,7 +54,6 @@ import org.akvo.caddisfly.entity.CalibrationDetail;
 import org.akvo.caddisfly.helper.ApkHelper;
 import org.akvo.caddisfly.helper.CameraHelper;
 import org.akvo.caddisfly.helper.ErrorMessages;
-import org.akvo.caddisfly.helper.FileHelper;
 import org.akvo.caddisfly.helper.PermissionsDelegate;
 import org.akvo.caddisfly.helper.SwatchHelper;
 import org.akvo.caddisfly.helper.TestConfigHelper;
@@ -99,8 +98,7 @@ public class TestActivity extends BaseActivity {
 
     private final WeakRefHandler handler = new WeakRefHandler(this);
     private final PermissionsDelegate permissionsDelegate = new PermissionsDelegate(this);
-    private final String[] storagePermissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private final String[] permissions = {Manifest.permission.CAMERA};
     private final String[] bluetoothPermissions = {Manifest.permission.ACCESS_COARSE_LOCATION};
     private TestInfo testInfo;
     private boolean cameraIsOk = false;
@@ -339,10 +337,6 @@ public class TestActivity extends BaseActivity {
 
     private void startTest() {
 
-        if (permissionsDelegate.hasPermissions(storagePermissions)) {
-            FileHelper.migrateFolders();
-        }
-
         if (testInfo != null) {
             if (testInfo.getSubtype() == TestType.SENSOR
                     && !this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_USB_HOST)) {
@@ -579,7 +573,6 @@ public class TestActivity extends BaseActivity {
                                            @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (permissionsDelegate.resultGranted(requestCode, grantResults)) {
-            FileHelper.migrateFolders();
             startTest();
         } else {
 
@@ -587,7 +580,7 @@ public class TestActivity extends BaseActivity {
             if (testInfo.getSubtype() == TestType.BLUETOOTH) {
                 message = getString(R.string.location_permission);
             } else {
-                message = getString(R.string.cameraAndStoragePermissions);
+                message = getString(R.string.cameraPermissions);
             }
 
             AlertUtil.showSettingsSnackbar(this,

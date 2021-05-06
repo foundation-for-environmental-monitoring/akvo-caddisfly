@@ -59,8 +59,8 @@ import static org.apache.commons.math3.util.Precision.round;
 public final class SwatchHelper {
 
     private static final int MAX_DISTANCE = 999;
-    private static transient DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-    private static transient DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
+    private static final transient DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private static final transient DecimalFormat decimalFormat = new DecimalFormat("#.###", symbols);
 
     private SwatchHelper() {
     }
@@ -362,7 +362,6 @@ public final class SwatchHelper {
      * @param testInfo the test Information
      * @return True if valid otherwise false
      */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isSwatchListValid(TestInfo testInfo) {
 
         if (testInfo == null) {
@@ -383,6 +382,7 @@ public final class SwatchHelper {
             for (Calibration calibration : oneStepCalibrations) {
                 if (calibration.color == Color.TRANSPARENT) {
                     hasOneStepCalibration = false;
+                    break;
                 }
             }
         } else {
@@ -515,7 +515,7 @@ public final class SwatchHelper {
         }
 
         //return an average color
-        int resultCount = resultDetails.size();
+        int resultCount = Math.max(1, resultDetails.size());
         return Color.rgb(red / resultCount, green / resultCount, blue / resultCount);
     }
 

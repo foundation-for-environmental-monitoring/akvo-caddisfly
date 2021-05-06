@@ -79,8 +79,7 @@
     <string name="checkChamberPlacement">जांचें कि कक्ष सही ढंग से रखा गया है।</string>
     <string name="acceptResult">परिणाम स्वीकार करें</string>
     <!-- Permission -->
-    <string name="storagePermission">स्टोरेज अनुमति की आवश्यकता है</string>
-    <string name="cameraAndStoragePermissions">कैमरा और स्टोरेज अनुमतियों की आवश्यकता है</string>
+    <string name="cameraPermissions">कैमरा अनुमति की आवश्यकता है</string>
     <!-- Alerts -->
     <string name="cannotStartTest">परीक्षण शुरू नहीं कर सकता</string>
     <string name="errorTestNotAvailable">अनुरोधित परीक्षण उपलब्ध नहीं है</string>

@@ -19,7 +19,6 @@
 
 package org.akvo.caddisfly.ui;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.widget.Button;
@@ -99,8 +98,6 @@ public class MainTest {
     @Test
     public void clickingCalibrate() {
 
-        String[] permissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
         ActivityController controller = Robolectric.buildActivity(MainActivity.class).create().start();
         Activity activity = (Activity) controller.get();
 
@@ -113,7 +110,6 @@ public class MainTest {
         assertNull(nextIntent);
 
         ShadowApplication application = shadowOf(activity.getApplication());
-        application.grantPermissions(permissions);
         controller.resume();
 
         button.performClick();
