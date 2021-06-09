@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'de.mobilej.unmock'
 
 def propertyFile = file(System.properties['user.home'] + '/.gradle/gradle.properties')
 def properties = new Properties()
@@ -110,10 +109,6 @@ android {
     }
 
     kotlinOptions { jvmTarget = "1.8" }
-
-    unMock {
-        keep "android.graphics.Color"
-    }
 }
 
 dependencies {
@@ -122,13 +117,13 @@ dependencies {
     // Support
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0-rc01'
+    implementation 'androidx.appcompat:appcompat:1.4.0-alpha02'
     implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
-    implementation 'com.simplecityapps:recyclerview-fastscroll:2.0.0'
+    implementation 'com.simplecityapps:recyclerview-fastscroll:2.0.1'
 
     implementation 'com.google.android.play:core:1.10.0'
 
@@ -147,7 +142,7 @@ dependencies {
     kapt 'android.arch.persistence.room:compiler:1.1.1'
 
     // Gson
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.7'
 
     implementation 'com.jjoe64:graphview:4.2.2'
 
@@ -157,17 +152,17 @@ dependencies {
     implementation files('libs/mail.jar')
 
     // Dagger
-    kapt 'com.google.dagger:dagger-compiler:2.32'
-    kapt 'com.google.dagger:dagger-android-processor:2.32'
-    implementation 'com.google.dagger:dagger-android:2.32'
-    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.32'
+    kapt 'com.google.dagger:dagger-compiler:2.36'
+    kapt 'com.google.dagger:dagger-android-processor:2.36'
+    implementation 'com.google.dagger:dagger-android:2.36'
+    kaptAndroidTest 'com.google.dagger:dagger-compiler:2.36'
 
-    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "androidx.core:core-ktx:1.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // Testing
-    testImplementation 'org.assertj:assertj-core:3.8.0'
+    testImplementation 'org.assertj:assertj-core:3.19.0'
     testImplementation 'androidx.test:core:1.3.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:runner:1.3.0'
@@ -190,9 +185,6 @@ dependencies {
     // UIAutomator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
-    // Unmock
-    unmock 'org.robolectric:android-all:4.3_r2-robolectric-0'
-
     debugImplementation 'androidx.multidex:multidex:2.0.1'
 
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
@@ -200,4 +192,3 @@ dependencies {
 repositories {
     mavenCentral()
 }
-//apply plugin: 'com.google.gms.google-services'
