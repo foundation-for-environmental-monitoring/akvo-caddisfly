@@ -17,8 +17,8 @@ android {
         applicationId "io.ffem"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 274
-        versionName "Beta 2.7"
+        versionCode 275
+        versionName "Beta 2.71"
         resConfigs "en", "en_US", "hi", "kn", "te"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -89,7 +89,8 @@ android {
     defaultConfig {
         // do not change these defaults
         buildConfigField "String", "SUPPORT_EMAIL", "\"info@ffem.io\""
-        buildConfigField "Boolean", "TEST_RUNNING", "false"
+        buildConfigField "java.util.concurrent.atomic.AtomicBoolean", "TEST_RUNNING",
+                "new java.util.concurrent.atomic.AtomicBoolean(false)"
         buildConfigField "Boolean", "TAKE_SCREENSHOTS", "false"
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + 0L + ")"
     }

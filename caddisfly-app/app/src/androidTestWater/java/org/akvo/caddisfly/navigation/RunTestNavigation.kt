@@ -13,6 +13,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import androidx.test.uiautomator.UiDevice
+import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R
 import org.akvo.caddisfly.common.TestConstants.CALIBRATION_TEST_INDEX
 import org.akvo.caddisfly.ui.MainActivity
@@ -260,6 +261,7 @@ class RunTestNavigation {
         @JvmStatic
         @BeforeClass
         fun initialize() {
+            BuildConfig.TEST_RUNNING.set(true)
             if (!TestHelper.isDeviceInitialized()) {
                 mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
             }

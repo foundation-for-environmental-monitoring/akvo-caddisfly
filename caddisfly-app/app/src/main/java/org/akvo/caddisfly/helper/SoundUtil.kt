@@ -43,9 +43,13 @@ object SoundUtil {
         if (AppPreferences.isSoundOn) {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val originalVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                    if (BuildConfig.TEST_RUNNING) 1 else audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-                    0)
+            audioManager.setStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                if (BuildConfig.TEST_RUNNING.get()) 1 else audioManager.getStreamMaxVolume(
+                    AudioManager.STREAM_MUSIC
+                ),
+                0
+            )
             val mp = MediaPlayer.create(context, resourceId)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mp.setAudioAttributes(

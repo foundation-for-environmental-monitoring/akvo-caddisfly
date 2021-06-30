@@ -152,7 +152,7 @@ class ChamberTestActivity : BaseActivity(), OnResultListener, OnCalibrationSelec
 
     private fun runTest() {
         if (cameraIsOk) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !BuildConfig.TEST_RUNNING
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !BuildConfig.TEST_RUNNING.get()
             ) {
                 startLockTask()
             }

@@ -38,6 +38,7 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
+import org.akvo.caddisfly.BuildConfig
 import org.akvo.caddisfly.R.id
 import org.akvo.caddisfly.R.string
 import org.akvo.caddisfly.common.TestConstants
@@ -371,6 +372,7 @@ class CalibrationTest {
         @JvmStatic
         @BeforeClass
         fun initialize() {
+            BuildConfig.TEST_RUNNING.set(true)
             if (!TestHelper.isDeviceInitialized()) {
                 mDevice = UiDevice.getInstance(getInstrumentation())
             }

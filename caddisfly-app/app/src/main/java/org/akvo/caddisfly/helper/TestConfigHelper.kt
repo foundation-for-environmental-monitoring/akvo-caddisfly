@@ -49,9 +49,11 @@ object TestConfigHelper {
      * @return the result in json format
      */
     @JvmStatic
-    fun getJsonResult(testInfo: TestInfo, results: SparseArray<String>,
-                      brackets: SparseArray<String?>?, color: Int,
-                      resultImageUrl: String?): JSONObject {
+    fun getJsonResult(
+        testInfo: TestInfo, results: SparseArray<String>,
+        brackets: SparseArray<String?>?, color: Int,
+        resultImageUrl: String?
+    ): JSONObject {
         val resultJson = JSONObject()
         try {
             resultJson.put(ConstantJsonKey.TYPE, BuildConfig.APPLICATION_ID)
@@ -59,6 +61,10 @@ object TestConfigHelper {
             resultJson.put(ConstantJsonKey.UUID, testInfo.uuid)
             val resultsJsonArray = JSONArray()
             for (subTest in testInfo.results!!) {
+                if (subTest.input) {
+                    continue
+                }
+
                 val subTestJson = JSONObject()
                 subTestJson.put(ConstantJsonKey.DILUTION, subTest.dilution)
                 subTestJson.put(ConstantJsonKey.NAME, subTest.name)
@@ -75,11 +81,14 @@ object TestConfigHelper {
                 }
                 if (color > -1) {
                     subTestJson.put("resultColor", Integer.toHexString(color and BIT_MASK))
-                    val calibrationDetail = db?.calibrationDao()!!.getCalibrationDetails(testInfo.uuid)
+                    val calibrationDetail =
+                        db?.calibrationDao()!!.getCalibrationDetails(testInfo.uuid)
                     // Add calibration details to result
-                    subTestJson.put("calibratedDate",
-                            SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.US)
-                                    .format(calibrationDetail!!.date))
+                    subTestJson.put(
+                        "calibratedDate",
+                        SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.US)
+                            .format(calibrationDetail!!.date)
+                    )
                     subTestJson.put("reagentExpiry", calibrationDetail.expiry)
                     subTestJson.put("cuvetteType", calibrationDetail.cuvetteType)
                     val calibrationSwatches = JSONArray()
@@ -98,8 +107,10 @@ object TestConfigHelper {
                 resultJson.put(ConstantJsonKey.IMAGE, resultImageUrl)
             }
             // Add current date to result
-            resultJson.put(ConstantJsonKey.TEST_DATE, SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.US)
-                    .format(Calendar.getInstance().time))
+            resultJson.put(
+                ConstantJsonKey.TEST_DATE, SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.US)
+                    .format(Calendar.getInstance().time)
+            )
         } catch (e: JSONException) {
             Timber.e(e)
         }

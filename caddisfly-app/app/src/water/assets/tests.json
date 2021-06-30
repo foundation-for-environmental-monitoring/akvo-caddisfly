@@ -551,12 +551,14 @@
         {
           "id": 1,
           "name": "Titration 1 drops",
-          "unit": "mg/l"
+          "unit": "mg/l",
+          "input": true
         },
         {
           "id": 2,
           "name": "Titration 2 drops",
-          "unit": "mg/l"
+          "unit": "mg/l",
+          "input": true
         },
         {
           "id": 3,
@@ -578,7 +580,8 @@
         {
           "id": 1,
           "name": "Titration drops",
-          "unit": "mg/l"
+          "unit": "mg/l",
+          "input": true
         },
         {
           "id": 2,
@@ -600,7 +603,8 @@
         {
           "id": 1,
           "name": "Titration drops",
-          "unit": "mg/l"
+          "unit": "mg/l",
+          "input": true
         },
         {
           "id": 2,
@@ -622,7 +626,8 @@
         {
           "id": 1,
           "name": "Titration drops",
-          "unit": "mg/l"
+          "unit": "mg/l",
+          "input": true
         },
         {
           "id": 2,

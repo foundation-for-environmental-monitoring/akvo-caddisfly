@@ -250,7 +250,7 @@ object AppPreferences {
     }
 
     fun isAppUpdateCheckRequired(): Boolean {
-        if (BuildConfig.TEST_RUNNING) {
+        if (BuildConfig.TEST_RUNNING.get()) {
             return true
         }
         val lastCheck = PreferencesUtil.getLong(app, "lastUpdateCheck")
