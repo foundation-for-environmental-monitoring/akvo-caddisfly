@@ -733,6 +733,22 @@
       ]
     },
     {
+      "name": "Dissolved Oxygen",
+      "type": "water",
+      "subtype": "titration",
+      "uuid": "1a511039-60fa-43e9-99a7-b60de23e74f6",
+      "image": "ffem",
+      "imageScale": "centerCrop",
+      "results": [
+        {
+          "id": 1,
+          "name": "Dissolved Oxygen",
+          "unit": "mg/l",
+          "formula": "%1$f * 0.05"
+        }
+      ]
+    },
+    {
       "name": "Sulfite",
       "type": "water",
       "subtype": "titration",

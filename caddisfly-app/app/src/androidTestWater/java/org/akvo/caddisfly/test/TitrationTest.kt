@@ -90,6 +90,8 @@ class TitrationTest {
 
         onView(withId(id.buttonAccept)).perform(click())
 
+        sleep(1000)
+
         assertNotNull(mDevice.findObject(By.text(getString(string.carbonate) + ": ")))
         assertNotNull(mDevice.findObject(By.text("300.00")))
 
